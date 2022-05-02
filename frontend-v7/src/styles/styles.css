@@ -1,0 +1,6 @@
+
+.cardAPPS:hover {
+  
+  box-shadow: 5px 10px 20px 1px rgba(255, 255, 255, 0.273) !important;
+  transition: all 0.7s linear;
+}

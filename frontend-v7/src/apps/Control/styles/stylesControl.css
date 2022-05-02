@@ -1,0 +1,62 @@
+
+.cardAgenciaMaritima:hover {
+  
+  box-shadow: 5px 10px 20px 1px rgba(255, 255, 255, 0.273) !important;
+  transition: all 0.7s linear;
+}
+ .contenedorVideo{
+  position: relative;
+  padding-top: 56.25%;
+}
+
+ .react-player{
+  position: absolute;
+  top: 0;
+  left: 0;
+}  
+.status-OPERATIVO {
+  background: #C8E6C9;
+  color: #256029;
+}
+.status-CULMINADO {
+  background: #FFCDD2;
+  color: #C63737;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .Buque-china {
+    animation: Buque-china-spin 2 20s  linear;
+    /* animation: name duration timing-function delay iteration-count direction fill-mode; */
+    animation-direction: alternate-reverse; 
+     transform: translate(340px, 90px); 
+    width: 50px;   
+    height: 30px; 
+    transition: all 0.7s linear;
+    
+  }
+ 
+}
+@keyframes Buque-china-spin {
+  0% {
+      transform: translate(20px,150px);
+      width: 15px;   
+      height: 30px; 
+  }
+   25% {
+      transform: translate(-35px, 180px);
+     
+    }
+   80% {
+      transform: translate(-170px, 60px);
+     
+    }
+    80.1% {
+      transform: translate(450px, 60px);
+     
+    }
+      100% {
+      transform: translate(340px, 90px);
+      width: 90px;   
+      height: 30px; 
+    }
+  }
