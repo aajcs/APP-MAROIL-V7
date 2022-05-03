@@ -28,11 +28,11 @@ const programacionVentanaSchema = new Schema(
     fechaFinVentana: {
       type: Date
     },
-    buqueCreado: {
+    programacionVentanaCreado: {
       type: Date,
       default: moment()
     },
-    buqueModificado: {
+    programacionVentanaModificado: {
       type: Date,
       default: moment()
     }

@@ -29,6 +29,10 @@ app.use((req, res, next) => {
 // Routes
 // app.use('/api/barcos', require('./routes/barcosRoute'));
 app.use('/api/barco', require('./appsControl/routes/BarcoRoutes'))
+app.use(
+  '/api/programacionVentana',
+  require('./appsControl/routes/ProgramacionVentanaRoutes')
+)
 app.use('/api/gabarra', require('./appsControl/routes/GabarraRoutes'))
 app.use('/api/usuario', require('./routes/UsuarioRoutes'))
 // app.use('/api/reportehora', require('./routes/ReporteHoraRoutes'));

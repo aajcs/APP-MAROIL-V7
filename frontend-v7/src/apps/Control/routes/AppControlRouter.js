@@ -23,7 +23,7 @@ import { BuquesPorCliente } from '../pages/BuquesPorCliente'
 
 import '../styles/stylesControl.css'
 import { MapaEstadisticoPage } from '../pages/MapaEstadisticoPage'
-import { ProgramacionVentana } from '../pages/ProgramacionVentana'
+import { ProgramacionVentana } from '../pages/ProgramacionVentanaPage'
 import { ModeladoOperacionPage } from '../pages/ModeladoOperacionPage'
 
 export default function appControlRouter() {

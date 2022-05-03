@@ -1,5 +1,7 @@
 import { Tag } from 'primereact/tag'
 import logomaroil from '../assetsControl/logomaroil.png'
+import ProgramacionVentanaListList from '../components/ProgramacionVentanaList'
+import ProgramacionVentanaContextProvider from '../contexts/ProgramacionVentanaContext'
 export const ProgramacionVentana = () => {
   return (
     <div className="grid crud-demo">
@@ -26,6 +28,9 @@ export const ProgramacionVentana = () => {
                 Sección en construcción por el dpto. de AIT.
               </Tag>
             </div>
+            <ProgramacionVentanaContextProvider>
+              <ProgramacionVentanaListList />
+            </ProgramacionVentanaContextProvider>
           </div>
         </div>
       </div>
