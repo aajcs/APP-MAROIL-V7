@@ -33,7 +33,7 @@ const ProgramacionVentanaList = () => {
     findProgramacionVentana(id)
     setIsVisible(true)
   }
-
+  console.log(programacionVentanas)
   // cabecera de la tabla
   const leftToolbarTemplate = () => {
     return (
@@ -62,16 +62,16 @@ const ProgramacionVentanaList = () => {
       </React.Fragment>
     )
   }
-  const fechaAtracoTemplate = (rowData) => {
-    const validarFecha = moment(rowData.fechaAtraco).isValid()
+  const fechaInicioVentana = (rowData) => {
+    const validarFecha = moment(rowData.fechaInicioVentana).isValid()
     if (!validarFecha) return
-    const fecha = moment(rowData.fechaAtraco)
+    const fecha = moment(rowData.fechaInicioVentana)
     return fecha.format('dddDD/MM/YY HH:mm')
   }
-  const fechaInicioCargaTemplate = (rowData) => {
-    const validarFecha = moment(rowData.fechaInicioCarga).isValid()
+  const fechaFinVentana = (rowData) => {
+    const validarFecha = moment(rowData.fechaFinVentana).isValid()
     if (!validarFecha) return
-    const fecha = moment(rowData.fechaInicioCarga)
+    const fecha = moment(rowData.fechaFinVentana)
     return fecha.format('dddDD/MM/YY HH:mm')
   }
   const fechaFinalCargaTemplate = (rowData) => {
@@ -207,18 +207,25 @@ const ProgramacionVentanaList = () => {
         responsiveLayout="scroll"
         breakpoint="960px"
       >
-        <Column
-          field="nombreProgramacionVentana"
-          header="nombre ProgramacionVentana"
-        />
+        <Column field="nombreBuque" header="nombreBuque" />
         <Column field="descripcion" header="descripcion" />
+        <Column field="terminalBuque" header="terminalBuque" />
         <Column field="buqueCliente" header="buqueCliente" />
         <Column field="buquePaisDestino" header="buquePaisDestino" />
-        <Column field="toneladasCapacidad" header="toneladas Nominadas" />
-        <Column field="toneladasNominadas" header="toneladas Solicitadas" />
-        <Column field="toneladasActual" header="toneladas Actual" />
-        <Column field="cantidadBodegas" header="cantidad Bodegas" />
-        <Column field="cantidadGruas" header="cantidad Gruas" />
+        <Column field="toneladasNominadas" header="toneladasNominadas" />
+        <Column
+          field="fechaInicioVentana"
+          header="fechaInicioVentana"
+          body={fechaInicioVentana}
+          dataType="date"
+        />
+        <Column
+          field="fechaFinVentana"
+          header="fechaFinVentana"
+          body={fechaFinVentana}
+          dataType="date"
+        />
+
         <Column
           field="programacionVentanaCreado"
           body={fechaProgramacionVentanaCreado}
@@ -230,30 +237,6 @@ const ProgramacionVentanaList = () => {
           body={fechaProgramacionVentanaModificado}
           header="programacionVentana Modificado"
           dataType="date"
-        />
-        <Column
-          field="fechaAtraco"
-          header="fecha Atraco"
-          body={fechaAtracoTemplate}
-          dataType="date"
-        />
-        <Column
-          field="fechaInicioCarga"
-          header="fecha Inicio Carga"
-          body={fechaInicioCargaTemplate}
-          dataType="date"
-        />
-        <Column
-          field="fechaFinalCarga"
-          header="fecha Final Carga"
-          body={fechaFinalCargaTemplate}
-          dataType="date"
-        />
-        <Column header="Dias Totales de Carga" body={diasTotalesCarga}></Column>
-
-        <Column
-          field="estatusProgramacionVentana"
-          header="estatus ProgramacionVentana"
         />
 
         <Column body={actionBodyTemplate}></Column>

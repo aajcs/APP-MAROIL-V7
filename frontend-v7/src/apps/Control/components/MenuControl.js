@@ -33,7 +33,7 @@ export const MenuControl = () => {
         {
           label: 'PROGRAMACION DE VENTANA',
           icon: 'pi pi-fw pi-ticket',
-          to: '/apps/control/programacionventana',
+          to: '/apps/control/programacionventanaAgendaPage',
           permi: 'ADMIN',
           permi1: 'LECTURA'
         }
@@ -196,6 +196,13 @@ export const MenuControl = () => {
             icon: 'pi pi-fw pi-database',
             to: '/apps/control/cargabodega',
             permi: 'SUPERADMIN'
+          },
+          {
+            label: 'PROGRAMACION DE VENTANA',
+            icon: 'pi pi-fw pi-database',
+            to: '/apps/control/programacionventana',
+            permi: 'ADMIN',
+            permi1: 'LECTURA'
           }
         ]
       }

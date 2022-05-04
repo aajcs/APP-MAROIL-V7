@@ -12,6 +12,9 @@ const programacionVentanaSchema = new Schema(
     descripcion: {
       type: String
     },
+    terminalBuque: {
+      type: String
+    },
     buqueCliente: {
       type: String
     },

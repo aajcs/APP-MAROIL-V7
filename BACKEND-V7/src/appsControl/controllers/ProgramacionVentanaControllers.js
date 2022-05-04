@@ -6,25 +6,27 @@ programacionVentanaCtrl.createProgramacionVentana = async (req, res) => {
   const {
     nombreBuque,
     descripcion,
+    terminalBuque,
     buqueCliente,
     buquePaisDestino,
     toneladasNominadas,
     fechaInicioVentana,
     fechaFinVentana,
-    buqueCreado,
-    buqueModificado
+    programacionVentanaCreado,
+    programacionVentanaModificado
   } = req.body
   try {
     const newProgramacionVentana = new ProgramacionVentana({
       nombreBuque,
       descripcion,
+      terminalBuque,
       buqueCliente,
       buquePaisDestino,
       toneladasNominadas,
       fechaInicioVentana,
       fechaFinVentana,
-      buqueCreado,
-      buqueModificado
+      programacionVentanaCreado,
+      programacionVentanaModificado
     })
     const saveProgramacionVentana = await newProgramacionVentana.save()
 
@@ -42,9 +44,7 @@ programacionVentanaCtrl.createProgramacionVentana = async (req, res) => {
 programacionVentanaCtrl.getProgramacionVentanas = async (req, res) => {
   try {
     const programacionVentanas = await ProgramacionVentana.find({})
-      .populate('reporteCarga')
-      .populate('reporteCargaGOM')
-      .populate('cargaBodega')
+
     res.status(200).json(programacionVentanas)
   } catch (err) {
     res.status(400).json({
@@ -61,9 +61,7 @@ programacionVentanaCtrl.getProgramacionVentana = async (req, res) => {
     })
   }
   try {
-    const programacionVentana = await ProgramacionVentana.findById(id).populate(
-      'reporteCarga'
-    )
+    const programacionVentana = await ProgramacionVentana.findById(id)
     if (programacionVentana) {
       res.status(200).json(programacionVentana)
     } else {
@@ -86,29 +84,15 @@ programacionVentanaCtrl.updateProgramacionVentana = async (req, res) => {
   const {
     nombreBuque,
     descripcion,
+    terminalBuque,
     buqueCliente,
     buquePaisDestino,
     toneladasNominadas,
     fechaInicioVentana,
     fechaFinVentana,
-    buqueCreado,
-    buqueModificado
+    programacionVentanaCreado,
+    programacionVentanaModificado
   } = req.body
-  // no se esta usuando
-  // const newProgramacionVentana = new ProgramacionVentana({
-  //   nombreProgramacionVentana,
-  //   descripcion,
-  //   toneladasCapacidad,
-  //   toneladasNominadas,
-  //   toneladasActual,
-  //   totalGabarras,
-  //   cantidadBodegas,
-  //   cantidadGruas,
-  //   estatusProgramacionVentana,
-  //   reporteCarga,
-  //   programacionVentanaCreado,
-  //   programacionVentanaModificado
-  // })
 
   try {
     const updateProgramacionVentana =
@@ -117,13 +101,14 @@ programacionVentanaCtrl.updateProgramacionVentana = async (req, res) => {
         {
           nombreBuque,
           descripcion,
+          terminalBuque,
           buqueCliente,
           buquePaisDestino,
           toneladasNominadas,
           fechaInicioVentana,
           fechaFinVentana,
-          buqueCreado,
-          buqueModificado
+          programacionVentanaCreado,
+          programacionVentanaModificado
         },
         { new: true }
       )

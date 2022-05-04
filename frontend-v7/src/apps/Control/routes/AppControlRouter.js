@@ -25,6 +25,7 @@ import '../styles/stylesControl.css'
 import { MapaEstadisticoPage } from '../pages/MapaEstadisticoPage'
 import { ProgramacionVentana } from '../pages/ProgramacionVentanaPage'
 import { ModeladoOperacionPage } from '../pages/ModeladoOperacionPage'
+import { ProgramacionVentanaAgendaPage } from '../pages/ProgramacionVentanaAgendaPage'
 
 export default function appControlRouter() {
   const { staticMenuInactive, onToggleMenuClick } = useContext(ConfigContext)
@@ -129,6 +130,11 @@ export default function appControlRouter() {
               exact
               path="/apps/control/programacionVentana"
               component={ProgramacionVentana}
+            />
+            <PrivateRoute
+              exact
+              path="/apps/control/programacionventanaAgendaPage"
+              component={ProgramacionVentanaAgendaPage}
             />
             <PrivateRoute
               exact

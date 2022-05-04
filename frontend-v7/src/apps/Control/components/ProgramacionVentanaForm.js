@@ -18,23 +18,16 @@ import flagplaceholder from '../assetsControl/flagplaceholder.png'
 const ProgramacionVentanaForm = (props) => {
   const initialProgramacionVentanaForm = {
     id: null,
-    nombreProgramacionVentana: '',
+    nombreBuque: '',
     descripcion: '',
+    terminalBuque: '',
     buqueCliente: '',
     buquePaisDestino: '',
-    toneladasCapacidad: 0,
     toneladasNominadas: 0,
-    toneladasActual: 0,
-    totalGabarras: 0,
-    cantidadBodegas: 0,
-    cantidadGruas: 0,
-    barcoCreado: moment(),
-    barcoModificado: moment(),
-    fechaAtraco: '',
-    fechaInicioCarga: '',
-    fechaFinalCarga: '',
-    estatusProgramacionVentana: '',
-    reporteCarga: []
+    fechaInicioVentana: '',
+    fechaFinVentana: '',
+    programacionVentanaCreado: moment(),
+    programacionVentanaModificado: moment()
   }
 
   addLocale('es', {
@@ -92,9 +85,23 @@ const ProgramacionVentanaForm = (props) => {
     useState(null)
   const [selectedBuqueCliente, setSelectedBuqueCliente] = useState(null)
   const [selectedCountry, setSelectedCountry] = useState(null)
-  const [barcoData, setProgramacionVentanaData] = useState(
+  const [selectedTerminalBuque, setSelectTerminalBuque] = useState(null)
+  const TerminalBuque = [
+    { name: 'MAROIL TERMINAL 1' },
+    { name: 'MAROIL TERMINAL 2' },
+    { name: 'PETRO CEDENO' },
+    { name: 'PETRO SAN FELIX' },
+    { name: 'BUQUES FONDEADO' },
+    { name: 'PROXIMOS BUQUES' }
+  ]
+  const onTerminalBuque = (e) => {
+    setSelectTerminalBuque(e.value)
+    updateField(e.value.name, 'terminalBuque')
+  }
+  const [programacionVentanaData, setProgramacionVentanaData] = useState(
     initialProgramacionVentanaForm
   )
+  console.log(programacionVentanaData)
   const estadoProgramacionVentana = [
     { estatusProgramacionVentana: 'OPERATIVO' },
     { estatusProgramacionVentana: 'CULMINADO' }
@@ -130,10 +137,9 @@ const ProgramacionVentanaForm = (props) => {
     setSelectedCountry(e.value)
     updateField(e.value.code, 'buquePaisDestino')
   }
-  const [date, setDate] = useState(null)
-  const [dateAtraco, setDateAtraco] = useState(null)
-  const [dateInicio, setDateInicio] = useState(null)
-  const [dateFinal, setDateFinal] = useState(null)
+  const [dateInicioVentana, setDateInicioVentana] = useState(null)
+  const [dateFinVentana, setDateFinVentana] = useState(null)
+
   const toast = useRef(null)
 
   useEffect(() => {
@@ -146,18 +152,13 @@ const ProgramacionVentanaForm = (props) => {
       setSelectedBuqueCliente({
         buqueCliente: editProgramacionVentana.buqueCliente
       })
-      setDate(moment(editProgramacionVentana.barcoCreado)._d)
-      setDateAtraco(
-        editProgramacionVentana.fechaAtraco &&
-          moment(editProgramacionVentana.fechaAtraco)._d
+      setDateInicioVentana(
+        editProgramacionVentana.fechaInicioVentana &&
+          moment(editProgramacionVentana.fechaInicioVentana)._d
       )
-      setDateInicio(
-        editProgramacionVentana.fechaInicioCarga &&
-          moment(editProgramacionVentana.fechaInicioCarga)._d
-      )
-      setDateFinal(
-        editProgramacionVentana.fechaFinalCarga &&
-          moment(editProgramacionVentana.fechaFinalCarga)._d
+      setDateFinVentana(
+        editProgramacionVentana.fechaFinVentana &&
+          moment(editProgramacionVentana.fechaFinVentana)._d
       )
     }
   }, [editProgramacionVentana])
@@ -168,7 +169,7 @@ const ProgramacionVentanaForm = (props) => {
   }, [createBodegaProgramacionVentana1])
   const createBodegaProgramacionVentana = (saveProgramacionVentana) => {
     const cargaBodega = {
-      barcoID: saveProgramacionVentana.id,
+      programacionVentanaID: saveProgramacionVentana.id,
       nombreBodega: '',
       estatusBodega: 'CARGANDO',
       toneladasCargadasBodega: 0,
@@ -178,26 +179,27 @@ const ProgramacionVentanaForm = (props) => {
 
   const updateField = (data, field) => {
     setProgramacionVentanaData({
-      ...barcoData,
+      ...programacionVentanaData,
       [field]: data
     })
   }
 
   const saveProgramacionVentana = () => {
     if (!editProgramacionVentana) {
-      createProgramacionVentana(barcoData)
+      createProgramacionVentana(programacionVentanaData)
     } else {
       updateProgramacionVentana({
-        ...barcoData,
-        barcoModificado: moment()
+        ...programacionVentanaData,
+        programacionVentanaModificado: moment()
       })
     }
     setProgramacionVentanaData(initialProgramacionVentanaForm)
     setIsVisible(false)
     setSelectedProgramacionVentana('')
-    setDateAtraco(null)
-    setDateInicio(null)
-    setDateFinal(null)
+    setDateInicioVentana(null)
+    setDateFinVentana(null)
+    setSelectTerminalBuque(null)
+    setSelectedBuqueCliente(null)
   }
 
   const dialogFooter = (
@@ -219,9 +221,10 @@ const ProgramacionVentanaForm = (props) => {
     setIsVisible(false)
     setProgramacionVentanaData(initialProgramacionVentanaForm)
     setSelectedProgramacionVentana('')
-    setDateAtraco(null)
-    setDateInicio(null)
-    setDateFinal(null)
+    setDateInicioVentana(null)
+    setDateFinVentana(null)
+    setSelectTerminalBuque(null)
+    setSelectedBuqueCliente(null)
   }
   const selectedestatusProgramacionVentanaTemplate = (option, props) => {
     if (option) {
@@ -310,7 +313,25 @@ const ProgramacionVentanaForm = (props) => {
       </div>
     )
   }
+  const selectedTerminalBuqueTemplate = (option, props) => {
+    if (option) {
+      return (
+        <div className="country-item country-item-value">
+          <div>{option.name}</div>
+        </div>
+      )
+    }
 
+    return <span>{props.placeholder}</span>
+  }
+
+  const TerminalBuqueOptionTemplate = (option) => {
+    return (
+      <div className="country-item">
+        <div>{option.name}</div>
+      </div>
+    )
+  }
   return (
     <div className="dialog-demo">
       <Toast ref={toast} />
@@ -326,17 +347,15 @@ const ProgramacionVentanaForm = (props) => {
           <br />
           <div className="p-float-label">
             <InputText
-              value={barcoData.nombreProgramacionVentana}
-              onChange={(e) =>
-                updateField(e.target.value, 'nombreProgramacionVentana')
-              }
+              value={programacionVentanaData.nombreBuque}
+              onChange={(e) => updateField(e.target.value, 'nombreBuque')}
             />
-            <label>Nombre del ProgramacionVentana:</label>
+            <label>nombreBuque</label>
           </div>
           <br />
           <div className="p-float-label">
             <InputText
-              value={barcoData.descripcion}
+              value={programacionVentanaData.descripcion}
               onChange={(e) => updateField(e.target.value, 'descripcion')}
             />
             <label>Descripcion:</label>
@@ -369,29 +388,10 @@ const ProgramacionVentanaForm = (props) => {
             </div>
             <br />
             <div className="field col-6 p-col-2 p-md-1">
-              <label htmlFor="toneladasCapacidad">Toneladas Nominadas</label>
-              <InputNumber
-                inputId="toneladasCapacidad"
-                value={barcoData.toneladasCapacidad}
-                onValueChange={(e) =>
-                  updateField(e.target.value, 'toneladasCapacidad')
-                }
-                showButtons
-                buttonLayout="horizontal"
-                step={1}
-                decrementButtonClassName="p-button-danger"
-                incrementButtonClassName="p-button-success"
-                incrementButtonIcon="pi pi-plus"
-                decrementButtonIcon="pi pi-minus"
-                suffix=" TM"
-              />
-            </div>
-
-            <div className="field col-6 p-col-2 p-md-1">
-              <label htmlFor="toneladasNominadas">Toneladas Solicitadas</label>
+              <label htmlFor="toneladasNominadas">Toneladas Nominadas</label>
               <InputNumber
                 inputId="toneladasNominadas"
-                value={barcoData.toneladasNominadas}
+                value={programacionVentanaData.toneladasNominadas}
                 onValueChange={(e) =>
                   updateField(e.target.value, 'toneladasNominadas')
                 }
@@ -405,81 +405,18 @@ const ProgramacionVentanaForm = (props) => {
                 suffix=" TM"
               />
             </div>
-            <div className="field col-6 p-col-2 p-md-1">
-              <label htmlFor="toneladasActual">Toneladas Actual</label>
-              <InputNumber
-                inputId="toneladasActual"
-                value={barcoData.toneladasActual}
-                onValueChange={(e) =>
-                  updateField(e.target.value, 'toneladasActual')
-                }
-                showButtons
-                buttonLayout="horizontal"
-                step={1}
-                decrementButtonClassName="p-button-danger"
-                incrementButtonClassName="p-button-success"
-                incrementButtonIcon="pi pi-plus"
-                decrementButtonIcon="pi pi-minus"
-                suffix=" TM"
+            <div className="field col-12 md:col-6">
+              <h5>ubicacionBuque</h5>
+              <Dropdown
+                value={selectedTerminalBuque}
+                options={TerminalBuque}
+                onChange={onTerminalBuque}
+                optionLabel="name"
+                placeholder="Seleccione ubicacionBuque"
+                valueTemplate={selectedTerminalBuqueTemplate}
+                itemTemplate={TerminalBuqueOptionTemplate}
               />
-              {/* <InputNumber id="quantity" value={product.quantity} onValueChange={(e) => onInputNumberChange(e, 'quantity')} integeronly /> */}
             </div>
-            <div className="field col-6 p-col-2 p-md-1">
-              <label htmlFor="totalGabarras">Total Gabarras</label>
-              <InputNumber
-                inputId="totalGabarras"
-                value={barcoData.totalGabarras}
-                onValueChange={(e) =>
-                  updateField(e.target.value, 'totalGabarras')
-                }
-                showButtons
-                buttonLayout="horizontal"
-                step={1}
-                decrementButtonClassName="p-button-danger"
-                incrementButtonClassName="p-button-success"
-                incrementButtonIcon="pi pi-plus"
-                decrementButtonIcon="pi pi-minus"
-              />
-              {/* <InputNumber id="quantity" value={product.quantity} onValueChange={(e) => onInputNumberChange(e, 'quantity')} integeronly /> */}
-            </div>
-            <div className="field col-6 p-col-2 p-md-1">
-              <label htmlFor="cantidadBodegas">Cantidad Bodegas</label>
-              <InputNumber
-                inputId="cantidadBodegas"
-                value={barcoData.cantidadBodegas}
-                onValueChange={(e) =>
-                  updateField(e.target.value, 'cantidadBodegas')
-                }
-                showButtons
-                buttonLayout="horizontal"
-                step={1}
-                decrementButtonClassName="p-button-danger"
-                incrementButtonClassName="p-button-success"
-                incrementButtonIcon="pi pi-plus"
-                decrementButtonIcon="pi pi-minus"
-              />
-              {/* <InputNumber id="quantity" value={product.quantity} onValueChange={(e) => onInputNumberChange(e, 'quantity')} integeronly /> */}
-            </div>
-            <div className="field col-6 p-col-2 p-md-1">
-              <label htmlFor="cantidadGruas">Cantidad Gruas</label>
-              <InputNumber
-                inputId="cantidadGruas"
-                value={barcoData.cantidadGruas}
-                onValueChange={(e) =>
-                  updateField(e.target.value, 'cantidadGruas')
-                }
-                showButtons
-                buttonLayout="horizontal"
-                step={1}
-                decrementButtonClassName="p-button-danger"
-                incrementButtonClassName="p-button-success"
-                incrementButtonIcon="pi pi-plus"
-                decrementButtonIcon="pi pi-minus"
-              />
-              {/* <InputNumber id="quantity" value={product.quantity} onValueChange={(e) => onInputNumberChange(e, 'quantity')} integeronly /> */}
-            </div>
-          </div>
-          <div className="formgrid grid">
             <div className="field col-12 md:col-6">
               <label>Estado</label>
               <Dropdown
@@ -492,15 +429,17 @@ const ProgramacionVentanaForm = (props) => {
                 itemTemplate={estatusProgramacionVentanaOptionTemplate}
               />
             </div>
+          </div>
+          <div className="formgrid grid">
             <div className="field col-12 md:col-6">
-              <label>Fecha de Atraque</label>
+              <label> fechaInicioVentana</label>
               <Calendar
                 className="p-datepicker-today"
                 id="time24"
-                value={dateAtraco !== null && dateAtraco}
+                value={dateInicioVentana !== null && dateInicioVentana}
                 onChange={(e) => {
-                  setDateAtraco(e.target.value)
-                  updateField(e.target.value, 'fechaAtraco')
+                  setDateInicioVentana(e.target.value)
+                  updateField(e.target.value, 'fechaInicioVentana')
                 }}
                 showTime
                 locale="es"
@@ -509,14 +448,14 @@ const ProgramacionVentanaForm = (props) => {
               />
             </div>
             <div className="field col-12 md:col-6">
-              <label>Fecha Inicio Carga</label>
+              <label>fechaFinVentana</label>
               <Calendar
                 className="p-datepicker-today"
                 id="time24"
-                value={dateInicio !== null && dateInicio}
+                value={dateFinVentana !== null && dateFinVentana}
                 onChange={(e) => {
-                  setDateInicio(e.value)
-                  updateField(e.target.value, 'fechaInicioCarga')
+                  setDateFinVentana(e.value)
+                  updateField(e.target.value, 'fechaFinVentana')
                 }}
                 showTime
                 locale="es"
@@ -524,35 +463,6 @@ const ProgramacionVentanaForm = (props) => {
                 showButtonBar
               />
             </div>
-            <div className="field col-12 md:col-6">
-              <label>Fecha Final Carga</label>
-              <Calendar
-                className="p-datepicker-today"
-                id="time24"
-                value={dateFinal !== null && dateFinal}
-                onChange={(e) => {
-                  setDateFinal(e.value)
-                  updateField(e.target.value, 'fechaFinalCarga')
-                }}
-                showTime
-                locale="es"
-                hourFormat="12"
-                showButtonBar
-              />
-            </div>
-            {/* <div className="field col-12 md:col-6">
-              <h5>Fecha</h5>
-              <Calendar
-                className="p-datepicker-today"
-                id="time24"
-                value={date}
-                onChange={(e) => setDate(e.value)}
-                showTime
-                locale="es"
-                hourFormat="12"
-                showButtonBar
-              />
-            </div> */}
           </div>
         </div>
       </Dialog>
