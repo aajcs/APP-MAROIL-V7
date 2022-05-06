@@ -8,44 +8,81 @@ const localizer = momentLocalizer(moment)
 
 const events = [
   {
-    title: 'PROBANDO BUQUE 1',
+    title: 'UNIVERSE NEPTUNE / MAROIL / 50.0000 TM',
     bgColor: '#094db1',
     allDay: true,
-    start: moment('5-5-2022', 'MM-DD-YYYY'),
-    end: moment('5-7-2022', 'MM-DD-YYYY')
+    start: moment('4-25-2022', 'MM-DD-YYYY'),
+    end: moment('4-30-2022', 'MM-DD-YYYY')
   },
   {
-    title: 'PROBANDO BUQUE 1',
+    title: 'TBN  / PDVSA / 50.0000 TM',
     bgColor: '#094db1',
     allDay: true,
-    start: moment('5-5-2022', 'MM-DD-YYYY'),
-    end: moment('5-16-2022', 'MM-DD-YYYY')
+    start: moment('4-26-2022', 'MM-DD-YYYY'),
+    end: moment('5-1-2022', 'MM-DD-YYYY')
   },
   {
-    title: 'PROBANDO BUQUE 1',
+    title: 'EMILIA / MAROIL / 50.0000 TM',
     bgColor: '#094db1',
     allDay: true,
-    start: moment('5-1-2022', 'MM-DD-YYYY'),
-    end: moment('5-8-2022', 'MM-DD-YYYY')
+    start: moment('4-30-2022', 'MM-DD-YYYY'),
+    end: moment('5-5-2022', 'MM-DD-YYYY')
   },
   {
-    title: 'PROBANDO BUQUE 1',
+    title: 'TBN  / PDVSA / 50.0000 TM',
     bgColor: '#094db1',
     allDay: true,
-    start: moment('5-5-2022', 'MM-DD-YYYY'),
-    end: moment('5-10-2022', 'MM-DD-YYYY')
+    start: moment('5-6-2022', 'MM-DD-YYYY'),
+    end: moment('5-11-2022', 'MM-DD-YYYY')
   },
   {
-    title: 'PROBANDO BUQUE 2',
-    bgColor: '#d9a406',
-    start: moment('5-15-2022', 'MM-DD-YYYY'),
-    end: moment('5-22-2022', 'MM-DD-YYYY')
+    title: 'TOP OFF AP SVETI VLAHO / MAROIL / 20.0000 TM',
+    bgColor: '#094db1',
+    allDay: true,
+    start: moment('5-3-2022', 'MM-DD-YYYY'),
+    end: moment('5-5-2022', 'MM-DD-YYYY')
   },
   {
-    title: 'PROBANDO BUQUE 3',
+    title: 'PLUTUS / MAROIL / 13.0000 TM',
     bgColor: '#157347',
-    start: moment('5-25-2022', 'MM-DD-YYYY'),
-    end: moment('5-30-2022', 'MM-DD-YYYY')
+    allDay: true,
+    start: moment('4-25-2022', 'MM-DD-YYYY'),
+    end: moment('4-27-2022', 'MM-DD-YYYY')
+  },
+  {
+    title: 'J.M. ESPAÑA / MAROIL / 13.0000 TM',
+    bgColor: '#157347',
+    allDay: true,
+    start: moment('4-27-2022', 'MM-DD-YYYY'),
+    end: moment('4-29-2022', 'MM-DD-YYYY')
+  },
+  {
+    title: 'AP SVETI VLAHO / MAROIL / 30.0000 TM',
+    bgColor: '#157347',
+    allDay: true,
+    start: moment('4-29-2022', 'MM-DD-YYYY'),
+    end: moment('5-3-2022', 'MM-DD-YYYY')
+  },
+  {
+    title: 'J.M. ESPAÑA / MAROIL / 13.0000 TM',
+    bgColor: '#157347',
+    allDay: true,
+    start: moment('5-4-2022', 'MM-DD-YYYY'),
+    end: moment('5-6-2022', 'MM-DD-YYYY')
+  },
+  {
+    title: 'TBN/ MAROIL / 25.0000 TM',
+    bgColor: '#157347',
+    allDay: true,
+    start: moment('5-9-2022', 'MM-DD-YYYY'),
+    end: moment('5-12-2022', 'MM-DD-YYYY')
+  },
+
+  {
+    title: 'VIGOROUS/ PDVSA / 25.0000 TM',
+    bgColor: '#ffd965',
+    start: moment('4-27-2022', 'MM-DD-YYYY'),
+    end: moment('5-7-2022', 'MM-DD-YYYY')
   }
 ]
 
@@ -113,9 +150,9 @@ function App() {
           week: 'Semana',
           day: 'Día'
         }}
-        // onSelectEvent={(event) => alert(event.title)}
+        onSelectEvent={(event) => alert(event.title)}
         // views={['week', 'month']}
-        style={{ height: 'calc(95vh - 9rem)' }}
+        style={{ height: 'calc(120vh - 9rem)' }}
         // components={{
         //   dateCellWrapper: ColoredDateCellWrapper
         // }}

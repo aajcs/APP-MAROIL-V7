@@ -67,8 +67,45 @@
     background: #909397 !important;
 }
 .rbc-off-range {
-  color: rgba(255, 255, 255, 0.87) !important;
+  color: rgba(0, 0, 0) !important;
 }
+.rbc-button-link {
+  color: rgba(0, 0, 0) !important;
+}
+.rbc-day-bg {
+  background: rgba(255, 255, 255, 0.87) !important;
+}
+
 .rbc-today {
-  background-color: transparent !important;
+  background-color: rgba(255, 255, 255, 0.87)  !important;
+}
+.rbc-header + .rbc-header {
+  border-left: 1px solid #ddd !important;
+
+}
+.rbc-rtl .rbc-header + .rbc-header {
+
+  border-right: 1px solid rgb(253, 8, 8) !important;
+}
+.rbc-toolbar button {
+ 
+  border: 1px solid rgb(255, 0, 0) !important;
+ 
+}
+.rbc-month-view {
+ 
+  border: 1px solid rgb(255, 0, 0) !important;
+ 
+}
+.rbc-month-row + .rbc-month-row {
+  border: 2px solid rgb(0, 0, 0) !important;
+}
+.rbc-day-bg + .rbc-day-bg {
+  border: 1px solid rgb(0, 0, 0) !important;
+
+}
+.rbc-rtl .rbc-day-bg + .rbc-day-bg {
+
+  border: 1px solid rgb(0, 0, 0) !important;
+
 }
