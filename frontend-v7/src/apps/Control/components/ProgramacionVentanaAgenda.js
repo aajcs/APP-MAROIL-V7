@@ -3,76 +3,77 @@ import React, { useState, Children } from 'react'
 import { Calendar, momentLocalizer } from 'react-big-calendar'
 import 'react-big-calendar/lib/css/react-big-calendar.css'
 import moment from 'moment'
+import Agenda from './Agenda'
 
 const localizer = momentLocalizer(moment)
 
 const events = [
   {
     title: 'UNIVERSE NEPTUNE / MAROIL / 50.0000 TM',
-    bgColor: '#094db1',
+    bgColor: '#3b8afd',
     allDay: true,
     start: moment('4-25-2022', 'MM-DD-YYYY'),
     end: moment('4-30-2022', 'MM-DD-YYYY')
   },
   {
     title: 'TBN  / PDVSA / 50.0000 TM',
-    bgColor: '#094db1',
+    bgColor: '#3b8afd',
     allDay: true,
     start: moment('4-26-2022', 'MM-DD-YYYY'),
     end: moment('5-1-2022', 'MM-DD-YYYY')
   },
   {
     title: 'EMILIA / MAROIL / 50.0000 TM',
-    bgColor: '#094db1',
+    bgColor: '#3b8afd',
     allDay: true,
     start: moment('4-30-2022', 'MM-DD-YYYY'),
     end: moment('5-5-2022', 'MM-DD-YYYY')
   },
   {
     title: 'TBN  / PDVSA / 50.0000 TM',
-    bgColor: '#094db1',
+    bgColor: '#3b8afd',
     allDay: true,
     start: moment('5-6-2022', 'MM-DD-YYYY'),
     end: moment('5-11-2022', 'MM-DD-YYYY')
   },
   {
     title: 'TOP OFF AP SVETI VLAHO / MAROIL / 20.0000 TM',
-    bgColor: '#094db1',
+    bgColor: '#3b8afd',
     allDay: true,
     start: moment('5-3-2022', 'MM-DD-YYYY'),
     end: moment('5-5-2022', 'MM-DD-YYYY')
   },
   {
     title: 'PLUTUS / MAROIL / 13.0000 TM',
-    bgColor: '#157347',
+    bgColor: '#459e74',
     allDay: true,
     start: moment('4-25-2022', 'MM-DD-YYYY'),
     end: moment('4-27-2022', 'MM-DD-YYYY')
   },
   {
     title: 'J.M. ESPAÑA / MAROIL / 13.0000 TM',
-    bgColor: '#157347',
+    bgColor: '#459e74',
     allDay: true,
     start: moment('4-27-2022', 'MM-DD-YYYY'),
     end: moment('4-29-2022', 'MM-DD-YYYY')
   },
   {
     title: 'AP SVETI VLAHO / MAROIL / 30.0000 TM',
-    bgColor: '#157347',
+    bgColor: '#459e74',
     allDay: true,
     start: moment('4-29-2022', 'MM-DD-YYYY'),
     end: moment('5-3-2022', 'MM-DD-YYYY')
   },
   {
     title: 'J.M. ESPAÑA / MAROIL / 13.0000 TM',
-    bgColor: '#157347',
+    bgColor: '#459e74',
     allDay: true,
     start: moment('5-4-2022', 'MM-DD-YYYY'),
     end: moment('5-6-2022', 'MM-DD-YYYY')
   },
   {
     title: 'TBN/ MAROIL / 25.0000 TM',
-    bgColor: '#157347',
+    bgColor: '#459e74',
     allDay: true,
     start: moment('5-9-2022', 'MM-DD-YYYY'),
     end: moment('5-12-2022', 'MM-DD-YYYY')
@@ -158,6 +159,7 @@ function App() {
         // }}
         eventPropGetter={eventStyleGetter}
       />
+      <Agenda />
     </div>
   )
 }
