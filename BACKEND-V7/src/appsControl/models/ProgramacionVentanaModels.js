@@ -6,8 +6,7 @@ const programacionVentanaSchema = new Schema(
   {
     nombreBuque: {
       type: String,
-      required: true,
-      unique: true
+      required: true
     },
     descripcion: {
       type: String

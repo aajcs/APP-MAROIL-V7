@@ -1,5 +1,5 @@
 import ProgramacionVentanaContextProvider from '../contexts/ProgramacionVentanaContext'
-import ProgramacionVentanaAgenda from '../components/ProgramacionVentanaAgenda'
+import Agenda from '../components/Agenda'
 export const ProgramacionVentanaAgendaPage = () => {
   return (
     <div className="grid crud-demo">
@@ -7,7 +7,7 @@ export const ProgramacionVentanaAgendaPage = () => {
         <div className="card">
           {/* <div className="text-center " style={{ 'margin-top': '10%' }}> */}
           <ProgramacionVentanaContextProvider>
-            <ProgramacionVentanaAgenda />
+            <Agenda />
           </ProgramacionVentanaContextProvider>
         </div>
       </div>

@@ -247,6 +247,8 @@ hr {
   background: #ff0000 !important;
 } */
 .event-item{
-  color: #000000 !important;
+  color: #ffffff !important;
   font-weight: bold;
+ font-size: 10px;
+ 
 }

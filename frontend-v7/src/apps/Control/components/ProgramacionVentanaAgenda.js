@@ -111,7 +111,7 @@ function App() {
   //   function handleAddEvent() {
   //     setAllEvents([...allEvents, newEvent])
   //   }
-  console.log(allEvents)
+
   return (
     <div className="">
       <h1>Programacion de Ventana</h1>
@@ -138,6 +138,7 @@ function App() {
           Add Event
         </button>
       </div> */}
+      <Agenda />
       <Calendar
         localizer={localizer}
         events={allEvents}
@@ -159,7 +160,6 @@ function App() {
         // }}
         eventPropGetter={eventStyleGetter}
       />
-      <Agenda />
     </div>
   )
 }

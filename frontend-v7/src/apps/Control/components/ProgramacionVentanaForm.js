@@ -89,10 +89,8 @@ const ProgramacionVentanaForm = (props) => {
   const TerminalBuque = [
     { name: 'MAROIL TERMINAL 1' },
     { name: 'MAROIL TERMINAL 2' },
-    { name: 'PETRO CEDENO' },
     { name: 'PETRO SAN FELIX' },
-    { name: 'BUQUES FONDEADO' },
-    { name: 'PROXIMOS BUQUES' }
+    { name: 'PETRO CEDENO' }
   ]
   const onTerminalBuque = (e) => {
     setSelectTerminalBuque(e.value)

@@ -4,6 +4,19 @@ import { Card } from 'primereact/card'
 const AgenciasMaritimasList = () => {
   const agenciasMaritimas = [
     {
+      status: 'Shipped',
+      date: '15/10/2020 16:15',
+      icon: 'pi pi-arrow-down-right',
+      color: '#FF9800',
+      nombre: 'DESARROLLOS 1405',
+      direccion:
+        'Avenida principal de lechería, Edif Y2K, piso 1, Estado Anzoategui.',
+      telefono: '+58 (281) 282.02.58',
+      personaContacto: 'ventas@desarrollos1405.com',
+      webSite: 'https://desarrollos1405.com/',
+      image: ''
+    },
+    {
       status: 'Ordered',
       date: '15/10/2020 10:30',
       icon: 'pi pi-arrow-down-right',
@@ -29,19 +42,7 @@ const AgenciasMaritimasList = () => {
       webSite: 'http://navasca.com.ve/',
       image: ''
     },
-    {
-      status: 'Shipped',
-      date: '15/10/2020 16:15',
-      icon: 'pi pi-arrow-down-right',
-      color: '#FF9800',
-      nombre: 'DESARROLLOS 1405',
-      direccion:
-        'Avenida principal de lechería, Edif Y2K, piso 1, Estado Anzoategui.',
-      telefono: '+58 (281) 282.02.58',
-      personaContacto: 'ventas@desarrollos1405.com',
-      webSite: 'https://desarrollos1405.com/',
-      image: ''
-    },
+
     {
       status: 'Delivered',
       date: '16/10/2020 10:00',
