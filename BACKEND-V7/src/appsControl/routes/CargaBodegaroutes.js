@@ -11,20 +11,21 @@ const {
 const auth = require('../../middlewares/authMiddleware')
 const { isAppControl } = require('../../middlewares/AppsMiddleware')
 const {
-  isAdmin,
-  isSuperAdmin,
-  isLectura
+  isLectura,
+  isOperador,
+
+  isSuperAdmin
 } = require('../../middlewares/RolesMiddleware')
 
 router
   .route('/')
   .get([auth, isAppControl, isLectura], getCargaBodegas)
-  .post([auth, isAppControl, isAdmin], createCargaBodega)
+  .post([auth, isAppControl, isOperador], createCargaBodega)
 
 router
   .route('/:id')
-  .get([auth, isAppControl, isAdmin], getCargaBodega)
+  .get([auth, isAppControl, isOperador], getCargaBodega)
   .delete([auth, isAppControl, isSuperAdmin], deleteCargaBodega)
-  .put([auth, isAppControl, isAdmin], updateCargaBodega)
+  .put([auth, isAppControl, isOperador], updateCargaBodega)
 
 module.exports = router

@@ -26,6 +26,7 @@ export const AppTopbar = (props) => {
   const incrementScale = () => {
     setScale((prevState) => ++prevState)
   }
+  console.log(auth.user.faidUser.user)
   return (
     <div className="layout-topbar">
       <Link to="/" className="layout-topbar-logo">
@@ -133,6 +134,7 @@ export const AppTopbar = (props) => {
               <i className="pi pi-user-plus" />
               <span>Events</span>
             </NavLink>
+            hola
           </li>
         )}
         {auth.isLogged() && (
@@ -141,12 +143,13 @@ export const AppTopbar = (props) => {
               className="p-link layout-topbar-button"
               onClick={auth.logout}
             >
-              <i className="pi pi-user-minus" />
-              <span>Settings</span>
+              <i className="pi pi-user-minus pr-1" />
+              <span>Settings</span> {auth.user.faidUser.user}
             </button>
           </li>
         )}
       </ul>
+      {/* {auth.isLogged() && <h6>{auth.user.faidUser.user}</h6>} */}
     </div>
   )
 }

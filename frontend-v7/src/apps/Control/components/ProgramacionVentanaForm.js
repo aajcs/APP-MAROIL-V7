@@ -150,6 +150,9 @@ const ProgramacionVentanaForm = (props) => {
       setSelectedBuqueCliente({
         buqueCliente: editProgramacionVentana.buqueCliente
       })
+      setSelectTerminalBuque({
+        name: editProgramacionVentana.terminalBuque
+      })
       setDateInicioVentana(
         editProgramacionVentana.fechaInicioVentana &&
           moment(editProgramacionVentana.fechaInicioVentana)._d
@@ -336,7 +339,7 @@ const ProgramacionVentanaForm = (props) => {
       <Dialog
         visible={isVisible}
         breakpoints={{ '960px': '75vw' }}
-        style={{ width: '30vw' }}
+        style={{ width: '40vw' }}
         header="Detalles de la ProgramacionVentana"
         footer={dialogFooter}
         onHide={() => clearSelected()}
@@ -348,18 +351,13 @@ const ProgramacionVentanaForm = (props) => {
               value={programacionVentanaData.nombreBuque}
               onChange={(e) => updateField(e.target.value, 'nombreBuque')}
             />
-            <label>nombreBuque</label>
+            <label>Nombre del Buque</label>
           </div>
           <br />
-          <div className="p-float-label">
-            <InputText
-              value={programacionVentanaData.descripcion}
-              onChange={(e) => updateField(e.target.value, 'descripcion')}
-            />
-            <label>Descripcion:</label>
-          </div>
+
           <div className="formgrid grid">
-            <div className="field col-12 md:col-6 mt-3 mb-0 ">
+            <div className="field col-12 md:col-6  mb-0 ">
+              <label htmlFor="toneladasNominadas">Consignatario</label>
               <Dropdown
                 value={selectedBuqueCliente}
                 options={buqueCliente}
@@ -370,21 +368,18 @@ const ProgramacionVentanaForm = (props) => {
                 itemTemplate={buqueClienteOptionTemplate}
               />
             </div>
-            <div className="field col-12 md:col-6 mt-3">
+            <div className="field col-12 md:col-6">
+              <label>Terminal</label>
               <Dropdown
-                value={selectedCountry}
-                options={countries}
-                onChange={onCountryChange}
+                value={selectedTerminalBuque}
+                options={TerminalBuque}
+                onChange={onTerminalBuque}
                 optionLabel="name"
-                filter
-                showClear
-                filterBy="name"
-                placeholder="Pais de Destino"
-                valueTemplate={selectedCountryTemplate}
-                itemTemplate={countryOptionTemplate}
+                placeholder="Seleccione ubicacionBuque"
+                valueTemplate={selectedTerminalBuqueTemplate}
+                itemTemplate={TerminalBuqueOptionTemplate}
               />
             </div>
-            <br />
             <div className="field col-6 p-col-2 p-md-1">
               <label htmlFor="toneladasNominadas">Toneladas Nominadas</label>
               <InputNumber
@@ -403,34 +398,10 @@ const ProgramacionVentanaForm = (props) => {
                 suffix=" TM"
               />
             </div>
-            <div className="field col-12 md:col-6">
-              <h5>ubicacionBuque</h5>
-              <Dropdown
-                value={selectedTerminalBuque}
-                options={TerminalBuque}
-                onChange={onTerminalBuque}
-                optionLabel="name"
-                placeholder="Seleccione ubicacionBuque"
-                valueTemplate={selectedTerminalBuqueTemplate}
-                itemTemplate={TerminalBuqueOptionTemplate}
-              />
-            </div>
-            <div className="field col-12 md:col-6">
-              <label>Estado</label>
-              <Dropdown
-                value={selectedProgramacionVentana}
-                options={estadoProgramacionVentana}
-                onChange={onEstatusProgramacionVentana}
-                optionLabel="estatusProgramacionVentana"
-                placeholder="Seleccione Estado"
-                valueTemplate={selectedestatusProgramacionVentanaTemplate}
-                itemTemplate={estatusProgramacionVentanaOptionTemplate}
-              />
-            </div>
           </div>
           <div className="formgrid grid">
             <div className="field col-12 md:col-6">
-              <label> fechaInicioVentana</label>
+              <label> Inicio de Ventana</label>
               <Calendar
                 className="p-datepicker-today"
                 id="time24"
@@ -446,7 +417,7 @@ const ProgramacionVentanaForm = (props) => {
               />
             </div>
             <div className="field col-12 md:col-6">
-              <label>fechaFinVentana</label>
+              <label>Fin de Ventana</label>
               <Calendar
                 className="p-datepicker-today"
                 id="time24"

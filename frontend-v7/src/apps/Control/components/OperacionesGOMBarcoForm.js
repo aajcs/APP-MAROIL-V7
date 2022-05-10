@@ -344,6 +344,7 @@ const OperacionesGOMBarcoForm = (props) => {
                 placeholder="Seleccione Cliente"
                 valueTemplate={selectedBuqueClienteTemplate}
                 itemTemplate={buqueClienteOptionTemplate}
+                showClear
               />
             </div>
             <div className="field col-12 md:col-6 mt-3">

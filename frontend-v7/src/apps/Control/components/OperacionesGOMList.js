@@ -16,8 +16,11 @@ import { TabView, TabPanel } from 'primereact/tabview'
 import moment from 'moment'
 import { OperacionesGOMBodega } from './OperacionesGOMBodega'
 import OperacionesGOMBarco from './OperacionesGOMBarco'
+import OperacionesGOMVentana from './OperacionesGOMVentana'
+import AuthUse from '../../../auth/AuthUse'
 
 const OperacionesGOMList = () => {
+  const auth = AuthUse()
   const {
     reporteCargaGOMs,
     findReporteCargaGOM,
@@ -227,6 +230,12 @@ const OperacionesGOMList = () => {
         <TabPanel header="Carga de Barcos" leftIcon="pi pi-user">
           <OperacionesGOMBarco />
         </TabPanel>
+        {(auth.user.faidUser.roles[0] === 'ADMIN' ||
+          auth.user.faidUser.roles[0] === 'SUPERADMIN') && (
+          <TabPanel header="Programacion de Ventana" leftIcon="pi pi-user">
+            <OperacionesGOMVentana />
+          </TabPanel>
+        )}
       </TabView>
 
       <Toast ref={toast} />

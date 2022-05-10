@@ -1,6 +1,7 @@
 import OperacionesGOMList from '../components/OperacionesGOMList'
 import BarcoContextProvider from '../contexts/BarcoContext'
 import CargaBodegaContextProvider from '../contexts/CargaBodegaContext'
+import ProgramacionVentanaContextProvider from '../contexts/ProgramacionVentanaContext'
 import ReporteCargaGOMContextProvider from '../contexts/ReporteCargaGOMContext'
 
 export const OperacionesGOMPAGE = () => {
@@ -11,7 +12,9 @@ export const OperacionesGOMPAGE = () => {
           <BarcoContextProvider>
             <CargaBodegaContextProvider>
               <ReporteCargaGOMContextProvider>
-                <OperacionesGOMList />
+                <ProgramacionVentanaContextProvider>
+                  <OperacionesGOMList />
+                </ProgramacionVentanaContextProvider>
               </ReporteCargaGOMContextProvider>
             </CargaBodegaContextProvider>
           </BarcoContextProvider>

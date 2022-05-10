@@ -74,7 +74,8 @@ const AppSubmenu = (props) => {
       } else {
         if (
           item.permi === auth.user.faidUser.roles[0] ||
-          item.permi1 === auth.user.faidUser.roles[0]
+          item.permi1 === auth.user.faidUser.roles[0] ||
+          item.permi2 === auth.user.faidUser.roles[0]
         ) {
           return (
             <NavLink

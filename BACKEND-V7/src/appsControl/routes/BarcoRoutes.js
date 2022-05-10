@@ -12,19 +12,20 @@ const auth = require('../../middlewares/authMiddleware')
 const { isAppControl } = require('../../middlewares/AppsMiddleware')
 const {
   isLectura,
-  isAdmin,
+  isOperador,
+
   isSuperAdmin
 } = require('../../middlewares/RolesMiddleware')
 
 router
   .route('/')
   .get([auth, isAppControl, isLectura], getBarcos)
-  .post([auth, isAppControl, isAdmin], createBarco)
+  .post([auth, isAppControl, isOperador], createBarco)
 
 router
   .route('/:id')
-  .get([auth, isAppControl, isAdmin], getBarco)
+  .get([auth, isAppControl, isOperador], getBarco)
   .delete([auth, isAppControl, isSuperAdmin], deleteBarco)
-  .put([auth, isAppControl, isAdmin], updateBarco)
+  .put([auth, isAppControl, isOperador], updateBarco)
 
 module.exports = router

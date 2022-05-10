@@ -2,9 +2,9 @@ import axios from 'axios'
 
 export class ReporteHoraService {
   // baseUrl = "http://localhost:8080/api/reporteHoras/";
-  //baseUrl = '  http://localhost:4000/api/'
-  baseUrl = 'http://localhost:4000/api/'
-  // baseUrl = 'http://localhost:4000/api/'
+  //baseUrl = '  https://apimaroil.herokuapp.com/api/'
+  baseUrl = 'https://apimaroil.herokuapp.com/api/'
+  // baseUrl = 'https://apimaroil.herokuapp.com/api/'
   // baseUrl = "https://hg-rest-api.herokuapp.com/api/reporteHoras/";
 
   readAll(token) {

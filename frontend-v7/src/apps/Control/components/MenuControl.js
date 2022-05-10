@@ -21,21 +21,24 @@ export const MenuControl = () => {
           icon: 'pi pi-fw pi-info-circle',
           to: '/apps/control/reportecargaGOMInfo',
           permi: 'ADMIN',
-          permi1: 'LECTURA'
+          permi1: 'LECTURA',
+          permi2: 'OPERADOR'
         },
         {
           label: 'BUQUE 3D',
           icon: 'pi pi-fw pi-box',
           to: '/apps/control/barco3d',
           permi: 'ADMIN',
-          permi1: 'LECTURA'
+          permi1: 'LECTURA',
+          permi2: 'OPERADOR'
         },
         {
           label: 'PROGRAMACION DE VENTANA',
           icon: 'pi pi-fw pi-ticket',
           to: '/apps/control/programacionventanaAgendaPage',
           permi: 'ADMIN',
-          permi1: 'LECTURA'
+          permi1: 'LECTURA',
+          permi2: 'OPERADOR'
         }
       ]
     },
@@ -48,7 +51,8 @@ export const MenuControl = () => {
           icon: 'pi pi-fw pi-video',
           to: '/apps/control/ModeladoOperacion',
           permi: 'ADMIN',
-          permi1: 'LECTURA'
+          permi1: 'LECTURA',
+          permi2: 'OPERADOR'
         }
       ]
     },
@@ -62,14 +66,16 @@ export const MenuControl = () => {
           icon: 'pi pi-fw pi-chart-bar',
           to: '/apps/control/BuquesPorCliente',
           permi: 'ADMIN',
-          permi1: 'LECTURA'
+          permi1: 'LECTURA',
+          permi2: 'OPERADOR'
         },
         {
           label: 'MAPA',
           icon: 'pi pi-fw pi-map',
           to: '/apps/control/mapaestadistica',
           permi: 'ADMIN',
-          permi1: 'LECTURA'
+          permi1: 'LECTURA',
+          permi2: 'OPERADOR'
         }
 
         // {
@@ -112,7 +118,8 @@ export const MenuControl = () => {
           label: 'GERENCIA MARITIMA',
           icon: 'pi pi-fw pi-server',
           to: '/apps/control/OperacionesGOM',
-          permi: 'ADMIN'
+          permi: 'ADMIN',
+          permi2: 'OPERADOR'
         }
       ]
     },
@@ -126,7 +133,8 @@ export const MenuControl = () => {
           icon: 'pi pi-fw pi-tags',
           to: '/apps/control/agenciamasritimas',
           permi: 'ADMIN',
-          permi1: 'LECTURA'
+          permi1: 'LECTURA',
+          permi2: 'OPERADOR'
         }
         // {
         //   label: 'CARGA DEL MES',
@@ -201,8 +209,7 @@ export const MenuControl = () => {
             label: 'PROGRAMACION DE VENTANA',
             icon: 'pi pi-fw pi-database',
             to: '/apps/control/programacionventana',
-            permi: 'ADMIN',
-            permi1: 'LECTURA'
+            permi: 'SUPERADMIN'
           }
         ]
       }
