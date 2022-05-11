@@ -10,7 +10,7 @@ const AgenciasMaritimasList = () => {
       color: '#FF9800',
       nombre: 'DESARROLLOS 1405',
       direccion:
-        'Avenida principal de lechería, Edif Y2K, piso 1, Estado Anzoategui.',
+        'Avenida principal de lechería, Edif Y2K, piso 1, Estado Anzoátegui.',
       telefono: '+58 (281) 282.02.58',
       personaContacto: 'ventas@desarrollos1405.com',
       webSite: 'https://desarrollos1405.com/',
@@ -28,6 +28,81 @@ const AgenciasMaritimasList = () => {
       telefono: '+58 (414) 313.03.74',
       personaContacto: 'gerenciaocamaroriente@ocamar.com.ve',
       webSite: 'https://ocamar.com.ve/contactenos/',
+      image: ''
+    },
+    {
+      status: 'Processing',
+      date: '15/10/2020 14:00',
+      icon: 'pi pi-arrow-down-left',
+      color: '#673AB7',
+      nombre: 'A. NAVAS & CO CA',
+      direccion: 'Falcón, Venezuela',
+      telefono: '+58 (269) 246.69.70',
+      personaContacto: 'info@navasca.com.ve',
+      webSite: 'http://navasca.com.ve/',
+      image: ''
+    },
+
+    {
+      status: 'Delivered',
+      date: '16/10/2020 10:00',
+      icon: 'pi pi-arrow-down-left',
+      color: '#607D8B',
+      nombre: 'MARINE AGENCY',
+      direccion: '-----------------',
+      telefono: '',
+      personaContacto: 'plc@marineagency.org',
+      webSite: '#',
+      image: ''
+    },
+    {
+      status: 'Processing',
+      date: '15/10/2020 14:00',
+      icon: 'pi pi-arrow-down-left',
+      color: '#673AB7',
+      nombre: 'SERVICIO MARÍTIMOS DE ORIENTE C.A',
+      direccion: 'Barceloa, Estado Anzoátegui',
+      telefono: '+58 (414) 819.15.30',
+      personaContacto: '',
+      webSite: '#',
+      image: ''
+    },
+
+    {
+      status: 'Delivered',
+      date: '16/10/2020 10:00',
+      icon: 'pi pi-arrow-down-left',
+      color: '#607D8B',
+      nombre: 'MARINE AGENCY',
+      direccion: '-----------------',
+      telefono: '',
+      personaContacto: 'plc@marineagency.org',
+      webSite: '#',
+      image: ''
+    },
+    {
+      status: 'Processing',
+      date: '15/10/2020 14:00',
+      icon: 'pi pi-arrow-down-left',
+      color: '#673AB7',
+      nombre: 'A. NAVAS & CO CA',
+      direccion: 'Falcón, Venezuela',
+      telefono: '+58 (269) 246.69.70',
+      personaContacto: 'info@navasca.com.ve',
+      webSite: 'http://navasca.com.ve/',
+      image: ''
+    },
+
+    {
+      status: 'Delivered',
+      date: '16/10/2020 10:00',
+      icon: 'pi pi-arrow-down-left',
+      color: '#607D8B',
+      nombre: 'MARINE AGENCY',
+      direccion: '-----------------',
+      telefono: '',
+      personaContacto: 'plc@marineagency.org',
+      webSite: '#',
       image: ''
     },
     {

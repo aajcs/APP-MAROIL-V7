@@ -9,6 +9,7 @@ import { Skeleton } from 'primereact/skeleton'
 import ProgramacionVentanaAngenaV2 from './ProgramacionVentanaAngenaV2'
 
 import 'react-big-scheduler/lib/css/style.css'
+import ProgramacionVentanaCard from './ProgramacionVentanaCard'
 
 const Agenda = () => {
   const { programacionVentanas } = useContext(ProgramacionVentanaContext)
@@ -69,7 +70,24 @@ const Agenda = () => {
           </div>
         </div>
       ) : (
-        <ProgramacionVentanaAngenaV2 events={auxProgramacionVentanas} />
+        <>
+          <div className="card">
+            <ProgramacionVentanaAngenaV2 events={auxProgramacionVentanas} />
+          </div>
+          <div className="grid flex">
+            {programacionVentanas.map((events) => (
+              <div key={events.id} className="col-12 lg:col-6 xl:col-3">
+                <div className="card  ">
+                  <span className="text-green-500 text-center fw-bold fst-italic mb-2">
+                    {events.terminalBuque}
+                  </span>
+
+                  <ProgramacionVentanaCard key={events.id} events={events} />
+                </div>
+              </div>
+            ))}{' '}
+          </div>
+        </>
       )}
     </div>
   )
