@@ -305,7 +305,7 @@ const OperacionesGOMBarcoForm = (props) => {
       </div>
     )
   }
-  console.log(barcoData)
+
   return (
     <div className="dialog-demo">
       <Toast ref={toast} />

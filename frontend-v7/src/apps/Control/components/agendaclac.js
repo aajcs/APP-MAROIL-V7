@@ -46,7 +46,7 @@ class ProgramacionVentanaAngenaV2 extends Component {
         ]
       }
     )
-    console.log(schedulerData)
+
     schedulerData.localeMoment.locale('he-il')
     schedulerData.setResources(resources)
     schedulerData.setEvents(events)

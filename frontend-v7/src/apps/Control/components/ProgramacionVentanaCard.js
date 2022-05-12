@@ -17,12 +17,12 @@ function ProgramacionVentanaCard({ events }) {
   }
 
   const ubicacionBuqueTag = ubicacionBuqueTags[events.terminalBuque]
-  console.log(events)
+
   return (
     // <div className="col-12 lg:col-6 xl:col-3">
     <>
       <div
-        className="card Pb-0 border-bottom-0 border-start-0 border-2  mb-0 text-end"
+        className="card Pb-0 border-bottom-0 border-start-0 border-2  mb-0 text-end animate__animated animate__rotateInDownRight animate__slower"
         style={{ 'border-color': ubicacionBuqueTag, padding: 0 }}
       >
         <span className="mr-2  fst-italic ">
@@ -33,7 +33,7 @@ function ProgramacionVentanaCard({ events }) {
       </div>
 
       <div
-        className="card Pb-2 border-top-0 border-end-0 border-2 "
+        className="card Pb-2 border-top-0 border-end-0 border-2 animate__animated animate__zoomInLeft animate__slower animate__delay-2s"
         style={{ 'border-color': consignatarioBuqueColor }}
       >
         <div className="flex justify-content-between">

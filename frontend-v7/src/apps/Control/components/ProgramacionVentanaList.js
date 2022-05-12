@@ -33,7 +33,7 @@ const ProgramacionVentanaList = () => {
     findProgramacionVentana(id)
     setIsVisible(true)
   }
-  console.log(programacionVentanas)
+
   // cabecera de la tabla
   const leftToolbarTemplate = () => {
     return (

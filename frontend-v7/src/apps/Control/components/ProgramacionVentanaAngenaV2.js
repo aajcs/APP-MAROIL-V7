@@ -140,7 +140,7 @@ const resources = [
 class ProgramacionVentanaAngenaV2 extends Component {
   constructor(props) {
     super(props)
-    console.log(props)
+
     let schedulerData = new SchedulerData(
       moment().format(DATE_FORMAT),
       ViewTypes.Quarter,
@@ -188,7 +188,7 @@ class ProgramacionVentanaAngenaV2 extends Component {
         ]
       }
     )
-    console.log(schedulerData)
+
     schedulerData.localeMoment.locale('he-il')
     schedulerData.setResources(resources)
     schedulerData.setEvents(props.events)

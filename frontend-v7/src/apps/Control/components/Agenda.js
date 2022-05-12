@@ -63,16 +63,12 @@ const Agenda = () => {
     programacionVentanas.map((events) => {
       if (events.fechaFinVentana >= moment().subtract(1, 'days').format()) {
         if (events.terminalBuque === 'MAROIL TERMINAL 1') {
-          console.log('1', events.terminalBuque)
           auxTerminalMaroilPuesto1.push(events)
         } else if (events.terminalBuque === 'MAROIL TERMINAL 2') {
-          console.log('2', events.terminalBuque)
           auxTerminalMaroilPuesto2.push(events)
         } else if (events.terminalBuque === 'PETRO SAN FELIX') {
-          console.log('3', events.terminalBuque)
           auxTerminalPetroSanFelix.push(events)
         } else {
-          console.log('4', events.terminalBuque)
           auxTerminalPetroCedeno.push(events)
         }
       }
@@ -82,11 +78,7 @@ const Agenda = () => {
     setTerminalPetroSanFelix(auxTerminalPetroSanFelix)
     setTerminalPetroCedeno(auxTerminalPetroCedeno)
   }
-  console.log(auxProgramacionVentanas)
-  console.log(auxTerminalMaroilPuesto1)
-  console.log(auxTerminalMaroilPuesto2)
-  console.log(auxTerminalPetroSanFelix)
-  console.log(auxTerminalPetroCedeno)
+
   useEffect(() => {
     agentaCard()
   }, [programacionVentanas])
@@ -165,7 +157,7 @@ const Agenda = () => {
           <div className="col-12 lg:col-6 xl:col-3">
             <div className="card  ">
               <span className="text-900 text-center fw-bold fst-italic mb-2">
-                PETRO SEDEÑO
+                PETRO CEDEÑO
               </span>
               {terminalPetroCedeno.map((events) => (
                 <>

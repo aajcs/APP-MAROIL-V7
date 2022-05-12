@@ -183,10 +183,9 @@ const ProgramacionVentanaAngenaV2 = () => {
   )
   const [viewModel, setViewModel] = useState(schedulerDataPrimari)
   const { programacionVentanas } = useContext(ProgramacionVentanaContext)
-  console.log(programacionVentanas)
+
   let auxProgramacionVentanas = []
   for (let prop in programacionVentanas) {
-    console.log(programacionVentanas[prop])
     auxProgramacionVentanas.push({
       id: programacionVentanas[prop].id,
       title:
@@ -213,7 +212,6 @@ const ProgramacionVentanaAngenaV2 = () => {
           : '#dc3545'
     })
   }
-  console.log(auxProgramacionVentanas)
 
   const prevClick = (schedulerData) => {
     schedulerData.prev()

@@ -99,7 +99,7 @@ const ProgramacionVentanaForm = (props) => {
   const [programacionVentanaData, setProgramacionVentanaData] = useState(
     initialProgramacionVentanaForm
   )
-  console.log(programacionVentanaData)
+
   const estadoProgramacionVentana = [
     { estatusProgramacionVentana: 'OPERATIVO' },
     { estatusProgramacionVentana: 'CULMINADO' }

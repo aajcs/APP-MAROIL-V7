@@ -54,82 +54,82 @@ const AgenciasMaritimasList = () => {
       personaContacto: 'plc@marineagency.org',
       webSite: '#',
       image: ''
-    },
-    {
-      status: 'Processing',
-      date: '15/10/2020 14:00',
-      icon: 'pi pi-arrow-down-left',
-      color: '#673AB7',
-      nombre: 'SERVICIO MARÍTIMOS DE ORIENTE C.A',
-      direccion: 'Barceloa, Estado Anzoátegui',
-      telefono: '+58 (414) 819.15.30',
-      personaContacto: '',
-      webSite: '#',
-      image: ''
-    },
-
-    {
-      status: 'Delivered',
-      date: '16/10/2020 10:00',
-      icon: 'pi pi-arrow-down-left',
-      color: '#607D8B',
-      nombre: 'MARINE AGENCY',
-      direccion: '-----------------',
-      telefono: '',
-      personaContacto: 'plc@marineagency.org',
-      webSite: '#',
-      image: ''
-    },
-    {
-      status: 'Processing',
-      date: '15/10/2020 14:00',
-      icon: 'pi pi-arrow-down-left',
-      color: '#673AB7',
-      nombre: 'A. NAVAS & CO CA',
-      direccion: 'Falcón, Venezuela',
-      telefono: '+58 (269) 246.69.70',
-      personaContacto: 'info@navasca.com.ve',
-      webSite: 'http://navasca.com.ve/',
-      image: ''
-    },
-
-    {
-      status: 'Delivered',
-      date: '16/10/2020 10:00',
-      icon: 'pi pi-arrow-down-left',
-      color: '#607D8B',
-      nombre: 'MARINE AGENCY',
-      direccion: '-----------------',
-      telefono: '',
-      personaContacto: 'plc@marineagency.org',
-      webSite: '#',
-      image: ''
-    },
-    {
-      status: 'Processing',
-      date: '15/10/2020 14:00',
-      icon: 'pi pi-arrow-down-left',
-      color: '#673AB7',
-      nombre: 'A. NAVAS & CO CA',
-      direccion: 'Falcón, Venezuela',
-      telefono: '+58 (269) 246.69.70',
-      personaContacto: 'info@navasca.com.ve',
-      webSite: 'http://navasca.com.ve/',
-      image: ''
-    },
-
-    {
-      status: 'Delivered',
-      date: '16/10/2020 10:00',
-      icon: 'pi pi-arrow-down-left',
-      color: '#607D8B',
-      nombre: 'MARINE AGENCY',
-      direccion: '-----------------',
-      telefono: '',
-      personaContacto: 'plc@marineagency.org',
-      webSite: '#',
-      image: ''
     }
+    // {
+    //   status: 'Processing',
+    //   date: '15/10/2020 14:00',
+    //   icon: 'pi pi-arrow-down-left',
+    //   color: '#673AB7',
+    //   nombre: 'SERVICIO MARÍTIMOS DE ORIENTE C.A',
+    //   direccion: 'Barceloa, Estado Anzoátegui',
+    //   telefono: '+58 (414) 819.15.30',
+    //   personaContacto: '',
+    //   webSite: '#',
+    //   image: ''
+    // },
+
+    // {
+    //   status: 'Delivered',
+    //   date: '16/10/2020 10:00',
+    //   icon: 'pi pi-arrow-down-left',
+    //   color: '#607D8B',
+    //   nombre: 'MARINE AGENCY',
+    //   direccion: '-----------------',
+    //   telefono: '',
+    //   personaContacto: 'plc@marineagency.org',
+    //   webSite: '#',
+    //   image: ''
+    // },
+    // {
+    //   status: 'Processing',
+    //   date: '15/10/2020 14:00',
+    //   icon: 'pi pi-arrow-down-left',
+    //   color: '#673AB7',
+    //   nombre: 'A. NAVAS & CO CA',
+    //   direccion: 'Falcón, Venezuela',
+    //   telefono: '+58 (269) 246.69.70',
+    //   personaContacto: 'info@navasca.com.ve',
+    //   webSite: 'http://navasca.com.ve/',
+    //   image: ''
+    // },
+
+    // {
+    //   status: 'Delivered',
+    //   date: '16/10/2020 10:00',
+    //   icon: 'pi pi-arrow-down-left',
+    //   color: '#607D8B',
+    //   nombre: 'MARINE AGENCY',
+    //   direccion: '-----------------',
+    //   telefono: '',
+    //   personaContacto: 'plc@marineagency.org',
+    //   webSite: '#',
+    //   image: ''
+    // },
+    // {
+    //   status: 'Processing',
+    //   date: '15/10/2020 14:00',
+    //   icon: 'pi pi-arrow-down-left',
+    //   color: '#673AB7',
+    //   nombre: 'A. NAVAS & CO CA',
+    //   direccion: 'Falcón, Venezuela',
+    //   telefono: '+58 (269) 246.69.70',
+    //   personaContacto: 'info@navasca.com.ve',
+    //   webSite: 'http://navasca.com.ve/',
+    //   image: ''
+    // },
+
+    // {
+    //   status: 'Delivered',
+    //   date: '16/10/2020 10:00',
+    //   icon: 'pi pi-arrow-down-left',
+    //   color: '#607D8B',
+    //   nombre: 'MARINE AGENCY',
+    //   direccion: '-----------------',
+    //   telefono: '',
+    //   personaContacto: 'plc@marineagency.org',
+    //   webSite: '#',
+    //   image: ''
+    // }
   ]
   const customizedMarker = (item) => {
     return (

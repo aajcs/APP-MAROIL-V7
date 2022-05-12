@@ -26,7 +26,7 @@ export const AppTopbar = (props) => {
   const incrementScale = () => {
     setScale((prevState) => ++prevState)
   }
-  console.log(auth.user.faidUser.user)
+
   return (
     <div className="layout-topbar">
       <Link to="/" className="layout-topbar-logo">
