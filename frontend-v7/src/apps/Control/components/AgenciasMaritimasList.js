@@ -35,8 +35,9 @@ const AgenciasMaritimasList = () => {
       date: '15/10/2020 14:00',
       icon: 'pi pi-arrow-down-left',
       color: '#673AB7',
-      nombre: 'A. NAVAS & CO CA',
-      direccion: 'Falcón, Venezuela',
+      nombre: 'A NAVA & CO, C.A AGENTES ADUANALES Y NAVIERA ',
+      direccion:
+        'Av. Bolivar. C.C.E. Caribe, Piso 2. Local L2-1, Falcón, Venezuela',
       telefono: '+58 (269) 246.69.70',
       personaContacto: 'info@navasca.com.ve',
       webSite: 'http://navasca.com.ve/',
@@ -54,82 +55,85 @@ const AgenciasMaritimasList = () => {
       personaContacto: 'plc@marineagency.org',
       webSite: '#',
       image: ''
+    },
+    {
+      status: 'Processing',
+      date: '15/10/2020 14:00',
+      icon: 'pi pi-arrow-down-left',
+      color: '#673AB7',
+      nombre: 'SERVICIO MARÍTIMOS DE ORIENTE C.A',
+      direccion: 'Lecheria, Estado Anzoátegui',
+      telefono: '+58 (414) 819.15.30',
+      personaContacto: '',
+      webSite: 'https://servimaritima.com/',
+      image: ''
+    },
+
+    {
+      status: 'Delivered',
+      date: '16/10/2020 10:00',
+      icon: 'pi pi-arrow-down-left',
+      color: '#607D8B',
+      nombre: 'NAUTICAL ROSE SERVICES VENEZUELA, C.A',
+      direccion:
+        'Final Av. Uno, Urb. Guaraguao, Puerto La Cruz, Anzoategui, Venezuela',
+      telefono: '+58 (414) 4129425815',
+      personaContacto: 'info@nauticalroses.com',
+      webSite: 'https://nauticalroses.com/',
+      image: ''
+    },
+    {
+      status: 'Processing',
+      date: '15/10/2020 14:00',
+      icon: 'pi pi-arrow-down-left',
+      color: '#673AB7',
+      nombre: 'SOLUCIONES C.A',
+      direccion: 'ZULIA, Venezuela',
+      telefono: '+58 (412) 191.03.08',
+      personaContacto: 'ops.plc@solucionesshippingagency.com',
+      webSite: '#',
+      image: ''
+    },
+
+    {
+      status: 'Delivered',
+      date: '16/10/2020 10:00',
+      icon: 'pi pi-arrow-down-left',
+      color: '#607D8B',
+      nombre: 'NAVIERA PARAGUANÁ C.A ',
+      direccion:
+        'Av. Elice y José Felix Sosa, Edificio Nuevo Centro Piso 7, oficina 7-E, Chacao -Caracas. Venezuela',
+      telefono: '+58 (416) 503.36.37',
+      personaContacto: 'Info.navieraparaguana@gmail.com',
+      webSite: 'https://www.navieraparaguana.com/',
+      image: ''
+    },
+    {
+      status: 'Processing',
+      date: '15/10/2020 14:00',
+      icon: 'pi pi-arrow-down-left',
+      color: '#673AB7',
+      nombre: 'ATLÁNTICO AGENTES LOGÍSTICOS Y PORTUARIOS C.A',
+      direccion:
+        'Av. Jacinto Lara, Esquina Libertador, Centro Comercial Premier Piso 1. Oficina N- 13, Punto Fijo, estado Falcón',
+      telefono: '+58 (412) 059.51.25',
+      personaContacto: 'atlanticoops@gmail.com',
+      webSite: '#',
+      image: ''
+    },
+
+    {
+      status: 'Delivered',
+      date: '16/10/2020 10:00',
+      icon: 'pi pi-arrow-down-left',
+      color: '#607D8B',
+      nombre: 'BAFER SERVICIOS Y SUMINISTROS MARÍTIMOS, C.A',
+      direccion: 'Av. Ollarvides. Punta Cardon Falcon, Venezuela',
+      telefono: '+58 (412) 425.56.37',
+      personaContacto: 'Info@Baferca.Com',
+      webSite: 'https://baferca.com/',
+      image: ''
     }
-    // {
-    //   status: 'Processing',
-    //   date: '15/10/2020 14:00',
-    //   icon: 'pi pi-arrow-down-left',
-    //   color: '#673AB7',
-    //   nombre: 'SERVICIO MARÍTIMOS DE ORIENTE C.A',
-    //   direccion: 'Barceloa, Estado Anzoátegui',
-    //   telefono: '+58 (414) 819.15.30',
-    //   personaContacto: '',
-    //   webSite: '#',
-    //   image: ''
-    // },
-
-    // {
-    //   status: 'Delivered',
-    //   date: '16/10/2020 10:00',
-    //   icon: 'pi pi-arrow-down-left',
-    //   color: '#607D8B',
-    //   nombre: 'MARINE AGENCY',
-    //   direccion: '-----------------',
-    //   telefono: '',
-    //   personaContacto: 'plc@marineagency.org',
-    //   webSite: '#',
-    //   image: ''
-    // },
-    // {
-    //   status: 'Processing',
-    //   date: '15/10/2020 14:00',
-    //   icon: 'pi pi-arrow-down-left',
-    //   color: '#673AB7',
-    //   nombre: 'A. NAVAS & CO CA',
-    //   direccion: 'Falcón, Venezuela',
-    //   telefono: '+58 (269) 246.69.70',
-    //   personaContacto: 'info@navasca.com.ve',
-    //   webSite: 'http://navasca.com.ve/',
-    //   image: ''
-    // },
-
-    // {
-    //   status: 'Delivered',
-    //   date: '16/10/2020 10:00',
-    //   icon: 'pi pi-arrow-down-left',
-    //   color: '#607D8B',
-    //   nombre: 'MARINE AGENCY',
-    //   direccion: '-----------------',
-    //   telefono: '',
-    //   personaContacto: 'plc@marineagency.org',
-    //   webSite: '#',
-    //   image: ''
-    // },
-    // {
-    //   status: 'Processing',
-    //   date: '15/10/2020 14:00',
-    //   icon: 'pi pi-arrow-down-left',
-    //   color: '#673AB7',
-    //   nombre: 'A. NAVAS & CO CA',
-    //   direccion: 'Falcón, Venezuela',
-    //   telefono: '+58 (269) 246.69.70',
-    //   personaContacto: 'info@navasca.com.ve',
-    //   webSite: 'http://navasca.com.ve/',
-    //   image: ''
-    // },
-
-    // {
-    //   status: 'Delivered',
-    //   date: '16/10/2020 10:00',
-    //   icon: 'pi pi-arrow-down-left',
-    //   color: '#607D8B',
-    //   nombre: 'MARINE AGENCY',
-    //   direccion: '-----------------',
-    //   telefono: '',
-    //   personaContacto: 'plc@marineagency.org',
-    //   webSite: '#',
-    //   image: ''
-    // }
   ]
   const customizedMarker = (item) => {
     return (

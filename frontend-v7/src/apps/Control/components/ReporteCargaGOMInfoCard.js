@@ -244,7 +244,7 @@ function ReporteCargaGOMInfoCard({ barcos }) {
               </p>
             </Dialog>{' '}
             <Dialog
-              header="Detalle de la carga en bodegas"
+              header="Detalle de carga en bodegas"
               visible={displayDetalleCarga}
               onHide={() => onHide('displayDetalleCarga')}
               breakpoints={{ '960px': '75vw' }}

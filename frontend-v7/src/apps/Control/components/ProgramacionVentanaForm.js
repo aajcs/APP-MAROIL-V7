@@ -111,7 +111,11 @@ const ProgramacionVentanaForm = (props) => {
       'estatusProgramacionVentana'
     )
   }
-  const buqueCliente = [{ buqueCliente: 'MAROIL' }, { buqueCliente: 'PDVSA' }]
+  const buqueCliente = [
+    { buqueCliente: 'MAROIL' },
+    { buqueCliente: 'PDVSA' },
+    { buqueCliente: 'MANTENIMIENTO' }
+  ]
   const onBuqueCliente = (e) => {
     setSelectedBuqueCliente(e.value)
     updateField(e.value.buqueCliente, 'buqueCliente')

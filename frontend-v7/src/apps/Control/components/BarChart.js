@@ -147,7 +147,7 @@ const BarChartDemo = ({
                 Carga en Buque{' '}
                 {reporteCargaGOM &&
                   new Intl.NumberFormat().format(reporteCargaGOM)}{' '}
-                Tm
+                TM
               </Tag>
             </div>
           </div>

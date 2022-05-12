@@ -140,7 +140,7 @@ const OperacionesGOMList = () => {
   }
   const header = (
     <div className="flex flex-column md:flex-row md:justify-content-between md:align-items-center">
-      <h5 className="m-0">ReporteCargaGOM</h5>
+      <h5 className="m-0">Reporte Carga</h5>
       <span className="block mt-2 md:mt-0 p-input-icon-left">
         <i className="pi pi-search" />
         <InputText
@@ -170,9 +170,9 @@ const OperacionesGOMList = () => {
 
   return (
     <>
-      <h5>Operacion Gerencia Maritima</h5>
+      <h5>Operaciones de Gerencia Marítima</h5>
       <TabView className="tabview-custom">
-        <TabPanel header="Reporte GOT" leftIcon="pi pi-calendar">
+        <TabPanel header="Reporte GOM" leftIcon="pi pi-calendar">
           <Toolbar
             className="mb-4"
             left={leftToolbarTemplate}
@@ -219,7 +219,7 @@ const OperacionesGOMList = () => {
             <Column
               field="reporteCargaGOMModificado"
               body={reporteCargaGOMModificadoTemplate}
-              header="Reporte CargaGOM Modificado"
+              header="Reporte Carga GOM Modificado"
               dataType="date"
             />
           </DataTable>
@@ -232,7 +232,7 @@ const OperacionesGOMList = () => {
         </TabPanel>
         {(auth.user.faidUser.roles[0] === 'ADMIN' ||
           auth.user.faidUser.roles[0] === 'SUPERADMIN') && (
-          <TabPanel header="Programacion de Ventana" leftIcon="pi pi-user">
+          <TabPanel header="Programación de Ventana" leftIcon="pi pi-user">
             <OperacionesGOMVentana />
           </TabPanel>
         )}

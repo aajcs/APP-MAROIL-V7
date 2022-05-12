@@ -27,7 +27,7 @@ const resources = [
   },
   {
     id: 'r3',
-    name: 'Petro San Felix'
+    name: 'Petro San Félix'
   },
   {
     id: 'r4',
@@ -154,9 +154,10 @@ class ProgramacionVentanaAngenaV2 extends Component {
         endResizable: false,
         movable: false,
         creatable: false,
+        resourceName: 'Terminales',
         views: [
           {
-            viewName: 'Dia',
+            viewName: 'Día',
             viewType: ViewTypes.Day,
             showAgenda: false,
             isEventPerspective: false
@@ -203,7 +204,7 @@ class ProgramacionVentanaAngenaV2 extends Component {
     return (
       <div>
         <div>
-          <h3 style={{ textAlign: 'center' }}>Programacion de Ventana</h3>
+          <h3 style={{ textAlign: 'center' }}>Programación de Ventana</h3>
           <Scheduler
             schedulerData={viewModel}
             prevClick={this.prevClick}

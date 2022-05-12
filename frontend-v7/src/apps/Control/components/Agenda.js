@@ -20,6 +20,15 @@ const Agenda = () => {
   const [terminalMaroilPuesto2, setTerminalMaroilPuesto2] = useState([])
   const [terminalPetroSanFelix, setTerminalPetroSanFelix] = useState([])
   const [terminalPetroCedeno, setTerminalPetroCedeno] = useState([])
+  programacionVentanas.sort((o1, o2) => {
+    if (o1.fechaInicioVentana < o2.fechaInicioVentana) {
+      return -1
+    } else if (o1.fechaInicioVentana > o2.fechaInicioVentana) {
+      return 1
+    } else {
+      return 0
+    }
+  })
 
   //   const schedulerData = new SchedulerData(
   //     new moment().format(DATE_FORMAT),
@@ -56,7 +65,9 @@ const Agenda = () => {
       bgColor:
         programacionVentanas[prop].buqueCliente === 'MAROIL'
           ? '#0d6efd'
-          : '#dc3545'
+          : programacionVentanas[prop].buqueCliente === 'PDVSA'
+          ? '#dc3545'
+          : '#797d82'
     })
   }
   const agentaCard = () => {
@@ -143,7 +154,7 @@ const Agenda = () => {
           <div className="col-12 lg:col-6 xl:col-3">
             <div className="card  ">
               <span className="text-900 text-center fw-bold fst-italic mb-2">
-                PETRO SAN FELIX
+                PETRO SAN FÉLIX
               </span>
               {terminalPetroSanFelix.map((events) => (
                 <>

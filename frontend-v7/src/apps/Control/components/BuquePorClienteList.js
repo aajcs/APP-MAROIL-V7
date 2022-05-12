@@ -24,12 +24,12 @@ const BuquePorClienteList = () => {
     ]
   })
   const [chartData2, setChartData2] = useState({
-    labels: ['MAROIL TERMINAL', 'PETRO CEDENO', 'PETRO SAN FELIX'],
+    labels: ['MAROIL TERMINAL', 'PETRO CEDEÑO', 'PETRO SAN FELIX'],
 
     datasets: [
       {
         type: 'line',
-        label: 'TONELADAS METRICAS',
+        label: 'TONELADAS MÉTRICAS',
         borderColor: '#d9a406',
         borderWidth: 2,
         fill: false,
@@ -87,7 +87,7 @@ const BuquePorClienteList = () => {
     datasets: [
       {
         type: 'line',
-        label: 'DIAS DE CARGA',
+        label: 'DÍAS DE CARGA',
         borderColor: '#d63384',
         borderWidth: 2,
         fill: false,
@@ -100,7 +100,7 @@ const BuquePorClienteList = () => {
       },
       {
         type: 'bar',
-        label: 'TONELADAS METRICAS',
+        label: 'TONELADAS MÉTRICAS',
         backgroundColor: '#d9a406',
         data: [21, 84, 24, 75, 37, 65, 34]
         // borderColor: 'white',
@@ -207,7 +207,7 @@ const BuquePorClienteList = () => {
     auxOtro2.push(
       {
         type: 'line',
-        label: 'TONELADAS METRICAS',
+        label: 'TONELADAS MÉTRICAS',
         borderColor: '#d9a406',
         borderWidth: 2,
         fill: false,
@@ -268,7 +268,7 @@ const BuquePorClienteList = () => {
     auxOtro4.push(
       {
         type: 'line',
-        label: 'DIAS DE CARGA',
+        label: 'DÍAS DE CARGA',
         borderColor: '#d63384',
         borderWidth: 2,
         fill: false,
@@ -281,7 +281,7 @@ const BuquePorClienteList = () => {
       },
       {
         type: 'bar',
-        label: 'TONELADAS METRICAS',
+        label: 'TONELADAS MÉTRICAS',
         backgroundColor: '#d9a406',
         data: [...toneladasTotales]
         // borderColor: 'white',
@@ -347,7 +347,7 @@ const BuquePorClienteList = () => {
         },
         title: {
           display: true,
-          text: 'CARGA DETALLA POR BUQUE',
+          text: 'CANTIDAD DE CARGA POR BUQUE',
           color: '#fffcf3'
         }
       }
@@ -453,7 +453,7 @@ const BuquePorClienteList = () => {
               <div className="flex justify-content-between mb-3">
                 <div>
                   <span className="block text-900 font-medium mb-3">
-                    Detalles Buques por Consignatario
+                    Buques por Consignatario
                   </span>
                   <hr style={{ width: '100%', height: '5px' }} />
                   <div className="text-900 font-medium text-xl mb-3">
@@ -476,14 +476,20 @@ const BuquePorClienteList = () => {
                   <div className="text-900 font-medium text-xl mb-3">
                     Maroil{' '}
                     <span className="text-blue-400 font-medium">
-                      {(100 * contMaroil) / (contPdvsa + contMaroil)}%
+                      {((100 * contMaroil) / (contPdvsa + contMaroil)).toFixed(
+                        2
+                      )}
+                      %
                     </span>{' '}
                     Buques
                   </div>
                   <div className="text-900 font-medium text-xl mb-5">
                     PDVSA{' '}
                     <span className="text-pink-500 font-medium">
-                      {(100 * contPdvsa) / (contPdvsa + contMaroil)}%
+                      {((100 * contPdvsa) / (contPdvsa + contMaroil)).toFixed(
+                        2
+                      )}
+                      %
                     </span>{' '}
                     Buques
                   </div>

@@ -124,9 +124,17 @@ const ReporteCargaList = () => {
     return (
       <React.Fragment>
         {/* <FileUpload mode="basic" accept="image/*" maxFileSize={1000000} label="Import" chooseLabel="Import" className="mr-2 inline-block" /> */}
-        <Button label="Export" icon="pi pi-upload" className="p-button-help" />
+        <Button
+          label="Export"
+          icon="pi pi-upload"
+          className="p-button-help"
+          onClick={exportCSV}
+        />
       </React.Fragment>
     )
+  }
+  const exportCSV = () => {
+    dt.current.exportCSV()
   }
 
   const eliminarReporteCarga = () => {

@@ -114,7 +114,7 @@ function App() {
 
   return (
     <div className="">
-      <h1>Programacion de Ventana</h1>
+      <h1>Programación de Ventana</h1>
       {/* <div>
         <input
           type="text"

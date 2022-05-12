@@ -33,7 +33,7 @@ const OperacionesGOMVentana = () => {
     findProgramacionVentana(id)
     setIsVisible(true)
   }
-  console.log(programacionVentanas)
+
   // cabecera de la tabla
   const leftToolbarTemplate = () => {
     return (
@@ -159,7 +159,7 @@ const OperacionesGOMVentana = () => {
 
   const header = (
     <div className="flex flex-column md:flex-row md:justify-content-between md:align-items-center">
-      <h5 className="m-0">ProgramacionVentanas</h5>
+      <h5 className="m-0">Programacion Ventanas</h5>
       <span className="block mt-2 md:mt-0 p-input-icon-left">
         <i className="pi pi-search" />
         <InputText
@@ -206,7 +206,7 @@ const OperacionesGOMVentana = () => {
       >
         <Column field="nombreBuque" header="Buque" />
         <Column field="terminalBuque" header="Terminal" />
-        <Column field="buqueCliente" header="consignatario" />
+        <Column field="buqueCliente" header="Consignatario" />
         <Column field="toneladasNominadas" header="Toneladas Nominadas" />
         <Column
           field="fechaInicioVentana"

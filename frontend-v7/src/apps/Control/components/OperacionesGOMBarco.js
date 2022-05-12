@@ -47,9 +47,17 @@ const OperacionesGOMBarco = () => {
   const rightToolbarTemplate = () => {
     return (
       <React.Fragment>
-        <Button label="Export" icon="pi pi-upload" className="p-button-help" />
+        <Button
+          label="Export"
+          icon="pi pi-upload"
+          className="p-button-help"
+          onClick={exportCSV}
+        />
       </React.Fragment>
     )
+  }
+  const exportCSV = () => {
+    dt.current.exportCSV()
   }
   const fechaAtracoTemplate = (rowData) => {
     const validarFecha = moment(rowData.fechaAtraco).isValid()

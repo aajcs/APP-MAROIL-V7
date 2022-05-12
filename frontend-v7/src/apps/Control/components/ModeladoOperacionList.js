@@ -22,7 +22,7 @@ const ModeladoOperacionList = () => {
       date: '15/10/2020 14:00',
       icon: 'pi pi-arrow-down-left',
       color: '#673AB7',
-      nombre: 'Modelado de las Operaciones de Petro San Felix',
+      nombre: 'Modelado de las Operaciones de Petro San Félix',
       direccion: '',
       telefono: '+58 (269) 246.69.70',
       personaContacto: 'info@navasca.com.ve',

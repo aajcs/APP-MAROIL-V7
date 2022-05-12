@@ -50,8 +50,8 @@ export default function Apps() {
               <div className="cardAPPS card mb-0">
                 <div className="flex justify-content-between mb-3">
                   <div>
-                    <span className="block text-500 font-medium mb-3">
-                      ADMINISTRACION
+                    <span className="block text-500 font-medium mb-3 mr-2">
+                      ADMINISTRACIÓN
                     </span>
                     <div className="text-900 font-medium text-xl">
                       Egresos e Ingresos

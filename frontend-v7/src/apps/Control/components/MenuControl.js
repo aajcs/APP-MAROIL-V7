@@ -17,7 +17,7 @@ export const MenuControl = () => {
           permi1: 'SUPERADMIN'
         },
         {
-          label: 'INFORMACION MARITIMA',
+          label: 'INFORMACIÓN MARÍTIMA',
           icon: 'pi pi-fw pi-info-circle',
           to: '/apps/control/reportecargaGOMInfo',
           permi: 'ADMIN',
@@ -33,7 +33,7 @@ export const MenuControl = () => {
           permi2: 'OPERADOR'
         },
         {
-          label: 'PROGRAMACION DE VENTANA',
+          label: 'PROGRAMACIÓN DE VENTANA',
           icon: 'pi pi-fw pi-ticket',
           to: '/apps/control/programacionventanaAgendaPage',
           permi: 'ADMIN',
@@ -115,7 +115,7 @@ export const MenuControl = () => {
           to: '/apps/control/gabarraestatus'
         },
         {
-          label: 'GERENCIA MARITIMA',
+          label: 'GERENCIA MARÍTIMA',
           icon: 'pi pi-fw pi-server',
           to: '/apps/control/OperacionesGOM',
           permi: 'ADMIN',
@@ -129,7 +129,7 @@ export const MenuControl = () => {
 
       items: [
         {
-          label: 'AGENCIAS MARITIMAS',
+          label: 'AGENCIAS MARÍTIMAS',
           icon: 'pi pi-fw pi-tags',
           to: '/apps/control/agenciamasritimas',
           permi: 'ADMIN',

@@ -1,3 +1,4 @@
+/* eslint-disable indent */
 /* eslint-disable react/prop-types */
 import React from 'react'
 import moment from 'moment'
@@ -5,7 +6,8 @@ import moment from 'moment'
 function ProgramacionVentanaCard({ events }) {
   const consignatarioBuque = {
     MAROIL: '#2600ff',
-    PDVSA: '#ff0000'
+    PDVSA: '#ff0000',
+    MANTENIMIENTO: '#797d82'
   }
 
   const consignatarioBuqueColor = consignatarioBuque[events.buqueCliente]
@@ -27,8 +29,12 @@ function ProgramacionVentanaCard({ events }) {
       >
         <span className="mr-2  fst-italic ">
           {events.fechaInicioVentana <= moment().add(1, 'days').format()
-            ? 'Buque Actual en Ventana'
-            : 'Buque Proximo en Ventana'}
+            ? events.buqueCliente === 'MANTENIMIENTO'
+              ? 'Mantenimeinto Actual en Ventana'
+              : 'Buque Actual en Ventana'
+            : events.buqueCliente === 'MANTENIMIENTO'
+            ? 'Mantenimeinto Próximo en Ventana'
+            : 'Buque Próximo en Ventana'}
         </span>
       </div>
 

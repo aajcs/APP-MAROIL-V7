@@ -10,7 +10,7 @@ export const MapaEstadisticoPage = () => {
     <div className="grid crud-demo">
       <div className="col-12">
         <div className="card text-center ">
-          <h4>Mapa estadístico</h4>
+          <h4>Mapa Estadístico</h4>
           <div>
             <BarcoContextProvider>
               <ReporteCargaGOMContextProvider>
