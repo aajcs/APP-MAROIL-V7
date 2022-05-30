@@ -134,6 +134,11 @@ const OperacionesGOMVentana = () => {
           className="p-button-rounded p-button-success mr-2 mb-2"
           onClick={() => saveProgramacionVentana(rowData.id)}
         />
+        <Button
+          icon="pi pi-trash"
+          className="p-button-rounded  p-button-danger"
+          onClick={() => confirmDeleteProgramacionVentana(rowData)}
+        />
       </div>
     )
   }
