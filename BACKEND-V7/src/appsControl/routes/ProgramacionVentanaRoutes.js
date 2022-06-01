@@ -10,11 +10,7 @@ const {
 } = require('../controllers/ProgramacionVentanaControllers')
 const auth = require('../../middlewares/authMiddleware')
 const { isAppControl } = require('../../middlewares/AppsMiddleware')
-const {
-  isLectura,
-  isAdmin,
-  isSuperAdmin
-} = require('../../middlewares/RolesMiddleware')
+const { isLectura, isAdmin } = require('../../middlewares/RolesMiddleware')
 
 router
   .route('/')
@@ -24,7 +20,7 @@ router
 router
   .route('/:id')
   .get([auth, isAppControl, isAdmin], getProgramacionVentana)
-  .delete([auth, isAppControl, isSuperAdmin], deleteProgramacionVentana)
+  .delete([auth, isAppControl, isAdmin], deleteProgramacionVentana)
   .put([auth, isAppControl, isAdmin], updateProgramacionVentana)
 
 module.exports = router
