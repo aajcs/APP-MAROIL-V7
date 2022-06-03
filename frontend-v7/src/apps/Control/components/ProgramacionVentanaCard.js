@@ -14,6 +14,7 @@ function ProgramacionVentanaCard({ events }) {
   const ubicacionBuqueTags = {
     'MAROIL TERMINAL 1': '#094db1',
     'MAROIL TERMINAL 2': '#094db1',
+    'MAROIL TERMINAL 3': '#094db1',
     'PETRO CEDENO': '#d9a406',
     'PETRO SAN FELIX': '#157347'
   }

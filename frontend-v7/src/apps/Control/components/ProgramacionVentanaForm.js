@@ -89,6 +89,7 @@ const ProgramacionVentanaForm = (props) => {
   const TerminalBuque = [
     { name: 'MAROIL TERMINAL 1' },
     { name: 'MAROIL TERMINAL 2' },
+    { name: 'MAROIL TERMINAL 3' },
     { name: 'PETRO SAN FELIX' },
     { name: 'PETRO CEDENO' }
   ]
