@@ -6,7 +6,9 @@ import moment from 'moment'
 function ProgramacionVentanaCard({ events }) {
   const consignatarioBuque = {
     MAROIL: '#2600ff',
+    'MAROIL PRIORIDAD': '#08afff',
     PDVSA: '#ff0000',
+    'PDVSA PRIORIDAD': '#f759ab',
     MANTENIMIENTO: '#797d82'
   }
 
@@ -15,6 +17,9 @@ function ProgramacionVentanaCard({ events }) {
     'MAROIL TERMINAL 1': '#094db1',
     'MAROIL TERMINAL 2': '#094db1',
     'MAROIL TERMINAL 3': '#094db1',
+    'Puesto de Espera (Oeste)': '#094db1',
+    'Puesto de Carga (Centro)': '#094db1',
+    'Puesto de Carga S.T.S. (Este)': '#094db1',
     'PETRO CEDENO': '#d9a406',
     'PETRO SAN FELIX': '#157347'
   }

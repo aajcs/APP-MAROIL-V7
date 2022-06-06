@@ -87,9 +87,9 @@ const ProgramacionVentanaForm = (props) => {
   const [selectedCountry, setSelectedCountry] = useState(null)
   const [selectedTerminalBuque, setSelectTerminalBuque] = useState(null)
   const TerminalBuque = [
-    { name: 'MAROIL TERMINAL 1' },
-    { name: 'MAROIL TERMINAL 2' },
-    { name: 'MAROIL TERMINAL 3' },
+    { name: 'Puesto de Espera (Oeste)' },
+    { name: 'Puesto de Carga (Centro)' },
+    { name: 'Puesto de Carga S.T.S. (Este)' },
     { name: 'PETRO SAN FELIX' },
     { name: 'PETRO CEDENO' }
   ]
@@ -114,7 +114,9 @@ const ProgramacionVentanaForm = (props) => {
   }
   const buqueCliente = [
     { buqueCliente: 'MAROIL' },
+    { buqueCliente: 'MAROIL PRIORIDAD' },
     { buqueCliente: 'PDVSA' },
+    { buqueCliente: 'PDVSA PRIORIDAD' },
     { buqueCliente: 'MANTENIMIENTO' }
   ]
   const onBuqueCliente = (e) => {

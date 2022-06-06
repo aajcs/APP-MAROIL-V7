@@ -17,17 +17,17 @@ const resources = [
   { id: 'r0', name: 'Terminal Maroil' },
   {
     id: 'r1',
-    name: 'Puesto 1',
+    name: 'Puesto de Espera (Oeste)',
     parentId: 'r0'
   },
   {
     id: 'r2',
-    name: 'Puesto 2',
+    name: 'Puesto de Carga (Centro)',
     parentId: 'r0'
   },
   {
     id: 'r5',
-    name: 'Puesto 3',
+    name: 'Puesto de Carga S.T.S. (Este)',
     parentId: 'r0'
   },
   {
@@ -155,6 +155,9 @@ class ProgramacionVentanaAngenaV2 extends Component {
         checkConflict: true,
         schedulerWidth: '75%',
         schedulerMaxHeight: 500,
+        agendaResourceTableWidth: 300,
+        customResourceTableWidth: 300,
+        quarterResourceTableWidth: 220,
         startResizable: false,
         endResizable: false,
         movable: false,

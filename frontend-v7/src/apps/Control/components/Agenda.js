@@ -21,6 +21,8 @@ const Agenda = () => {
   const [terminalMaroilPuesto3, setTerminalMaroilPuesto3] = useState([])
   const [terminalPetroSanFelix, setTerminalPetroSanFelix] = useState([])
   const [terminalPetroCedeno, setTerminalPetroCedeno] = useState([])
+  const [sumaTmMes, setSumaTmMes] = useState([])
+
   programacionVentanas.sort((o1, o2) => {
     if (o1.fechaInicioVentana < o2.fechaInicioVentana) {
       return -1
@@ -44,6 +46,7 @@ const Agenda = () => {
   let auxTerminalMaroilPuesto3 = []
   let auxTerminalPetroSanFelix = []
   let auxTerminalPetroCedeno = []
+  let auxSumaTmMes = 0
   for (let prop in programacionVentanas) {
     auxProgramacionVentanas.push({
       id: programacionVentanas[prop].id,
@@ -56,11 +59,16 @@ const Agenda = () => {
       start: programacionVentanas[prop].fechaInicioVentana,
       end: programacionVentanas[prop].fechaFinVentana,
       resourceId:
-        programacionVentanas[prop].terminalBuque === 'MAROIL TERMINAL 1'
+        programacionVentanas[prop].terminalBuque === 'MAROIL TERMINAL 1' ||
+        programacionVentanas[prop].terminalBuque === 'Puesto de Espera (Oeste)'
           ? 'r1'
-          : programacionVentanas[prop].terminalBuque === 'MAROIL TERMINAL 2'
+          : programacionVentanas[prop].terminalBuque === 'MAROIL TERMINAL 2' ||
+            programacionVentanas[prop].terminalBuque ===
+              'Puesto de Carga (Centro)'
           ? 'r2'
-          : programacionVentanas[prop].terminalBuque === 'MAROIL TERMINAL 3'
+          : programacionVentanas[prop].terminalBuque === 'MAROIL TERMINAL 3' ||
+            programacionVentanas[prop].terminalBuque ===
+              'Puesto de Carga S.T.S. (Este)'
           ? 'r5'
           : programacionVentanas[prop].terminalBuque === 'PETRO SAN FELIX'
           ? 'r3'
@@ -69,19 +77,32 @@ const Agenda = () => {
       bgColor:
         programacionVentanas[prop].buqueCliente === 'MAROIL'
           ? '#0d6efd'
+          : programacionVentanas[prop].buqueCliente === 'MAROIL PRIORIDAD'
+          ? '#08afff'
           : programacionVentanas[prop].buqueCliente === 'PDVSA'
           ? '#dc3545'
+          : programacionVentanas[prop].buqueCliente === 'PDVSA PRIORIDAD'
+          ? '#f759ab'
           : '#797d82'
     })
   }
   const agentaCard = () => {
     programacionVentanas.map((events) => {
       if (events.fechaFinVentana >= moment().subtract(1, 'days').format()) {
-        if (events.terminalBuque === 'MAROIL TERMINAL 1') {
+        if (
+          events.terminalBuque === 'MAROIL TERMINAL 1' ||
+          events.terminalBuque === 'Puesto de Espera (Oeste)'
+        ) {
           auxTerminalMaroilPuesto1.push(events)
-        } else if (events.terminalBuque === 'MAROIL TERMINAL 2') {
+        } else if (
+          events.terminalBuque === 'MAROIL TERMINAL 2' ||
+          events.terminalBuque === 'Puesto de Carga (Centro)'
+        ) {
           auxTerminalMaroilPuesto2.push(events)
-        } else if (events.terminalBuque === 'MAROIL TERMINAL 3') {
+        } else if (
+          events.terminalBuque === 'MAROIL TERMINAL 3' ||
+          events.terminalBuque === 'Puesto de Carga S.T.S. (Este)'
+        ) {
           auxTerminalMaroilPuesto3.push(events)
         } else if (events.terminalBuque === 'PETRO SAN FELIX') {
           auxTerminalPetroSanFelix.push(events)
@@ -89,7 +110,15 @@ const Agenda = () => {
           auxTerminalPetroCedeno.push(events)
         }
       }
+      // let fecha = moment(events.fechaFinVentana).format('YYYY-MM-DD')
+      if (moment(events.fechaFinVentana).isSame(moment(), 'month')) {
+        auxSumaTmMes = auxSumaTmMes + events.toneladasNominadas
+      } else {
+        console.log('chao')
+      }
     })
+    setSumaTmMes(auxSumaTmMes)
+    console.log(auxSumaTmMes)
     setTerminalMaroilPuesto1(auxTerminalMaroilPuesto1)
     setTerminalMaroilPuesto2(auxTerminalMaroilPuesto2)
     setTerminalMaroilPuesto3(auxTerminalMaroilPuesto3)
@@ -129,11 +158,22 @@ const Agenda = () => {
         </>
       )}
       <div className="grid flex">
+        <div className="col-12">
+          <div className="card  text-center">
+            <spam className="font-medium">
+              VOLUMETRÍA NOMINADA DEL MES:{' '}
+              {moment().format('MMMM').toUpperCase()}{' '}
+              {sumaTmMes !== 0 && sumaTmMes.toLocaleString()} {'TM'}
+            </spam>
+          </div>
+        </div>
+      </div>
+      <div className="grid flex">
         {auxTerminalMaroilPuesto1.length === 0 && (
           <div className="col-12 lg:col-6 xl:col-3">
             <div className="card  ">
               <span className="text-900 text-center fw-bold fst-italic mb-2">
-                MAROIL TERMINAL 1
+                MAROIL Puesto de Espera (Oeste)
               </span>
               {terminalMaroilPuesto1.map((events) => (
                 <>
@@ -147,7 +187,7 @@ const Agenda = () => {
           <div className="col-12 lg:col-6 xl:col-3">
             <div className="card  ">
               <span className="text-900 text-center fw-bold fst-italic mb-2">
-                MAROIL TERMINAL 2
+                MAROIL Puesto de Carga (Centro)
               </span>
               {terminalMaroilPuesto2.map((events) => (
                 <>
@@ -161,7 +201,7 @@ const Agenda = () => {
           <div className="col-12 lg:col-6 xl:col-3">
             <div className="card  ">
               <span className="text-900 text-center fw-bold fst-italic mb-2">
-                MAROIL TERMINAL 3
+                Puesto de Carga S.T.S. (Este)
               </span>
               {terminalMaroilPuesto3.map((events) => (
                 <>
