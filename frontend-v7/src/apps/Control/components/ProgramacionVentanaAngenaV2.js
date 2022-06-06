@@ -26,6 +26,11 @@ const resources = [
     parentId: 'r0'
   },
   {
+    id: 'r5',
+    name: 'Puesto 3',
+    parentId: 'r0'
+  },
+  {
     id: 'r3',
     name: 'Petro San Félix'
   },

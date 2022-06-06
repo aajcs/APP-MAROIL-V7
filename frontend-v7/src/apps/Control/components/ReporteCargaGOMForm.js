@@ -1,3 +1,4 @@
+/* eslint-disable indent */
 /* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
 import React, { useContext, useState, useEffect, useRef } from 'react'
@@ -75,7 +76,8 @@ const ReporteCargaGOMForm = (props) => {
   })
   const categories = [
     { name: 'PUESTO-1', key: 'A' },
-    { name: 'PUESTO-2', key: 'M' }
+    { name: 'PUESTO-2', key: 'M' },
+    { name: 'PUESTO-3', key: 'B' }
     // { name: 'Production', key: 'P' },
     // { name: 'Research', key: 'R' }
   ]
@@ -136,8 +138,13 @@ const ReporteCargaGOMForm = (props) => {
     })
     if (p.ubicacionBuque === 'MAROIL TERMINAL') {
       setPuestoTerminalIsVisible(true)
+      // p.puestoTerminal === 'PUESTO-2'
+      //   ? setSelectedPuestoTerminal(categories[1])
+      //   : setSelectedPuestoTerminal(categories[0])
       p.puestoTerminal === 'PUESTO-2'
         ? setSelectedPuestoTerminal(categories[1])
+        : p.puestoTerminal === 'PUESTO-3'
+        ? setSelectedPuestoTerminal(categories[2])
         : setSelectedPuestoTerminal(categories[0])
     } else {
       setPuestoTerminalIsVisible(false)
@@ -165,6 +172,8 @@ const ReporteCargaGOMForm = (props) => {
         setPuestoTerminalIsVisible(true)
         editReporteCargaGOM.puestoTerminal === 'PUESTO-2'
           ? setSelectedPuestoTerminal(categories[1])
+          : editReporteCargaGOM.puestoTerminal === 'PUESTO-3'
+          ? setSelectedPuestoTerminal(categories[2])
           : setSelectedPuestoTerminal(categories[0])
       } else {
         setPuestoTerminalIsVisible(false)

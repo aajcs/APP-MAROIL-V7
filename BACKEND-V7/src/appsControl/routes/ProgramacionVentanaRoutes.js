@@ -10,11 +10,7 @@ const {
 } = require('../controllers/ProgramacionVentanaControllers')
 const auth = require('../../middlewares/authMiddleware')
 const { isAppControl } = require('../../middlewares/AppsMiddleware')
-const {
-  isLectura,
-  isAdmin,
-  isSuperAdmin
-} = require('../../middlewares/RolesMiddleware')
+const { isLectura, isAdmin } = require('../../middlewares/RolesMiddleware')
 
 router
   .route('/')

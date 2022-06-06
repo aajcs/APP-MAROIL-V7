@@ -18,6 +18,7 @@ const Agenda = () => {
   const { programacionVentanas } = useContext(ProgramacionVentanaContext)
   const [terminalMaroilPuesto1, setTerminalMaroilPuesto1] = useState([])
   const [terminalMaroilPuesto2, setTerminalMaroilPuesto2] = useState([])
+  const [terminalMaroilPuesto3, setTerminalMaroilPuesto3] = useState([])
   const [terminalPetroSanFelix, setTerminalPetroSanFelix] = useState([])
   const [terminalPetroCedeno, setTerminalPetroCedeno] = useState([])
   programacionVentanas.sort((o1, o2) => {
@@ -40,6 +41,7 @@ const Agenda = () => {
   let auxProgramacionVentanas = []
   let auxTerminalMaroilPuesto1 = []
   let auxTerminalMaroilPuesto2 = []
+  let auxTerminalMaroilPuesto3 = []
   let auxTerminalPetroSanFelix = []
   let auxTerminalPetroCedeno = []
   for (let prop in programacionVentanas) {
@@ -58,6 +60,8 @@ const Agenda = () => {
           ? 'r1'
           : programacionVentanas[prop].terminalBuque === 'MAROIL TERMINAL 2'
           ? 'r2'
+          : programacionVentanas[prop].terminalBuque === 'MAROIL TERMINAL 3'
+          ? 'r5'
           : programacionVentanas[prop].terminalBuque === 'PETRO SAN FELIX'
           ? 'r3'
           : 'r4',
@@ -77,6 +81,8 @@ const Agenda = () => {
           auxTerminalMaroilPuesto1.push(events)
         } else if (events.terminalBuque === 'MAROIL TERMINAL 2') {
           auxTerminalMaroilPuesto2.push(events)
+        } else if (events.terminalBuque === 'MAROIL TERMINAL 3') {
+          auxTerminalMaroilPuesto3.push(events)
         } else if (events.terminalBuque === 'PETRO SAN FELIX') {
           auxTerminalPetroSanFelix.push(events)
         } else {
@@ -86,6 +92,7 @@ const Agenda = () => {
     })
     setTerminalMaroilPuesto1(auxTerminalMaroilPuesto1)
     setTerminalMaroilPuesto2(auxTerminalMaroilPuesto2)
+    setTerminalMaroilPuesto3(auxTerminalMaroilPuesto3)
     setTerminalPetroSanFelix(auxTerminalPetroSanFelix)
     setTerminalPetroCedeno(auxTerminalPetroCedeno)
   }
@@ -143,6 +150,20 @@ const Agenda = () => {
                 MAROIL TERMINAL 2
               </span>
               {terminalMaroilPuesto2.map((events) => (
+                <>
+                  <ProgramacionVentanaCard key={events.id} events={events} />
+                </>
+              ))}
+            </div>
+          </div>
+        )}
+        {auxTerminalMaroilPuesto3.length === 0 && (
+          <div className="col-12 lg:col-6 xl:col-3">
+            <div className="card  ">
+              <span className="text-900 text-center fw-bold fst-italic mb-2">
+                MAROIL TERMINAL 3
+              </span>
+              {terminalMaroilPuesto3.map((events) => (
                 <>
                   <ProgramacionVentanaCard key={events.id} events={events} />
                 </>
