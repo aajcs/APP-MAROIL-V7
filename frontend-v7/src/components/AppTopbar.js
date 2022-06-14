@@ -1,6 +1,7 @@
+/* eslint-disable prefer-const */
 /* eslint-disable react/prop-types */
 
-import { useContext, useState, useEffect } from 'react'
+import { useCallback, useContext, useState, useEffect } from 'react'
 import { Link, NavLink } from 'react-router-dom'
 import classNames from 'classnames'
 import AuthUse from '../auth/AuthUse'
@@ -13,8 +14,10 @@ export const AppTopbar = (props) => {
   const [visibleRight, setVisibleRight] = useState(false)
   const [scale, setScale] = useState(14)
   const [scales] = useState([12, 13, 14, 15, 16])
+  const [theme, setTheme] = useState('bootstrap4-light-blue')
   const auth = AuthUse()
-  const { onToggleMenuClick } = useContext(ConfigContext)
+  const { onToggleMenuClick, onMobileTopbarMenuClick, mobileTopbarMenuActive } =
+    useContext(ConfigContext)
   useEffect(() => {
     document.documentElement.style.fontSize = scale + 'px'
   }, [scale])
@@ -26,7 +29,47 @@ export const AppTopbar = (props) => {
   const incrementScale = () => {
     setScale((prevState) => ++prevState)
   }
+  const replaceLink = useCallback((linkElement, href, callback) => {
+    if (isIE()) {
+      linkElement.setAttribute('href', href)
 
+      if (callback) {
+        callback()
+      }
+    } else {
+      const id = linkElement.getAttribute('id')
+      const cloneLinkElement = linkElement.cloneNode(true)
+
+      cloneLinkElement.setAttribute('href', href)
+      cloneLinkElement.setAttribute('id', id + '-clone')
+
+      linkElement.parentNode.insertBefore(
+        cloneLinkElement,
+        linkElement.nextSibling
+      )
+
+      cloneLinkElement.addEventListener('load', () => {
+        linkElement.remove()
+        cloneLinkElement.setAttribute('id', id)
+
+        if (callback) {
+          callback()
+        }
+      })
+    }
+  }, [])
+  useEffect(() => {
+    let themeElement = document.getElementById('theme-link')
+    const themeHref =
+      process.env.PUBLIC_URL + '/assets/themes/' + theme + '/theme.css'
+    replaceLink(themeElement, themeHref)
+  }, [theme, replaceLink])
+  const isIE = () => {
+    return /(MSIE|Trident\/|Edge\/)/i.test(window.navigator.userAgent)
+  }
+  const changeTheme = (e, theme, scheme) => {
+    setTheme(theme)
+  }
   return (
     <div className="layout-topbar">
       <Link to="/" className="layout-topbar-logo">
@@ -46,7 +89,7 @@ export const AppTopbar = (props) => {
       <button
         type="button"
         className="p-link layout-topbar-menu-button layout-topbar-button"
-        onClick={props.onMobileTopbarMenuClick}
+        onClick={onMobileTopbarMenuClick}
       >
         <i className="pi pi-ellipsis-v" />
       </button>
@@ -87,18 +130,28 @@ export const AppTopbar = (props) => {
             <h5>Themes</h5>
             <div className="grid free-themes">
               <div className="col-3 text-center">
-                <button className="p-link" onClick={(e) => ''}>
+                <button
+                  className="p-link"
+                  onClick={(e) =>
+                    changeTheme(e, 'bootstrap4-light-blue', 'light')
+                  }
+                >
                   <img
-                    src="assets/layout/images/themes/bootstrap4-light-blue.svg"
+                    src={require('../assets/bootstrap4-light-blue.svg').default}
                     alt="Bootstrap Light Blue"
                   />
                 </button>
               </div>
 
               <div className="col-3 text-center">
-                <button className="p-link" onClick={(e) => ''}>
+                <button
+                  className="p-link"
+                  onClick={(e) =>
+                    changeTheme(e, 'bootstrap4-dark-blue', 'dark')
+                  }
+                >
                   <img
-                    src="assets/layout/images/themes/bootstrap4-dark-blue.svg"
+                    src={require('../assets/bootstrap4-dark-blue.svg').default}
                     alt="Bootstrap Dark Blue"
                   />
                 </button>
@@ -117,7 +170,7 @@ export const AppTopbar = (props) => {
 
       <ul
         className={classNames('layout-topbar-menu lg:flex origin-top', {
-          'layout-topbar-menu-mobile-active': props.mobileTopbarMenuActive
+          'layout-topbar-menu-mobile-active': mobileTopbarMenuActive
         })}
       >
         {auth.isLogged() && (

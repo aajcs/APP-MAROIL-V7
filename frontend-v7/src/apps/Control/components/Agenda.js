@@ -113,12 +113,9 @@ const Agenda = () => {
       // let fecha = moment(events.fechaFinVentana).format('YYYY-MM-DD')
       if (moment(events.fechaFinVentana).isSame(moment(), 'month')) {
         auxSumaTmMes = auxSumaTmMes + events.toneladasNominadas
-      } else {
-        console.log('chao')
       }
     })
     setSumaTmMes(auxSumaTmMes)
-    console.log(auxSumaTmMes)
     setTerminalMaroilPuesto1(auxTerminalMaroilPuesto1)
     setTerminalMaroilPuesto2(auxTerminalMaroilPuesto2)
     setTerminalMaroilPuesto3(auxTerminalMaroilPuesto3)
