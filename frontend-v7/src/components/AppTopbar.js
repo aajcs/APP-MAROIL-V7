@@ -14,7 +14,7 @@ export const AppTopbar = (props) => {
   const [visibleRight, setVisibleRight] = useState(false)
   const [scale, setScale] = useState(14)
   const [scales] = useState([12, 13, 14, 15, 16])
-  const [theme, setTheme] = useState('bootstrap4-light-blue')
+  const [theme, setTheme] = useState('bootstrap4-dark-blue')
   const auth = AuthUse()
   const { onToggleMenuClick, onMobileTopbarMenuClick, mobileTopbarMenuActive } =
     useContext(ConfigContext)

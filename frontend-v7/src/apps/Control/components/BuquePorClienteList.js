@@ -112,9 +112,14 @@ const BuquePorClienteList = () => {
   let auxOtro1 = []
   let contMaroil = 0
   let contPdvsa = 0
+  let contJME = 0
   for (let prop in barcos) {
     let buqueCliente = barcos[prop].buqueCliente
-    buqueCliente === 'MAROIL' ? contMaroil++ : contPdvsa++
+    buqueCliente === 'MAROIL'
+      ? contMaroil++
+      : buqueCliente === 'PDVSA'
+      ? contPdvsa++
+      : contJME++
   }
   auxOtro1.push({
     data: [contMaroil, contPdvsa],
