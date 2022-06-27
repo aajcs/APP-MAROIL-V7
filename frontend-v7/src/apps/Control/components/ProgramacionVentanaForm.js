@@ -419,7 +419,7 @@ const ProgramacionVentanaForm = (props) => {
                 }}
                 showTime
                 locale="es"
-                hourFormat="12"
+                // hourFormat="12"
                 showButtonBar
               />
             </div>
@@ -435,7 +435,7 @@ const ProgramacionVentanaForm = (props) => {
                 }}
                 showTime
                 locale="es"
-                hourFormat="12"
+                // hourFormat="12"
                 showButtonBar
               />
             </div>

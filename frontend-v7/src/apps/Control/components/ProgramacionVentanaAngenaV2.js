@@ -163,6 +163,7 @@ class ProgramacionVentanaAngenaV2 extends Component {
         movable: false,
         creatable: false,
         resourceName: 'Terminales',
+        eventItemPopoverEnabled: false,
         views: [
           {
             viewName: 'Día',

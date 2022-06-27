@@ -496,7 +496,7 @@ const BarcoForm = (props) => {
                 }}
                 showTime
                 locale="es"
-                hourFormat="12"
+                // hourFormat="12"
                 showButtonBar
               />
             </div>
@@ -512,7 +512,7 @@ const BarcoForm = (props) => {
                 }}
                 showTime
                 locale="es"
-                hourFormat="12"
+                // hourFormat="12"
                 showButtonBar
               />
             </div>
@@ -528,7 +528,7 @@ const BarcoForm = (props) => {
                 }}
                 showTime
                 locale="es"
-                hourFormat="12"
+                // hourFormat="12"
                 showButtonBar
               />
             </div>
@@ -541,7 +541,7 @@ const BarcoForm = (props) => {
                 onChange={(e) => setDate(e.value)}
                 showTime
                 locale="es"
-                hourFormat="12"
+                // hourFormat="12"
                 showButtonBar
               />
             </div> */}

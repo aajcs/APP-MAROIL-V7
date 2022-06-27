@@ -194,20 +194,7 @@ const Agenda = () => {
             </div>
           </div>
         )}
-        {auxTerminalMaroilPuesto3.length === 0 && (
-          <div className="col-12 lg:col-6 xl:col-3">
-            <div className="card  ">
-              <span className="text-900 text-center fw-bold fst-italic mb-2">
-                Puesto de Carga S.T.S. (Este)
-              </span>
-              {terminalMaroilPuesto3.map((events) => (
-                <>
-                  <ProgramacionVentanaCard key={events.id} events={events} />
-                </>
-              ))}
-            </div>
-          </div>
-        )}
+
         {auxTerminalPetroSanFelix.length === 0 && (
           <div className="col-12 lg:col-6 xl:col-3">
             <div className="card  ">
@@ -229,6 +216,20 @@ const Agenda = () => {
                 PETRO CEDEÑO
               </span>
               {terminalPetroCedeno.map((events) => (
+                <>
+                  <ProgramacionVentanaCard key={events.id} events={events} />
+                </>
+              ))}
+            </div>
+          </div>
+        )}
+        {auxTerminalMaroilPuesto3.length === 0 && (
+          <div className="col-12 lg:col-6 xl:col-3">
+            <div className="card  ">
+              <span className="text-900 text-center fw-bold fst-italic mb-2">
+                Puesto de Carga S.T.S. (Este)
+              </span>
+              {terminalMaroilPuesto3.map((events) => (
                 <>
                   <ProgramacionVentanaCard key={events.id} events={events} />
                 </>

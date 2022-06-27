@@ -233,7 +233,7 @@ const UsuarioForm = (props) => {
                 onChange={(e) => setDate(e.value)}
                 showTime
                 locale="es"
-                hourFormat="12"
+                // hourFormat="12"
                 showButtonBar
               />
             </div>

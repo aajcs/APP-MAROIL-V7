@@ -480,7 +480,7 @@ const OperacionesGOMBarcoForm = (props) => {
                 }}
                 showTime
                 locale="es"
-                hourFormat="12"
+                // hourFormat="12"
                 showButtonBar
               />
             </div>
@@ -496,7 +496,7 @@ const OperacionesGOMBarcoForm = (props) => {
                 }}
                 showTime
                 locale="es"
-                hourFormat="12"
+                // hourFormat="12"
                 showButtonBar
               />
             </div>
@@ -512,7 +512,7 @@ const OperacionesGOMBarcoForm = (props) => {
                 }}
                 showTime
                 locale="es"
-                hourFormat="12"
+                // hourFormat="24"
                 showButtonBar
               />
             </div>

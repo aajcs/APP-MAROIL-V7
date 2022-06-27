@@ -1,3 +1,4 @@
+/* eslint-disable array-callback-return */
 /* eslint-disable indent */
 /* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
@@ -105,7 +106,7 @@ const ReporteCargaGOMForm = (props) => {
     setSelectedPuestoTerminal(e.value)
     updateField(e.value.name, 'puestoTerminal')
   }
-  const barcoIDGOM = barcos
+  const barcoIDGOM = barcos.filter((p) => p.estatusBarco === 'OPERATIVO' && p)
 
   const ubicacionBuqueReporteCargaGOM = [
     { name: 'MAROIL TERMINAL' },
