@@ -21,6 +21,7 @@ const Agenda = () => {
   const [terminalMaroilPuesto3, setTerminalMaroilPuesto3] = useState([])
   const [terminalPetroSanFelix, setTerminalPetroSanFelix] = useState([])
   const [terminalPetroCedeno, setTerminalPetroCedeno] = useState([])
+  const [terminalBuquesFondeados, setTerminalBuquesFondeados] = useState([])
   const [sumaTmMes, setSumaTmMes] = useState([])
 
   programacionVentanas.sort((o1, o2) => {
@@ -46,45 +47,51 @@ const Agenda = () => {
   let auxTerminalMaroilPuesto3 = []
   let auxTerminalPetroSanFelix = []
   let auxTerminalPetroCedeno = []
+  let auxTerminalBuquesFondeados = []
   let auxSumaTmMes = 0
   for (let prop in programacionVentanas) {
-    auxProgramacionVentanas.push({
-      id: programacionVentanas[prop].id,
-      title:
-        programacionVentanas[prop].nombreBuque +
-        ' / ' +
-        programacionVentanas[prop].toneladasNominadas +
-        ' TM / ' +
-        programacionVentanas[prop].buqueCliente,
-      start: programacionVentanas[prop].fechaInicioVentana,
-      end: programacionVentanas[prop].fechaFinVentana,
-      resourceId:
-        programacionVentanas[prop].terminalBuque === 'MAROIL TERMINAL 1' ||
-        programacionVentanas[prop].terminalBuque === 'Puesto de Espera (Oeste)'
-          ? 'r1'
-          : programacionVentanas[prop].terminalBuque === 'MAROIL TERMINAL 2' ||
-            programacionVentanas[prop].terminalBuque ===
-              'Puesto de Carga (Centro)'
-          ? 'r2'
-          : programacionVentanas[prop].terminalBuque === 'MAROIL TERMINAL 3' ||
-            programacionVentanas[prop].terminalBuque ===
-              'Puesto de Carga S.T.S. (Este)'
-          ? 'r5'
-          : programacionVentanas[prop].terminalBuque === 'PETRO SAN FELIX'
-          ? 'r3'
-          : 'r4',
-      movable: false,
-      bgColor:
-        programacionVentanas[prop].buqueCliente === 'MAROIL'
-          ? '#0d6efd'
-          : programacionVentanas[prop].buqueCliente === 'MAROIL PRIORIDAD'
-          ? '#08afff'
-          : programacionVentanas[prop].buqueCliente === 'PDVSA'
-          ? '#dc3545'
-          : programacionVentanas[prop].buqueCliente === 'PDVSA PRIORIDAD'
-          ? '#f759ab'
-          : '#797d82'
-    })
+    if (programacionVentanas[prop].terminalBuque !== 'BUQUES FONDEADOS') {
+      auxProgramacionVentanas.push({
+        id: programacionVentanas[prop].id,
+        title:
+          programacionVentanas[prop].nombreBuque +
+          ' / ' +
+          programacionVentanas[prop].toneladasNominadas +
+          ' TM / ' +
+          programacionVentanas[prop].buqueCliente,
+        start: programacionVentanas[prop].fechaInicioVentana,
+        end: programacionVentanas[prop].fechaFinVentana,
+        resourceId:
+          programacionVentanas[prop].terminalBuque === 'MAROIL TERMINAL 1' ||
+          programacionVentanas[prop].terminalBuque ===
+            'Puesto de Espera (Oeste)'
+            ? 'r1'
+            : programacionVentanas[prop].terminalBuque ===
+                'MAROIL TERMINAL 2' ||
+              programacionVentanas[prop].terminalBuque ===
+                'Puesto de Carga (Centro)'
+            ? 'r2'
+            : programacionVentanas[prop].terminalBuque ===
+                'MAROIL TERMINAL 3' ||
+              programacionVentanas[prop].terminalBuque ===
+                'Puesto de Carga S.T.S. (Este)'
+            ? 'r5'
+            : programacionVentanas[prop].terminalBuque === 'PETRO SAN FELIX'
+            ? 'r3'
+            : 'r4',
+        movable: false,
+        bgColor:
+          programacionVentanas[prop].buqueCliente === 'MAROIL'
+            ? '#0d6efd'
+            : programacionVentanas[prop].buqueCliente === 'MAROIL PRIORIDAD'
+            ? '#08afff'
+            : programacionVentanas[prop].buqueCliente === 'PDVSA'
+            ? '#dc3545'
+            : programacionVentanas[prop].buqueCliente === 'PDVSA PRIORIDAD'
+            ? '#f759ab'
+            : '#797d82'
+      })
+    }
   }
   const agentaCard = () => {
     programacionVentanas.map((events) => {
@@ -114,6 +121,9 @@ const Agenda = () => {
       if (moment(events.fechaFinVentana).isSame(moment(), 'month')) {
         auxSumaTmMes = auxSumaTmMes + events.toneladasNominadas
       }
+      if (events.terminalBuque === 'BUQUES FONDEADOS') {
+        auxTerminalBuquesFondeados.push(events)
+      }
     })
     setSumaTmMes(auxSumaTmMes)
     setTerminalMaroilPuesto1(auxTerminalMaroilPuesto1)
@@ -121,6 +131,7 @@ const Agenda = () => {
     setTerminalMaroilPuesto3(auxTerminalMaroilPuesto3)
     setTerminalPetroSanFelix(auxTerminalPetroSanFelix)
     setTerminalPetroCedeno(auxTerminalPetroCedeno)
+    setTerminalBuquesFondeados(auxTerminalBuquesFondeados)
   }
 
   useEffect(() => {
@@ -129,31 +140,6 @@ const Agenda = () => {
 
   return (
     <div>
-      {auxProgramacionVentanas.length === 0 ? (
-        <div className="field col-12  pr-0">
-          <div className=" custom-skeleton p-4">
-            <div className="flex justify-content-between mt-3 mb-3">
-              <div className="mr-2">
-                <Skeleton
-                  width="13rem"
-                  height="3rem"
-                  className="mb-2"
-                ></Skeleton>
-              </div>
-
-              <Skeleton width="40rem" height="3rem"></Skeleton>
-            </div>
-
-            <Skeleton width="100%" height="18rem" className="mb-2"></Skeleton>
-          </div>
-        </div>
-      ) : (
-        <>
-          <div className="card">
-            <ProgramacionVentanaAngenaV2 events={auxProgramacionVentanas} />
-          </div>
-        </>
-      )}
       <div className="grid flex">
         <div className="col-12">
           <div className="card  text-center">
@@ -166,20 +152,6 @@ const Agenda = () => {
         </div>
       </div>
       <div className="grid flex">
-        {auxTerminalMaroilPuesto1.length === 0 && (
-          <div className="col-12 lg:col-6 xl:col-3">
-            <div className="card  ">
-              <span className="text-900 text-center fw-bold fst-italic mb-2">
-                MAROIL Puesto de Espera (Oeste)
-              </span>
-              {terminalMaroilPuesto1.map((events) => (
-                <>
-                  <ProgramacionVentanaCard key={events.id} events={events} />
-                </>
-              ))}
-            </div>
-          </div>
-        )}
         {auxTerminalMaroilPuesto2.length === 0 && (
           <div className="col-12 lg:col-6 xl:col-3">
             <div className="card  ">
@@ -194,7 +166,20 @@ const Agenda = () => {
             </div>
           </div>
         )}
-
+        {auxTerminalMaroilPuesto3.length === 0 && (
+          <div className="col-12 lg:col-6 xl:col-3">
+            <div className="card  ">
+              <span className="text-900 text-center fw-bold fst-italic mb-2">
+                Puesto de Carga S.T.S. (Este)
+              </span>
+              {terminalMaroilPuesto3.map((events) => (
+                <>
+                  <ProgramacionVentanaCard key={events.id} events={events} />
+                </>
+              ))}
+            </div>
+          </div>
+        )}
         {auxTerminalPetroSanFelix.length === 0 && (
           <div className="col-12 lg:col-6 xl:col-3">
             <div className="card  ">
@@ -223,13 +208,27 @@ const Agenda = () => {
             </div>
           </div>
         )}
-        {auxTerminalMaroilPuesto3.length === 0 && (
+        {auxTerminalMaroilPuesto1.length === 0 && (
           <div className="col-12 lg:col-6 xl:col-3">
             <div className="card  ">
               <span className="text-900 text-center fw-bold fst-italic mb-2">
-                Puesto de Carga S.T.S. (Este)
+                MAROIL Puesto de Espera (Oeste)
               </span>
-              {terminalMaroilPuesto3.map((events) => (
+              {terminalMaroilPuesto1.map((events) => (
+                <>
+                  <ProgramacionVentanaCard key={events.id} events={events} />
+                </>
+              ))}
+            </div>
+          </div>
+        )}
+        {auxTerminalBuquesFondeados.length === 0 && (
+          <div className="col-12 lg:col-6 xl:col-3">
+            <div className="card  ">
+              <span className="text-900 text-center fw-bold fst-italic mb-2">
+                BUQUES FONDEADOS
+              </span>
+              {terminalBuquesFondeados.map((events) => (
                 <>
                   <ProgramacionVentanaCard key={events.id} events={events} />
                 </>
@@ -238,6 +237,31 @@ const Agenda = () => {
           </div>
         )}
       </div>
+      {auxProgramacionVentanas.length === 0 ? (
+        <div className="field col-12  pr-0">
+          <div className=" custom-skeleton p-4">
+            <div className="flex justify-content-between mt-3 mb-3">
+              <div className="mr-2">
+                <Skeleton
+                  width="13rem"
+                  height="3rem"
+                  className="mb-2"
+                ></Skeleton>
+              </div>
+
+              <Skeleton width="40rem" height="3rem"></Skeleton>
+            </div>
+
+            <Skeleton width="100%" height="18rem" className="mb-2"></Skeleton>
+          </div>
+        </div>
+      ) : (
+        <>
+          <div className="card">
+            <ProgramacionVentanaAngenaV2 events={auxProgramacionVentanas} />
+          </div>
+        </>
+      )}
     </div>
   )
 }

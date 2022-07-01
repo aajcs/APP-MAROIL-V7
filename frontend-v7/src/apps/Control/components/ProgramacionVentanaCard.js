@@ -33,15 +33,20 @@ function ProgramacionVentanaCard({ events }) {
         className="card Pb-0 border-bottom-0 border-start-0 border-2  mb-0 text-end animate__animated animate__rotateInDownRight animate__slower"
         style={{ 'border-color': ubicacionBuqueTag, padding: 0 }}
       >
-        <span className="mr-2  fst-italic ">
-          {events.fechaInicioVentana <= moment().add(1, 'days').format()
-            ? events.buqueCliente === 'MANTENIMIENTO'
-              ? 'Mantenimeinto Actual en Ventana'
-              : 'Buque Actual en Ventana'
-            : events.buqueCliente === 'MANTENIMIENTO'
-            ? 'Mantenimeinto Próximo en Ventana'
-            : 'Buque Próximo en Ventana'}
-        </span>
+        {' '}
+        {events.terminalBuque !== 'BUQUES FONDEADOS' && (
+          <>
+            <span className="mr-2  fst-italic ">
+              {events.fechaInicioVentana <= moment().add(1, 'days').format()
+                ? events.buqueCliente === 'MANTENIMIENTO'
+                  ? 'Mantenimeinto Actual en Ventana'
+                  : 'Buque Actual en Ventana'
+                : events.buqueCliente === 'MANTENIMIENTO'
+                ? 'Mantenimeinto Próximo en Ventana'
+                : 'Buque Próximo en Ventana'}
+            </span>{' '}
+          </>
+        )}
       </div>
 
       <div
@@ -67,8 +72,12 @@ function ProgramacionVentanaCard({ events }) {
         </span> */}
         <span className="text-500">
           {' '}
-          {moment(events.fechaInicioVentana).format('DD-MMMM')} {' => '}{' '}
-          {moment(events.fechaFinVentana).format('DD-MMMM')}{' '}
+          {events.terminalBuque !== 'BUQUES FONDEADOS' && (
+            <>
+              {moment(events.fechaInicioVentana).format('DD-MMMM')} {' => '}{' '}
+              {moment(events.fechaFinVentana).format('DD-MMMM')}{' '}
+            </>
+          )}
         </span>
         <span className="text-end p-0"></span>
       </div>

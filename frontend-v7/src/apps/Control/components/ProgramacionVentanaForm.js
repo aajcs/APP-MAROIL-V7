@@ -91,7 +91,8 @@ const ProgramacionVentanaForm = (props) => {
     { name: 'Puesto de Carga (Centro)' },
     { name: 'Puesto de Carga S.T.S. (Este)' },
     { name: 'PETRO SAN FELIX' },
-    { name: 'PETRO CEDENO' }
+    { name: 'PETRO CEDENO' },
+    { name: 'BUQUES FONDEADOS' }
   ]
   const onTerminalBuque = (e) => {
     setSelectTerminalBuque(e.value)

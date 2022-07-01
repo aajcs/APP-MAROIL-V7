@@ -12,6 +12,7 @@ import moment from 'moment'
 const BuquePorClienteList = () => {
   const { reporteCargaGOMs } = useContext(ReporteCargaGOMContext)
   const { barcos } = useContext(BarcoContext)
+  const [totalVolumeria, setTotalVolumetria] = useState(0)
 
   const [chartData1, setChartData1] = useState({
     labels: ['MAROIL', 'PDVSA'],
@@ -241,6 +242,9 @@ const BuquePorClienteList = () => {
           contTerminalfelixPdvsa
         ]
       }
+    )
+    setTotalVolumetria(
+      contTerminalMaroilTm + contTerminalCedenoTm + contTerminalfelixTm
     )
   }
   let auxOtro3 = []
@@ -517,6 +521,9 @@ const BuquePorClienteList = () => {
     return (
       <div className="card">
         <Chart type="bar" data={chartData2} options={lightOptions2} />{' '}
+        <div className="mt-3 text-center text-900 font-medium text-xl">
+          {'VOLUMETRÍA TOTAL'} {new Intl.NumberFormat().format(totalVolumeria)}
+        </div>
       </div>
     )
   }

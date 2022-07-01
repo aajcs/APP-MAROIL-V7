@@ -148,7 +148,7 @@ class ProgramacionVentanaAngenaV2 extends Component {
 
     let schedulerData = new SchedulerData(
       moment().format(DATE_FORMAT),
-      ViewTypes.Quarter,
+      ViewTypes.Year,
       false,
       false,
       {

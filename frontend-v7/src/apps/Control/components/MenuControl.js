@@ -4,6 +4,9 @@ import AuthUse from '../../../auth/AuthUse'
 
 export const MenuControl = () => {
   const auth = AuthUse()
+  const usersBloqueo = ['vina', 'psuarez']
+  const userBloqueo = usersBloqueo.filter((x) => x === auth.user.faidUser.user)
+
   const panelMenuitems = [
     {
       label: 'ESCRITORIO',
@@ -32,13 +35,14 @@ export const MenuControl = () => {
           permi1: 'LECTURA',
           permi2: 'OPERADOR'
         },
-        {
+        userBloqueo.length === 0 && {
           label: 'PROGRAMACIÓN DE VENTANA',
           icon: 'pi pi-fw pi-ticket',
           to: '/apps/control/programacionventanaAgendaPage',
           permi: 'ADMIN',
           permi1: 'LECTURA',
-          permi2: 'OPERADOR'
+          permi2: 'OPERADOR',
+          permi3: 'NOVER'
         }
       ]
     },
@@ -61,8 +65,8 @@ export const MenuControl = () => {
       icon: 'pi pi-fw pi-chart-bar',
 
       items: [
-        {
-          label: 'BUQUES POR CONSIGNATARIO',
+        userBloqueo.length === 0 && {
+          label: 'MÓDULO DE GRÁFICOS',
           icon: 'pi pi-fw pi-chart-bar',
           to: '/apps/control/BuquesPorCliente',
           permi: 'ADMIN',
@@ -162,6 +166,7 @@ export const MenuControl = () => {
         // }
       ]
     },
+
     auth.user.faidUser.roles[0] !== 'LECTURA' &&
       auth.user.faidUser.roles[0] !== 'ADMIN' && {
         label: 'CARGA DE INFORMACION',

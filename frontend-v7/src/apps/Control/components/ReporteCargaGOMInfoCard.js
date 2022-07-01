@@ -109,6 +109,8 @@ function ReporteCargaGOMInfoCard({ barcos }) {
 
   const ubicacionBuqueTag =
     ubicacionBuqueTags[reporteCargaGOM[ultimoRegistro].ubicacionBuque]
+
+  console.log(barcos)
   return (
     <div className="col-12 lg:col-6 xl:col-4">
       <div className="card mt-2 mb-0 pb-0 ">
@@ -179,6 +181,13 @@ function ReporteCargaGOMInfoCard({ barcos }) {
           </h6>
           <h6 className="card-text mt-0 mb-2">
             Cantidad Nominada:
+            <span className=" font-medium">
+              {' '}
+              {new Intl.NumberFormat().format(barcos.toneladasCapacidad)} Tm
+            </span>
+          </h6>
+          <h6 className="card-text mt-0 mb-2">
+            Requerida por el Buque:
             <span className=" font-medium">
               {' '}
               {new Intl.NumberFormat().format(barcos.toneladasNominadas)} Tm

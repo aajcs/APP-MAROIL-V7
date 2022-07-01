@@ -1,3 +1,4 @@
+/* eslint-disable multiline-ternary */
 /* eslint-disable react/prop-types */
 /* eslint-disable prefer-const */
 import React, { useState } from 'react'
