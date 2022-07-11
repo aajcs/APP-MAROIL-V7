@@ -2,11 +2,11 @@ import axios from 'axios'
 
 export class ProgramacionVentanaService {
   // baseUrl = "http://localhost:8080/api/programacionVentanas/";
-  // baseUrl = '  https://apimaroil.herokuapp.com/api/'
+  // baseUrl = '  http://10.20.40.196:4000/api/'
   // baseUrl = "http://10.20.40.159:4000/api/";
   // baseUrl = "https://hg-rest-api.herokuapp.com/api/programacionVentanas/";
-  baseUrl = 'https://apimaroil.herokuapp.com/api/'
-  // baseUrl = 'https://apimaroil.herokuapp.com/api/'
+  baseUrl = 'http://10.20.40.196:4000/api/'
+  // baseUrl = 'http://10.20.40.196:4000/api/'
 
   readAll(token) {
     const config = {

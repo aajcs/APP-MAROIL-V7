@@ -3,6 +3,7 @@ import { useContext, useState } from 'react'
 import { Switch, Route, Redirect } from 'react-router-dom'
 
 import PrivateRoute from '../../../routes/PrivateRoute'
+import PrivateAdminRoute from '../../../routes/PrivateAdminRoute'
 import { HomeControl } from '../pages/HomeControl'
 
 import classNames from 'classnames'
@@ -131,12 +132,12 @@ export default function appControlRouter() {
               path="/apps/control/programacionVentana"
               component={ProgramacionVentana}
             />
-            <PrivateRoute
+            <PrivateAdminRoute
               exact
               path="/apps/control/programacionventanaAgendaPage"
               component={ProgramacionVentanaAgendaPage}
             />
-            <PrivateRoute
+            <PrivateAdminRoute
               exact
               path="/apps/control/BuquesPorCliente"
               component={BuquesPorCliente}

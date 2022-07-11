@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable array-callback-return */
 /* eslint-disable indent */
 /* eslint-disable prefer-const */
@@ -521,9 +522,9 @@ const BuquePorClienteList = () => {
     return (
       <div className="card">
         <Chart type="bar" data={chartData2} options={lightOptions2} />{' '}
-        <div className="mt-3 text-center text-900 font-medium text-xl">
+        {/* <div className="mt-3 text-center text-900 font-medium text-xl">
           {'VOLUMETRÍA TOTAL'} {new Intl.NumberFormat().format(totalVolumeria)}
-        </div>
+        </div> */}
       </div>
     )
   }

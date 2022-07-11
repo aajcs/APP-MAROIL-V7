@@ -274,7 +274,7 @@ const ReporteCargaGOMForm = (props) => {
           <br />
           <div className="formgrid grid">
             <div className="field col-12 md:col-6">
-              <h5>ubicacionBuque</h5>
+              <h5>Ubicacion Buque</h5>
               <Dropdown
                 value={selectedubicacionBuqueReporteCargaGOM}
                 options={ubicacionBuqueReporteCargaGOM}
@@ -313,8 +313,10 @@ const ReporteCargaGOMForm = (props) => {
             )}
           </div>
           <div className="formgrid grid">
-            <div className="field col-6 p-col-2 p-md-1">
-              <label htmlFor="toneladasCargadasGOM">toneladasCargadasGOM</label>
+            <div className="field col-12 p-col-2 p-md-1 md:col-6">
+              <label htmlFor="toneladasCargadasGOM">
+                Toneladas Cargadas GOM
+              </label>
               <InputNumber
                 inputId="toneladasCargadasGOM"
                 value={reporteCargaGOMData.toneladasCargadasGOM}
@@ -323,16 +325,19 @@ const ReporteCargaGOMForm = (props) => {
                 }
                 showButtons
                 buttonLayout="horizontal"
-                step={1}
+                step={0.25}
                 decrementButtonClassName="p-button-danger"
                 incrementButtonClassName="p-button-success"
                 incrementButtonIcon="pi pi-plus"
                 decrementButtonIcon="pi pi-minus"
+                mode="decimal"
+                minFractionDigits={3}
+                maxFractionDigits={5}
                 suffix=" TM"
               />
             </div>{' '}
-            <div className="field col-6 p-col-2 p-md-1">
-              <label htmlFor="tasaDeCargaGOM">tasaDeCargaGOM</label>
+            <div className="field col-12 p-col-2 p-md-1 md:col-6">
+              <label htmlFor="tasaDeCargaGOM">Tasa De Carga GOM</label>
               <InputNumber
                 inputId="tasaDeCargaGOM"
                 value={reporteCargaGOMData.tasaDeCargaGOM}
@@ -363,7 +368,7 @@ const ReporteCargaGOMForm = (props) => {
               value={reporteCargaGOMData.comentariosGOM}
               onChange={(e) => updateField(e.target.value, 'comentariosGOM')}
             />
-            <label>comentariosGOM:</label>
+            <label>Comentarios GOM:</label>
           </div>{' '}
           <br />
           <div className="p-float-label">
@@ -371,7 +376,7 @@ const ReporteCargaGOMForm = (props) => {
               value={reporteCargaGOMData.observacionesGOM}
               onChange={(e) => updateField(e.target.value, 'observacionesGOM')}
             />
-            <label>observacionesGOM:</label>
+            <label>Observaciones GOM:</label>
           </div>
           <br />
         </div>

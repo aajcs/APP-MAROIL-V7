@@ -39,10 +39,7 @@ export const MenuControl = () => {
           label: 'PROGRAMACIÓN DE VENTANA',
           icon: 'pi pi-fw pi-ticket',
           to: '/apps/control/programacionventanaAgendaPage',
-          permi: 'ADMIN',
-          permi1: 'LECTURA',
-          permi2: 'OPERADOR',
-          permi3: 'NOVER'
+          permi: 'ADMIN'
         }
       ]
     },
@@ -69,9 +66,7 @@ export const MenuControl = () => {
           label: 'MÓDULO DE GRÁFICOS',
           icon: 'pi pi-fw pi-chart-bar',
           to: '/apps/control/BuquesPorCliente',
-          permi: 'ADMIN',
-          permi1: 'LECTURA',
-          permi2: 'OPERADOR'
+          permi: 'ADMIN'
         },
         {
           label: 'MAPA',
