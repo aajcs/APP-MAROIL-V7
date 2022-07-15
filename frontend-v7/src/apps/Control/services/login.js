@@ -1,10 +1,10 @@
 import axios from 'axios'
 
-const baseUrl = 'http://10.20.40.196:4000/api/'
-// const baseUrl = 'http://10.20.40.196:4000/api/'
-// const baseUrl = '  http://10.20.40.196:4000/api/usuario/login'
+const baseUrl = 'https://apimaroil.herokuapp.com/api/'
+// const baseUrl = 'https://apimaroil.herokuapp.com/api/'
+// const baseUrl = '  https://apimaroil.herokuapp.com/api/usuario/login'
 
-// baseUrl = "  http://10.20.40.196:4000/api/";
+// baseUrl = "  https://apimaroil.herokuapp.com/api/";
 // baseUrl = "http://10.20.40.159:4000/api/";
 const login = async (credentials) => {
   const { data } = await axios.post(baseUrl, credentials)

@@ -22,9 +22,10 @@ import {
 import { scaleLinear } from 'd3-scale'
 import buqueMapa from '../assetsControl/buqueMapa.png'
 import banderaMapa from '../assetsControl/BanderaMapa'
+import featureJson from '../assetsControl/features.json'
 
-const geoUrl =
-  'https://raw.githubusercontent.com/zcreativelabs/react-simple-maps/master/topojson-maps/world-110m.json'
+const geoUrl = featureJson
+console.log(geoUrl)
 
 const rounded = (num) => {
   if (num > 1000000000) {

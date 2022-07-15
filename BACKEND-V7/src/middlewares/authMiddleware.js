@@ -8,8 +8,9 @@ const authMiddleware = async (req, res, next) => {
     if (token) {
       const verify = jwt.verify(token, process.env.PRIVATE_KEY)
       if (verify) {
-        req.userID = verify
-        const user = await User.findById(verify)
+        console.log(verify)
+        req.userID = verify.id
+        const user = await User.findById(verify.id)
         if (user) {
           req.user = user
           next()
@@ -31,6 +32,13 @@ const authMiddleware = async (req, res, next) => {
       })
     }
   } catch (error) {
+    console.log(error.name)
+    if (error.name === 'TokenExpiredError') {
+      return res.status(400).json({
+        status: false,
+        message: 'The token is expired.'
+      })
+    }
     return res.status(400).json({
       status: false,
       message: 'The token is invalid.'

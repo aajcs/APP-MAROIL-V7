@@ -8,6 +8,7 @@ export const AuthContext = createContext()
 // eslint-disable-next-line react/prop-types
 export default function AuthProvider({ children }) {
   // const [user, setUser] = useState(null);
+  console.log(user1)
   const [user, setUser] = useState(user1 || null)
 
   const isLogged = () => !!user

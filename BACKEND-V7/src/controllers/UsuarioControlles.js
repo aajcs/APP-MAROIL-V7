@@ -175,9 +175,17 @@ usuarioCtrl.login = async (req, res) => {
       })
     }
 
+    const userForToken = {
+      id: faidUser._id.toString(),
+      username: user.username
+    }
     try {
       // crea el token del usario manera simple la de medudev es mas extensa con el beard
-      const token = jwt.sign(faidUser._id.toString(), process.env.PRIVATE_KEY)
+      const token = jwt.sign(userForToken, process.env.PRIVATE_KEY, {
+        expiresIn: 60
+      })
+
+      console.log(token)
 
       return res.status(200).json({
         faidUser,
@@ -185,8 +193,10 @@ usuarioCtrl.login = async (req, res) => {
         message: 'Login correct.'
       })
     } catch (err) {
+      console.log(err)
       res.status(400).json({
-        error: err
+        error: err,
+        message: 'aqui esta el error?'
       })
     }
   } else {
