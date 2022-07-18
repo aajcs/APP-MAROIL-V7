@@ -1,8 +1,7 @@
-/* eslint-disable prefer-const */
 /* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
 
-import React, { useContext, useState, useRef, useEffect } from 'react'
+import React, { useContext, useState, useRef } from 'react'
 import { DataTable } from 'primereact/datatable'
 import { Column } from 'primereact/column'
 import { Button } from 'primereact/button'
@@ -14,13 +13,8 @@ import { BarcoContext } from '../contexts/BarcoContext'
 import ReporteCargaGOMForm from './ReporteCargaGOMForm'
 import { InputText } from 'primereact/inputtext'
 import moment from 'moment'
-import { BarcoService } from '../services/BarcoService'
-import AuthUse from '../../../auth/AuthUse'
 
 const ReporteCargaGOMList = () => {
-  const barcoService = new BarcoService()
-  const auth = AuthUse()
-  const token = auth.user.token
   const {
     reporteCargaGOMs,
     findReporteCargaGOM,
@@ -28,14 +22,11 @@ const ReporteCargaGOMList = () => {
     loading
   } = useContext(ReporteCargaGOMContext)
   const { barcos } = useContext(BarcoContext)
-  const [barcostodos, setBarcostodos] = useState(barcos)
-
   const [reporteCargaGOM, setReporteCargaGOM] = useState(reporteCargaGOMs)
   const [deleteReporteCargaGOMDialog, setDeleteReporteCargaGOMDialog] =
     useState(false)
   const [globalFilter, setGlobalFilter] = useState(null)
   const [expandedRows, setExpandedRows] = useState([])
-  const [expandedRows2, setExpandedRows2] = useState(null)
   const [isVisible, setIsVisible] = useState(false)
   const [selectedProducts, setSelectedProducts] = useState(null)
   const dt = useRef(null)
@@ -52,12 +43,6 @@ const ReporteCargaGOMList = () => {
       life: 3000
     })
   }
-
-  useEffect(() => {
-    barcoService.readAll(token).then((data) => {
-      setBarcostodos(data)
-    })
-  }, [reporteCargaGOMs])
 
   const onRowGroupCollapse = (event) => {
     toast.current.show({
@@ -187,100 +172,7 @@ const ReporteCargaGOMList = () => {
     const fecha = moment(rowData.reporteCargaGOMModificado)
     return fecha.format('dddDD/MM/YY HH:mm')
   }
-  const onRowExpand = (event) => {
-    toast.current.show({
-      severity: 'info',
-      summary: 'Grupo de filas ampliado',
-      detail: 'Buque: ' + event.data.nombreBarco,
-      life: 3000
-    })
-    console.log(event)
-  }
 
-  const onRowCollapse = (event) => {
-    toast.current.show({
-      severity: 'success',
-      summary: 'Product Collapsed',
-      detail: event.data.name,
-      life: 3000
-    })
-  }
-  const expandAll = () => {
-    let _expandedRows = {}
-    barcos.forEach((p) => (_expandedRows[`${p.id}`] = true))
-
-    setExpandedRows2(_expandedRows)
-  }
-
-  const collapseAll = () => {
-    setExpandedRows2(null)
-  }
-  const header2 = (
-    <div className="flex flex-column md:flex-row md:justify-content-between md:align-items-center">
-      <Button
-        icon="pi pi-plus"
-        label="Expand All"
-        onClick={expandAll}
-        className="mr-2"
-      />
-      <Button icon="pi pi-minus" label="Collapse All" onClick={collapseAll} />
-      <span className="block mt-2 md:mt-0 p-input-icon-left">
-        <i className="pi pi-search" />
-        <InputText
-          type="search"
-          onInput={(e) => setGlobalFilter(e.target.value)}
-          placeholder="Buscar..."
-        />
-      </span>
-    </div>
-  )
-
-  const rowExpansionTemplate = (data) => {
-    return (
-      <div className="orders-subtable">
-        <h5>Reporte GOM del buque {data.nombreBarco}</h5>
-        <DataTable
-          value={data.reporteCargaGOM}
-          responsiveLayout="scroll"
-          sortField="data.reporteCargaGOMCreado"
-          sortOrder={1}
-        >
-          <Column body={actionBodyTemplate}></Column>
-          <Column field="ubicacionBuque" header="ubicacionBuque" />
-          <Column field="puestoTerminal" header="puestoTerminal" />
-
-          <Column
-            field="toneladasCargadasGOM"
-            header="toneladas Cargadas GOM"
-          />
-          <Column field="tasaDeCargaGOM" header="tasaDeCargaGOM" />
-          <Column field="etc" header="etc" />
-          <Column field="comentariosGOM" header="comentarios GOM" />
-          <Column field="observacionesGOM" header="observaciones GOM" />
-          <Column
-            field="reporteCargaGOMCreado"
-            header="reporte CargaGOM Creado"
-            body={reporteCargaGOMCreadoTemplate}
-            dataType="date"
-            sortable
-          />
-          <Column
-            field="reporteCargaGOMModificado"
-            body={reporteCargaGOMModificadoTemplate}
-            header="reporte CargaGOM Modificado"
-            dataType="date"
-          />
-        </DataTable>
-      </div>
-    )
-  }
-  const estatusTemplate = (rowData) => {
-    return (
-      <span className={`text-gray-900 ml-3 status-${rowData.estatusBarco}`}>
-        {rowData.estatusBarco}
-      </span>
-    )
-  }
   return (
     <>
       <Toast ref={toast} />
@@ -290,42 +182,6 @@ const ReporteCargaGOMList = () => {
         right={rightToolbarTemplate}
       ></Toolbar>
 
-      <div className="card">
-        <DataTable
-          value={barcostodos}
-          expandedRows={expandedRows2}
-          onRowToggle={(e) => setExpandedRows2(e.data)}
-          onRowExpand={onRowExpand}
-          onRowCollapse={onRowCollapse}
-          responsiveLayout="scroll"
-          rowExpansionTemplate={rowExpansionTemplate}
-          dataKey="id"
-          header={header2}
-          globalFilter={globalFilter}
-          sortField="estatusBarco"
-          sortOrder={-1}
-        >
-          <Column expander style={{ width: '3em' }} />
-          <Column field="nombreBarco" header="nombre Barco" sortable />
-          <Column field="buqueCliente" header="buqueCliente" sortable />
-          <Column
-            body={estatusTemplate}
-            field="estatusBarco"
-            header="estatusBarco"
-            sortable
-          />
-          <Column
-            field="toneladasCapacidad"
-            header="toneladas Nominadas"
-            sortable
-          />
-          <Column
-            field="toneladasNominadas"
-            header="toneladas Solicitadas"
-            sortable
-          />
-        </DataTable>
-      </div>
       <DataTable
         ref={dt}
         value={reporteCargaGOMs}

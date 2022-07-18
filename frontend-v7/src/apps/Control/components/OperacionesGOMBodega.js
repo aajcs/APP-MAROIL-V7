@@ -12,7 +12,8 @@ export const OperacionesGOMBodega = () => {
   const [bodegasDelBarco, setBodegasDelBarco] = useState(null)
   const { barcos } = useContext(BarcoContext)
   const { cargaBodegas, updateCargaBodega } = useContext(CargaBodegaContext)
-  const barcoIDGOM = barcos
+
+  const barcoIDGOM = barcos.filter((p) => p.estatusBarco === 'OPERATIVO' && p)
   const onuBarcoIDGOM = (e) => {
     setSelectedBarcoIDGOM(e.value)
     findBodegaBarco(e.value.id)

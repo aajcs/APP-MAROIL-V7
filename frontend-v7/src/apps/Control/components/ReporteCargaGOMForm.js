@@ -325,14 +325,14 @@ const ReporteCargaGOMForm = (props) => {
                 }
                 showButtons
                 buttonLayout="horizontal"
-                step={0.25}
+                step={1}
                 decrementButtonClassName="p-button-danger"
                 incrementButtonClassName="p-button-success"
                 incrementButtonIcon="pi pi-plus"
                 decrementButtonIcon="pi pi-minus"
-                mode="decimal"
-                minFractionDigits={3}
-                maxFractionDigits={5}
+                // mode="decimal"
+                // minFractionDigits={3}
+                // maxFractionDigits={5}
                 suffix=" TM"
               />
             </div>{' '}

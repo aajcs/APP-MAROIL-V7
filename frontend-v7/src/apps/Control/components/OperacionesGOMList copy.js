@@ -38,13 +38,45 @@ const OperacionesGOMList = () => {
   const [deleteReporteCargaGOMDialog, setDeleteReporteCargaGOMDialog] =
     useState(false)
   const [globalFilter, setGlobalFilter] = useState(null)
+  const [expandedRows, setExpandedRows] = useState([])
   const [expandedRows2, setExpandedRows2] = useState(null)
   const [isVisible, setIsVisible] = useState(false)
+  const [selectedProducts, setSelectedProducts] = useState(null)
   const dt = useRef(null)
   const toast = useRef(null)
   const saveReporteCargaGOM = (id) => {
     findReporteCargaGOM(id)
     setIsVisible(true)
+  }
+  const onRowGroupExpand = (event) => {
+    toast.current.show({
+      severity: 'info',
+      summary: 'Grupo de filas ampliado',
+      detail: 'Buque: ' + event.data.barcoID.nombreBarco,
+      life: 3000
+    })
+  }
+
+  const onRowGroupCollapse = (event) => {
+    toast.current.show({
+      severity: 'success',
+      summary: 'Grupo de filas contraído',
+      detail: 'Bueque: ' + event.data.barcoID.nombreBarco,
+      life: 3000
+    })
+  }
+  const headerTemplate = (data) => {
+    return (
+      <React.Fragment>
+        <span className="image-text">{data.barcoID.nombreBarco}</span>
+        {'  '}
+        <span
+          className={`text-gray-900 ml-3 status-${data.barcoID.estatusBarco}`}
+        >
+          {data.barcoID.estatusBarco}
+        </span>
+      </React.Fragment>
+    )
   }
 
   useEffect(() => {
@@ -109,6 +141,12 @@ const OperacionesGOMList = () => {
           className="p-button-rounded p-button-success mr-2"
           onClick={() => saveReporteCargaGOM(rowData.id)}
         />
+
+        <Button
+          icon="pi pi-trash"
+          className="p-button-rounded p-button-warning"
+          onClick={() => confirmDeleteReporteCargaGOM(rowData)}
+        />
       </div>
     )
   }
@@ -160,11 +198,11 @@ const OperacionesGOMList = () => {
     <div className="flex flex-column md:flex-row md:justify-content-between md:align-items-center">
       <Button
         icon="pi pi-plus"
-        label="Expandir Todos"
+        label="Expand All"
         onClick={expandAll}
         className="mr-2"
       />
-      <Button icon="pi pi-minus" label="Reducir Todos" onClick={collapseAll} />
+      <Button icon="pi pi-minus" label="Collapse All" onClick={collapseAll} />
       <span className="block mt-2 md:mt-0 p-input-icon-left">
         <i className="pi pi-search" />
         <InputText
@@ -183,13 +221,10 @@ const OperacionesGOMList = () => {
         <DataTable
           value={data.reporteCargaGOM}
           responsiveLayout="scroll"
-          sortField="data.reporteCargaGOMModificado"
-          sortOrder={-1}
+          sortField="data.reporteCargaGOMCreado"
+          sortOrder={1}
         >
-          {(auth.user.faidUser.roles[0] === 'ADMIN' ||
-            auth.user.faidUser.roles[0] === 'SUPERADMIN') && (
-            <Column body={actionBodyTemplate}></Column>
-          )}
+          <Column body={actionBodyTemplate}></Column>
           <Column field="ubicacionBuque" header="ubicacionBuque" />
           <Column field="puestoTerminal" header="puestoTerminal" />
 
@@ -201,13 +236,18 @@ const OperacionesGOMList = () => {
           <Column field="etc" header="etc" />
           <Column field="comentariosGOM" header="comentarios GOM" />
           <Column field="observacionesGOM" header="observaciones GOM" />
-
+          <Column
+            field="reporteCargaGOMCreado"
+            header="reporte CargaGOM Creado"
+            body={reporteCargaGOMCreadoTemplate}
+            dataType="date"
+            sortable
+          />
           <Column
             field="reporteCargaGOMModificado"
             body={reporteCargaGOMModificadoTemplate}
             header="reporte CargaGOM Modificado"
             dataType="date"
-            sortable
           />
         </DataTable>
       </div>
@@ -244,7 +284,6 @@ const OperacionesGOMList = () => {
             globalFilter={globalFilter}
             sortField="estatusBarco"
             sortOrder={-1}
-            loading={loading}
           >
             <Column expander style={{ width: '3em' }} />
             <Column field="nombreBarco" header="nombre Barco" sortable />
