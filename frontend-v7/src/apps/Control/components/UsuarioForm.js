@@ -79,7 +79,8 @@ const UsuarioForm = (props) => {
     { name: 'SUPERADMIN' },
     { name: 'ADMIN' },
     { name: 'OPERADOR' },
-    { name: 'LECTURA' }
+    { name: 'LECTURA' },
+    { name: 'CLIENTE' }
   ]
   const cboApps = [
     { name: 'SUPERAPPS' },

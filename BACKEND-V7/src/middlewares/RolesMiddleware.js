@@ -62,7 +62,8 @@ ControllerRolesCtrl.isLectura = async (req, res, next) => {
         roles[i] === 'SUPERADMIN' ||
         roles[i] === 'ADMIN' ||
         roles[i] === 'OPERADOR' ||
-        roles[i] === 'LECTURA'
+        roles[i] === 'LECTURA' ||
+        roles[i] === 'CLIENTE'
       ) {
         next()
         return

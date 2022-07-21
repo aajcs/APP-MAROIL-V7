@@ -211,6 +211,7 @@ const BarcoList = () => {
         <Column field="nombreBarco" header="nombre Barco" />
         <Column field="descripcion" header="descripcion" />
         <Column field="buqueCliente" header="buqueCliente" />
+        <Column field="buqueClienteVenta" header="buqueClienteVenta" />
         <Column field="buquePaisDestino" header="buquePaisDestino" />
         <Column field="toneladasCapacidad" header="toneladas Nominadas" />
         <Column field="toneladasNominadas" header="toneladas Solicitadas" />

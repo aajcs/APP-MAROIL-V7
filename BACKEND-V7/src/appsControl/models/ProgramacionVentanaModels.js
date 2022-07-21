@@ -17,6 +17,9 @@ const programacionVentanaSchema = new Schema(
     buqueCliente: {
       type: String
     },
+    buqueClienteVenta: {
+      type: String
+    },
     buquePaisDestino: {
       type: String
     },

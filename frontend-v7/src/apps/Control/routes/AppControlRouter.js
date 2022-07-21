@@ -27,6 +27,7 @@ import { MapaEstadisticoPage } from '../pages/MapaEstadisticoPage'
 import { ProgramacionVentana } from '../pages/ProgramacionVentanaPage'
 import { ModeladoOperacionPage } from '../pages/ModeladoOperacionPage'
 import { ProgramacionVentanaAgendaPage } from '../pages/ProgramacionVentanaAgendaPage'
+import { ReporteCargaGOMInfoPageCrec10 } from '../pages/ReporteCargaGOMInfoPageCrec10'
 
 export default function appControlRouter() {
   const { staticMenuInactive, onToggleMenuClick } = useContext(ConfigContext)
@@ -91,6 +92,11 @@ export default function appControlRouter() {
               exact
               path="/apps/control/reportecargaGOMInfo"
               component={ReporteCargaGOMInfoPage}
+            />
+            <PrivateRoute
+              exact
+              path="/apps/control/reportecargaGOMInfoCrec10"
+              component={ReporteCargaGOMInfoPageCrec10}
             />
             <PrivateRoute
               exact

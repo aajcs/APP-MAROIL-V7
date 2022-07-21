@@ -190,22 +190,22 @@ const OperacionesGOMList = () => {
             auth.user.faidUser.roles[0] === 'SUPERADMIN') && (
             <Column body={actionBodyTemplate}></Column>
           )}
-          <Column field="ubicacionBuque" header="ubicacionBuque" />
-          <Column field="puestoTerminal" header="puestoTerminal" />
+          <Column field="ubicacionBuque" header="Terminar" />
+          <Column field="puestoTerminal" header="Puesto Terminal" />
 
           <Column
             field="toneladasCargadasGOM"
-            header="toneladas Cargadas GOM"
+            header="Toneladas Cargadas GOM"
           />
-          <Column field="tasaDeCargaGOM" header="tasaDeCargaGOM" />
+          <Column field="tasaDeCargaGOM" header="Tasa De Carga GOM" />
           <Column field="etc" header="etc" />
-          <Column field="comentariosGOM" header="comentarios GOM" />
-          <Column field="observacionesGOM" header="observaciones GOM" />
+          <Column field="comentariosGOM" header="Comentarios GOM" />
+          <Column field="observacionesGOM" header="Observaciones GOM" />
 
           <Column
             field="reporteCargaGOMModificado"
             body={reporteCargaGOMModificadoTemplate}
-            header="reporte CargaGOM Modificado"
+            header="Carga GOM Modificado"
             dataType="date"
             sortable
           />
@@ -247,22 +247,22 @@ const OperacionesGOMList = () => {
             loading={loading}
           >
             <Column expander style={{ width: '3em' }} />
-            <Column field="nombreBarco" header="nombre Barco" sortable />
-            <Column field="buqueCliente" header="buqueCliente" sortable />
+            <Column field="nombreBarco" header="Buque" sortable />
+            <Column field="buqueCliente" header="Consignatario" sortable />
             <Column
               body={estatusTemplate}
               field="estatusBarco"
-              header="estatusBarco"
+              header="Estatus"
               sortable
             />
             <Column
               field="toneladasCapacidad"
-              header="toneladas Nominadas"
+              header="Toneladas Nominadas"
               sortable
             />
             <Column
               field="toneladasNominadas"
-              header="toneladas Solicitadas"
+              header="Toneladas Solicitadas"
               sortable
             />
           </DataTable>

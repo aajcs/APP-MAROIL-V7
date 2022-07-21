@@ -197,6 +197,7 @@ const OperacionesGOMBarco = () => {
         <Column field="nombreBarco" header="Nombre Buque" sortable />
         <Column field="descripcion" header="Descripcion" />
         <Column field="buqueCliente" header="Consignatario" />
+        <Column field="buqueClienteVenta" header="Cliente" />
         <Column field="buquePaisDestino" header="Pais Destino" />
         <Column field="toneladasCapacidad" header="Toneladas Nominadas" />
         <Column field="toneladasNominadas" header="Toneladas Solicitadas" />

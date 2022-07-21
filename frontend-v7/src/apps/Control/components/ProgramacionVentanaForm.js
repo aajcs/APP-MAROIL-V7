@@ -22,6 +22,7 @@ const ProgramacionVentanaForm = (props) => {
     descripcion: '',
     terminalBuque: '',
     buqueCliente: '',
+    buqueClienteVenta: '',
     buquePaisDestino: '',
     toneladasNominadas: 0,
     fechaInicioVentana: '',
@@ -84,6 +85,8 @@ const ProgramacionVentanaForm = (props) => {
   const [selectedProgramacionVentana, setSelectedProgramacionVentana] =
     useState(null)
   const [selectedBuqueCliente, setSelectedBuqueCliente] = useState(null)
+  const [selectedBuqueClienteVenta, setSelectedBuqueClienteVenta] =
+    useState(null)
   const [selectedCountry, setSelectedCountry] = useState(null)
   const [selectedTerminalBuque, setSelectTerminalBuque] = useState(null)
   const TerminalBuque = [
@@ -120,9 +123,14 @@ const ProgramacionVentanaForm = (props) => {
     { buqueCliente: 'PDVSA PRIORIDAD' },
     { buqueCliente: 'MANTENIMIENTO' }
   ]
+  const buqueClienteVenta = [{ buqueClienteVenta: 'CREC 10' }]
   const onBuqueCliente = (e) => {
     setSelectedBuqueCliente(e.value)
     updateField(e.value.buqueCliente, 'buqueCliente')
+  }
+  const onBuqueClienteVenta = (e) => {
+    setSelectedBuqueClienteVenta(e.value)
+    updateField(e.value.buqueClienteVenta, 'buqueClienteVenta')
   }
   const countries = [
     { name: 'Turkey', code: 'TR' },
@@ -157,6 +165,9 @@ const ProgramacionVentanaForm = (props) => {
       })
       setSelectedBuqueCliente({
         buqueCliente: editProgramacionVentana.buqueCliente
+      })
+      setSelectedBuqueClienteVenta({
+        buqueClienteVenta: editProgramacionVentana.buqueClienteVenta
       })
       setSelectTerminalBuque({
         name: editProgramacionVentana.terminalBuque
@@ -273,6 +284,25 @@ const ProgramacionVentanaForm = (props) => {
       </div>
     )
   }
+  const selectedBuqueClienteVentaTemplate = (option, props) => {
+    if (option) {
+      return (
+        <div className="country-item country-item-value">
+          <div>{option.buqueClienteVenta}</div>
+        </div>
+      )
+    }
+
+    return <span>{props.placeholder}</span>
+  }
+
+  const buqueClienteVentaOptionTemplate = (option) => {
+    return (
+      <div className="country-item">
+        <div>{option.buqueClienteVenta}</div>
+      </div>
+    )
+  }
   const selectedCountryTemplate = (option, props) => {
     if (option) {
       return (
@@ -371,9 +401,21 @@ const ProgramacionVentanaForm = (props) => {
                 options={buqueCliente}
                 onChange={onBuqueCliente}
                 optionLabel="estatusbuqueCliente"
-                placeholder="Seleccione Cliente"
+                placeholder="Seleccione Consignatario"
                 valueTemplate={selectedBuqueClienteTemplate}
                 itemTemplate={buqueClienteOptionTemplate}
+              />
+            </div>
+            <div className="field col-12 md:col-6  mb-0 ">
+              <label htmlFor="toneladasNominadas">Cliente</label>
+              <Dropdown
+                value={selectedBuqueClienteVenta}
+                options={buqueClienteVenta}
+                onChange={onBuqueClienteVenta}
+                optionLabel="estatusbuqueCliente"
+                placeholder="Seleccione Cliente"
+                valueTemplate={selectedBuqueClienteVentaTemplate}
+                itemTemplate={buqueClienteVentaOptionTemplate}
               />
             </div>
             <div className="field col-12 md:col-6">

@@ -28,6 +28,14 @@ export const MenuControl = () => {
           permi2: 'OPERADOR'
         },
         {
+          label: 'CLIENTE CREC 10',
+          icon: 'pi pi-fw pi-info-circle',
+          to: '/apps/control/reportecargaGOMInfoCrec10',
+          permi: 'ADMIN',
+          permi2: 'OPERADOR',
+          permi3: 'CLIENTE'
+        },
+        {
           label: 'BUQUE 3D',
           icon: 'pi pi-fw pi-box',
           to: '/apps/control/barco3d',
@@ -43,7 +51,7 @@ export const MenuControl = () => {
         }
       ]
     },
-    {
+    auth.user.faidUser.roles[0] !== 'CLIENTE' && {
       label: 'MODELADO',
       icon: 'pi pi-fw pi-shopping-cart',
       items: [
@@ -57,7 +65,7 @@ export const MenuControl = () => {
         }
       ]
     },
-    {
+    auth.user.faidUser.roles[0] !== 'CLIENTE' && {
       label: 'ESTADISTICAS',
       icon: 'pi pi-fw pi-chart-bar',
 
@@ -104,25 +112,27 @@ export const MenuControl = () => {
       ]
     },
 
-    auth.user.faidUser.roles[0] !== 'LECTURA' && {
-      label: 'OPERACIONES',
-      icon: 'pi pi-fw pi-shopping-cart',
-      items: [
-        {
-          label: 'GERENCIA TERRESTRE',
-          icon: 'pi pi-fw pi-server',
-          to: '/apps/control/gabarraestatus'
-        },
-        {
-          label: 'GERENCIA MARÍTIMA',
-          icon: 'pi pi-fw pi-server',
-          to: '/apps/control/OperacionesGOM',
-          permi: 'ADMIN',
-          permi2: 'OPERADOR'
-        }
-      ]
-    },
-    {
+    auth.user.faidUser.roles[0] !== 'LECTURA' &&
+      auth.user.faidUser.roles[0] !== 'CLIENTE' && {
+        label: 'OPERACIONES',
+        icon: 'pi pi-fw pi-shopping-cart',
+        items: [
+          {
+            label: 'GERENCIA TERRESTRE',
+            icon: 'pi pi-fw pi-server',
+            to: '/apps/control/gabarraestatus'
+          },
+          {
+            label: 'GERENCIA MARÍTIMA',
+            icon: 'pi pi-fw pi-server',
+            to: '/apps/control/OperacionesGOM',
+            permi: 'ADMIN',
+            permi2: 'OPERADOR'
+          }
+        ]
+      },
+
+    auth.user.faidUser.roles[0] !== 'CLIENTE' && {
       label: 'SERVICIOS',
       icon: 'pi pi-fw pi-chart-bar',
 
@@ -161,8 +171,8 @@ export const MenuControl = () => {
         // }
       ]
     },
-
-    auth.user.faidUser.roles[0] !== 'LECTURA' &&
+    auth.user.faidUser.roles[0] !== 'CLIENTE' &&
+      auth.user.faidUser.roles[0] !== 'LECTURA' &&
       auth.user.faidUser.roles[0] !== 'ADMIN' && {
         label: 'CARGA DE INFORMACION',
         icon: 'pi pi-fw pi-envelope',

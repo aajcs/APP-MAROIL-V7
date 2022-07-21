@@ -212,6 +212,7 @@ const OperacionesGOMVentana = () => {
         <Column field="nombreBuque" header="Buque" />
         <Column field="terminalBuque" header="Terminal" />
         <Column field="buqueCliente" header="Consignatario" />
+        <Column field="buqueClienteVenta" header="Cliente" />
         <Column field="toneladasNominadas" header="Toneladas Nominadas" />
         <Column
           field="fechaInicioVentana"

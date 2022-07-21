@@ -8,7 +8,6 @@ const authMiddleware = async (req, res, next) => {
     if (token) {
       const verify = jwt.verify(token, process.env.PRIVATE_KEY)
       if (verify) {
-        console.log(verify)
         req.userID = verify.id
         const user = await User.findById(verify.id)
         if (user) {

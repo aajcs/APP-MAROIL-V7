@@ -21,6 +21,7 @@ const OperacionesGOMBarcoForm = (props) => {
     nombreBarco: '',
     descripcion: '',
     buqueCliente: '',
+    buqueClienteVenta: '',
     buquePaisDestino: '',
     toneladasCapacidad: 0,
     toneladasNominadas: 0,
@@ -87,6 +88,8 @@ const OperacionesGOMBarcoForm = (props) => {
   const { isVisible, setIsVisible } = props
   const [selectedBarco, setSelectedBarco] = useState(null)
   const [selectedBuqueCliente, setSelectedBuqueCliente] = useState(null)
+  const [selectedBuqueClienteVenta, setSelectedBuqueClienteVenta] =
+    useState(null)
   const [selectedCountry, setSelectedCountry] = useState(null)
   const [barcoData, setBarcoData] = useState(initialBarcoForm)
   const estadoBarco = [
@@ -98,9 +101,14 @@ const OperacionesGOMBarcoForm = (props) => {
     updateField(e.value.estatusBarco, 'estatusBarco')
   }
   const buqueCliente = [{ buqueCliente: 'MAROIL' }, { buqueCliente: 'PDVSA' }]
+  const buqueClienteVenta = [{ buqueClienteVenta: 'CREC 10' }]
   const onBuqueCliente = (e) => {
     setSelectedBuqueCliente(e.value)
     updateField(e.value.buqueCliente, 'buqueCliente')
+  }
+  const onBuqueClienteVenta = (e) => {
+    setSelectedBuqueClienteVenta(e.value)
+    updateField(e.value.buqueClienteVenta, 'buqueClienteVenta')
   }
   const countries = [
     { name: 'Turkey', code: 'TR' },
@@ -132,6 +140,9 @@ const OperacionesGOMBarcoForm = (props) => {
       setBarcoData(editBarco)
       setSelectedBarco({ estatusBarco: editBarco.estatusBarco })
       setSelectedBuqueCliente({ buqueCliente: editBarco.buqueCliente })
+      setSelectedBuqueClienteVenta({
+        buqueClienteVenta: editBarco.buqueClienteVenta
+      })
       setDate(moment(editBarco.barcoCreado)._d)
       setDateAtraco(editBarco.fechaAtraco && moment(editBarco.fechaAtraco)._d)
       setDateInicio(
@@ -256,6 +267,25 @@ const OperacionesGOMBarcoForm = (props) => {
       </div>
     )
   }
+  const selectedBuqueClienteVentaTemplate = (option, props) => {
+    if (option) {
+      return (
+        <div className="country-item country-item-value">
+          <div>{option.buqueClienteVenta}</div>
+        </div>
+      )
+    }
+
+    return <span>{props.placeholder}</span>
+  }
+
+  const buqueClienteVentaOptionTemplate = (option) => {
+    return (
+      <div className="country-item">
+        <div>{option.buqueClienteVenta}</div>
+      </div>
+    )
+  }
   const selectedCountryTemplate = (option, props) => {
     if (option) {
       return (
@@ -341,9 +371,21 @@ const OperacionesGOMBarcoForm = (props) => {
                 options={buqueCliente}
                 onChange={onBuqueCliente}
                 optionLabel="estatusbuqueCliente"
-                placeholder="Seleccione Cliente"
+                placeholder="Seleccione Consignatario"
                 valueTemplate={selectedBuqueClienteTemplate}
                 itemTemplate={buqueClienteOptionTemplate}
+                showClear
+              />
+            </div>
+            <div className="field col-12 md:col-6 mt-3 mb-0">
+              <Dropdown
+                value={selectedBuqueClienteVenta}
+                options={buqueClienteVenta}
+                onChange={onBuqueClienteVenta}
+                optionLabel="estatusbuqueCliente"
+                placeholder="Seleccione Cliente"
+                valueTemplate={selectedBuqueClienteVentaTemplate}
+                itemTemplate={buqueClienteVentaOptionTemplate}
                 showClear
               />
             </div>

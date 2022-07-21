@@ -181,9 +181,9 @@ usuarioCtrl.login = async (req, res) => {
     }
     try {
       // crea el token del usario manera simple la de medudev es mas extensa con el beard
-      const token = jwt.sign(userForToken, process.env.PRIVATE_KEY, {
-        expiresIn: 60
-      })
+      // ,{  expiresIn: '7d'
+      // }
+      const token = jwt.sign(userForToken, process.env.PRIVATE_KEY)
 
       console.log(token)
 
@@ -193,10 +193,8 @@ usuarioCtrl.login = async (req, res) => {
         message: 'Login correct.'
       })
     } catch (err) {
-      console.log(err)
       res.status(400).json({
-        error: err,
-        message: 'aqui esta el error?'
+        error: err
       })
     }
   } else {
