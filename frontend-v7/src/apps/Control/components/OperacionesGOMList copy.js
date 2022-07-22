@@ -173,7 +173,6 @@ const OperacionesGOMList = () => {
       detail: 'Buque: ' + event.data.nombreBarco,
       life: 3000
     })
-    console.log(event)
   }
 
   const onRowCollapse = (event) => {

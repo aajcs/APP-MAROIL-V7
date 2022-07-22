@@ -109,6 +109,14 @@ const OperacionesGOMList = () => {
           className="p-button-rounded p-button-success mr-2"
           onClick={() => saveReporteCargaGOM(rowData.id)}
         />
+        {(auth.user.faidUser.roles[0] === 'ADMIN' ||
+          auth.user.faidUser.roles[0] === 'SUPERADMIN') && (
+          <Button
+            icon="pi pi-trash"
+            className="p-button-rounded p-button-warning"
+            onClick={() => confirmDeleteReporteCargaGOM(rowData)}
+          />
+        )}
       </div>
     )
   }
@@ -135,7 +143,6 @@ const OperacionesGOMList = () => {
       detail: 'Buque: ' + event.data.nombreBarco,
       life: 3000
     })
-    console.log(event)
   }
 
   const onRowCollapse = (event) => {
@@ -187,6 +194,7 @@ const OperacionesGOMList = () => {
           sortOrder={-1}
         >
           {(auth.user.faidUser.roles[0] === 'ADMIN' ||
+            auth.user.faidUser.roles[0] === 'OPERADOR' ||
             auth.user.faidUser.roles[0] === 'SUPERADMIN') && (
             <Column body={actionBodyTemplate}></Column>
           )}

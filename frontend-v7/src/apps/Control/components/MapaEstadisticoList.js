@@ -25,7 +25,6 @@ import banderaMapa from '../assetsControl/BanderaMapa'
 import featureJson from '../assetsControl/features.json'
 
 const geoUrl = featureJson
-console.log(geoUrl)
 
 const rounded = (num) => {
   if (num > 1000000000) {

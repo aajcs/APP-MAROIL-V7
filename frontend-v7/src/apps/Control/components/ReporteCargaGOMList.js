@@ -194,7 +194,6 @@ const ReporteCargaGOMList = () => {
       detail: 'Buque: ' + event.data.nombreBarco,
       life: 3000
     })
-    console.log(event)
   }
 
   const onRowCollapse = (event) => {
@@ -281,6 +280,7 @@ const ReporteCargaGOMList = () => {
       </span>
     )
   }
+
   return (
     <>
       <Toast ref={toast} />

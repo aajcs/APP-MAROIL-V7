@@ -95,9 +95,11 @@ const ProgramacionVentanaCrec10 = () => {
   }
   const agentaCard = () => {
     programacionVentanas.map((events) => {
-      console.log(events)
       if (events.buqueClienteVenta === 'CREC 10') {
-        if (events.fechaFinVentana >= moment().subtract(1, 'days').format()) {
+        if (
+          events.fechaFinVentana >= moment().subtract(1, 'days').format() &&
+          events.fechaInicioVentana >= moment().subtract(1, 'days').format()
+        ) {
           if (
             events.terminalBuque === 'MAROIL TERMINAL 1' ||
             events.terminalBuque === 'Puesto de Espera (Oeste)'

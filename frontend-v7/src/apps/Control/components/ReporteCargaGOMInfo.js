@@ -6,6 +6,7 @@ import { Skeleton } from 'primereact/skeleton'
 
 function ReporteCargaGOMInfo() {
   const { barcos } = useContext(BarcoContext)
+  // console.table(barcos)
   return (
     <>
       {barcos.length === 0 ? (
