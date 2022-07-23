@@ -1,11 +1,12 @@
 import axios from 'axios'
 
-export class ReporteHoraService {
-  // baseUrl = "http://localhost:8080/api/reporteHoras/";
-  //baseUrl = '  http://localhost:4000/api/'
+export class ProyectoAuxService {
+  // baseUrl = "http://localhost:8080/api/proyectoAuxs/";
+  // baseUrl = '  http://localhost:4000/api/'
+  // baseUrl = "http://10.20.40.159:4000/api/";
+  // baseUrl = "https://hg-rest-api.herokuapp.com/api/proyectoAuxs/";
   baseUrl = 'http://localhost:4000/api/'
   // baseUrl = 'http://localhost:4000/api/'
-  // baseUrl = "https://hg-rest-api.herokuapp.com/api/reporteHoras/";
 
   readAll(token) {
     const config = {
@@ -14,29 +15,29 @@ export class ReporteHoraService {
       }
     }
     return axios
-      .get(this.baseUrl + 'reporteHora/', config)
+      .get(this.baseUrl + 'proyectoAux/', config)
       .then((res) => res.data)
   }
 
-  create(reporteHora, token) {
+  create(proyectoAux, token) {
     const config = {
       headers: {
         authorization: token
       }
     }
     return axios
-      .post(this.baseUrl + 'reporteHora/', reporteHora, config)
+      .post(this.baseUrl + 'proyectoAux/', proyectoAux, config)
       .then((res) => res.data)
   }
 
-  update(reporteHora, token) {
+  update(proyectoAux, token) {
     const config = {
       headers: {
         authorization: token
       }
     }
     return axios
-      .put(this.baseUrl + 'reporteHora/' + reporteHora.id, reporteHora, config)
+      .put(this.baseUrl + 'proyectoAux/' + proyectoAux.id, proyectoAux, config)
       .then((res) => res.data)
   }
 
@@ -47,7 +48,7 @@ export class ReporteHoraService {
       }
     }
     return axios
-      .delete(this.baseUrl + 'reporteHora/' + id, config)
+      .delete(this.baseUrl + 'proyectoAux/' + id, config)
       .then((res) => res.data)
   }
 }

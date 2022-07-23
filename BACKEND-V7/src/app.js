@@ -42,6 +42,25 @@ app.use(
   require('./appsControl/routes/ReporteCargaGOMRoutes')
 )
 app.use('/api/cargaBodega', require('./appsControl/routes/CargaBodegaRoutes'))
+app.use(
+  '/api/requisicionMateriales',
+  require('./appsProcura/routes/RequisicionMaterialesRoutes')
+)
+app.use('/api/proyectoAux', require('./appsProcura/routes/ProyectoAuxRoutes'))
+app.use('/api/prioridadAux', require('./appsProcura/routes/PrioridadAuxRoutes'))
+app.use('/api/unidadAux', require('./appsProcura/routes/UnidadAuxRoutes'))
+app.use(
+  '/api/departamentoAux',
+  require('./appsProcura/routes/DepartamentoAuxRoutes')
+)
+app.use(
+  '/api/centroDeCostoAux',
+  require('./appsProcura/routes/CentroDeCostoAuxRoutes')
+)
+app.use(
+  '/api/RequisicionMaterialesItems',
+  require('./appsProcura/routes/RequisicionMaterialesItemsRoutes')
+)
 // Static Files
 // app.use(express.static(path.join(__dirname, '../public')));;
 app.use((req, res) => {
