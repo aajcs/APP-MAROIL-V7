@@ -7,11 +7,11 @@ const {
   getCentroDeCostoAux,
   deleteCentroDeCostoAux,
   updateCentroDeCostoAux
-} = require('../controllers/CentroDeCostoAuxControlles')
+} = require('../controllers/CentroDeCostoAuxControllers')
 const auth = require('../../middlewares/authMiddleware')
 const { isAppControl } = require('../../middlewares/AppsMiddleware')
 const {
-  isAdmin,
+  isOperador,
   isSuperAdmin,
   isLectura
 } = require('../../middlewares/RolesMiddleware')
@@ -19,12 +19,12 @@ const {
 router
   .route('/')
   .get([auth, isAppControl, isLectura], getCentroDeCostoAuxs)
-  .post([auth, isAppControl, isAdmin], createCentroDeCostoAux)
+  .post([auth, isAppControl, isOperador], createCentroDeCostoAux)
 
 router
   .route('/:id')
-  .get([auth, isAppControl, isAdmin], getCentroDeCostoAux)
+  .get([auth, isAppControl, isOperador], getCentroDeCostoAux)
   .delete([auth, isAppControl, isSuperAdmin], deleteCentroDeCostoAux)
-  .put([auth, isAppControl, isAdmin], updateCentroDeCostoAux)
+  .put([auth, isAppControl, isOperador], updateCentroDeCostoAux)
 
 module.exports = router

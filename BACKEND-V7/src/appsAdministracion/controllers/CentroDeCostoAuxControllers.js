@@ -4,17 +4,19 @@ const CentroDeCostoAux = require('../models/CentroDeCostoAuxModels')
 
 centroDeCostoAuxCtrl.createCentroDeCostoAux = async (req, res) => {
   const {
-    nombreProyecto,
-    descripcionProyecto,
-    estatusProyecto,
+    codigoCentroDeCosto,
+    nombreCentroDeCosto,
+    descripcionCentroDeCosto,
+    estatusCentroDeCosto,
     centroDeCostoAuxCreado,
     centroDeCostoAuxModificado
   } = req.body
   try {
     const newCentroDeCostoAux = new CentroDeCostoAux({
-      nombreProyecto,
-      descripcionProyecto,
-      estatusProyecto,
+      codigoCentroDeCosto,
+      nombreCentroDeCosto,
+      descripcionCentroDeCosto,
+      estatusCentroDeCosto,
       centroDeCostoAuxCreado,
       centroDeCostoAuxModificado
     })
@@ -72,20 +74,22 @@ centroDeCostoAuxCtrl.updateCentroDeCostoAux = async (req, res) => {
     })
   }
   const {
-    nombreProyecto,
-    descripcionProyecto,
-    estatusProyecto,
+    codigoCentroDeCosto,
+    nombreCentroDeCosto,
+    descripcionCentroDeCosto,
+    estatusCentroDeCosto,
     centroDeCostoAuxCreado,
     centroDeCostoAuxModificado
   } = req.body
 
   try {
-    const updategabarra = await CentroDeCostoAux.findByIdAndUpdate(
+    const updateCentroDeCosto = await CentroDeCostoAux.findByIdAndUpdate(
       id,
       {
-        nombreProyecto,
-        descripcionProyecto,
-        estatusProyecto,
+        codigoCentroDeCosto,
+        nombreCentroDeCosto,
+        descripcionCentroDeCosto,
+        estatusCentroDeCosto,
         centroDeCostoAuxCreado,
         centroDeCostoAuxModificado
       },
@@ -93,7 +97,7 @@ centroDeCostoAuxCtrl.updateCentroDeCostoAux = async (req, res) => {
     )
     // VERIFICAR QUE UPDATE NO SEA NULL
     res.status(200).json({
-      updategabarra,
+      updateCentroDeCosto,
       message: 'CentroDeCostoAux Actualizado de Manera Exitosa.'
     })
   } catch (err) {

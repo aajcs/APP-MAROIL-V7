@@ -11,7 +11,7 @@ const {
 const auth = require('../../middlewares/authMiddleware')
 const { isAppControl } = require('../../middlewares/AppsMiddleware')
 const {
-  isAdmin,
+  isOperador,
   isSuperAdmin,
   isLectura
 } = require('../../middlewares/RolesMiddleware')
@@ -19,12 +19,12 @@ const {
 router
   .route('/')
   .get([auth, isAppControl, isLectura], getDepartamentoAuxs)
-  .post([auth, isAppControl, isAdmin], createDepartamentoAux)
+  .post([auth, isAppControl, isOperador], createDepartamentoAux)
 
 router
   .route('/:id')
-  .get([auth, isAppControl, isAdmin], getDepartamentoAux)
+  .get([auth, isAppControl, isOperador], getDepartamentoAux)
   .delete([auth, isAppControl, isSuperAdmin], deleteDepartamentoAux)
-  .put([auth, isAppControl, isAdmin], updateDepartamentoAux)
+  .put([auth, isAppControl, isOperador], updateDepartamentoAux)
 
 module.exports = router

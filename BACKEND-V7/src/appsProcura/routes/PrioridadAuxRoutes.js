@@ -11,7 +11,7 @@ const {
 const auth = require('../../middlewares/authMiddleware')
 const { isAppControl } = require('../../middlewares/AppsMiddleware')
 const {
-  isAdmin,
+  isOperador,
   isSuperAdmin,
   isLectura
 } = require('../../middlewares/RolesMiddleware')
@@ -19,12 +19,12 @@ const {
 router
   .route('/')
   .get([auth, isAppControl, isLectura], getPrioridadAuxs)
-  .post([auth, isAppControl, isAdmin], createPrioridadAux)
+  .post([auth, isAppControl, isOperador], createPrioridadAux)
 
 router
   .route('/:id')
-  .get([auth, isAppControl, isAdmin], getPrioridadAux)
+  .get([auth, isAppControl, isOperador], getPrioridadAux)
   .delete([auth, isAppControl, isSuperAdmin], deletePrioridadAux)
-  .put([auth, isAppControl, isAdmin], updatePrioridadAux)
+  .put([auth, isAppControl, isOperador], updatePrioridadAux)
 
 module.exports = router

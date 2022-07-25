@@ -55,11 +55,25 @@ app.use(
 )
 app.use(
   '/api/centroDeCostoAux',
-  require('./appsProcura/routes/CentroDeCostoAuxRoutes')
+  require('./appsAdministracion/routes/CentroDeCostoAuxRoutes')
 )
 app.use(
   '/api/RequisicionMaterialesItems',
   require('./appsProcura/routes/RequisicionMaterialesItemsRoutes')
+)
+app.use(
+  '/api/proveedor',
+  require('./appsAdministracion/routes/ProveedorRoutes')
+)
+app.use('/api/Activo', require('./appsAdministracion/routes/ActivoRoutes'))
+app.use('/api/Factura', require('./appsAdministracion/routes/FacturaRoutes'))
+app.use(
+  '/api/Presupuesto',
+  require('./appsAdministracion/routes/PresupuestoRoutes')
+)
+app.use(
+  '/api/IngresoGasto',
+  require('./appsAdministracion/routes/IngresoGastoRoutes')
 )
 // Static Files
 // app.use(express.static(path.join(__dirname, '../public')));;
