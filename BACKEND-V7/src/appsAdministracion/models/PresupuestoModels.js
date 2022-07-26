@@ -45,11 +45,11 @@ const PresupuestoSchema = new Schema(
       type: Schema.Types.ObjectId,
       ref: 'User'
     },
-    PresupuestoCreado: {
+    presupuestoCreado: {
       type: Date,
       default: moment()
     },
-    PresupuestoModificado: {
+    presupuestoModificado: {
       type: Date,
       default: moment()
     }

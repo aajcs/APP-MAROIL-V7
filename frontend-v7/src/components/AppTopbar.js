@@ -177,7 +177,7 @@ export const AppTopbar = (props) => {
           <li>
             <NavLink to="/apps" className="p-link layout-topbar-button">
               <i className="pi pi-microsoft" />
-              <span>Events</span>
+              <span>APPS</span>
             </NavLink>
           </li>
         )}
@@ -185,7 +185,7 @@ export const AppTopbar = (props) => {
           <li>
             <NavLink to="/login" className="p-link layout-topbar-button">
               <i className="pi pi-user-plus" />
-              <span>Events</span>
+              <span>APPS</span>
             </NavLink>
             hola
           </li>

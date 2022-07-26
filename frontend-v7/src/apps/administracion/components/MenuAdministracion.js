@@ -75,6 +75,12 @@ export const MenuAdministracion = () => {
             icon: 'pi pi-fw pi-database',
             to: '/apps/administracion/Proveedor',
             permi: 'SUPERADMIN'
+          },
+          {
+            label: 'PRESUPUESTO',
+            icon: 'pi pi-fw pi-database',
+            to: '/apps/administracion/Presupuesto',
+            permi: 'SUPERADMIN'
           }
         ]
       }

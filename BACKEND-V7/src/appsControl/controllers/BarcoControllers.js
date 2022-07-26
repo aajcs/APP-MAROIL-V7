@@ -12,6 +12,7 @@ barcoCtrl.createBarco = async (req, res) => {
     toneladasCapacidad,
     toneladasNominadas,
     toneladasActual,
+    blFinalBuque,
     totalGabarras,
     cantidadBodegas,
     cantidadGruas,
@@ -34,6 +35,7 @@ barcoCtrl.createBarco = async (req, res) => {
       toneladasCapacidad,
       toneladasNominadas,
       toneladasActual,
+      blFinalBuque,
       totalGabarras,
       cantidadBodegas,
       cantidadGruas,
@@ -65,6 +67,7 @@ barcoCtrl.getBarcos = async (req, res) => {
       .populate('reporteCarga')
       .populate('reporteCargaGOM')
       .populate('cargaBodega')
+      .populate('volumetriaId')
     res.status(200).json(barcos)
   } catch (err) {
     res.status(400).json({
@@ -110,6 +113,7 @@ barcoCtrl.updateBarco = async (req, res) => {
     toneladasCapacidad,
     toneladasNominadas,
     toneladasActual,
+    blFinalBuque,
     totalGabarras,
     cantidadBodegas,
     cantidadGruas,
@@ -148,6 +152,7 @@ barcoCtrl.updateBarco = async (req, res) => {
         toneladasCapacidad,
         toneladasNominadas,
         toneladasActual,
+        blFinalBuque,
         totalGabarras,
         cantidadBodegas,
         cantidadGruas,

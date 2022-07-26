@@ -42,6 +42,7 @@ app.use(
   require('./appsControl/routes/ReporteCargaGOMRoutes')
 )
 app.use('/api/cargaBodega', require('./appsControl/routes/CargaBodegaRoutes'))
+app.use('/api/volumetria', require('./appsControl/routes/VolumetriaRoutes'))
 app.use(
   '/api/requisicionMateriales',
   require('./appsProcura/routes/RequisicionMaterialesRoutes')

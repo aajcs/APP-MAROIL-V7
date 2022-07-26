@@ -1197,6 +1197,12 @@ const markers = [
     name: 'India',
     coordinates: [78.196115, 19.330118],
     bandera: banderaMapa.banderaIndia
+  },
+  {
+    markerOffset: 15,
+    name: 'Brasil',
+    coordinates: [-57.021382, -10.7305],
+    bandera: banderaMapa.banderaIndia
   }
 ]
 // a6a8ab
@@ -1363,6 +1369,14 @@ const MapaEstadisticoList = ({ setTooltipContent }) => {
                       {/* india */}
                       <path
                         d="M 247.12 -7.29736 C 251.493 -8.60607 251.52 -9.80127 253.934 -7.29736 C 268.93 7.5767 315.944 14.1118 320 14.1118 C 327.951 14.1118 330.905 11.0532 328.084 0.000001 C 323.87 -16.5124 319.314 -22.5233 314.062 -25.5135"
+                        stroke="red"
+                        stroke-width="1"
+                        fill="none"
+                        stroke-dasharray="10, 5"
+                      ></path>
+                      {/* brasil */}
+                      <path
+                        d="M-0.54596,0.68653C16.195034,-5.213239,39.620955,-1.069509,50.42563,12.099621C63.03294,27.465868,60.004108,24.313601,58.411694,41.225266"
                         stroke="red"
                         stroke-width="1"
                         fill="none"

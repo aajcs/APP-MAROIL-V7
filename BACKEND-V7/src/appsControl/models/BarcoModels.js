@@ -33,6 +33,10 @@ const barcoSchema = new Schema(
       type: Number,
       default: 0
     },
+    blFinalBuque: {
+      type: Number,
+      default: 0
+    },
     totalGabarras: {
       type: Number,
       default: 0
@@ -73,6 +77,12 @@ const barcoSchema = new Schema(
       {
         type: Schema.Types.ObjectId,
         ref: 'CargaBodega'
+      }
+    ],
+    volumetriaId: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: 'Volumetria'
       }
     ],
     barcoCreado: {

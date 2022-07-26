@@ -220,6 +220,12 @@ export const MenuControl = () => {
             icon: 'pi pi-fw pi-database',
             to: '/apps/control/programacionventana',
             permi: 'SUPERADMIN'
+          },
+          {
+            label: 'VOLUMETRIA',
+            icon: 'pi pi-fw pi-database',
+            to: '/apps/control/Volumetria',
+            permi: 'SUPERADMIN'
           }
         ]
       }
