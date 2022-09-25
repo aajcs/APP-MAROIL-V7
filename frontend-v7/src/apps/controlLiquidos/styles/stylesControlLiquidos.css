@@ -1,0 +1,262 @@
+
+.cardAgenciaMaritima:hover {
+
+  box-shadow: 5px 10px 20px 1px rgba(255, 255, 255, 0.273) !important;
+  transition: all 0.7s linear;
+}
+ .contenedorVideo{
+  position: relative;
+  padding-top: 56.25%;
+}
+
+ .react-player{
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+.status-OPERATIVO {
+  background: #C8E6C9;
+  color: #256029;
+}
+.status-CULMINADO {
+  background: #FFCDD2;
+  color: #C63737;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .Buque-china {
+    animation: Buque-china-spin 2 20s  linear;
+    /* animation: name duration timing-function delay iteration-count direction fill-mode; */
+    animation-direction: alternate-reverse;
+     transform: translate(340px, 90px);
+    width: 50px;
+    height: 30px;
+    transition: all 0.7s linear;
+
+  }
+
+}
+@keyframes Buque-china-spin {
+  0% {
+      transform: translate(20px,150px);
+      width: 15px;
+      height: 30px;
+  }
+   25% {
+      transform: translate(-35px, 180px);
+
+    }
+   80% {
+      transform: translate(-170px, 60px);
+
+    }
+    80.1% {
+      transform: translate(450px, 60px);
+
+    }
+      100% {
+      transform: translate(340px, 90px);
+      width: 90px;
+      height: 30px;
+    }
+  }
+
+  /* estilos de la agenda */
+  /* .rbc-toolbar button {
+    color: rgba(255, 255, 255, 0.87) !important;
+  }
+  .rbc-off-range-bg {
+    background: #909397 !important;
+}
+.rbc-off-range {
+  color: rgba(0, 0, 0) !important;
+}
+.rbc-button-link {
+  color: rgba(0, 0, 0) !important;
+}
+.rbc-day-bg {
+  background: rgba(255, 255, 255, 0.87) !important;
+}
+
+.rbc-today {
+  background-color: rgba(255, 255, 255, 0.87)  !important;
+}
+.rbc-header + .rbc-header {
+  border-left: 1px solid #ddd !important;
+
+}
+.rbc-rtl .rbc-header + .rbc-header {
+
+  border-right: 1px solid rgb(253, 8, 8) !important;
+}
+.rbc-toolbar button {
+
+  border: 1px solid rgb(255, 0, 0) !important;
+
+}
+.rbc-month-view {
+
+  border: 1px solid rgb(255, 0, 0) !important;
+
+}
+.rbc-month-row + .rbc-month-row {
+  border: 2px solid rgb(0, 0, 0) !important;
+}
+.rbc-day-bg + .rbc-day-bg {
+  border: 1px solid rgb(0, 0, 0) !important;
+
+}
+.rbc-rtl .rbc-day-bg + .rbc-day-bg {
+
+  border: 1px solid rgb(0, 0, 0) !important;
+
+} */
+
+@import url("//fonts.googleapis.com/css?family=Roboto:300,400,500|Material+Icons");
+@import url("//fonts.googleapis.com/css?family=Nunito:300,300i,400,400i,600,700");
+
+
+.high-intensity{
+  background: #34cbef;
+  display: block;
+  height: 100%;
+}
+
+hr {
+  border: none;
+  border-bottom: 1px solid #ddd;
+}
+.rbc-calendar {
+  margin-top: 20px;
+  min-height: 600px;
+  color: rgb(255, 255, 255);
+  font: 300 1em/1.5 "Nunito", sans-serif;
+}
+
+.rbc-time-header > .rbc-row:nth-of-type(2) {
+  display: none !important;
+}
+
+.rbc-time-content {
+  border: none;
+}
+
+.rbc-timeslot-group {
+  min-height: 50px;
+}
+
+.rbc-today {
+  background: none;
+}
+
+.rbc-label {
+  text-align: right;
+}
+
+.rbc-event {
+  background: #eee;
+  color: #000000 ;
+  border-radius: 0;
+
+}
+
+.rbc-day-slot .rbc-event {
+  border: 1px solid #fff;
+}
+
+.rbc-event.rbc-selected {
+    background-color: #34cbef;
+}
+
+.rbc-time-view {
+  border: none;
+}
+
+.rbc-time-gutter.rbc-time-column > .rbc-timeslot-group {
+  border: none;
+}
+
+.rbc-label.rbc-header-gutter {
+  border: none;
+}
+.rbc-time-header > .rbc-row > * + * {
+  border-left: 1px solid #eee;
+  border-top: 1px solid #eee;
+  border-right: 1px solid #eee;
+}
+
+.rbc-header {
+  border-bottom: 1px solid #eee;
+}
+
+.rbc-time-header > .rbc-row:first-child {
+  border-bottom: none;
+}
+
+.rbc-time-content .rbc-day-slot.rbc-time-column:last-child {
+  border-right: 1px solid #eee;
+}
+.rbc-month-row  {
+  border-top: 3px solid rgb(0, 0, 0) !important;
+}
+.rbc-month-view {
+  border: 3px solid rgb(0, 0, 0) !important;
+}
+.rbc-day-bg + .rbc-day-bg {
+  border-left: 3px solid rgb(0, 0, 0) !important;
+}
+.rbc-header{
+  border-bottom: 0px solid rgb(0, 0, 0) !important;
+}
+.rbc-header + .rbc-header {
+  border-left: 3px solid rgb(0, 0, 0) !important;
+}
+.rbc-day-bg {
+  background: #d2d4d5 !important;
+}
+
+.rbc-today {
+  background-color: #d2d4d5  !important;
+}
+.rbc-button-link {
+  color: rgba(0, 0, 0) !important;
+}
+.rbc-toolbar button {
+  color: rgba(255, 255, 255, 0.87) !important;
+}
+.rbc-event-content{
+  color: rgba(0, 0, 0, 0.87);
+  font-weight: bold;
+  /* text-shadow: 0 0 3px #FF0000, 0 0 5px #0000FF; */
+}
+/* .scheduler-bg-table {
+  background: #d2d4d5 !important;
+} */
+.header3-text {
+  background: transparent !important;
+  color: #ffffff !important;
+}
+.scheduler-bg {
+  background: #00a3f5 !important;
+}
+.scheduler-bg-table > tbody > tr > td {
+  background: #d2d4d5 !important;
+  border-color: #000000 ;
+}
+/* .event-start-resizer{
+  background: #ff0000 !important;
+} */
+.event-item{
+  color: #ffffff !important;
+  font-weight: bold;
+ font-size: 10px;
+
+}
+.datatable-rowexpansion-demo .product-image {
+  width: 100px;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+}
+
+.datatable-rowexpansion-demo .orders-subtable {
+  padding: 1rem;
+}

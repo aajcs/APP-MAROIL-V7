@@ -76,6 +76,14 @@ app.use(
   '/api/IngresoGasto',
   require('./appsAdministracion/routes/IngresoGastoRoutes')
 )
+app.use(
+  '/api/Remolcador',
+  require('./appsControlLiquidos/routes/RemolcadorRoutes')
+)
+app.use(
+  '/api/Embarcacion',
+  require('./appsControlLiquidos/routes/EmbarcacionRoutes')
+)
 // Static Files
 // app.use(express.static(path.join(__dirname, '../public')));;
 app.use((req, res) => {

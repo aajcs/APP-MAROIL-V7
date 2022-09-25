@@ -5,6 +5,9 @@ export default function Apps() {
   const onAppsControlClick = () => {
     history.push('/apps/control')
   }
+  const onAppsControlLiquidosClick = () => {
+    history.push('/apps/controlLiquidos')
+  }
   const onAppsAdministracionClick = () => {
     history.push('/apps/administracion')
   }
@@ -30,7 +33,31 @@ export default function Apps() {
                       CONTROL
                     </span>
                     <div className="text-900 font-medium text-xl ">
-                      Control de Carga
+                      Control de Carga de Solidos
+                    </div>
+                  </div>
+                  <div
+                    className="flex align-items-center justify-content-center bg-blue-100 border-round"
+                    style={{ width: '2.5rem', height: '2.5rem' }}
+                  >
+                    <i className="pi pi-chart-bar text-blue-500 text-xl" />
+                  </div>
+                </div>
+                <span className="text-green-500 font-medium">----- </span>
+              </div>
+            </div>
+            <div
+              className=" col-12 lg:col-6 xl:col-3  animate__animated animate__bounceInLeft animate__slower"
+              onClick={onAppsControlLiquidosClick}
+            >
+              <div className="cardAPPS card mb-0">
+                <div className="flex justify-content-between mb-3">
+                  <div>
+                    <span className="block text-500 font-medium mb-3">
+                      CONTROL
+                    </span>
+                    <div className="text-900 font-medium text-xl ">
+                      Control de Carga de Liquidos
                     </div>
                   </div>
                   <div

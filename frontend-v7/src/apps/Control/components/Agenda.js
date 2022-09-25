@@ -95,7 +95,8 @@ const Agenda = () => {
   }
   const agentaCard = () => {
     programacionVentanas.map((events) => {
-      if (events.fechaFinVentana >= moment().subtract(1, 'days').format()) {
+      // if (events.fechaFinVentana >= moment().subtract(1, 'days').format()) {
+      if (events.fechaFinVentana >= moment().format()) {
         if (
           events.terminalBuque === 'MAROIL TERMINAL 1' ||
           events.terminalBuque === 'Puesto de Espera (Oeste)'

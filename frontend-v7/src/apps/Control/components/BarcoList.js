@@ -18,7 +18,7 @@ const BarcoList = () => {
   const [deleteBarcoDialog, setDeleteBarcoDialog] = useState(false)
   const [globalFilter, setGlobalFilter] = useState(null)
   const [isVisible, setIsVisible] = useState(false)
-
+  console.log(barcos)
   const [selectedProducts, setSelectedProducts] = useState(null)
   const dt = useRef(null)
   const toast = useRef(null)
