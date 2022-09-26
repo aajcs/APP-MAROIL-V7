@@ -1,0 +1,482 @@
+/* eslint-disable react/prop-types */
+
+import React, { useContext, useState, useEffect, useRef } from 'react'
+import { ViajeContext } from '../contexts/ViajeContext'
+import { Dialog } from 'primereact/dialog'
+import { Button } from 'primereact/button'
+import { InputText } from 'primereact/inputtext'
+import { Toast } from 'primereact/toast'
+import { Dropdown } from 'primereact/dropdown'
+import { addLocale } from 'primereact/api'
+import { InputNumber } from 'primereact/inputnumber'
+import { Calendar } from 'primereact/calendar'
+
+import moment from 'moment'
+// import { CargaBodegaContext } from '../contexts/CargaBodegaContext'
+// import flagplaceholder from '../assetsControl/flagplaceholder.png'
+
+const ViajeForm = (props) => {
+  const initialViajeForm = {
+    id: null,
+    nombreViaje: '',
+    descripcionViaje: '',
+    estatusViaje: '',
+    destinoViaje: '',
+    etcViaje: '',
+    etaViaje: '',
+    etdViaje: '',
+    tipoCargaViaje: '',
+    cantidadCargaViaje: '',
+    cantidadActualCargaViaje: '',
+    rataCargaViaje: '',
+    fechaInicioViaje: '',
+    fechaFinViaje: '',
+    embarcacion: '',
+    viajeCreado: moment(),
+    viajeModificado: moment()
+  }
+
+  addLocale('es', {
+    firstDayOfWeek: 1,
+    dayNames: [
+      'domingo',
+      'lunes',
+      'martes',
+      'miércoles',
+      'jueves',
+      'viernes',
+      'sábado'
+    ],
+    dayNamesShort: ['dom', 'lun', 'mar', 'mié', 'jue', 'vie', 'sáb'],
+    dayNamesMin: ['D', 'L', 'M', 'X', 'J', 'V', 'S'],
+    monthNames: [
+      'enero',
+      'febrero',
+      'marzo',
+      'abril',
+      'mayo',
+      'junio',
+      'julio',
+      'agosto',
+      'septiembre',
+      'octubre',
+      'noviembre',
+      'diciembre'
+    ],
+    monthNamesShort: [
+      'ene',
+      'feb',
+      'mar',
+      'abr',
+      'may',
+      'jun',
+      'jul',
+      'ago',
+      'sep',
+      'oct',
+      'nov',
+      'dic'
+    ],
+    today: 'Hoy',
+    clear: 'Limpiar'
+  })
+  const { createViaje, editViaje, updateViaje, createBodegaViaje1 } =
+    useContext(ViajeContext)
+  // const { createCargaBodega } = useContext(CargaBodegaContext)
+  const { isVisible, setIsVisible } = props
+  const [selectedViaje, setSelectedViaje] = useState(null)
+  const [selectedEmbarcacion, setSelectedEmbarcacion] = useState(null)
+  const [selectedRemolcador, setSelectedRemolcador] = useState(null)
+  const [selectedDestinoViaje, setSelectedDestinoViaje] = useState(null)
+  const [selectedTipoCargaViaje, setSelectedTipoCargaViaje] = useState(null)
+
+  const [dateFinal, setDateFinal] = useState(null)
+  const [dateInicio, setDateInicio] = useState(null)
+  const [ViajeData, setViajeData] = useState(initialViajeForm)
+  const estadoViaje = [
+    { estatusViaje: 'INICIADO' },
+    { estatusViaje: 'CULMINADO' }
+  ]
+  const embarcacionlist = [
+    { embarcacion: 'NASCA 1' },
+    { embarcacion: 'INMACULADA' }
+  ]
+  const remolcadorlist = [
+    { remolcador: 'MARE' },
+    { remolcador: 'UMAY' },
+    { remolcador: 'MOROCOTO' }
+  ]
+  const destinoViajelist = [
+    { destinoViaje: 'DOMINICA' },
+    { destinoViaje: 'SANTA LUCIA' },
+    { destinoViaje: 'SAN VICENTE DE LAS GRANADINAS' }
+  ]
+  const tipoCargaViajelist = [
+    { tipoCargaViaje: 'GASOLINA' },
+    { tipoCargaViaje: 'DIESEL' }
+  ]
+  const onEstatusViaje = (e) => {
+    setSelectedViaje(e.value)
+    updateField(e.value.estatusViaje, 'estatusViaje')
+  }
+  const onEmbacacion = (e) => {
+    setSelectedEmbarcacion(e.value)
+    updateField(e.value.embarcacion, 'embarcacion')
+  }
+  const onRemolcador = (e) => {
+    setSelectedRemolcador(e.value)
+    updateField(e.value.remolcador, 'remolcador')
+  }
+  const onDestinoViaje = (e) => {
+    setSelectedDestinoViaje(e.value)
+    updateField(e.value.destinoViaje, 'destinoViaje')
+  }
+  const onTipoCargaViaje = (e) => {
+    setSelectedTipoCargaViaje(e.value)
+    updateField(e.value.tipoCargaViaje, 'tipoCargaViaje')
+  }
+
+  const toast = useRef(null)
+
+  useEffect(() => {
+    console.log(editViaje)
+    if (editViaje) {
+      setViajeData(editViaje)
+      setSelectedViaje({
+        estatusViaje: editViaje.estatusViaje
+      })
+    }
+  }, [editViaje])
+  useEffect(() => {
+    if (createBodegaViaje1) {
+      createBodegaViaje(createBodegaViaje1)
+    }
+  }, [createBodegaViaje1])
+  const createBodegaViaje = (saveViaje) => {
+    const cargaBodega = {
+      ViajeID: saveViaje.id,
+      nombreBodega: '',
+      estatusBodega: 'CARGANDO',
+      toneladasCargadasBodega: 0,
+      toneladasCapacidadBodega: 0
+    }
+
+    // let i = 1
+
+    // do {
+    //   cargaBodega.nombreBodega = `BODEGA ${i}`
+    //   cargaBodegaService.create(cargaBodega, token).then(i++)
+    // } while (i <= saveViaje.cantidadBodegas)
+    for (let i = 1; i <= saveViaje.cantidadBodegas; i++) {
+      cargaBodega.nombreBodega = `BODEGA ${i}`
+
+      // createCargaBodega(cargaBodega)
+    }
+    // ViajeService.create(CargaBodega, token).then((data) => {
+    //   setViajes([...Viajes, data.saveViaje])
+    //   console.log('Viaje creado', data.saveViaje)
+    // })
+  }
+
+  const updateField = (data, field) => {
+    setViajeData({
+      ...ViajeData,
+      [field]: data
+    })
+  }
+
+  const saveViaje = () => {
+    if (!editViaje) {
+      createViaje(ViajeData)
+    } else {
+      updateViaje({
+        ...ViajeData,
+        ViajeModificado: moment()
+      })
+    }
+    setViajeData(initialViajeForm)
+    setIsVisible(false)
+    setSelectedViaje('')
+  }
+
+  const dialogFooter = (
+    <div className="ui-dialog-buttonpane p-clearfix">
+      <Button
+        label="Cancelar"
+        icon="pi pi-times"
+        onClick={() => clearSelected()}
+      />
+      <Button label="Guardar" icon="pi pi-check" onClick={saveViaje} />
+    </div>
+  )
+
+  const clearSelected = () => {
+    setIsVisible(false)
+    setViajeData(initialViajeForm)
+    setSelectedViaje('')
+  }
+  const selectedestatusViajeTemplate = (option, props) => {
+    if (option) {
+      return (
+        <div className="country-item country-item-value">
+          <div>{option.estatusViaje}</div>
+        </div>
+      )
+    }
+
+    return <span>{props.placeholder}</span>
+  }
+
+  const estatusViajeOptionTemplate = (option) => {
+    return (
+      <div className="country-item">
+        <div>{option.estatusViaje}</div>
+      </div>
+    )
+  }
+  const selectedEmbarcacionTemplate = (option, props) => {
+    if (option) {
+      return (
+        <div className="country-item country-item-value">
+          <div>{option.embarcacion}</div>
+        </div>
+      )
+    }
+
+    return <span>{props.placeholder}</span>
+  }
+
+  const embarcacionOptionTemplate = (option) => {
+    return (
+      <div className="country-item">
+        <div>{option.embarcacion}</div>
+      </div>
+    )
+  }
+  const selectedRemolcadorTemplate = (option, props) => {
+    if (option) {
+      return (
+        <div className="country-item country-item-value">
+          <div>{option.remolcador}</div>
+        </div>
+      )
+    }
+
+    return <span>{props.placeholder}</span>
+  }
+
+  const remolcadorOptionTemplate = (option) => {
+    return (
+      <div className="country-item">
+        <div>{option.remolcador}</div>
+      </div>
+    )
+  }
+  const selectedDestinoViajeTemplate = (option, props) => {
+    if (option) {
+      return (
+        <div className="country-item country-item-value">
+          <div>{option.destinoViaje}</div>
+        </div>
+      )
+    }
+
+    return <span>{props.placeholder}</span>
+  }
+
+  const destinoViajeOptionTemplate = (option) => {
+    return (
+      <div className="country-item">
+        <div>{option.destinoViaje}</div>
+      </div>
+    )
+  }
+  const selectedTipoCargaViajeTemplate = (option, props) => {
+    if (option) {
+      return (
+        <div className="country-item country-item-value">
+          <div>{option.tipoCargaViaje}</div>
+        </div>
+      )
+    }
+
+    return <span>{props.placeholder}</span>
+  }
+
+  const tipoCargaViajeTemplate = (option) => {
+    return (
+      <div className="country-item">
+        <div>{option.tipoCargaViaje}</div>
+      </div>
+    )
+  }
+
+  return (
+    <div className="dialog-demo">
+      <Toast ref={toast} />
+      <Dialog
+        visible={isVisible}
+        breakpoints={{ '960px': '75vw' }}
+        style={{ width: '70vw' }}
+        header="Detalles de la Viaje"
+        footer={dialogFooter}
+        onHide={() => clearSelected()}
+      >
+        <div className="p-grid p-fluid">
+          <div className="formgrid grid">
+            <div className="field col-12 md:col-3">
+              <label>Nombre Viaje:</label>
+              <InputText
+                value={ViajeData.nombreViaje}
+                onChange={(e) => updateField(e.target.value, 'nombreViaje')}
+              />
+            </div>
+            <div className="field col-12 md:col-3">
+              <label>Embacacion Asociada</label>
+              <Dropdown
+                value={selectedEmbarcacion}
+                options={embarcacionlist}
+                onChange={onEmbacacion}
+                optionLabel="embacacion"
+                placeholder="Seleccione Embarcacion"
+                valueTemplate={selectedEmbarcacionTemplate}
+                itemTemplate={embarcacionOptionTemplate}
+              />
+            </div>
+            <div className="field col-12 md:col-3">
+              <label>Remolcador Asociado</label>
+              <Dropdown
+                value={selectedRemolcador}
+                options={remolcadorlist}
+                onChange={onRemolcador}
+                optionLabel="remolcador"
+                placeholder="Seleccione remolcador"
+                valueTemplate={selectedRemolcadorTemplate}
+                itemTemplate={remolcadorOptionTemplate}
+              />
+            </div>
+            <div className="field col-12 md:col-3">
+              <label>Estatus</label>
+              <Dropdown
+                value={selectedViaje}
+                options={estadoViaje}
+                onChange={onEstatusViaje}
+                optionLabel="estatusViaje"
+                placeholder="Seleccione Tipo Carga"
+                valueTemplate={selectedestatusViajeTemplate}
+                itemTemplate={estatusViajeOptionTemplate}
+              />
+            </div>
+
+            <div className="field col-12 md:col-4">
+              <label>Destino</label>
+              <Dropdown
+                value={selectedDestinoViaje}
+                options={destinoViajelist}
+                onChange={onDestinoViaje}
+                optionLabel="estatusDestinoViaje"
+                placeholder="Seleccione Destino"
+                valueTemplate={selectedDestinoViajeTemplate}
+                itemTemplate={destinoViajeOptionTemplate}
+              />
+            </div>
+            <div className="field col-12 md:col-4">
+              <label>Tipo Carga</label>
+              <Dropdown
+                value={selectedTipoCargaViaje}
+                options={tipoCargaViajelist}
+                onChange={onTipoCargaViaje}
+                optionLabel="estatusTipoCargaViaje"
+                placeholder="Seleccione Tipo Carga"
+                valueTemplate={selectedTipoCargaViajeTemplate}
+                itemTemplate={tipoCargaViajeTemplate}
+              />
+            </div>
+            <div className="field col-12 md:col-4">
+              <label htmlFor="integeronly">Cantidad de Carga</label>
+              <InputNumber
+                inputId="integeronly"
+                value={ViajeData.cantidadCargaViaje}
+                onValueChange={(e) =>
+                  updateField(e.target.value, 'cantidadCargaViaje')
+                }
+              />
+            </div>
+            <div className="field col-12 md:col-4">
+              <label htmlFor="integeronly">ETA</label>
+              <InputText
+                value={ViajeData.etaViaje}
+                onChange={(e) => updateField(e.target.value, 'etaViaje')}
+              />
+            </div>
+            <div className="field col-12 md:col-4">
+              <label htmlFor="integeronly">ETC</label>
+              <InputText
+                value={ViajeData.etcViaje}
+                onChange={(e) => updateField(e.target.value, 'etcViaje')}
+              />
+            </div>
+            <div className="field col-12 md:col-4">
+              <label htmlFor="integeronly">ETD</label>
+              <InputText
+                value={ViajeData.etdViaje}
+                onChange={(e) => updateField(e.target.value, 'etdViaje')}
+              />
+            </div>
+            <div className="field col-12 md:col-3">
+              <label htmlFor="integeronly">Rata de Carga</label>
+              <InputText
+                value={ViajeData.rataCargaViaje}
+                onChange={(e) => updateField(e.target.value, 'rataCargaViaje')}
+              />
+            </div>
+            <div className="field col-12 md:col-3">
+              <label>Fecha Inicio Carga</label>
+              <Calendar
+                className="p-datepicker-today"
+                id="time24"
+                value={dateInicio !== null && dateInicio}
+                onChange={(e) => {
+                  setDateInicio(e.value)
+                  updateField(e.target.value, 'fechaInicioViaje')
+                }}
+                showTime
+                locale="es"
+                // hourFormat="12"
+                showButtonBar
+              />
+            </div>
+            <div className="field col-12 md:col-3">
+              <label>Fecha Final Carga</label>
+              <Calendar
+                className="p-datepicker-today"
+                id="time24"
+                value={dateFinal !== null && dateFinal}
+                onChange={(e) => {
+                  setDateFinal(e.value)
+                  updateField(e.target.value, 'fechaFinViaje')
+                }}
+                showTime
+                locale="es"
+                // hourFormat="12"
+                showButtonBar
+              />
+            </div>
+            <div className="field col-12 md:col-3">
+              <label htmlFor="integeronly">Cantidad de Actual de Carga</label>
+              <InputNumber
+                inputId="integeronly"
+                value={ViajeData.combustibleActualViaje}
+                onValueChange={(e) =>
+                  updateField(e.target.value, 'combustibleActualViaje')
+                }
+              />
+            </div>
+          </div>
+        </div>
+      </Dialog>
+    </div>
+  )
+}
+
+export default ViajeForm

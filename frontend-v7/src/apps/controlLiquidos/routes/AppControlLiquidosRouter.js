@@ -21,6 +21,7 @@ import { EmbarcacionPage } from '../pages/EmbarcacionPage'
 import { RemolcadorPage } from '../pages/RemolcadorPage'
 import { EmbarcacionInfoPage } from '../pages/EmbarcacionInfoPage'
 import { RemolcadorInfoPage } from '../pages/RemolcadorInfoPage'
+import { ViajePage } from '../pages/ViajePage'
 
 export default function AppControlLiquidosRouter() {
   const { staticMenuInactive, onToggleMenuClick } = useContext(ConfigContext)
@@ -76,6 +77,11 @@ export default function AppControlLiquidosRouter() {
               exact
               path="/apps/controlLiquidos/remolcadorinfo"
               component={RemolcadorInfoPage}
+            />
+            <PrivateRoute
+              exact
+              path="/apps/controlLiquidos/viaje"
+              component={ViajePage}
             />
             <Route path="*">
               <Redirect to="/404" />
