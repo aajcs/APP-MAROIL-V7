@@ -49,20 +49,16 @@ const viajeSchema = new Schema(
       default: moment()
     },
 
-    embarcacion: { type: String },
-    remolcador: { type: String },
-    // embarcacion: [
-    //   {
-    //     type: Schema.Types.ObjectId,
-    //     ref: 'Embarcacion'
-    //   }
-    // ],
-    // remolcador: [
-    //   {
-    //     type: Schema.Types.ObjectId,
-    //     ref: 'Remolcador'
-    //   }
-    // ],
+    embarcacion: {
+      type: Schema.Types.ObjectId,
+      ref: 'Embarcacion'
+    },
+    remolcador: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: 'Remolcador'
+      }
+    ],
     viajeCreado: {
       type: Date,
       default: moment()

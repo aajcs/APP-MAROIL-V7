@@ -18,6 +18,14 @@ export const MenuControlLiquidos = () => {
           permi1: 'SUPERADMIN'
         },
         {
+          label: 'INFORMACIÓN VIAJE',
+          icon: 'pi pi-fw pi-info-circle',
+          to: '/apps/controlLiquidos/viajeinfo',
+          permi: 'ADMIN',
+          permi1: 'LECTURA',
+          permi2: 'OPERADOR'
+        },
+        {
           label: 'INFORMACIÓN EMBARCACIONES',
           icon: 'pi pi-fw pi-info-circle',
           to: '/apps/controlLiquidos/embarcacioninfo',

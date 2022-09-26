@@ -28,7 +28,6 @@ function EmbarcacionCard({ embarcacions }) {
     handlesumar()
   }, [])
 
-  console.log(embarcacions)
   return (
     <div className="col-12 lg:col-6 xl:col-6">
       <div className="card mt-2 mb-0 pb-0 ">

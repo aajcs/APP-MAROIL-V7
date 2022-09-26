@@ -15,7 +15,7 @@ const RemolcadorContextProvider = (props) => {
   const [editRemolcador, setEditRemolcador] = useState(null)
   const [loading, setLoading] = useState(true)
   const [actuallizar, setActuallizar] = useState(null)
-  console.log(remolcadors)
+
   const auth = AuthUse()
   const token = auth.user.token
 

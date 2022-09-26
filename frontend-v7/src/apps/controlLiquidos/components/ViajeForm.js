@@ -12,6 +12,8 @@ import { InputNumber } from 'primereact/inputnumber'
 import { Calendar } from 'primereact/calendar'
 
 import moment from 'moment'
+import { EmbarcacionContext } from '../contexts/EmbarcacionContext'
+import { RemolcadorContext } from '../contexts/RemolcadorContext'
 // import { CargaBodegaContext } from '../contexts/CargaBodegaContext'
 // import flagplaceholder from '../assetsControl/flagplaceholder.png'
 
@@ -32,6 +34,7 @@ const ViajeForm = (props) => {
     fechaInicioViaje: '',
     fechaFinViaje: '',
     embarcacion: '',
+    remolcador: '',
     viajeCreado: moment(),
     viajeModificado: moment()
   }
@@ -82,6 +85,9 @@ const ViajeForm = (props) => {
   })
   const { createViaje, editViaje, updateViaje, createBodegaViaje1 } =
     useContext(ViajeContext)
+  const { embarcacions } = useContext(EmbarcacionContext)
+  const { remolcadors } = useContext(RemolcadorContext)
+
   // const { createCargaBodega } = useContext(CargaBodegaContext)
   const { isVisible, setIsVisible } = props
   const [selectedViaje, setSelectedViaje] = useState(null)
@@ -97,15 +103,15 @@ const ViajeForm = (props) => {
     { estatusViaje: 'INICIADO' },
     { estatusViaje: 'CULMINADO' }
   ]
-  const embarcacionlist = [
-    { embarcacion: 'NASCA 1' },
-    { embarcacion: 'INMACULADA' }
-  ]
-  const remolcadorlist = [
-    { remolcador: 'MARE' },
-    { remolcador: 'UMAY' },
-    { remolcador: 'MOROCOTO' }
-  ]
+  // const embarcacionlist = [
+  //   { embarcacion: 'NASCA 1' },
+  //   { embarcacion: 'INMACULADA' }
+  // ]
+  // const remolcadorlist = [
+  //   { remolcador: 'MARE' },
+  //   { remolcador: 'UMAY' },
+  //   { remolcador: 'MOROCOTO' }
+  // ]
   const destinoViajelist = [
     { destinoViaje: 'DOMINICA' },
     { destinoViaje: 'SANTA LUCIA' },
@@ -121,11 +127,12 @@ const ViajeForm = (props) => {
   }
   const onEmbacacion = (e) => {
     setSelectedEmbarcacion(e.value)
-    updateField(e.value.embarcacion, 'embarcacion')
+    updateField(e.value.id, 'embarcacion')
   }
+
   const onRemolcador = (e) => {
     setSelectedRemolcador(e.value)
-    updateField(e.value.remolcador, 'remolcador')
+    updateField(e.value.id, 'remolcador')
   }
   const onDestinoViaje = (e) => {
     setSelectedDestinoViaje(e.value)
@@ -139,12 +146,28 @@ const ViajeForm = (props) => {
   const toast = useRef(null)
 
   useEffect(() => {
-    console.log(editViaje)
     if (editViaje) {
+      console.log(editViaje.embarcacion.nombreEmbarcacion)
       setViajeData(editViaje)
       setSelectedViaje({
         estatusViaje: editViaje.estatusViaje
       })
+      setSelectedEmbarcacion(editViaje.embarcacion.nombreEmbarcacion)
+      setSelectedRemolcador({
+        nombreRemolcador: editViaje.remolcador.nombreRemolcador
+      })
+      setSelectedDestinoViaje({
+        destinoViaje: editViaje.destinoViaje
+      })
+      setSelectedTipoCargaViaje({
+        tipoCargaViaje: editViaje.tipoCargaViaje
+      })
+      setDateInicio(
+        editViaje.fechaInicioViaje && moment(editViaje.fechaInicioViaje)._d
+      )
+      setDateFinal(
+        editViaje.fechaFinViaje && moment(editViaje.fechaFinViaje)._d
+      )
     }
   }, [editViaje])
   useEffect(() => {
@@ -197,6 +220,12 @@ const ViajeForm = (props) => {
     setViajeData(initialViajeForm)
     setIsVisible(false)
     setSelectedViaje('')
+    setSelectedEmbarcacion('')
+    setSelectedRemolcador('')
+    setSelectedDestinoViaje('')
+    setSelectedTipoCargaViaje('')
+    setDateInicio(null)
+    setDateFinal(null)
   }
 
   const dialogFooter = (
@@ -214,6 +243,12 @@ const ViajeForm = (props) => {
     setIsVisible(false)
     setViajeData(initialViajeForm)
     setSelectedViaje('')
+    setSelectedEmbarcacion('')
+    setSelectedRemolcador('')
+    setSelectedDestinoViaje('')
+    setSelectedTipoCargaViaje('')
+    setDateInicio(null)
+    setDateFinal(null)
   }
   const selectedestatusViajeTemplate = (option, props) => {
     if (option) {
@@ -238,7 +273,7 @@ const ViajeForm = (props) => {
     if (option) {
       return (
         <div className="country-item country-item-value">
-          <div>{option.embarcacion}</div>
+          <div>{option.nombreEmbarcacion}</div>
         </div>
       )
     }
@@ -249,7 +284,7 @@ const ViajeForm = (props) => {
   const embarcacionOptionTemplate = (option) => {
     return (
       <div className="country-item">
-        <div>{option.embarcacion}</div>
+        <div>{option.nombreEmbarcacion}</div>
       </div>
     )
   }
@@ -257,7 +292,7 @@ const ViajeForm = (props) => {
     if (option) {
       return (
         <div className="country-item country-item-value">
-          <div>{option.remolcador}</div>
+          <div>{option.nombreRemolcador}</div>
         </div>
       )
     }
@@ -268,7 +303,7 @@ const ViajeForm = (props) => {
   const remolcadorOptionTemplate = (option) => {
     return (
       <div className="country-item">
-        <div>{option.remolcador}</div>
+        <div>{option.nombreRemolcador}</div>
       </div>
     )
   }
@@ -331,13 +366,14 @@ const ViajeForm = (props) => {
                 onChange={(e) => updateField(e.target.value, 'nombreViaje')}
               />
             </div>
+
             <div className="field col-12 md:col-3">
               <label>Embacacion Asociada</label>
               <Dropdown
                 value={selectedEmbarcacion}
-                options={embarcacionlist}
+                options={embarcacions}
                 onChange={onEmbacacion}
-                optionLabel="embacacion"
+                optionLabel="nombreEmbarcacion"
                 placeholder="Seleccione Embarcacion"
                 valueTemplate={selectedEmbarcacionTemplate}
                 itemTemplate={embarcacionOptionTemplate}
@@ -347,9 +383,9 @@ const ViajeForm = (props) => {
               <label>Remolcador Asociado</label>
               <Dropdown
                 value={selectedRemolcador}
-                options={remolcadorlist}
+                options={remolcadors}
                 onChange={onRemolcador}
-                optionLabel="remolcador"
+                optionLabel="nombreRemolcador"
                 placeholder="Seleccione remolcador"
                 valueTemplate={selectedRemolcadorTemplate}
                 itemTemplate={remolcadorOptionTemplate}
@@ -367,7 +403,15 @@ const ViajeForm = (props) => {
                 itemTemplate={estatusViajeOptionTemplate}
               />
             </div>
-
+            <div className="field col-12 ">
+              <label>Descripcion de Viaje:</label>
+              <InputText
+                value={ViajeData.descripcionViaje}
+                onChange={(e) =>
+                  updateField(e.target.value, 'descripcionViaje')
+                }
+              />
+            </div>
             <div className="field col-12 md:col-4">
               <label>Destino</label>
               <Dropdown
@@ -466,9 +510,9 @@ const ViajeForm = (props) => {
               <label htmlFor="integeronly">Cantidad de Actual de Carga</label>
               <InputNumber
                 inputId="integeronly"
-                value={ViajeData.combustibleActualViaje}
+                value={ViajeData.cantidadActualCargaViaje}
                 onValueChange={(e) =>
-                  updateField(e.target.value, 'combustibleActualViaje')
+                  updateField(e.target.value, 'cantidadActualCargaViaje')
                 }
               />
             </div>

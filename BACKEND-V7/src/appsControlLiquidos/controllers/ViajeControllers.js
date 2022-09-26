@@ -18,6 +18,7 @@ viajeCtrl.createViaje = async (req, res) => {
     fechaInicioViaje,
     fechaFinViaje,
     embarcacion,
+    remolcador,
     viajeCreado,
     viajeModificado
   } = req.body
@@ -37,6 +38,7 @@ viajeCtrl.createViaje = async (req, res) => {
       fechaInicioViaje,
       fechaFinViaje,
       embarcacion,
+      remolcador,
       viajeCreado,
       viajeModificado
     })
@@ -56,6 +58,8 @@ viajeCtrl.createViaje = async (req, res) => {
 viajeCtrl.getViajes = async (req, res) => {
   try {
     const viaje = await Viaje.find({})
+      .populate('embarcacion')
+      .populate('remolcador')
     res.status(200).json(viaje)
   } catch (err) {
     console.log(err)
@@ -108,6 +112,7 @@ viajeCtrl.updateViaje = async (req, res) => {
     fechaInicioViaje,
     fechaFinViaje,
     embarcacion,
+    remolcador,
     viajeCreado,
     viajeModificado
   } = req.body
@@ -130,6 +135,7 @@ viajeCtrl.updateViaje = async (req, res) => {
         fechaInicioViaje,
         fechaFinViaje,
         embarcacion,
+        remolcador,
         viajeCreado,
         viajeModificado
       },
