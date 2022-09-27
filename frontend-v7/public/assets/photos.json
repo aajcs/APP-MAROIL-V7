@@ -1,0 +1,9 @@
+{
+    "data":[
+        {"itemImageSrc": "../assetsControlLiquidos/inmaculada1.jpeg","thumbnailImageSrc": "../assetsControlLiquidos/inmaculada1.jpeg","alt": "Description for Image 1","title": "Title 1"},
+        {"itemImageSrc": "../assetsControlLiquidos/inmaculada2.jpeg","thumbnailImageSrc": "../assetsControlLiquidos/inmaculada2.jpeg","alt": "Description for Image 1","title": "Title 1"},
+        {"itemImageSrc": "../assetsControlLiquidos/inmaculada3.jpeg","thumbnailImageSrc": "../assetsControlLiquidos/inmaculada3.jpeg","alt": "Description for Image 1","title": "Title 1"},
+        {"itemImageSrc": "../assetsControlLiquidos/inmaculada4.jpeg","thumbnailImageSrc": "../assetsControlLiquidos/inmaculada4.jpeg","alt": "Description for Image 1","title": "Title 1"},
+        {"itemImageSrc": "../assetsControlLiquidos/inmaculada5.jpeg","thumbnailImageSrc": "../assetsControlLiquidos/inmaculada5.jpeg","alt": "Description for Image 1","title": "Title 1"}
+    ]
+}

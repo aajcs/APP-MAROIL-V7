@@ -1,14 +1,15 @@
+/* eslint-disable indent */
 /* eslint-disable react/prop-types */
 
 import React, { useState, useEffect } from 'react'
 import moment from 'moment'
 import { Tag } from 'primereact/tag'
-// import { Image } from 'primereact/image'
+import { Image } from 'primereact/image'
 import { ProgressBar } from 'primereact/progressbar'
 
 import AuthUse from '../../../auth/AuthUse'
-// import barcoJPEG from '../assetsControl/barco.jpeg'
-
+import remolcadoresJPEG from '../assetsControlLiquidos/ImagenesTodas'
+console.log(remolcadoresJPEG)
 function RemolcadorCard({ remolcadors }) {
   const [porcentajeCombustible, setPorcentajeCombustible] = useState(0)
 
@@ -80,13 +81,39 @@ function RemolcadorCard({ remolcadors }) {
             </span>
           </h6>
           <hr className="mt-2 mb-2 " />
-          <div className=" ">
-            <h6 className="text-center">Porcentaje de Combustible</h6>
-            <ProgressBar
-              className="mt-2 mb-3 "
-              color={porcentajeCombustible > 10 ? '#198754' : '#ff0000'}
-              value={porcentajeCombustible}
-            ></ProgressBar>
+          <div className="grid ">
+            <div
+              className="col-6 text-center "
+              // onClick={() => onClick('displayDetalleCarga')}
+            >
+              <Image
+                src={
+                  remolcadoresJPEG[
+                    remolcadors.nombreRemolcador === 'MARE'
+                      ? 12
+                      : remolcadors.nombreRemolcador === 'UMAY'
+                      ? 17
+                      : 14
+                  ]
+                }
+                alt="Image"
+                width="100%"
+                preview
+              />
+              {/* <BarChartDemo
+                heightBogega="50px"
+                bodegasDelBarco={bodegasDelBarco}
+                barcos={barcos}
+              /> */}
+            </div>
+            <div className="col-6 text-right ">
+              <h6 className="text-center">Porcentaje de Combustible</h6>
+              <ProgressBar
+                className="mt-2 mb-3 "
+                color={porcentajeCombustible > 10 ? '#198754' : '#ff0000'}
+                value={porcentajeCombustible}
+              ></ProgressBar>{' '}
+            </div>
           </div>
         </div>
       </div>

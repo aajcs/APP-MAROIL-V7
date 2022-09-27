@@ -1,5 +1,4 @@
 import buqueFigura0 from './buqueFigura0.png'
-
 import buqueFigura2 from './buqueFigura2.png'
 import buqueFigura3 from './buqueFigura3.png'
 import buqueFigura4 from './buqueFigura4.png'

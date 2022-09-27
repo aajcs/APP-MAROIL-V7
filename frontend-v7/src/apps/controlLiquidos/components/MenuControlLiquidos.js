@@ -81,6 +81,12 @@ export const MenuControlLiquidos = () => {
             icon: 'pi pi-fw pi-database',
             to: '/apps/controlLiquidos/viaje',
             permi: 'SUPERADMIN'
+          },
+          {
+            label: 'CARGAVIAJE',
+            icon: 'pi pi-fw pi-database',
+            to: '/apps/controlLiquidos/CargaViaje',
+            permi: 'SUPERADMIN'
           }
         ]
       }

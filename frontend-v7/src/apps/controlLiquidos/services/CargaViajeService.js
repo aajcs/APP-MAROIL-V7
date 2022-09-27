@@ -1,11 +1,11 @@
 import axios from 'axios'
 
-export class RemolcadorService {
-  // baseUrl = "http://localhost:8080/api/Remolcadors/";
+export class CargaViajeService {
+  // baseUrl = "http://localhost:8080/api/CargaViajes/";
   // baseUrl = '  https://apimaroil.herokuapp.com/api/'
   // baseUrl = "http://10.20.40.159:4000/api/";
-  // baseUrl = "https://hg-rest-api.herokuapp.com/api/Remolcadors/";
-  baseUrl = 'https://apimaroil.herokuapp.com/api/'
+  // baseUrl = "https://hg-rest-api.herokuapp.com/api/CargaViajes/";
+  baseUrl = 'http://localhost:4000/api/'
   // baseUrl = 'https://apimaroil.herokuapp.com/api/'
 
   readAll(token) {
@@ -15,29 +15,29 @@ export class RemolcadorService {
       }
     }
     return axios
-      .get(this.baseUrl + 'Remolcador/', config)
+      .get(this.baseUrl + 'CargaViaje/', config)
       .then((res) => res.data)
   }
 
-  create(Remolcador, token) {
+  create(CargaViaje, token) {
     const config = {
       headers: {
         authorization: token
       }
     }
     return axios
-      .post(this.baseUrl + 'Remolcador/', Remolcador, config)
+      .post(this.baseUrl + 'CargaViaje/', CargaViaje, config)
       .then((res) => res.data)
   }
 
-  update(Remolcador, token) {
+  update(CargaViaje, token) {
     const config = {
       headers: {
         authorization: token
       }
     }
     return axios
-      .put(this.baseUrl + 'Remolcador/' + Remolcador.id, Remolcador, config)
+      .put(this.baseUrl + 'CargaViaje/' + CargaViaje.id, CargaViaje, config)
       .then((res) => res.data)
   }
 
@@ -48,7 +48,7 @@ export class RemolcadorService {
       }
     }
     return axios
-      .delete(this.baseUrl + 'Remolcador/' + id, config)
+      .delete(this.baseUrl + 'CargaViaje/' + id, config)
       .then((res) => res.data)
   }
 }
