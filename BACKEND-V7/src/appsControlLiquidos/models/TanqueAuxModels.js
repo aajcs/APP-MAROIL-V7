@@ -1,47 +1,44 @@
 const moment = require('moment') // require
 const { Schema, model } = require('mongoose')
 
-const viajeSchema = new Schema(
+const tanqueAuxSchema = new Schema(
   {
     // requisicionMaterialesId: {
     //   type: Schema.Types.ObjectId,
     //   ref: 'RequisicionMateriales'
     // },
-    nombreViaje: {
+    nombreTanqueAux: {
       type: String
     },
-    descripcionViaje: {
+    descripcionTanqueAux: {
       type: String
     },
-    estatusViaje: {
+    estatusTanqueAux: {
       type: String
     },
-    destinoViaje: {
+    ubicacionTanqueAux: {
       type: String
     },
-    fechaInicioViaje: {
-      type: Date,
-      default: moment()
+    volumenActualTanqueAux: {
+      type: Number,
+      default: 0
     },
-    fechaFinViaje: {
-      type: Date,
-      default: moment()
+    volumenCapacidadTanqueAux: {
+      type: Number,
+      default: 0
+    },
+    tipoCargaTanqueAux: {
+      type: String
     },
     embarcacion: {
       type: Schema.Types.ObjectId,
       ref: 'Embarcacion'
     },
-    remolcador: [
-      {
-        type: Schema.Types.ObjectId,
-        ref: 'Remolcador'
-      }
-    ],
-    viajeCreado: {
+    tanqueAuxCreado: {
       type: Date,
       default: moment()
     },
-    viajeModificado: {
+    tanqueAuxModificado: {
       type: Date,
       default: moment()
     }
@@ -51,13 +48,13 @@ const viajeSchema = new Schema(
     versionKey: false
   }
 )
-viajeSchema.set('toJSON', {
+tanqueAuxSchema.set('toJSON', {
   transform: (document, returnedObject) => {
     returnedObject.id = returnedObject._id
     delete returnedObject._id
   }
 })
 
-const Viaje = model('Viaje', viajeSchema)
+const TanqueAux = model('TanqueAux', tanqueAuxSchema)
 
-module.exports = Viaje
+module.exports = TanqueAux

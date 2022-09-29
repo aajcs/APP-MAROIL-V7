@@ -6,23 +6,23 @@ import { Toolbar } from 'primereact/toolbar'
 import { Dialog } from 'primereact/dialog'
 import { InputText } from 'primereact/inputtext'
 import { Toast } from 'primereact/toast'
-import { CargaViajeContext } from '../contexts/CargaViajeContext'
+import { TanqueAuxContext } from '../contexts/TanqueAuxContext'
 import moment from 'moment'
 
-import CargaViajeForm from './CargaViajeForm'
+import TanqueAuxForm from './TanqueAuxForm'
 
-const CargaViajeList = () => {
-  const { cargaViajes, findCargaViaje, deleteCargaViaje, loading } =
-    useContext(CargaViajeContext)
-  const [cargaViaje, setCargaViaje] = useState(cargaViajes)
-  const [deleteCargaViajeDialog, setDeleteCargaViajeDialog] = useState(false)
+const TanqueAuxList = () => {
+  const { tanqueAuxs, findTanqueAux, deleteTanqueAux, loading } =
+    useContext(TanqueAuxContext)
+  const [tanqueAux, setTanqueAux] = useState(tanqueAuxs)
+  const [deleteTanqueAuxDialog, setDeleteTanqueAuxDialog] = useState(false)
   const [globalFilter, setGlobalFilter] = useState(null)
   const [isVisible, setIsVisible] = useState(false)
 
   const dt = useRef(null)
   const toast = useRef(null)
-  const saveCargaViaje = (id) => {
-    findCargaViaje(id)
+  const saveTanqueAux = (id) => {
+    findTanqueAux(id)
     setIsVisible(true)
   }
 
@@ -63,54 +63,46 @@ const CargaViajeList = () => {
     dt.current.exportCSV()
   }
 
-  const fechaCargaViajeCreado = (rowData) => {
-    const fecha = moment(rowData.cargaViajeCreado)
+  const fechaTanqueAuxCreado = (rowData) => {
+    const fecha = moment(rowData.tanqueAuxCreado)
     return fecha.format('dddDD/MM/YY HH:mm')
   }
-  const fechaCargaViajeModificado = (rowData) => {
-    const fecha = moment(rowData.cargaViajeModificado)
-    return fecha.format('dddDD/MM/YY HH:mm')
-  }
-  const fechaFinCargaViaje = (rowData) => {
-    const fecha = moment(rowData.fechaFinCargaViaje)
-    return fecha.format('dddDD/MM/YY HH:mm')
-  }
-  const fechaInicioCargaViaje = (rowData) => {
-    const fecha = moment(rowData.fechaInicioCargaViaje)
+  const fechaTanqueAuxModificado = (rowData) => {
+    const fecha = moment(rowData.tanqueAuxModificado)
     return fecha.format('dddDD/MM/YY HH:mm')
   }
 
-  const eliminarCargaViaje = () => {
-    deleteCargaViaje(cargaViaje.id)
-    setDeleteCargaViajeDialog(false)
+  const eliminarTanqueAux = () => {
+    deleteTanqueAux(tanqueAux.id)
+    setDeleteTanqueAuxDialog(false)
     toast.current.show({
       severity: 'error',
       summary: 'Eliminar',
-      detail: 'CargaViaje Eliminado',
+      detail: 'TanqueAux Eliminado',
       life: 3000
     })
   }
 
-  const deleteCargaViajeDialogFooter = (
+  const deleteTanqueAuxDialogFooter = (
     <>
       <Button
         label="No"
         icon="pi pi-times"
         className="p-button-text"
-        onClick={() => setDeleteCargaViajeDialog(false)}
+        onClick={() => setDeleteTanqueAuxDialog(false)}
       />
       <Button
         label="Si"
         icon="pi pi-check"
         className="p-button-text"
-        onClick={() => eliminarCargaViaje()}
+        onClick={() => eliminarTanqueAux()}
       />
     </>
   )
 
-  const confirmDeleteCargaViaje = (cargaViajes) => {
-    setCargaViaje(cargaViajes)
-    setDeleteCargaViajeDialog(true)
+  const confirmDeleteTanqueAux = (tanqueAuxs) => {
+    setTanqueAux(tanqueAuxs)
+    setDeleteTanqueAuxDialog(true)
   }
 
   const actionBodyTemplate = (rowData) => {
@@ -119,13 +111,13 @@ const CargaViajeList = () => {
         <Button
           icon="pi pi-pencil"
           className="p-button-rounded p-button-success mr-2 mb-2"
-          onClick={() => saveCargaViaje(rowData.id)}
+          onClick={() => saveTanqueAux(rowData.id)}
         />
 
         <Button
           icon="pi pi-trash"
           className="p-button-rounded  p-button-danger"
-          onClick={() => confirmDeleteCargaViaje(rowData)}
+          onClick={() => confirmDeleteTanqueAux(rowData)}
         />
       </div>
     )
@@ -133,7 +125,7 @@ const CargaViajeList = () => {
 
   const header = (
     <div className="flex flex-column md:flex-row md:justify-content-between md:align-items-center">
-      <h5 className="m-0">CargaViajes</h5>
+      <h5 className="m-0">TanqueAuxs</h5>
       <span className="block mt-2 md:mt-0 p-input-icon-left">
         <i className="pi pi-search" />
         <InputText
@@ -145,7 +137,7 @@ const CargaViajeList = () => {
     </div>
   )
   const clearSelected = () => {
-    setDeleteCargaViajeDialog(false)
+    setDeleteTanqueAuxDialog(false)
   }
 
   return (
@@ -159,7 +151,7 @@ const CargaViajeList = () => {
 
       <DataTable
         ref={dt}
-        value={cargaViajes}
+        value={tanqueAuxs}
         dataKey="id"
         paginator
         rows={10}
@@ -167,73 +159,58 @@ const CargaViajeList = () => {
         className="datatable-responsive"
         selectionMode="single"
         paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
-        currentPageReportTemplate="Muestra {first} a {last} de {totalRecords} CargaViajes"
+        currentPageReportTemplate="Muestra {first} a {last} de {totalRecords} TanqueAuxs"
         globalFilter={globalFilter}
-        emptyMessage="No hay cargaViajes."
+        emptyMessage="No hay tanqueAuxs."
         header={header}
-        sortField="cargaViajeCreado"
+        sortField="tanqueAuxCreado"
         sortOrder={-1}
         loading={loading}
         responsiveLayout="scroll"
         breakpoint="960px"
       >
-        <Column field="descripcionCargaViaje" header="descripcionCargaViaje" />
-        <Column field="productoCargaViaje" header="productoCargaViaje" />
-        <Column field="estatusCargaViaje" header="estatusCargaViaje" />
-        <Column field="puertoCargaViaje" header="puertoCargaViaje" />
-        <Column field="fechaArriboCargaViaje" header="fechaArriboCargaViaje" />
+        <Column field="nombreTanqueAux" header="nombre TanqueAux" />
+        <Column field="descripcionTanqueAux" header="descripcionTanqueAux" />
+        <Column field="estatusTanqueAux" header="estatusTanqueAux" />
+        <Column field="ubicacionTanqueAux" header="ubicacionTanqueAux" />
         <Column
-          field="fechaCompletacionCargaViaje"
-          header="fechaCompletacionCargaViaje"
+          field="embarcacion.nombreEmbarcacion"
+          header="embarcacion.nombreEmbarcacion"
         />
-        <Column field="fechaZarpeCargaViaje" header="fechaZarpeCargaViaje" />
-        <Column field="tipoCargaViaje" header="tipoCargaViaje" />
-        <Column field="viaje.nombreViaje" header="viaje.nombreViaje" />
-        <Column field="rataCargaViaje" header="rataCargaViaje" />
+        <Column field="tipoCargaTanqueAux" header="tipoCargaTanqueAux" />
         <Column
-          field="catidadPruductoCargaViaje"
-          header="catidadPruductoCargaViaje"
+          field="volumenActualTanqueAux"
+          header="volumenActualTanqueAux"
         />
         <Column
-          field="catidadActualCargaViaje"
-          header="catidadActualCargaViaje"
+          field="volumenCapacidadTanqueAux"
+          header="volumenCapacidadTanqueAux"
         />
+
         <Column
-          field="fechaInicioCargaViaje"
-          header="fechaInicioCargaViaje"
-          body={fechaInicioCargaViaje}
+          field="tanqueAuxCreado"
+          body={fechaTanqueAuxCreado}
+          header="tanqueAux Creado"
           dataType="date"
         />
         <Column
-          field="fechaFinCargaViaje"
-          header="fechaFinCargaViaje"
-          body={fechaFinCargaViaje}
-          dataType="date"
-        />
-        <Column
-          field="cargaViajeCreado"
-          body={fechaCargaViajeCreado}
-          header="cargaViaje Creado"
-          dataType="date"
-        />
-        <Column
-          field="cargaViajeModificado"
-          body={fechaCargaViajeModificado}
-          header="cargaViaje Modificado"
+          field="tanqueAuxModificado"
+          body={fechaTanqueAuxModificado}
+          header="tanqueAux Modificado"
           dataType="date"
         />
 
         <Column body={actionBodyTemplate}></Column>
       </DataTable>
 
-      <CargaViajeForm isVisible={isVisible} setIsVisible={setIsVisible} />
+      <TanqueAuxForm isVisible={isVisible} setIsVisible={setIsVisible} />
 
       <Dialog
-        visible={deleteCargaViajeDialog}
+        visible={deleteTanqueAuxDialog}
         style={{ width: '450px' }}
         header="Confirm"
         modal
-        footer={deleteCargaViajeDialogFooter}
+        footer={deleteTanqueAuxDialogFooter}
         onHide={() => clearSelected()}
       >
         <div className="flex align-items-center justify-content-center">
@@ -241,10 +218,10 @@ const CargaViajeList = () => {
             className="pi pi-exclamation-triangle mr-3"
             style={{ fontSize: '2rem' }}
           />
-          {cargaViaje && (
+          {tanqueAux && (
             <span>
-              Esta seguro que quiere eliminar la cargaViaje{' '}
-              <b>{cargaViaje.nombreCargaViaje}</b>?
+              Esta seguro que quiere eliminar la tanqueAux{' '}
+              <b>{tanqueAux.nombreTanqueAux}</b>?
             </span>
           )}
         </div>
@@ -253,4 +230,4 @@ const CargaViajeList = () => {
   )
 }
 
-export default CargaViajeList
+export default TanqueAuxList

@@ -16,6 +16,8 @@ import morocoto1 from './morocoto1.jpeg'
 import morocoto2 from './morocoto2.jpeg'
 import umay1 from './umay1.jpeg'
 import umay2 from './umay2.jpeg'
+import inmaculadatanque from './inmaculadatanque.png'
+import nasca1tanque from './nasca1tanque.png'
 
 export default [
   inmaculada1,
@@ -35,5 +37,7 @@ export default [
   morocoto1,
   morocoto2,
   umay1,
-  umay2
+  umay2,
+  inmaculadatanque,
+  nasca1tanque
 ]

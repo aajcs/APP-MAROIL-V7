@@ -172,16 +172,6 @@ const ViajeList = () => {
         <Column field="descripcionViaje" header="descripcionViaje" />
         <Column field="estatusViaje" header="estatusViaje" />
         <Column field="destinoViaje" header="destinoViaje" />
-        <Column field="etcViaje" header="etcViaje" />
-        <Column field="etaViaje" header="etaViaje" />
-        <Column field="etdViaje" header="etdViaje" />
-        <Column field="tipoCargaViaje" header="tipoCargaViaje" />
-        <Column field="cantidadCargaViaje" header="cantidadCargaViaje" />
-        <Column
-          field="cantidadActualCargaViaje"
-          header="cantidadActualCargaViaje"
-        />
-        <Column field="rataCargaViaje" header="rataCargaViaje" />
         <Column field="embarcacion.nombreEmbarcacion" header="embarcacion" />
         <Column field="remolcador[0].nombreRemolcador" header="remolcador" />
 

@@ -9,6 +9,7 @@ import { ProgressBar } from 'primereact/progressbar'
 import AuthUse from '../../../auth/AuthUse'
 
 import { CargaViajeContext } from '../contexts/CargaViajeContext'
+import CargaViajeCard from './CargaViajeCard'
 // import barcoJPEG from '../assetsControl/barco.jpeg'
 
 function ViajeCard({ viajes }) {
@@ -46,17 +47,17 @@ function ViajeCard({ viajes }) {
   }, [])
   console.log(viajes)
   return (
-    <div className="col-12 lg:col-6 xl:col-6">
+    <div className="col-12 lg:col-12 xl:col-12 ">
       <div className="card mt-2 mb-0 pb-0 ">
         <div className="card-body p-0">
           <div className="grid ">
-            <div className="col-6">
+            <div className="col-12 lg:col-6 xl:col-6">
               <h3 className=" card-title mb-0">{viajes.nombreViaje}</h3>{' '}
               <h6 className="text-400 card-title mt-0">
                 {viajes.descripcionViaje}
               </h6>
             </div>
-            <div className="col-6 text-right ">
+            <div className="col-12 lg:col-6 xl:col-6col-6 text-right ">
               <Tag className="w-100 p-2 text-900">
                 <p className=" mb-0">{viajes.estatusViaje}</p>
               </Tag>
@@ -69,158 +70,74 @@ function ViajeCard({ viajes }) {
               )}
             </div>
           </div>
-          <h6 className="card-text mt-0 mb-2">
-            etaViaje:
-            <span className=" font-medium"> {viajes.etaViaje}</span>
-          </h6>
-          <h6 className="card-text mt-0 mb-2">
-            etcViaje:
-            <span className=" font-medium"> {viajes.etcViaje}</span>
-          </h6>
-          <h6 className="card-text mt-0 mb-2">
-            etdViaje:
-            <span className=" font-medium"> {viajes.etdViaje}</span>
-          </h6>
-          <h6 className="card-text mt-0 mb-2">
-            fechaInicioViaje:
-            <span className=" font-medium">
-              {' '}
-              {moment(viajes.fechaInicioViaje).isValid() &&
-                moment(viajes.fechaInicioViaje).format('dddDD/MM/YY HH:mm')}
-            </span>
-          </h6>
-          <h6 className="card-text mt-0 mb-2">
-            fechaFinViaje:
-            <span className=" font-medium">
-              {' '}
-              {moment(viajes.fechaFinViaje).isValid() &&
-                moment(viajes.fechaFinViaje).format('dddDD/MM/YY HH:mm')}
-            </span>
-          </h6>
-          <h6 className="card-text mt-0 mb-2">
-            rataCargaViaje:
-            <span className=" font-medium"> {viajes.rataCargaViaje}</span>
-          </h6>
-          <h6 className="card-text mt-0 mb-2">
-            nombreEmbarcacion:
-            <span className=" font-medium">
-              {viajes.embarcacion.nombreEmbarcacion}
-            </span>
-          </h6>
-          <h6 className="card-text mt-0 mb-2">
-            remolcador:
-            <span className=" font-medium">
-              {viajes.remolcador[0].nombreRemolcador}
-            </span>
-          </h6>
+          <div className="grid ">
+            <div
+              className="col-12 lg:col-6 xl:col-6 "
+              // onClick={() => onClick('displayDetalleCarga')}
+            >
+              <div className="justify-content-around  flex flex-fill">
+                <h6 className="card-text mt-0 mb-2 ">
+                  Inicio del Viaje:
+                  <span className=" font-medium ml-2 text-green-500 font-bold">
+                    {' '}
+                    {moment(viajes.fechaInicioViaje).isValid() &&
+                      moment(viajes.fechaInicioViaje).format(
+                        'dddDD/MM/YY HH:mm'
+                      )}
+                  </span>
+                </h6>
+                <h6 className="card-text mt-0 mb-2">
+                  Fin del Viaje:
+                  <span className=" font-medium ml-2 text-yellow-500 font-bold">
+                    {' '}
+                    {moment(viajes.fechaFinViaje).isValid() &&
+                      moment(viajes.fechaFinViaje).format('dddDD/MM/YY HH:mm')}
+                  </span>
+                </h6>
+              </div>
+              <div className="justify-content-around  flex flex-fill">
+                <h6 className="card-text mt-2 mb-2">
+                  Embarcacion:
+                  <span className=" font-medium ml-2 font-italic">
+                    {viajes.embarcacion.nombreEmbarcacion}
+                  </span>
+                </h6>
+                <h6 className="card-text mt-2 mb-2">
+                  Remolcador:
+                  <span className=" font-medium ml-2 font-italic">
+                    {viajes.remolcador[0].nombreRemolcador}
+                  </span>
+                </h6>
+              </div>
+            </div>
 
-          <h6 className="card-text mt-0 mb-2">
-            cantidadCargaViaje:
-            <span className=" font-medium">
-              {' '}
-              {new Intl.NumberFormat().format(viajes.cantidadCargaViaje)}
-            </span>
-          </h6>
-          <h6 className="card-text mt-0 mb-2">
-            cantidadActualCargaViaje:
-            <span className=" font-medium">
-              {' '}
-              {new Intl.NumberFormat().format(viajes.cantidadActualCargaViaje)}
-            </span>
-          </h6>
-          <hr className="mt-2 mb-2 " />
-          <div className=" ">
-            <h6 className="text-center">Porcentaje de Carga</h6>
-            <ProgressBar
-              className="mt-2 mb-3 "
-              color={porcentajeCombustible > 10 ? '#198754' : '#ff0000'}
-              value={porcentajeCombustible}
-            ></ProgressBar>
-            <h6 className="text-center  m-1">
-              Tiempo de Carga {secondsToString(diff)}
-            </h6>
-            {cargaViajes.map(
-              (cargaViajes) =>
-                cargaViajes.viaje.id === viajes.id && (
-                  <>
-                    <h6 className="card-text mt-0 mb-2 ">
-                      catidadActualCargaViaje:
-                      <span className=" font-medium ms-2">
-                        {cargaViajes.catidadActualCargaViaje}
-                      </span>
-                    </h6>
-                    <h6 className="card-text mt-0 mb-2">
-                      catidadPruductoCargaViaje:
-                      <span className="font-medium ms-2">
-                        {cargaViajes.catidadPruductoCargaViaje}
-                      </span>
-                    </h6>
-                    <h6 className="card-text mt-0 mb-2">
-                      descripcionCargaViaje:
-                      <span className="font-medium ms-2">
-                        {cargaViajes.descripcionCargaViaje}
-                      </span>
-                    </h6>
-                    <h6 className="card-text mt-0 mb-2">
-                      estatusCargaViaje:
-                      <span className="font-medium ms-2">
-                        {cargaViajes.estatusCargaViaje}
-                      </span>
-                    </h6>
-                    <h6 className="card-text mt-0 mb-2">
-                      etaCargaViaje:
-                      <span className="font-medium ms-2">
-                        {cargaViajes.etaCargaViaje}
-                      </span>
-                    </h6>
-                    <h6 className="card-text mt-0 mb-2">
-                      etcCargaViaje:
-                      <span className="font-medium ms-2">
-                        {cargaViajes.etcCargaViaje}
-                      </span>
-                    </h6>
-                    <h6 className="card-text mt-0 mb-2">
-                      fechaInicioCargaViaje:
-                      <span className="font-medium ms-2">
-                        {cargaViajes.fechaInicioCargaViaje}
-                      </span>
-                    </h6>{' '}
-                    <h6 className="card-text mt-0 mb-2">
-                      fechaFinCargaViaje:
-                      <span className="font-medium ms-2">
-                        {cargaViajes.fechaFinCargaViaje}
-                      </span>
-                    </h6>{' '}
-                    <h6 className="card-text mt-0 mb-2">
-                      productoCargaViaje:
-                      <span className="font-medium ms-2">
-                        {cargaViajes.productoCargaViaje}
-                      </span>
-                    </h6>{' '}
-                    <h6 className="card-text mt-0 mb-2">
-                      puertoCargaViaje:
-                      <span className="font-medium ms-2">
-                        {cargaViajes.puertoCargaViaje}
-                      </span>
-                    </h6>{' '}
-                    <h6 className="card-text mt-0 mb-2">
-                      rataCargaViaje:
-                      <span className="font-medium ms-2">
-                        {cargaViajes.rataCargaViaje}
-                      </span>
-                    </h6>{' '}
-                    <h6 className="card-text mt-0 mb-2">
-                      tipoCargaViaje:
-                      <span className="font-medium ms-2">
-                        {cargaViajes.tipoCargaViaje}
-                      </span>
-                    </h6>{' '}
-                    <hr className="mt-2 mb-2 " />
-                  </>
-                  // <ReporteCargaGOMInfoCard key={barcos.id} barcos={barcos} />
-                )
-            )}
+            <div className="col-12 lg:col-6 xl:col-6 text-right ">
+              <h6 className="text-center">Porcentaje de Carga</h6>
+              <ProgressBar
+                className="mt-2 mb-3 "
+                color={porcentajeCombustible > 10 ? '#198754' : '#ff0000'}
+                value={porcentajeCombustible}
+              ></ProgressBar>
+              <h6 className="text-center  m-1">
+                Tiempo de Carga {secondsToString(diff)}
+              </h6>{' '}
+            </div>
           </div>
+          <hr className="mt-2 mb-2 " />
+        </div>
+        <div className="grid w-100 d-flex flex-row">
+          {cargaViajes.map(
+            (cargaViajes) =>
+              cargaViajes.viaje.id === viajes.id && (
+                <>
+                  <CargaViajeCard
+                    key={cargaViajes.id}
+                    cargaViajes={cargaViajes}
+                  />
+                </>
+                // <ReporteCargaGOMInfoCard key={barcos.id} barcos={barcos} />
+              )
+          )}
         </div>
       </div>
     </div>

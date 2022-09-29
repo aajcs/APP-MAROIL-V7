@@ -22,14 +22,18 @@ const cargaViajeSchema = new Schema(
     estatusCargaViaje: {
       type: String
     },
-    etcCargaViaje: {
-      type: String
+
+    fechaArriboCargaViaje: {
+      type: Date,
+      default: moment()
     },
-    etaCargaViaje: {
-      type: String
+    fechaCompletacionCargaViaje: {
+      type: Date,
+      default: moment()
     },
-    etdCargaViaje: {
-      type: String
+    fechaZarpeCargaViaje: {
+      type: Date,
+      default: moment()
     },
     rataCargaViaje: {
       type: String
@@ -47,14 +51,7 @@ const cargaViajeSchema = new Schema(
       type: Schema.Types.ObjectId,
       ref: 'Viaje'
     },
-    fechaInicioCargaViaje: {
-      type: Date,
-      default: moment()
-    },
-    fechaFinCargaViaje: {
-      type: Date,
-      default: moment()
-    },
+
     cargaViajeCreado: {
       type: Date,
       default: moment()

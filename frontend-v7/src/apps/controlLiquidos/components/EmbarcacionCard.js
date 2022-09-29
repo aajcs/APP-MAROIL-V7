@@ -1,19 +1,39 @@
+/* eslint-disable prefer-const */
 /* eslint-disable indent */
 /* eslint-disable react/prop-types */
 
-import React, { useState, useEffect } from 'react'
+import React, { useContext, useState, useEffect } from 'react'
 import moment from 'moment'
 import { Tag } from 'primereact/tag'
 import { Image } from 'primereact/image'
 import { ProgressBar } from 'primereact/progressbar'
 import { Galleria } from 'primereact/galleria'
-
+import { Chart } from 'primereact/chart'
 import AuthUse from '../../../auth/AuthUse'
 import embarcacionJPEG from '../assetsControlLiquidos/ImagenesTodas'
 import { PhotoService } from '../services/PhotoService'
-import inmaculada5 from '../assetsControlLiquidos/inmaculada5.jpeg'
-console.log(inmaculada5)
+import { TanqueAuxContext } from '../contexts/TanqueAuxContext'
+
+const embarcacionImagen = require.context('../assetsControlLiquidos', true)
+
 function EmbarcacionCard({ embarcacions }) {
+  const { tanqueAuxs } = useContext(TanqueAuxContext)
+  console.log(tanqueAuxs)
+  const [basicData] = useState({
+    labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+    datasets: [
+      {
+        label: 'Tanque Estribor',
+        backgroundColor: '#42A5F5',
+        data: [65, 59, 80, 81, 56, 55, 40]
+      },
+      {
+        label: 'Tanque Babor',
+        backgroundColor: '#FFA726',
+        data: [28, 48, 40, 19, 86, 27, 90]
+      }
+    ]
+  })
   const [porcentajeCombustible, setPorcentajeCombustible] = useState(0)
   const [images, setImages] = useState(null)
   const galleriaService = new PhotoService()
@@ -33,7 +53,26 @@ function EmbarcacionCard({ embarcacions }) {
     }
   ]
   const auth = AuthUse()
-
+  const agentaCard = () => {
+    if (!images) return
+    images.map((tech) => {
+      if (tech === embarcacions.nombreEmbarcacion) {
+        return 'GraphQL'
+      } else {
+        return tech
+      }
+    })
+  }
+  console.log(embarcacions.nombreEmbarcacion.toLowerCase().substr(0, 4))
+  const nuevaImagen =
+    images === null
+      ? []
+      : images.filter((tech) =>
+          tech.itemImageSrc.includes(
+            embarcacions.nombreEmbarcacion.toLowerCase().substr(0, 4)
+          )
+        )
+  console.log(nuevaImagen)
   // const fecha4 = fecha2.diff(fecha1, 'days')
   useEffect(() => {
     const handlesumar = () => {
@@ -49,20 +88,29 @@ function EmbarcacionCard({ embarcacions }) {
   }, [])
   useEffect(() => {
     galleriaService.getImages().then((data) => setImages(data))
+    agentaCard()
   }, [])
   const itemTemplate = (item) => {
     console.log(item.itemImageSrc)
     return (
-      <img
-        src={
-          'https://empresas.blogthinkbig.com/wp-content/uploads/2019/11/Imagen3-245003649.jpg?w=800'
-        }
+      // <img
+      //   src={embarcacionImagen(`./${item.itemImageSrc}`)}
+      //   onError={(e) =>
+      //     (e.target.src =
+      //       'https://www.primefaces.org/wp-content/uploads/2020/05/placeholder.png')
+      //   }
+      //   alt={item.alt}
+      //   style={{ width: '100%', display: 'block' }}
+      // />
+      <Image
+        src={embarcacionImagen(`./${item.itemImageSrc}`)}
         onError={(e) =>
           (e.target.src =
             'https://www.primefaces.org/wp-content/uploads/2020/05/placeholder.png')
         }
         alt={item.alt}
-        style={{ width: '100%', display: 'block' }}
+        width="100%"
+        preview
       />
     )
   }
@@ -80,6 +128,44 @@ function EmbarcacionCard({ embarcacions }) {
       />
     )
   }
+
+  const getLightTheme = () => {
+    let basicOptions = {
+      maintainAspectRatio: false,
+      aspectRatio: 0.8,
+      plugins: {
+        legend: {
+          labels: {
+            color: '#fffcf3'
+          }
+        }
+      },
+      scales: {
+        x: {
+          ticks: {
+            color: '#fffcf3'
+          },
+          grid: {
+            color: '#fffcf3'
+          }
+        },
+        y: {
+          ticks: {
+            color: '#fffcf3'
+          },
+          grid: {
+            color: '#ebedef'
+          }
+        }
+      }
+    }
+
+    return {
+      basicOptions
+    }
+  }
+
+  const { basicOptions } = getLightTheme()
   return (
     <div className="col-12 lg:col-6 xl:col-6">
       <div className="card mt-2 mb-0 pb-0 ">
@@ -132,34 +218,35 @@ function EmbarcacionCard({ embarcacions }) {
             </span>
           </h6>
           <hr className="mt-2 mb-2 " />
-          <div className="card">
-            <h5>Item Navigators without Thumbnails</h5>
-            <Galleria
-              value={images}
-              responsiveOptions={responsiveOptions}
-              numVisible={5}
-              circular
-              style={{ maxWidth: '640px' }}
-              showItemNavigators
-              showThumbnails={false}
-              item={itemTemplate}
-              thumbnail={thumbnailTemplate}
-            />
-          </div>
+
+          <Image
+            src={
+              embarcacionJPEG[
+                embarcacions.nombreEmbarcacion === 'NASCA 1' ? 19 : 18
+              ]
+            }
+            alt="Image"
+            width="100%"
+            preview
+          />
+          <hr className="mt-2 mb-2 " />
           <div className=" grid">
             <div
               className="col-6 text-center "
               // onClick={() => onClick('displayDetalleCarga')}
             >
-              <Image
-                src={
-                  embarcacionJPEG[
-                    embarcacions.nombreEmbarcacion === 'NASCA 1' ? 5 : 0
-                  ]
-                }
-                alt="Image"
-                width="100%"
-                preview
+              <Galleria
+                value={nuevaImagen && nuevaImagen}
+                responsiveOptions={responsiveOptions}
+                numVisible={5}
+                circular
+                style={{ maxWidth: '640px' }}
+                showItemNavigators
+                showThumbnails={false}
+                item={itemTemplate}
+                thumbnail={thumbnailTemplate}
+                autoPlay
+                transitionInterval={6000}
               />
               {/* <BarChartDemo
                 heightBogega="50px"
@@ -174,6 +261,10 @@ function EmbarcacionCard({ embarcacions }) {
                 color={porcentajeCombustible > 10 ? '#198754' : '#ff0000'}
                 value={porcentajeCombustible}
               ></ProgressBar>
+              <div className="card">
+                <h5 className="text-center">Carga de Tanques</h5>
+                <Chart type="bar" data={basicData} options={basicOptions} />
+              </div>
             </div>
           </div>
         </div>

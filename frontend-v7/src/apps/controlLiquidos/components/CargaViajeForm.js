@@ -25,9 +25,9 @@ const CargaViajeForm = (props) => {
     descripcionCargaViaje: '',
     puertoCargaViaje: '',
     estatusCargaViaje: '',
-    etcCargaViaje: '',
-    etaCargaViaje: '',
-    etdCargaViaje: '',
+    fechaArriboCargaViaje: '',
+    fechaCompletacionCargaViaje: '',
+    fechaZarpeCargaViaje: '',
     catidadActualCargaViaje: '',
     catidadPruductoCargaViaje: '',
     rataCargaViaje: '',
@@ -100,8 +100,10 @@ const CargaViajeForm = (props) => {
     useState(null)
   const [selectedPuertoCargaViaje, setSelectedPuertoCargaViaje] = useState(null)
 
-  const [dateFinal, setDateFinal] = useState(null)
-  const [dateInicio, setDateInicio] = useState(null)
+  const [dateZarpeCargaViaje, setDateZarpeCargaViaje] = useState(null)
+  const [dateArriboCargaViaje, setDateArriboCargaViaje] = useState(null)
+  const [dateCompletacionCargaViaje, setDateCompletacionCargaViaje] =
+    useState(null)
   const [CargaViajeData, setCargaViajeData] = useState(initialCargaViajeForm)
   const estadoCargaViaje = [
     { estatusCargaViaje: 'INICIADO' },
@@ -126,8 +128,10 @@ const CargaViajeForm = (props) => {
     { productoCargaViaje: 'DIESEL' }
   ]
   const puertoCargaViajelist = [
-    { puertoCargaViaje: 'PUERTO1' },
-    { puertoCargaViaje: 'PUERTO2' }
+    { puertoCargaViaje: 'VENEZUELA' },
+    { puertoCargaViaje: 'DOMINICA' },
+    { puertoCargaViaje: 'SANTA LUCIA' },
+    { puertoCargaViaje: 'SAN VICENTE DE LAS GRANADINAS' }
   ]
   const onEstatusCargaViaje = (e) => {
     setSelectedCargaViaje(e.value)
@@ -165,13 +169,17 @@ const CargaViajeForm = (props) => {
       setSelectedTipoCargaViaje({
         tipoCargaViaje: editCargaViaje.tipoCargaViaje
       })
-      setDateInicio(
-        editCargaViaje.fechaInicioCargaViaje &&
-          moment(editCargaViaje.fechaInicioCargaViaje)._d
+      setDateArriboCargaViaje(
+        editCargaViaje.fechaArriboCargaViaje &&
+          moment(editCargaViaje.fechaArriboCargaViaje)._d
       )
-      setDateFinal(
-        editCargaViaje.fechaFinCargaViaje &&
-          moment(editCargaViaje.fechaFinCargaViaje)._d
+      setDateZarpeCargaViaje(
+        editCargaViaje.fechaZarpeCargaViaje &&
+          moment(editCargaViaje.fechaZarpeCargaViaje)._d
+      )
+      setDateCompletacionCargaViaje(
+        editCargaViaje.fechaCompletacionCargaViaje &&
+          moment(editCargaViaje.fechaCompletacionCargaViaje)._d
       )
     }
   }, [editCargaViaje])
@@ -228,8 +236,9 @@ const CargaViajeForm = (props) => {
     setSelectedViaje('')
 
     setSelectedTipoCargaViaje('')
-    setDateInicio(null)
-    setDateFinal(null)
+    setDateZarpeCargaViaje(null)
+    setDateCompletacionCargaViaje(null)
+    setDateArriboCargaViaje(null)
   }
 
   const dialogFooter = (
@@ -248,10 +257,10 @@ const CargaViajeForm = (props) => {
     setCargaViajeData(initialCargaViajeForm)
     setSelectedCargaViaje('')
     setSelectedViaje('')
-
     setSelectedTipoCargaViaje('')
-    setDateInicio(null)
-    setDateFinal(null)
+    setDateZarpeCargaViaje(null)
+    setDateCompletacionCargaViaje(null)
+    setDateArriboCargaViaje(null)
   }
   const selectedestatusCargaViajeTemplate = (option, props) => {
     if (option) {
@@ -443,66 +452,69 @@ const CargaViajeForm = (props) => {
                 onValueChange={(e) =>
                   updateField(e.target.value, 'catidadPruductoCargaViaje')
                 }
+                suffix=" Bbls"
               />
             </div>
             <div className="field col-12 md:col-4">
-              <label htmlFor="integeronly">ETA</label>
-              <InputText
-                value={CargaViajeData.etaCargaViaje}
-                onChange={(e) => updateField(e.target.value, 'etaCargaViaje')}
+              <label htmlFor="integeronly">fechaArriboCargaViaje</label>
+              <Calendar
+                className="p-datepicker-today"
+                id="time24"
+                value={dateArriboCargaViaje !== null && dateArriboCargaViaje}
+                onChange={(e) => {
+                  setDateArriboCargaViaje(e.value)
+                  updateField(e.target.value, 'fechaArriboCargaViaje')
+                }}
+                showTime
+                locale="es"
+                // hourFormat="12"
+                showButtonBar
               />
             </div>
             <div className="field col-12 md:col-4">
-              <label htmlFor="integeronly">ETC</label>
-              <InputText
-                value={CargaViajeData.etcCargaViaje}
-                onChange={(e) => updateField(e.target.value, 'etcCargaViaje')}
+              <label htmlFor="integeronly">fechaCompletacionCargaViaje</label>
+              <Calendar
+                className="p-datepicker-today"
+                id="time24"
+                value={
+                  dateCompletacionCargaViaje !== null &&
+                  dateCompletacionCargaViaje
+                }
+                onChange={(e) => {
+                  setDateCompletacionCargaViaje(e.value)
+                  updateField(e.target.value, 'fechaCompletacionCargaViaje')
+                }}
+                showTime
+                locale="es"
+                // hourFormat="12"
+                showButtonBar
               />
             </div>
             <div className="field col-12 md:col-4">
-              <label htmlFor="integeronly">ETD</label>
-              <InputText
-                value={CargaViajeData.etdCargaViaje}
-                onChange={(e) => updateField(e.target.value, 'etdCargaViaje')}
+              <label htmlFor="integeronly">fechaZarpeCargaViaje</label>
+              <Calendar
+                className="p-datepicker-today"
+                id="time24"
+                value={dateZarpeCargaViaje !== null && dateZarpeCargaViaje}
+                onChange={(e) => {
+                  setDateZarpeCargaViaje(e.value)
+                  updateField(e.target.value, 'fechaZarpeCargaViaje')
+                }}
+                showTime
+                locale="es"
+                // hourFormat="12"
+                showButtonBar
               />
             </div>
             <div className="field col-12 md:col-3">
               <label htmlFor="integeronly">Rata de Carga</label>
-              <InputText
+              <InputNumber
+                inputId="integeronly"
                 value={CargaViajeData.rataCargaViaje}
-                onChange={(e) => updateField(e.target.value, 'rataCargaViaje')}
-              />
-            </div>
-            <div className="field col-12 md:col-3">
-              <label>Fecha Inicio Carga</label>
-              <Calendar
-                className="p-datepicker-today"
-                id="time24"
-                value={dateInicio !== null && dateInicio}
-                onChange={(e) => {
-                  setDateInicio(e.value)
-                  updateField(e.target.value, 'fechaInicioCargaViaje')
-                }}
-                showTime
-                locale="es"
-                // hourFormat="12"
-                showButtonBar
-              />
-            </div>
-            <div className="field col-12 md:col-3">
-              <label>Fecha Final Carga</label>
-              <Calendar
-                className="p-datepicker-today"
-                id="time24"
-                value={dateFinal !== null && dateFinal}
-                onChange={(e) => {
-                  setDateFinal(e.value)
-                  updateField(e.target.value, 'fechaFinCargaViaje')
-                }}
-                showTime
-                locale="es"
-                // hourFormat="12"
-                showButtonBar
+                onValueChange={(e) =>
+                  updateField(e.target.value, 'rataCargaViaje')
+                }
+                suffix=" Bbls"
               />
             </div>
             <div className="field col-12 md:col-3">
@@ -513,6 +525,7 @@ const CargaViajeForm = (props) => {
                 onValueChange={(e) =>
                   updateField(e.target.value, 'catidadActualCargaViaje')
                 }
+                suffix=" Bbls"
               />
             </div>
           </div>
