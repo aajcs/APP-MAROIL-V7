@@ -15,7 +15,7 @@ const ViajeContextProvider = (props) => {
   const [editViaje, setEditViaje] = useState(null)
   const [loading, setLoading] = useState(true)
   const [actuallizar, setActuallizar] = useState(null)
-  console.log(viajes)
+
   const auth = AuthUse()
   const token = auth.user.token
 

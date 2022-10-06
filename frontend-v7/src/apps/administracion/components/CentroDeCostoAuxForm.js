@@ -115,6 +115,7 @@ const CentroDeCostoAuxForm = (props) => {
     { name: 'Germany', code: 'DE' },
     { name: 'Japan', code: 'JP' },
     { name: 'Spain', code: 'ES' },
+    { name: 'Dominica', code: 'DM' },
     { name: 'United States', code: 'US' }
   ]
   const onCountryChange = (e) => {

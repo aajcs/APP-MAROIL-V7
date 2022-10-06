@@ -285,7 +285,7 @@ function ReporteCargaGOMInfoCard({ barcos }) {
             >
               {/* <Image src={barcoJPEG} alt="Image" width="100" preview /> */}
               <BarChartDemo
-                heightBogega="50px"
+                heightTanque="50px"
                 bodegasDelBarco={bodegasDelBarco}
                 barcos={barcos}
               />

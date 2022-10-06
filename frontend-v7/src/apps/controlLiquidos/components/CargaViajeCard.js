@@ -8,6 +8,7 @@ import { ProgressBar } from 'primereact/progressbar'
 
 import AuthUse from '../../../auth/AuthUse'
 import cargaViajeesJPEG from '../assetsControlLiquidos/ImagenesTodas'
+import flagplaceholder from '../assetsControlLiquidos/flagplaceholder.png'
 console.log(cargaViajeesJPEG)
 function CargaViajeCard({ cargaViajes }) {
   const [porcentajeCombustible, setPorcentajeCombustible] = useState(0)
@@ -24,12 +25,14 @@ function CargaViajeCard({ cargaViajes }) {
       ? cargaViajes.fechaCompletacionCargaViaje
       : moment()
   )
+  const fecha4 = moment()
 
   // const fecha3 = moment(fecha1 - fecha2).format('HH:mm')
 
   // Diff in hours
   const diff = fecha2.diff(fecha1, 'seconds')
   const diff2 = fecha3.diff(fecha1, 'seconds')
+  const diff3 = fecha4.diff(fecha1, 'seconds')
 
   // const fecha4 = fecha2.diff(fecha1, 'days')
   useEffect(() => {
@@ -44,6 +47,14 @@ function CargaViajeCard({ cargaViajes }) {
 
     handlesumar()
   }, [])
+
+  function diasPorcentaje(diff, diff3) {
+    const porcentajeFechaProgrees = Math.trunc((100 / diff) * diff3)
+    if (porcentajeFechaProgrees >= 100) {
+      return '100%'
+    }
+    return porcentajeFechaProgrees + '%'
+  }
   function secondsToString(diff) {
     const numdays = Math.floor(diff / 86400)
     const numhours = Math.floor((diff % 86400) / 3600)
@@ -52,8 +63,18 @@ function CargaViajeCard({ cargaViajes }) {
 
     return numdays + ' dias ' + numhours + ' horas ' + numminutes + ' minutos '
   }
+
+  const ubicacionBuqueTags = {
+    DOMINICA: 'dm',
+    VENEZUELA: 've',
+    'SANTA LUCIA': 'lc',
+    'SAN VICENTE DE LAS GRANADINAS': 'vc',
+    'ST KITT AND NIEVES': 'tc'
+  }
+
+  const ubicacionBuqueTag = ubicacionBuqueTags[cargaViajes.puertoCargaViaje]
   return (
-    <div className="col-12 lg:col-6 xl:col-6">
+    <div className="col-12 lg:col-12 xl:col-12">
       <div className="">
         <div
           className={
@@ -71,6 +92,15 @@ function CargaViajeCard({ cargaViajes }) {
               <div className="col-6 ">
                 <h3 className=" card-title mb-0">
                   {cargaViajes.puertoCargaViaje}
+                  <img
+                    alt={'option.name'}
+                    src={flagplaceholder}
+                    onError={(e) =>
+                      (e.target.src =
+                        'https://www.primefaces.org/wp-content/uploads/2020/05/placeholder.png')
+                    }
+                    className={`ml-3 flag flag-${ubicacionBuqueTag.toLowerCase()}`}
+                  />
                 </h3>{' '}
                 <h6 className="text-400 card-title mt-0">
                   {cargaViajes.productoCargaViaje}
@@ -122,8 +152,25 @@ function CargaViajeCard({ cargaViajes }) {
                 className="col-6 text-left "
                 // onClick={() => onClick('displayDetalleCarga')}
               >
+                <div className="skill-bars">
+                  <div className="bar mt-3">
+                    <div className="progress-line mysql">
+                      <div className="infosnippet-startpoint"></div>
+                      <div className="infosnippet-endpoint"></div>
+                      <span
+                        style={{
+                          width: diasPorcentaje(diff, diff3)
+                        }}
+                      >
+                        <div className=" text-endpoint ">
+                          {diasPorcentaje(diff, diff3)}
+                        </div>{' '}
+                      </span>
+                    </div>
+                  </div>
+                </div>
                 <h6 className="card-text mt-0 mb-2">
-                  Fecha Arribo:
+                  Fecha Atraque:
                   <span className="text-green-500 font-medium">
                     {' '}
                     {moment(cargaViajes.fechaArriboCargaViaje).isValid() &&
@@ -157,7 +204,10 @@ function CargaViajeCard({ cargaViajes }) {
               </div>
               <div className="col-6 text-left ">
                 <h6 className="card-text mt-0 mb-2">
-                  Volumen Total:
+                  Volumen Actual{' '}
+                  {cargaViajes.tipoCargaViaje === 'CARGANDO'
+                    ? 'Cargando'
+                    : 'Descargando'}{' '}
                   <span className=" font-medium">
                     {' '}
                     {new Intl.NumberFormat().format(
@@ -167,7 +217,11 @@ function CargaViajeCard({ cargaViajes }) {
                   </span>
                 </h6>
                 <h6 className="card-text mt-0 mb-2">
-                  Volumen Actual:
+                  Volumen Total a{' '}
+                  {cargaViajes.tipoCargaViaje === 'CARGANDO'
+                    ? 'Cargar'
+                    : 'Descargar'}{' '}
+                  :
                   <span className=" font-medium">
                     {' '}
                     {new Intl.NumberFormat().format(

@@ -113,9 +113,11 @@ const ViajeForm = (props) => {
   //   { remolcador: 'MOROCOTO' }
   // ]
   const destinoViajelist = [
+    { puertoCargaViaje: 'VENEZUELA' },
     { destinoViaje: 'DOMINICA' },
     { destinoViaje: 'SANTA LUCIA' },
-    { destinoViaje: 'SAN VICENTE DE LAS GRANADINAS' }
+    { destinoViaje: 'SAN VICENTE DE LAS GRANADINAS' },
+    { destinoViaje: 'ST KITT AND NIEVES' }
   ]
   const tipoCargaViajelist = [
     { tipoCargaViaje: 'GASOLINA' },
@@ -147,7 +149,6 @@ const ViajeForm = (props) => {
 
   useEffect(() => {
     if (editViaje) {
-      console.log(editViaje.embarcacion.nombreEmbarcacion)
       setViajeData(editViaje)
       setSelectedViaje({
         estatusViaje: editViaje.estatusViaje

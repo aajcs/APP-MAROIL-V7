@@ -9,7 +9,7 @@ import { ProgressBar } from 'primereact/progressbar'
 
 import AuthUse from '../../../auth/AuthUse'
 import remolcadoresJPEG from '../assetsControlLiquidos/ImagenesTodas'
-console.log(remolcadoresJPEG)
+
 function RemolcadorCard({ remolcadors }) {
   const [porcentajeCombustible, setPorcentajeCombustible] = useState(0)
 

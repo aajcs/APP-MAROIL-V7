@@ -8,32 +8,20 @@ import { Tag } from 'primereact/tag'
 import { Image } from 'primereact/image'
 import { ProgressBar } from 'primereact/progressbar'
 import { Galleria } from 'primereact/galleria'
-import { Chart } from 'primereact/chart'
 import AuthUse from '../../../auth/AuthUse'
-import embarcacionJPEG from '../assetsControlLiquidos/ImagenesTodas'
 import { PhotoService } from '../services/PhotoService'
 import { TanqueAuxContext } from '../contexts/TanqueAuxContext'
+import TanqueAuxCard from './TanqueAuxCard'
+import { Button } from 'primereact/button'
+import { Dialog } from 'primereact/dialog'
 
 const embarcacionImagen = require.context('../assetsControlLiquidos', true)
 
 function EmbarcacionCard({ embarcacions }) {
   const { tanqueAuxs } = useContext(TanqueAuxContext)
-  console.log(tanqueAuxs)
-  const [basicData] = useState({
-    labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
-    datasets: [
-      {
-        label: 'Tanque Estribor',
-        backgroundColor: '#42A5F5',
-        data: [65, 59, 80, 81, 56, 55, 40]
-      },
-      {
-        label: 'Tanque Babor',
-        backgroundColor: '#FFA726',
-        data: [28, 48, 40, 19, 86, 27, 90]
-      }
-    ]
-  })
+  const [tanqueAuxEmbarcacion, setTanqueAuxEmbarcacion] = useState(null)
+  const [displayDetalleCarga, setDisplayDetalleCarga] = useState(false)
+
   const [porcentajeCombustible, setPorcentajeCombustible] = useState(0)
   const [images, setImages] = useState(null)
   const galleriaService = new PhotoService()
@@ -90,6 +78,14 @@ function EmbarcacionCard({ embarcacions }) {
     galleriaService.getImages().then((data) => setImages(data))
     agentaCard()
   }, [])
+  useEffect(() => {
+    const findBodegaBarco = (id) => {
+      const bodegaBarco = tanqueAuxs.filter((p) => p.embarcacion.id === id)
+
+      setTanqueAuxEmbarcacion(bodegaBarco)
+    }
+    findBodegaBarco(embarcacions.id)
+  }, [tanqueAuxs])
   const itemTemplate = (item) => {
     console.log(item.itemImageSrc)
     return (
@@ -128,44 +124,34 @@ function EmbarcacionCard({ embarcacions }) {
       />
     )
   }
-
-  const getLightTheme = () => {
-    let basicOptions = {
-      maintainAspectRatio: false,
-      aspectRatio: 0.8,
-      plugins: {
-        legend: {
-          labels: {
-            color: '#fffcf3'
-          }
-        }
-      },
-      scales: {
-        x: {
-          ticks: {
-            color: '#fffcf3'
-          },
-          grid: {
-            color: '#fffcf3'
-          }
-        },
-        y: {
-          ticks: {
-            color: '#fffcf3'
-          },
-          grid: {
-            color: '#ebedef'
-          }
-        }
-      }
-    }
-
-    return {
-      basicOptions
-    }
+  const dialogFuncMap = {
+    displayDetalleCarga: setDisplayDetalleCarga
+  }
+  const onClick = (name) => {
+    dialogFuncMap[`${name}`](true)
+  }
+  const onHide = (name) => {
+    dialogFuncMap[`${name}`](false)
+  }
+  const renderFooter = (name) => {
+    return (
+      <div>
+        <Button
+          label="No"
+          icon="pi pi-times"
+          onClick={() => onHide(name)}
+          className="p-button-text"
+        />
+        <Button
+          label="Yes"
+          icon="pi pi-check"
+          onClick={() => onHide(name)}
+          autoFocus
+        />
+      </div>
+    )
   }
 
-  const { basicOptions } = getLightTheme()
   return (
     <div className="col-12 lg:col-6 xl:col-6">
       <div className="card mt-2 mb-0 pb-0 ">
@@ -219,16 +205,28 @@ function EmbarcacionCard({ embarcacions }) {
           </h6>
           <hr className="mt-2 mb-2 " />
 
-          <Image
-            src={
-              embarcacionJPEG[
-                embarcacions.nombreEmbarcacion === 'NASCA 1' ? 19 : 18
-              ]
-            }
-            alt="Image"
-            width="100%"
-            preview
-          />
+          <div onClick={() => onClick('displayDetalleCarga')}>
+            <TanqueAuxCard
+              tanqueAuxEmbarcacion={tanqueAuxEmbarcacion}
+              embarcacions={embarcacions}
+              heightTanque="300px"
+            />
+          </div>
+          <Dialog
+            header="Detalle de carga en bodegas"
+            visible={displayDetalleCarga}
+            onHide={() => onHide('displayDetalleCarga')}
+            breakpoints={{ '960px': '75vw' }}
+            style={{ width: '75vw' }}
+            footer={renderFooter('displayDetalleCarga')}
+          >
+            <TanqueAuxCard
+              heightTanque="500px"
+              tanqueAuxEmbarcacion={tanqueAuxEmbarcacion}
+              embarcacions={embarcacions}
+              tolltip={true}
+            />
+          </Dialog>
           <hr className="mt-2 mb-2 " />
           <div className=" grid">
             <div
@@ -261,10 +259,6 @@ function EmbarcacionCard({ embarcacions }) {
                 color={porcentajeCombustible > 10 ? '#198754' : '#ff0000'}
                 value={porcentajeCombustible}
               ></ProgressBar>
-              <div className="card">
-                <h5 className="text-center">Carga de Tanques</h5>
-                <Chart type="bar" data={basicData} options={basicOptions} />
-              </div>
             </div>
           </div>
         </div>

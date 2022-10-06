@@ -122,6 +122,7 @@ const OperacionesGOMBarcoForm = (props) => {
     { name: 'France', code: 'FR' },
     { name: 'Germany', code: 'DE' },
     { name: 'Japan', code: 'JP' },
+    { name: 'Dominica', code: 'DM' },
     { name: 'Spain', code: 'ES' },
     { name: 'United States', code: 'US' }
   ]

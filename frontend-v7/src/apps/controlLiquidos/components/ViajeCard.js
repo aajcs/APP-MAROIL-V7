@@ -1,3 +1,4 @@
+/* eslint-disable quotes */
 /* eslint-disable react/prop-types */
 
 import React, { useContext, useState, useEffect } from 'react'
@@ -15,15 +16,25 @@ import CargaViajeCard from './CargaViajeCard'
 function ViajeCard({ viajes }) {
   const { cargaViajes } = useContext(CargaViajeContext)
   const [porcentajeCombustible, setPorcentajeCombustible] = useState(0)
-  console.log(cargaViajes)
+
   const auth = AuthUse()
   const fecha1 = moment(viajes.fechaInicioViaje)
   const fecha2 = moment(viajes.fechaFinViaje ? viajes.fechaFinViaje : moment())
+  const fecha3 = moment()
+
   // const fecha3 = moment(fecha1 - fecha2).format('HH:mm')
 
   // Diff in hours
   const diff = fecha2.diff(fecha1, 'seconds') // Diff in days
+  const diff2 = fecha3.diff(fecha1, 'seconds') // Diff in days
 
+  function diasPorcentaje(diff, diff2) {
+    const porcentajeFechaProgrees = Math.trunc((100 / diff) * diff2)
+    if (porcentajeFechaProgrees >= 100) {
+      return '100%'
+    }
+    return porcentajeFechaProgrees + '%'
+  }
   function secondsToString(diff) {
     const numdays = Math.floor(diff / 86400)
     const numhours = Math.floor((diff % 86400) / 3600)
@@ -45,7 +56,7 @@ function ViajeCard({ viajes }) {
 
     handlesumar()
   }, [])
-  console.log(viajes)
+
   return (
     <div className="col-12 lg:col-12 xl:col-12 ">
       <div className="card mt-2 mb-0 pb-0 ">
@@ -75,6 +86,29 @@ function ViajeCard({ viajes }) {
               className="col-12 lg:col-6 xl:col-6 "
               // onClick={() => onClick('displayDetalleCarga')}
             >
+              <div className="skill-bars">
+                <div className="bar mt-3">
+                  <div className="progress-line mysql">
+                    <div className="infosnippet-startpoint"></div>
+                    <div className="infosnippet-endpoint"></div>
+                    <span
+                      style={{
+                        content: {
+                          '&::after': {
+                            content: 'aqui'
+                          }
+                        },
+                        width: diasPorcentaje(diff, diff2)
+                      }}
+                    >
+                      <div className=" text-endpoint ">
+                        {diasPorcentaje(diff, diff2)}
+                      </div>{' '}
+                    </span>
+                  </div>
+                </div>
+              </div>
+
               <div className="justify-content-around  flex flex-fill">
                 <h6 className="card-text mt-0 mb-2 ">
                   Inicio del Viaje:
@@ -119,7 +153,7 @@ function ViajeCard({ viajes }) {
                 value={porcentajeCombustible}
               ></ProgressBar>
               <h6 className="text-center  m-1">
-                Tiempo de Carga {secondsToString(diff)}
+                Tiempo de Viaje {secondsToString(diff)}
               </h6>{' '}
             </div>
           </div>

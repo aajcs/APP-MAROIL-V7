@@ -129,9 +129,10 @@ const CargaViajeForm = (props) => {
   ]
   const puertoCargaViajelist = [
     { puertoCargaViaje: 'VENEZUELA' },
-    { puertoCargaViaje: 'DOMINICA' },
-    { puertoCargaViaje: 'SANTA LUCIA' },
-    { puertoCargaViaje: 'SAN VICENTE DE LAS GRANADINAS' }
+    { destinoViaje: 'DOMINICA' },
+    { destinoViaje: 'SANTA LUCIA' },
+    { destinoViaje: 'SAN VICENTE DE LAS GRANADINAS' },
+    { destinoViaje: 'ST KITT AND NIEVES' }
   ]
   const onEstatusCargaViaje = (e) => {
     setSelectedCargaViaje(e.value)

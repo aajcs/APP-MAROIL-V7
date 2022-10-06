@@ -103,7 +103,6 @@ const RemolcadorForm = (props) => {
   const toast = useRef(null)
 
   useEffect(() => {
-    console.log(editRemolcador)
     if (editRemolcador) {
       setRemolcadorData(editRemolcador)
       setSelectedRemolcador({
