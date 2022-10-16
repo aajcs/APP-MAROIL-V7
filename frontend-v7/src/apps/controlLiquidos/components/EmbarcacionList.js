@@ -169,32 +169,29 @@ const EmbarcacionList = () => {
         responsiveLayout="scroll"
         breakpoint="960px"
       >
-        <Column field="nombreEmbarcacion" header="nombre Embarcacion" />
-        <Column
-          field="descripcionEmbarcacion"
-          header="descripcionEmbarcacion"
-        />
-        <Column field="estatusEmbarcacion" header="estatusEmbarcacion" />
-        <Column field="ubicacionEmbarcacion" header="ubicacionEmbarcacion" />
+        <Column field="nombreEmbarcacion" header="Embarcacion" />
+        <Column field="descripcionEmbarcacion" header="Descripción" />
+        <Column field="estatusEmbarcacion" header="Estatus" />
+        <Column field="ubicacionEmbarcacion" header="Actividad" />
         <Column
           field="combustibleActualEmbarcacion"
-          header="combustibleActualEmbarcacion"
+          header="Combustible Actual"
         />
         <Column
           field="combustibleCapacidadEmbarcacion"
-          header="combustibleCapacidadEmbarcacion"
+          header="combustible Capacidad"
         />
 
         <Column
           field="embarcacionCreado"
           body={fechaEmbarcacionCreado}
-          header="embarcacion Creado"
+          header="Embarcacion Creado"
           dataType="date"
         />
         <Column
           field="embarcacionModificado"
           body={fechaEmbarcacionModificado}
-          header="embarcacion Modificado"
+          header="Embarcacion Modificado"
           dataType="date"
         />
 

@@ -288,7 +288,7 @@ const VolumetriaList = () => {
       </span>
     )
   }
-  console.log(barcostodos)
+
   return (
     <>
       <Toast ref={toast} />

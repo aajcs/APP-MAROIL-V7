@@ -13,6 +13,7 @@ import { Calendar } from 'primereact/calendar'
 
 import moment from 'moment'
 import { ViajeContext } from '../contexts/ViajeContext'
+import { ViajeAuxContext } from '../contexts/ViajeAuxContext'
 
 // import { CargaBodegaContext } from '../contexts/CargaBodegaContext'
 // import flagplaceholder from '../assetsControl/flagplaceholder.png'
@@ -25,13 +26,10 @@ const CargaViajeForm = (props) => {
     descripcionCargaViaje: '',
     puertoCargaViaje: '',
     estatusCargaViaje: '',
-    fechaArriboCargaViaje: '',
-    fechaCompletacionCargaViaje: '',
-    fechaZarpeCargaViaje: '',
     catidadActualCargaViaje: '',
     catidadPruductoCargaViaje: '',
     rataCargaViaje: '',
-    viaje: '',
+    viajeAux: '',
     fechaInicioCargaViaje: '',
     fechaFinCargaViaje: '',
     cargaViajeCreado: moment(),
@@ -89,21 +87,24 @@ const CargaViajeForm = (props) => {
     createBodegaCargaViaje1
   } = useContext(CargaViajeContext)
   const { viajes } = useContext(ViajeContext)
+  const { viajeAuxs } = useContext(ViajeAuxContext)
 
   // const { createCargaBodega } = useContext(CargaBodegaContext)
   const { isVisible, setIsVisible } = props
   const [selectedCargaViaje, setSelectedCargaViaje] = useState(null)
   const [selectedViaje, setSelectedViaje] = useState(null)
+  const [paisViajeAux, setPaisViajeAux] = useState(null)
+  const [selectedPaisViajeAux, setSelectedPaisViajeAux] = useState(null)
 
   const [selectedTipoCargaViaje, setSelectedTipoCargaViaje] = useState(null)
   const [selectedProductoCargaViaje, setSelectedProductoCargaViaje] =
     useState(null)
   const [selectedPuertoCargaViaje, setSelectedPuertoCargaViaje] = useState(null)
 
-  const [dateZarpeCargaViaje, setDateZarpeCargaViaje] = useState(null)
-  const [dateArriboCargaViaje, setDateArriboCargaViaje] = useState(null)
-  const [dateCompletacionCargaViaje, setDateCompletacionCargaViaje] =
-    useState(null)
+  const [dateInicioCargaViaje, setDateInicioCargaViaje] = useState(null)
+  const [dateFinCargaViaje, setDateFinCargaViaje] = useState(null)
+  const [disabledPaisAsociado, setDisabledPaisAsociado] = useState(true)
+
   const [CargaViajeData, setCargaViajeData] = useState(initialCargaViajeForm)
   const estadoCargaViaje = [
     { estatusCargaViaje: 'INICIADO' },
@@ -128,11 +129,11 @@ const CargaViajeForm = (props) => {
     { productoCargaViaje: 'DIESEL' }
   ]
   const puertoCargaViajelist = [
-    { puertoCargaViaje: 'VENEZUELA' },
-    { destinoViaje: 'DOMINICA' },
-    { destinoViaje: 'SANTA LUCIA' },
-    { destinoViaje: 'SAN VICENTE DE LAS GRANADINAS' },
-    { destinoViaje: 'ST KITT AND NIEVES' }
+    { puertoCargaViaje: 'GUARAGUAO' },
+    { puertoCargaViaje: 'WOODBRIDGE BAY PORT' },
+    { puertoCargaViaje: 'SANTA LUCIA' },
+    { puertoCargaViaje: 'SAN VICENTE DE LAS GRANADINAS' },
+    { puertoCargaViaje: 'BASSETERRE BAY' }
   ]
   const onEstatusCargaViaje = (e) => {
     setSelectedCargaViaje(e.value)
@@ -141,6 +142,15 @@ const CargaViajeForm = (props) => {
   const onViaje = (e) => {
     setSelectedViaje(e.value)
     updateField(e.value.id, 'viaje')
+    setDisabledPaisAsociado(false)
+    const viajeAuxFilter = viajeAuxs.filter(
+      (p) => p.viaje.id === e.value.id && p
+    )
+    setPaisViajeAux(viajeAuxFilter)
+  }
+  const OnPaisViajeAux = (e) => {
+    setSelectedPaisViajeAux(e.value)
+    updateField(e.value.id, 'viajeAux')
   }
 
   const onProductoCargaViaje = (e) => {
@@ -160,27 +170,29 @@ const CargaViajeForm = (props) => {
 
   useEffect(() => {
     if (editCargaViaje) {
-      console.log(editCargaViaje.viaje.nombreViaje)
       setCargaViajeData(editCargaViaje)
+
+      setSelectedPaisViajeAux(editCargaViaje.viajeAux)
       setSelectedCargaViaje({
         estatusCargaViaje: editCargaViaje.estatusCargaViaje
       })
-      setSelectedViaje(editCargaViaje.viaje.nombreViaje)
 
       setSelectedTipoCargaViaje({
         tipoCargaViaje: editCargaViaje.tipoCargaViaje
       })
-      setDateArriboCargaViaje(
-        editCargaViaje.fechaArriboCargaViaje &&
-          moment(editCargaViaje.fechaArriboCargaViaje)._d
+      setSelectedPuertoCargaViaje({
+        puertoCargaViaje: editCargaViaje.puertoCargaViaje
+      })
+      setSelectedProductoCargaViaje({
+        productoCargaViaje: editCargaViaje.productoCargaViaje
+      })
+      setDateFinCargaViaje(
+        editCargaViaje.fechaFinCargaViaje &&
+          moment(editCargaViaje.fechaFinCargaViaje)._d
       )
-      setDateZarpeCargaViaje(
-        editCargaViaje.fechaZarpeCargaViaje &&
-          moment(editCargaViaje.fechaZarpeCargaViaje)._d
-      )
-      setDateCompletacionCargaViaje(
-        editCargaViaje.fechaCompletacionCargaViaje &&
-          moment(editCargaViaje.fechaCompletacionCargaViaje)._d
+      setDateInicioCargaViaje(
+        editCargaViaje.fechaInicioCargaViaje &&
+          moment(editCargaViaje.fechaInicioCargaViaje)._d
       )
     }
   }, [editCargaViaje])
@@ -221,25 +233,37 @@ const CargaViajeForm = (props) => {
       [field]: data
     })
   }
-
+  const showError = () => {
+    toast.current.show({
+      severity: 'error',
+      summary: 'Mensaje de Error',
+      detail: 'Selecione el Pais Asociado',
+      life: 3000
+    })
+  }
   const saveCargaViaje = () => {
-    if (!editCargaViaje) {
-      createCargaViaje(CargaViajeData)
-    } else {
-      updateCargaViaje({
-        ...CargaViajeData,
-        CargaViajeModificado: moment()
-      })
-    }
-    setCargaViajeData(initialCargaViajeForm)
-    setIsVisible(false)
-    setSelectedCargaViaje('')
-    setSelectedViaje('')
+    if (selectedPaisViajeAux) {
+      if (!editCargaViaje) {
+        createCargaViaje(CargaViajeData)
+      } else {
+        updateCargaViaje({
+          ...CargaViajeData,
+          CargaViajeModificado: moment()
+        })
+      }
+      setCargaViajeData(initialCargaViajeForm)
+      setIsVisible(false)
+      setSelectedCargaViaje('')
+      setSelectedViaje('')
 
-    setSelectedTipoCargaViaje('')
-    setDateZarpeCargaViaje(null)
-    setDateCompletacionCargaViaje(null)
-    setDateArriboCargaViaje(null)
+      setSelectedTipoCargaViaje('')
+      setDateInicioCargaViaje(null)
+      setDisabledPaisAsociado(true)
+
+      setDateFinCargaViaje(null)
+    } else {
+      showError()
+    }
   }
 
   const dialogFooter = (
@@ -259,9 +283,10 @@ const CargaViajeForm = (props) => {
     setSelectedCargaViaje('')
     setSelectedViaje('')
     setSelectedTipoCargaViaje('')
-    setDateZarpeCargaViaje(null)
-    setDateCompletacionCargaViaje(null)
-    setDateArriboCargaViaje(null)
+    setDateInicioCargaViaje(null)
+
+    setDateFinCargaViaje(null)
+    setDisabledPaisAsociado(true)
   }
   const selectedestatusCargaViajeTemplate = (option, props) => {
     if (option) {
@@ -298,6 +323,25 @@ const CargaViajeForm = (props) => {
     return (
       <div className="country-item">
         <div>{option.nombreViaje}</div>
+      </div>
+    )
+  }
+  const selectedPaisViajeAuxTemplate = (option, props) => {
+    if (option) {
+      return (
+        <div className="country-item country-item-value">
+          <div>{option.paisViajeAux}</div>
+        </div>
+      )
+    }
+
+    return <span>{props.placeholder}</span>
+  }
+
+  const paisViajeAuxOptionTemplate = (option) => {
+    return (
+      <div className="country-item">
+        <div>{option.paisViajeAux}</div>
       </div>
     )
   }
@@ -366,14 +410,40 @@ const CargaViajeForm = (props) => {
       <Dialog
         visible={isVisible}
         breakpoints={{ '960px': '75vw' }}
-        style={{ width: '70vw' }}
+        style={{ width: '50vw' }}
         header="Detalles de la CargaViaje"
         footer={dialogFooter}
         onHide={() => clearSelected()}
       >
         <div className="p-grid p-fluid">
           <div className="formgrid grid">
-            <div className="field col-12 md:col-3">
+            <div className="field col-12 md:col-4">
+              <label>Viaje Asociada</label>
+              <Dropdown
+                value={selectedViaje}
+                options={viajes}
+                onChange={onViaje}
+                optionLabel="nombreViaje"
+                placeholder="Seleccione Viaje"
+                valueTemplate={selectedViajeTemplate}
+                itemTemplate={viajeOptionTemplate}
+              />
+            </div>
+            <div className="field col-12 md:col-4">
+              <label>Pais Asociado</label>
+              <Dropdown
+                value={selectedPaisViajeAux}
+                options={paisViajeAux}
+                onChange={OnPaisViajeAux}
+                optionLabel="paisViajeAux"
+                placeholder="Seleccione paisViajeAux"
+                valueTemplate={selectedPaisViajeAuxTemplate}
+                itemTemplate={paisViajeAuxOptionTemplate}
+                disabled={disabledPaisAsociado}
+                className={disabledPaisAsociado ? 'p-invalid' : ''}
+              />
+            </div>
+            <div className="field col-12 md:col-4">
               <label>tipoCargaViaje</label>
               <Dropdown
                 value={selectedTipoCargaViaje}
@@ -385,7 +455,7 @@ const CargaViajeForm = (props) => {
                 itemTemplate={tipoCargaViajeTemplate}
               />
             </div>
-            <div className="field col-12 md:col-3">
+            <div className="field col-12 md:col-4">
               <label>productoCargaViaje</label>
               <Dropdown
                 value={selectedProductoCargaViaje}
@@ -397,7 +467,7 @@ const CargaViajeForm = (props) => {
                 itemTemplate={productoCargaViajeTemplate}
               />
             </div>
-            <div className="field col-12 md:col-3">
+            <div className="field col-12 md:col-4">
               <label>puertoCargaViaje</label>
               <Dropdown
                 value={selectedPuertoCargaViaje}
@@ -410,20 +480,7 @@ const CargaViajeForm = (props) => {
               />
             </div>
 
-            <div className="field col-12 md:col-3">
-              <label>Viaje Asociada</label>
-              <Dropdown
-                value={selectedViaje}
-                options={viajes}
-                onChange={onViaje}
-                optionLabel="nombreViaje"
-                placeholder="Seleccione Viaje"
-                valueTemplate={selectedViajeTemplate}
-                itemTemplate={viajeOptionTemplate}
-              />
-            </div>
-
-            <div className="field col-12 md:col-3">
+            <div className="field col-12 md:col-4">
               <label>Estatus</label>
               <Dropdown
                 value={selectedCargaViaje}
@@ -453,60 +510,10 @@ const CargaViajeForm = (props) => {
                 onValueChange={(e) =>
                   updateField(e.target.value, 'catidadPruductoCargaViaje')
                 }
-                suffix=" Bbls"
+                suffix=" Bbls(GSV)"
               />
             </div>
-            <div className="field col-12 md:col-4">
-              <label htmlFor="integeronly">fechaArriboCargaViaje</label>
-              <Calendar
-                className="p-datepicker-today"
-                id="time24"
-                value={dateArriboCargaViaje !== null && dateArriboCargaViaje}
-                onChange={(e) => {
-                  setDateArriboCargaViaje(e.value)
-                  updateField(e.target.value, 'fechaArriboCargaViaje')
-                }}
-                showTime
-                locale="es"
-                // hourFormat="12"
-                showButtonBar
-              />
-            </div>
-            <div className="field col-12 md:col-4">
-              <label htmlFor="integeronly">fechaCompletacionCargaViaje</label>
-              <Calendar
-                className="p-datepicker-today"
-                id="time24"
-                value={
-                  dateCompletacionCargaViaje !== null &&
-                  dateCompletacionCargaViaje
-                }
-                onChange={(e) => {
-                  setDateCompletacionCargaViaje(e.value)
-                  updateField(e.target.value, 'fechaCompletacionCargaViaje')
-                }}
-                showTime
-                locale="es"
-                // hourFormat="12"
-                showButtonBar
-              />
-            </div>
-            <div className="field col-12 md:col-4">
-              <label htmlFor="integeronly">fechaZarpeCargaViaje</label>
-              <Calendar
-                className="p-datepicker-today"
-                id="time24"
-                value={dateZarpeCargaViaje !== null && dateZarpeCargaViaje}
-                onChange={(e) => {
-                  setDateZarpeCargaViaje(e.value)
-                  updateField(e.target.value, 'fechaZarpeCargaViaje')
-                }}
-                showTime
-                locale="es"
-                // hourFormat="12"
-                showButtonBar
-              />
-            </div>
+
             <div className="field col-12 md:col-3">
               <label htmlFor="integeronly">Rata de Carga</label>
               <InputNumber
@@ -515,7 +522,7 @@ const CargaViajeForm = (props) => {
                 onValueChange={(e) =>
                   updateField(e.target.value, 'rataCargaViaje')
                 }
-                suffix=" Bbls"
+                suffix=" Bbls(GSV)"
               />
             </div>
             <div className="field col-12 md:col-3">
@@ -526,7 +533,39 @@ const CargaViajeForm = (props) => {
                 onValueChange={(e) =>
                   updateField(e.target.value, 'catidadActualCargaViaje')
                 }
-                suffix=" Bbls"
+                suffix=" Bbls(GSV)"
+              />
+            </div>
+            <div className="field col-12 md:col-4">
+              <label htmlFor="integeronly">Fecha Inicio</label>
+              <Calendar
+                className="p-datepicker-today"
+                id="time24"
+                value={dateInicioCargaViaje !== null && dateInicioCargaViaje}
+                onChange={(e) => {
+                  setDateInicioCargaViaje(e.value)
+                  updateField(e.target.value, 'fechaInicioCargaViaje')
+                }}
+                showTime
+                locale="es"
+                // hourFormat="12"
+                showButtonBar
+              />
+            </div>
+            <div className="field col-12 md:col-4">
+              <label htmlFor="integeronly">Fecha Fin</label>
+              <Calendar
+                className="p-datepicker-today"
+                id="time24"
+                value={dateFinCargaViaje !== null && dateFinCargaViaje}
+                onChange={(e) => {
+                  setDateFinCargaViaje(e.value)
+                  updateField(e.target.value, 'fechaFinCargaViaje')
+                }}
+                showTime
+                locale="es"
+                // hourFormat="12"
+                showButtonBar
               />
             </div>
           </div>

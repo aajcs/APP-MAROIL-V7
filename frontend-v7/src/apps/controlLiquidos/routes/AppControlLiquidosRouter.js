@@ -15,7 +15,7 @@ import { ConfigContext } from '../../../contexts/ConfigContext'
 
 import '../styles/stylesControlLiquidos.css'
 
-import { HomeControlLiquidosPage } from '../pages/HomeControlLiquidosPage'
+// import { HomeControlLiquidosPage } from '../pages/HomeControlLiquidosPage'
 import ReporteCargaGOMInfoCard from '../../Control/components/ReporteCargaGOMInfoCard'
 import { EmbarcacionPage } from '../pages/EmbarcacionPage'
 import { RemolcadorPage } from '../pages/RemolcadorPage'
@@ -25,6 +25,8 @@ import { ViajePage } from '../pages/ViajePage'
 import { ViajeInfoPage } from '../pages/ViajeInfoPage'
 import { CargaViajePage } from '../pages/CargaViajePage'
 import { TanqueAuxPage } from '../pages/TanqueAuxPage'
+import { ViajeAuxPage } from '../pages/ViajeAuxPage'
+import { InicioInfoPage } from '../pages/InicioInfoPage'
 
 export default function AppControlLiquidosRouter() {
   const { staticMenuInactive, onToggleMenuClick } = useContext(ConfigContext)
@@ -58,7 +60,7 @@ export default function AppControlLiquidosRouter() {
             <PrivateRoute
               exact
               path="/apps/controlLiquidos"
-              component={HomeControlLiquidosPage}
+              component={InicioInfoPage}
             />
 
             <PrivateRoute
@@ -93,6 +95,11 @@ export default function AppControlLiquidosRouter() {
             />
             <PrivateRoute
               exact
+              path="/apps/controlLiquidos/InicioInfo"
+              component={InicioInfoPage}
+            />
+            <PrivateRoute
+              exact
               path="/apps/controlLiquidos/cargaViaje"
               component={CargaViajePage}
             />
@@ -100,6 +107,11 @@ export default function AppControlLiquidosRouter() {
               exact
               path="/apps/controlLiquidos/TanqueAux"
               component={TanqueAuxPage}
+            />
+            <PrivateRoute
+              exact
+              path="/apps/controlLiquidos/ViajeAux"
+              component={ViajeAuxPage}
             />
             <Route path="*">
               <Redirect to="/404" />

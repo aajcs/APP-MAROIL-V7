@@ -7,40 +7,28 @@ import { Tag } from 'primereact/tag'
 import { ProgressBar } from 'primereact/progressbar'
 
 import AuthUse from '../../../auth/AuthUse'
-import cargaViajeesJPEG from '../assetsControlLiquidos/ImagenesTodas'
-import flagplaceholder from '../assetsControlLiquidos/flagplaceholder.png'
-console.log(cargaViajeesJPEG)
+
 function CargaViajeCard({ cargaViajes }) {
   const [porcentajeCombustible, setPorcentajeCombustible] = useState(0)
 
   const auth = AuthUse()
-  const fecha1 = moment(cargaViajes.fechaArriboCargaViaje)
+  const fecha1 = moment(cargaViajes.fechaInicioCargaViaje)
   const fecha2 = moment(
-    cargaViajes.fechaZarpeCargaViaje
-      ? cargaViajes.fechaZarpeCargaViaje
-      : moment()
+    cargaViajes.fechaFinCargaViaje ? cargaViajes.fechaFinCargaViaje : moment()
   )
-  const fecha3 = moment(
-    cargaViajes.fechaCompletacionCargaViaje
-      ? cargaViajes.fechaCompletacionCargaViaje
-      : moment()
-  )
-  const fecha4 = moment()
 
   // const fecha3 = moment(fecha1 - fecha2).format('HH:mm')
 
   // Diff in hours
   const diff = fecha2.diff(fecha1, 'seconds')
-  const diff2 = fecha3.diff(fecha1, 'seconds')
-  const diff3 = fecha4.diff(fecha1, 'seconds')
 
   // const fecha4 = fecha2.diff(fecha1, 'days')
   useEffect(() => {
     const handlesumar = () => {
       if (cargaViajes.catidadActualCargaViaje) {
         const porcentaje =
-          (100 * cargaViajes.catidadPruductoCargaViaje) /
-          cargaViajes.catidadActualCargaViaje
+          (100 * cargaViajes.catidadActualCargaViaje) /
+          cargaViajes.catidadPruductoCargaViaje
         setPorcentajeCombustible(porcentaje.toFixed(2))
       }
     }
@@ -48,13 +36,6 @@ function CargaViajeCard({ cargaViajes }) {
     handlesumar()
   }, [])
 
-  function diasPorcentaje(diff, diff3) {
-    const porcentajeFechaProgrees = Math.trunc((100 / diff) * diff3)
-    if (porcentajeFechaProgrees >= 100) {
-      return '100%'
-    }
-    return porcentajeFechaProgrees + '%'
-  }
   function secondsToString(diff) {
     const numdays = Math.floor(diff / 86400)
     const numhours = Math.floor((diff % 86400) / 3600)
@@ -64,17 +45,8 @@ function CargaViajeCard({ cargaViajes }) {
     return numdays + ' dias ' + numhours + ' horas ' + numminutes + ' minutos '
   }
 
-  const ubicacionBuqueTags = {
-    DOMINICA: 'dm',
-    VENEZUELA: 've',
-    'SANTA LUCIA': 'lc',
-    'SAN VICENTE DE LAS GRANADINAS': 'vc',
-    'ST KITT AND NIEVES': 'tc'
-  }
-
-  const ubicacionBuqueTag = ubicacionBuqueTags[cargaViajes.puertoCargaViaje]
   return (
-    <div className="col-12 lg:col-12 xl:col-12">
+    <div className="col-12 lg:col-6 xl:col-6">
       <div className="">
         <div
           className={
@@ -89,24 +61,15 @@ function CargaViajeCard({ cargaViajes }) {
         >
           <div className="card-body p-0">
             <div className="grid ">
-              <div className="col-6 ">
+              <div className="col-12 lg:col-6 xl:col-6 ">
                 <h3 className=" card-title mb-0">
                   {cargaViajes.puertoCargaViaje}
-                  <img
-                    alt={'option.name'}
-                    src={flagplaceholder}
-                    onError={(e) =>
-                      (e.target.src =
-                        'https://www.primefaces.org/wp-content/uploads/2020/05/placeholder.png')
-                    }
-                    className={`ml-3 flag flag-${ubicacionBuqueTag.toLowerCase()}`}
-                  />
                 </h3>{' '}
                 <h6 className="text-400 card-title mt-0">
                   {cargaViajes.productoCargaViaje}
                 </h6>
               </div>
-              <div className="col-6 text-right ">
+              <div className="col-12 lg:col-6 xl:col-6  text-right ">
                 <Tag
                   className="w-100 p-2 text-800 font-bold"
                   style={{
@@ -149,60 +112,31 @@ function CargaViajeCard({ cargaViajes }) {
             </div>
             <div className="grid ">
               <div
-                className="col-6 text-left "
+                className="col-12 lg:col-6 xl:col-6  text-left "
                 // onClick={() => onClick('displayDetalleCarga')}
               >
-                <div className="skill-bars">
-                  <div className="bar mt-3">
-                    <div className="progress-line mysql">
-                      <div className="infosnippet-startpoint"></div>
-                      <div className="infosnippet-endpoint"></div>
-                      <span
-                        style={{
-                          width: diasPorcentaje(diff, diff3)
-                        }}
-                      >
-                        <div className=" text-endpoint ">
-                          {diasPorcentaje(diff, diff3)}
-                        </div>{' '}
-                      </span>
-                    </div>
-                  </div>
-                </div>
                 <h6 className="card-text mt-0 mb-2">
-                  Fecha Atraque:
+                  Fecha Inicio:
                   <span className="text-green-500 font-medium">
                     {' '}
-                    {moment(cargaViajes.fechaArriboCargaViaje).isValid() &&
-                      moment(cargaViajes.fechaArriboCargaViaje).format(
+                    {moment(cargaViajes.fechaInicioCargaViaje).isValid() &&
+                      moment(cargaViajes.fechaInicioCargaViaje).format(
                         'dddDD/MM/YY HH:mm'
                       )}
                   </span>
                 </h6>
                 <h6 className="card-text mt-0 mb-2">
-                  Fecha fin Carga:
-                  <span className="text-yellow-500 font-medium">
-                    {' '}
-                    {moment(
-                      cargaViajes.fechaCompletacionCargaViaje
-                    ).isValid() &&
-                      moment(cargaViajes.fechaCompletacionCargaViaje).format(
-                        'dddDD/MM/YY HH:mm'
-                      )}
-                  </span>
-                </h6>
-                <h6 className="card-text mt-0 mb-2">
-                  Fecha Zarpe:
+                  Fecha Fin:
                   <span className="text-orange-500 font-medium">
                     {' '}
-                    {moment(cargaViajes.fechaZarpeCargaViaje).isValid() &&
-                      moment(cargaViajes.fechaZarpeCargaViaje).format(
+                    {moment(cargaViajes.fechaFinCargaViaje).isValid() &&
+                      moment(cargaViajes.fechaFinCargaViaje).format(
                         'dddDD/MM/YY HH:mm'
                       )}
                   </span>
                 </h6>
               </div>
-              <div className="col-6 text-left ">
+              <div className="col-12 lg:col-6 xl:col-6 text-left ">
                 <h6 className="card-text mt-0 mb-2">
                   Volumen Actual{' '}
                   {cargaViajes.tipoCargaViaje === 'CARGANDO'
@@ -211,9 +145,9 @@ function CargaViajeCard({ cargaViajes }) {
                   <span className=" font-medium">
                     {' '}
                     {new Intl.NumberFormat().format(
-                      cargaViajes.catidadPruductoCargaViaje
+                      cargaViajes.catidadActualCargaViaje
                     )}
-                    {' Bbls'}
+                    {' Bbls(GSV)'}
                   </span>
                 </h6>
                 <h6 className="card-text mt-0 mb-2">
@@ -225,9 +159,9 @@ function CargaViajeCard({ cargaViajes }) {
                   <span className=" font-medium">
                     {' '}
                     {new Intl.NumberFormat().format(
-                      cargaViajes.catidadActualCargaViaje
+                      cargaViajes.catidadPruductoCargaViaje
                     )}
-                    {' Bbls'}
+                    {' Bbls(GSV)'}
                   </span>
                 </h6>
                 <h6 className="card-text mt-0 mb-2">
@@ -242,7 +176,7 @@ function CargaViajeCard({ cargaViajes }) {
                       .format(cargaViajes.rataCargaViaje)
                       .charAt(0)
                       .toUpperCase()}
-                    {' Bbls/h'}
+                    {' Bbls/h(GSV)'}
                   </span>
                 </h6>
               </div>
@@ -250,14 +184,11 @@ function CargaViajeCard({ cargaViajes }) {
             <hr className="mt-2 mb-2 " />
             <div className="grid ">
               <div
-                className="col-6 text-center "
+                className="col-12 lg:col-6 xl:col-6  text-center "
                 // onClick={() => onClick('displayDetalleCarga')}
               >
                 <h6 className="text-center  m-1">
                   Tiempo de Carga {secondsToString(diff)}
-                </h6>{' '}
-                <h6 className="text-center  m-1">
-                  Tiempo de Puerto {secondsToString(diff2)}
                 </h6>{' '}
                 {/* <BarChartDemo
                 heightBogega="50px"
@@ -265,7 +196,7 @@ function CargaViajeCard({ cargaViajes }) {
                 barcos={barcos}
               /> */}
               </div>
-              <div className="col-6 text-right ">
+              <div className="col-12 lg:col-6 xl:col-6  text-right ">
                 <h6 className="text-center">Porcentaje de Carga</h6>
                 <ProgressBar
                   className="mt-2 mb-3 "

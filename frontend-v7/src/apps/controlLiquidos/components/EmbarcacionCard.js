@@ -25,7 +25,6 @@ function EmbarcacionCard({ embarcacions }) {
   const [porcentajeCombustible, setPorcentajeCombustible] = useState(0)
   const [images, setImages] = useState(null)
   const galleriaService = new PhotoService()
-  console.log(images)
   const responsiveOptions = [
     {
       breakpoint: '1024px',
@@ -51,7 +50,6 @@ function EmbarcacionCard({ embarcacions }) {
       }
     })
   }
-  console.log(embarcacions.nombreEmbarcacion.toLowerCase().substr(0, 4))
   const nuevaImagen =
     images === null
       ? []
@@ -60,7 +58,6 @@ function EmbarcacionCard({ embarcacions }) {
             embarcacions.nombreEmbarcacion.toLowerCase().substr(0, 4)
           )
         )
-  console.log(nuevaImagen)
   // const fecha4 = fecha2.diff(fecha1, 'days')
   useEffect(() => {
     const handlesumar = () => {
@@ -87,7 +84,6 @@ function EmbarcacionCard({ embarcacions }) {
     findBodegaBarco(embarcacions.id)
   }, [tanqueAuxs])
   const itemTemplate = (item) => {
-    console.log(item.itemImageSrc)
     return (
       // <img
       //   src={embarcacionImagen(`./${item.itemImageSrc}`)}
@@ -166,7 +162,24 @@ function EmbarcacionCard({ embarcacions }) {
               </h6>
             </div>
             <div className="col-6 text-right ">
-              <Tag className="w-100 p-2 text-900">
+              <Tag
+                className="w-100 p-2 text-900"
+                style={{
+                  'box-shadow':
+                    embarcacions.estatusEmbarcacion === 'OPERATIVO'
+                      ? '0px 6px 20px rgb(0 222 99 / 30%)'
+                      : embarcacions.estatusEmbarcacion === 'INICIADO'
+                      ? '0px 6px 20px rgb(0 109 222 / 30%)'
+                      : '0px 6px 20px rgb(222 0 92 / 30%)',
+                  fontSize: '12px',
+                  background:
+                    embarcacions.estatusEmbarcacion === 'OPERATIVO'
+                      ? '#157347'
+                      : embarcacions.estatusEmbarcacion === 'INICIADO'
+                      ? '#094db1'
+                      : '#97101d'
+                }}
+              >
                 <p className=" mb-0">{embarcacions.estatusEmbarcacion}</p>
               </Tag>
               {auth.isLogged() && auth.user.faidUser.roles[0] !== 'LECTURA' && (

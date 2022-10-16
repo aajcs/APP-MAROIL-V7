@@ -18,7 +18,6 @@ const CargaViajeList = () => {
   const [deleteCargaViajeDialog, setDeleteCargaViajeDialog] = useState(false)
   const [globalFilter, setGlobalFilter] = useState(null)
   const [isVisible, setIsVisible] = useState(false)
-
   const dt = useRef(null)
   const toast = useRef(null)
   const saveCargaViaje = (id) => {
@@ -177,49 +176,37 @@ const CargaViajeList = () => {
         responsiveLayout="scroll"
         breakpoint="960px"
       >
-        <Column field="descripcionCargaViaje" header="descripcionCargaViaje" />
-        <Column field="productoCargaViaje" header="productoCargaViaje" />
-        <Column field="estatusCargaViaje" header="estatusCargaViaje" />
-        <Column field="puertoCargaViaje" header="puertoCargaViaje" />
-        <Column field="fechaArriboCargaViaje" header="fechaArriboCargaViaje" />
-        <Column
-          field="fechaCompletacionCargaViaje"
-          header="fechaCompletacionCargaViaje"
-        />
-        <Column field="fechaZarpeCargaViaje" header="fechaZarpeCargaViaje" />
-        <Column field="tipoCargaViaje" header="tipoCargaViaje" />
-        <Column field="viaje.nombreViaje" header="viaje.nombreViaje" />
-        <Column field="rataCargaViaje" header="rataCargaViaje" />
-        <Column
-          field="catidadPruductoCargaViaje"
-          header="catidadPruductoCargaViaje"
-        />
-        <Column
-          field="catidadActualCargaViaje"
-          header="catidadActualCargaViaje"
-        />
+        <Column field="descripcionCargaViaje" header="Descripción" />
+        <Column field="productoCargaViaje" header="Producto" />
+        <Column field="estatusCargaViaje" header="Estatus" />
+        <Column field="puertoCargaViaje" header="Puerto Asociado" />
+        <Column field="tipoCargaViaje" header="Tipo de Operacion" />
+        <Column field="viajeAux.paisViajeAux" header="Pais Asociado" />
+        <Column field="rataCargaViaje" header="Rata de Operacion" />
+        <Column field="catidadPruductoCargaViaje" header="Catidad Pruducto" />
+        <Column field="catidadActualCargaViaje" header="Catidad Actual" />
         <Column
           field="fechaInicioCargaViaje"
-          header="fechaInicioCargaViaje"
+          header="Fecha Inicio"
           body={fechaInicioCargaViaje}
           dataType="date"
         />
         <Column
           field="fechaFinCargaViaje"
-          header="fechaFinCargaViaje"
+          header="Fecha Fin"
           body={fechaFinCargaViaje}
           dataType="date"
         />
         <Column
           field="cargaViajeCreado"
           body={fechaCargaViajeCreado}
-          header="cargaViaje Creado"
+          header="CargaViaje Creado"
           dataType="date"
         />
         <Column
           field="cargaViajeModificado"
           body={fechaCargaViajeModificado}
-          header="cargaViaje Modificado"
+          header="CargaViaje Modificado"
           dataType="date"
         />
 

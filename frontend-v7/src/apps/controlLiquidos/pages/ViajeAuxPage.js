@@ -1,18 +1,15 @@
-import CargaViajeList from '../components/CargaViajeList'
-import CargaViajeContextProvider from '../contexts/CargaViajeContext'
+import ViajeAuxList from '../components/ViajeAuxList'
 import ViajeAuxContextProvider from '../contexts/ViajeAuxContext'
 import ViajeContextProvider from '../contexts/ViajeContext'
 
-export const CargaViajePage = () => {
+export const ViajeAuxPage = () => {
   return (
     <div className="grid crud-demo">
       <div className="col-12 ">
         <div className="card">
           <ViajeContextProvider>
             <ViajeAuxContextProvider>
-              <CargaViajeContextProvider>
-                <CargaViajeList />
-              </CargaViajeContextProvider>
+              <ViajeAuxList />
             </ViajeAuxContextProvider>
           </ViajeContextProvider>
         </div>

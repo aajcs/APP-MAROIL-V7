@@ -31,7 +31,7 @@ const CentroDeCostoAuxList = () => {
     findCentroDeCostoAux(id)
     setIsVisible(true)
   }
-  console.log(centroDeCostoAuxs)
+
   // cabecera de la tabla
   const leftToolbarTemplate = () => {
     return (

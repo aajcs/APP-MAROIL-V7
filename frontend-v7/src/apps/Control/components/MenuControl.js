@@ -28,6 +28,14 @@ export const MenuControl = () => {
           permi2: 'OPERADOR'
         },
         {
+          label: 'CONTROL DE LIQUIDOS',
+          icon: 'pi pi-fw pi-home',
+          to: '/apps/controlLiquidos/inicioInfo',
+          permi: 'ADMIN',
+          permi1: 'LECTURA',
+          permi2: 'OPERADOR'
+        },
+        {
           label: 'CLIENTE CREC 10',
           icon: 'pi pi-fw pi-info-circle',
           to: '/apps/control/reportecargaGOMInfoCrec10',

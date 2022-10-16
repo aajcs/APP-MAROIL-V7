@@ -6,22 +6,23 @@ import { Toolbar } from 'primereact/toolbar'
 import { Dialog } from 'primereact/dialog'
 import { InputText } from 'primereact/inputtext'
 import { Toast } from 'primereact/toast'
-import { ViajeContext } from '../contexts/ViajeContext'
+import { ViajeAuxContext } from '../contexts/ViajeAuxContext'
 import moment from 'moment'
 
-import ViajeForm from './ViajeForm'
+import ViajeAuxForm from './ViajeAuxForm'
 
-const ViajeList = () => {
-  const { viajes, findViaje, deleteViaje, loading } = useContext(ViajeContext)
-  const [viaje, setViaje] = useState(viajes)
-  const [deleteViajeDialog, setDeleteViajeDialog] = useState(false)
+const ViajeAuxList = () => {
+  const { viajeAuxs, findViajeAux, deleteViajeAux, loading } =
+    useContext(ViajeAuxContext)
+  const [viajeAux, setViajeAux] = useState(viajeAuxs)
+  const [deleteViajeAuxDialog, setDeleteViajeAuxDialog] = useState(false)
   const [globalFilter, setGlobalFilter] = useState(null)
   const [isVisible, setIsVisible] = useState(false)
 
   const dt = useRef(null)
   const toast = useRef(null)
-  const saveViaje = (id) => {
-    findViaje(id)
+  const saveViajeAux = (id) => {
+    findViajeAux(id)
     setIsVisible(true)
   }
 
@@ -62,46 +63,54 @@ const ViajeList = () => {
     dt.current.exportCSV()
   }
 
-  const fechaViajeCreado = (rowData) => {
-    const fecha = moment(rowData.viajeCreado)
+  const fechaViajeAuxCreado = (rowData) => {
+    const fecha = moment(rowData.viajeAuxCreado)
     return fecha.format('dddDD/MM/YY HH:mm')
   }
-  const fechaViajeModificado = (rowData) => {
-    const fecha = moment(rowData.viajeModificado)
+  const fechaViajeAuxModificado = (rowData) => {
+    const fecha = moment(rowData.viajeAuxModificado)
+    return fecha.format('dddDD/MM/YY HH:mm')
+  }
+  const fechaFechaArriboViajeAux = (rowData) => {
+    const fecha = moment(rowData.fechaArriboViajeAux)
+    return fecha.format('dddDD/MM/YY HH:mm')
+  }
+  const fechaFechaZarpeViajeAux = (rowData) => {
+    const fecha = moment(rowData.fechaZarpeViajeAux)
     return fecha.format('dddDD/MM/YY HH:mm')
   }
 
-  const eliminarViaje = () => {
-    deleteViaje(viaje.id)
-    setDeleteViajeDialog(false)
+  const eliminarViajeAux = () => {
+    deleteViajeAux(viajeAux.id)
+    setDeleteViajeAuxDialog(false)
     toast.current.show({
       severity: 'error',
       summary: 'Eliminar',
-      detail: 'Viaje Eliminado',
+      detail: 'ViajeAux Eliminado',
       life: 3000
     })
   }
 
-  const deleteViajeDialogFooter = (
+  const deleteViajeAuxDialogFooter = (
     <>
       <Button
         label="No"
         icon="pi pi-times"
         className="p-button-text"
-        onClick={() => setDeleteViajeDialog(false)}
+        onClick={() => setDeleteViajeAuxDialog(false)}
       />
       <Button
         label="Si"
         icon="pi pi-check"
         className="p-button-text"
-        onClick={() => eliminarViaje()}
+        onClick={() => eliminarViajeAux()}
       />
     </>
   )
 
-  const confirmDeleteViaje = (viajes) => {
-    setViaje(viajes)
-    setDeleteViajeDialog(true)
+  const confirmDeleteViajeAux = (viajeAuxs) => {
+    setViajeAux(viajeAuxs)
+    setDeleteViajeAuxDialog(true)
   }
 
   const actionBodyTemplate = (rowData) => {
@@ -110,13 +119,13 @@ const ViajeList = () => {
         <Button
           icon="pi pi-pencil"
           className="p-button-rounded p-button-success mr-2 mb-2"
-          onClick={() => saveViaje(rowData.id)}
+          onClick={() => saveViajeAux(rowData.id)}
         />
 
         <Button
           icon="pi pi-trash"
           className="p-button-rounded  p-button-danger"
-          onClick={() => confirmDeleteViaje(rowData)}
+          onClick={() => confirmDeleteViajeAux(rowData)}
         />
       </div>
     )
@@ -124,7 +133,7 @@ const ViajeList = () => {
 
   const header = (
     <div className="flex flex-column md:flex-row md:justify-content-between md:align-items-center">
-      <h5 className="m-0">Viajes</h5>
+      <h5 className="m-0">ViajeAuxs</h5>
       <span className="block mt-2 md:mt-0 p-input-icon-left">
         <i className="pi pi-search" />
         <InputText
@@ -136,9 +145,8 @@ const ViajeList = () => {
     </div>
   )
   const clearSelected = () => {
-    setDeleteViajeDialog(false)
+    setDeleteViajeAuxDialog(false)
   }
-
   return (
     <>
       <Toast ref={toast} />
@@ -150,7 +158,7 @@ const ViajeList = () => {
 
       <DataTable
         ref={dt}
-        value={viajes}
+        value={viajeAuxs}
         dataKey="id"
         paginator
         rows={10}
@@ -158,53 +166,55 @@ const ViajeList = () => {
         className="datatable-responsive"
         selectionMode="single"
         paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
-        currentPageReportTemplate="Muestra {first} a {last} de {totalRecords} Viajes"
+        currentPageReportTemplate="Muestra {first} a {last} de {totalRecords} ViajeAuxs"
         globalFilter={globalFilter}
-        emptyMessage="No hay viajes."
+        emptyMessage="No hay viajeAuxs."
         header={header}
-        sortField="viajeCreado"
+        sortField="viajeAuxCreado"
         sortOrder={-1}
         loading={loading}
         responsiveLayout="scroll"
         breakpoint="960px"
       >
-        <Column field="nombreViaje" header="Viaje" />
-        <Column field="descripcionViaje" header="Descripción" />
-        <Column field="estatusViaje" header="Estatus" />
-        <Column field="destinoViaje" header="Destino" />
+        <Column field="paisViajeAux" header="Pais" />
+        <Column field="descripcionViajeAux" header="Descripción" />
+        <Column field="estatusViajeAux" header="Estatus" />
         <Column
-          field="embarcacion.nombreEmbarcacion"
-          header="Embarcacion Asociado"
-        />
-        <Column
-          field="remolcador[0].nombreRemolcador"
-          header="Remolcador Asociado"
-        />
-
-        <Column
-          field="viajeCreado"
-          body={fechaViajeCreado}
-          header="Viaje Creado"
+          field="fechaArriboViajeAux"
+          header="Fecha Arribo"
+          body={fechaFechaArriboViajeAux}
           dataType="date"
         />
         <Column
-          field="viajeModificado"
-          body={fechaViajeModificado}
-          header="Viaje Modificado"
+          field="fechaZarpeViajeAux"
+          header="Fecha Zarpe"
+          body={fechaFechaZarpeViajeAux}
           dataType="date"
         />
-
+        <Column field="viaje.nombreViaje" header="Viaje Asociado" />
+        <Column
+          field="viajeAuxCreado"
+          body={fechaViajeAuxCreado}
+          header="ViajeAux Creado"
+          dataType="date"
+        />
+        <Column
+          field="viajeAuxModificado"
+          body={fechaViajeAuxModificado}
+          header="ViajeAux Modificado"
+          dataType="date"
+        />
         <Column body={actionBodyTemplate}></Column>
       </DataTable>
 
-      <ViajeForm isVisible={isVisible} setIsVisible={setIsVisible} />
+      <ViajeAuxForm isVisible={isVisible} setIsVisible={setIsVisible} />
 
       <Dialog
-        visible={deleteViajeDialog}
+        visible={deleteViajeAuxDialog}
         style={{ width: '450px' }}
         header="Confirm"
         modal
-        footer={deleteViajeDialogFooter}
+        footer={deleteViajeAuxDialogFooter}
         onHide={() => clearSelected()}
       >
         <div className="flex align-items-center justify-content-center">
@@ -212,10 +222,10 @@ const ViajeList = () => {
             className="pi pi-exclamation-triangle mr-3"
             style={{ fontSize: '2rem' }}
           />
-          {viaje && (
+          {viajeAux && (
             <span>
-              Esta seguro que quiere eliminar la viaje{' '}
-              <b>{viaje.nombreViaje}</b>?
+              Esta seguro que quiere eliminar la viajeAux{' '}
+              <b>{viajeAux.nombreViajeAux}</b>?
             </span>
           )}
         </div>
@@ -224,4 +234,4 @@ const ViajeList = () => {
   )
 }
 
-export default ViajeList
+export default ViajeAuxList

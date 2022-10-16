@@ -9,14 +9,14 @@ cargaViajeCtrl.createCargaViaje = async (req, res) => {
     descripcionCargaViaje,
     puertoCargaViaje,
     estatusCargaViaje,
-    fechaArriboCargaViaje,
-    fechaCompletacionCargaViaje,
-    fechaZarpeCargaViaje,
+    fechaInicioCargaViaje,
+    fechaFinCargaViaje,
+
     catidadActualCargaViaje,
     catidadPruductoCargaViaje,
     rataCargaViaje,
 
-    viaje,
+    viajeAux,
     cargaViajeCreado,
     cargaViajeModificado
   } = req.body
@@ -27,14 +27,14 @@ cargaViajeCtrl.createCargaViaje = async (req, res) => {
       descripcionCargaViaje,
       puertoCargaViaje,
       estatusCargaViaje,
-      fechaArriboCargaViaje,
-      fechaCompletacionCargaViaje,
-      fechaZarpeCargaViaje,
+      fechaInicioCargaViaje,
+      fechaFinCargaViaje,
+
       catidadActualCargaViaje,
       catidadPruductoCargaViaje,
       rataCargaViaje,
 
-      viaje,
+      viajeAux,
       cargaViajeCreado,
       cargaViajeModificado
     })
@@ -53,7 +53,7 @@ cargaViajeCtrl.createCargaViaje = async (req, res) => {
 
 cargaViajeCtrl.getCargaViajes = async (req, res) => {
   try {
-    const cargaViaje = await CargaViaje.find({}).populate('viaje')
+    const cargaViaje = await CargaViaje.find({}).populate('viajeAux')
     res.status(200).json(cargaViaje)
   } catch (err) {
     console.log(err)
@@ -97,14 +97,14 @@ cargaViajeCtrl.updateCargaViaje = async (req, res) => {
     descripcionCargaViaje,
     puertoCargaViaje,
     estatusCargaViaje,
-    fechaArriboCargaViaje,
-    fechaCompletacionCargaViaje,
-    fechaZarpeCargaViaje,
+    fechaInicioCargaViaje,
+    fechaFinCargaViaje,
+
     catidadActualCargaViaje,
     catidadPruductoCargaViaje,
     rataCargaViaje,
 
-    viaje,
+    viajeAux,
     cargaViajeCreado,
     cargaViajeModificado
   } = req.body
@@ -118,14 +118,14 @@ cargaViajeCtrl.updateCargaViaje = async (req, res) => {
         descripcionCargaViaje,
         puertoCargaViaje,
         estatusCargaViaje,
-        fechaArriboCargaViaje,
-        fechaCompletacionCargaViaje,
-        fechaZarpeCargaViaje,
+        fechaInicioCargaViaje,
+        fechaFinCargaViaje,
+
         catidadActualCargaViaje,
         catidadPruductoCargaViaje,
         rataCargaViaje,
 
-        viaje,
+        viajeAux,
         cargaViajeCreado,
         cargaViajeModificado
       },

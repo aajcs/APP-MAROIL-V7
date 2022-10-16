@@ -124,6 +124,7 @@ const TanqueAuxForm = (props) => {
   useEffect(() => {
     if (editTanqueAux) {
       setTanqueAuxData(editTanqueAux)
+      setSelectedEmbarcacion(editTanqueAux.embarcacion)
       setSelectedTanqueAux({
         estatusTanqueAux: editTanqueAux.estatusTanqueAux
       })
@@ -179,6 +180,7 @@ const TanqueAuxForm = (props) => {
     } else {
       updateTanqueAux({
         ...tanqueAuxData,
+        embarcacion: tanqueAuxData.embarcacion.id,
         TanqueAuxModificado: moment()
       })
     }
@@ -315,52 +317,20 @@ const TanqueAuxForm = (props) => {
             />
             <label>Descripcion :</label>
           </div>
-          <div className="field col-12 md:col-3">
-            <label>Embacacion Asociada</label>
-            <Dropdown
-              value={selectedEmbarcacion}
-              options={embarcacions}
-              onChange={onEmbacacion}
-              optionLabel="nombreEmbarcacion"
-              placeholder="Seleccione Embarcacion"
-              valueTemplate={selectedEmbarcacionTemplate}
-              itemTemplate={embarcacionOptionTemplate}
-            />
-          </div>
-          <div className="field col-12 md:col-3">
-            <label>tipoCargaViaje</label>
-            <Dropdown
-              value={selectedTipoCargaTanqueAux}
-              options={tipoCargaTanqueAuxlist}
-              onChange={onTipoCargaTanqueAux}
-              optionLabel="estatusTipoCargaViaje"
-              placeholder="Seleccione Tipo Carga"
-              valueTemplate={selectedTipoCargaTanqueAuxTemplate}
-              itemTemplate={tipoCargaTanqueAuxTemplate}
-            />
-          </div>
-          <div className="formgrid grid">
-            <div className="field col-12 md:col-6">
-              <label htmlFor="integeronly">Combustible Actual</label>
-              <InputNumber
-                inputId="integeronly"
-                value={tanqueAuxData.volumenActualTanqueAux}
-                onValueChange={(e) =>
-                  updateField(e.target.value, 'volumenActualTanqueAux')
-                }
+          <div className="grid mt-3">
+            <div className="field col-12 md:col-4">
+              <label>Embacacion Asociada</label>
+              <Dropdown
+                value={selectedEmbarcacion}
+                options={embarcacions}
+                onChange={onEmbacacion}
+                optionLabel="nombreEmbarcacion"
+                placeholder="Seleccione Embarcacion"
+                valueTemplate={selectedEmbarcacionTemplate}
+                itemTemplate={embarcacionOptionTemplate}
               />
-            </div>
-            <div className="field col-12 md:col-6">
-              <label htmlFor="integeronly">Combustible Capacidad</label>
-              <InputNumber
-                inputId="integeronly"
-                value={tanqueAuxData.volumenCapacidadTanqueAux}
-                onValueChange={(e) =>
-                  updateField(e.target.value, 'volumenCapacidadTanqueAux')
-                }
-              />
-            </div>
-            <div className="field col-12 md:col-6">
+            </div>{' '}
+            <div className="field col-12 md:col-4">
               <label>Estado</label>
               <Dropdown
                 value={selectedTanqueAux}
@@ -372,7 +342,7 @@ const TanqueAuxForm = (props) => {
                 itemTemplate={estatusTanqueAuxOptionTemplate}
               />
             </div>
-            <div className="field col-12 md:col-6">
+            <div className="field col-12 md:col-4">
               <label>Ubicacion</label>
               <Dropdown
                 value={selectedUbicacionTanqueAux}
@@ -384,6 +354,38 @@ const TanqueAuxForm = (props) => {
                 itemTemplate={ubicacionTanqueAuxOptionTemplate}
               />
             </div>
+            <div className="field col-12 md:col-4">
+              <label>tipoCargaViaje</label>
+              <Dropdown
+                value={selectedTipoCargaTanqueAux}
+                options={tipoCargaTanqueAuxlist}
+                onChange={onTipoCargaTanqueAux}
+                optionLabel="estatusTipoCargaViaje"
+                placeholder="Seleccione Tipo Carga"
+                valueTemplate={selectedTipoCargaTanqueAuxTemplate}
+                itemTemplate={tipoCargaTanqueAuxTemplate}
+              />
+            </div>
+            <div className="field col-12 md:col-4">
+              <label htmlFor="integeronly">Combustible Actual</label>
+              <InputNumber
+                inputId="integeronly"
+                value={tanqueAuxData.volumenActualTanqueAux}
+                onValueChange={(e) =>
+                  updateField(e.target.value, 'volumenActualTanqueAux')
+                }
+              />
+            </div>
+            <div className="field col-12 md:col-4">
+              <label htmlFor="integeronly">Combustible Capacidad</label>
+              <InputNumber
+                inputId="integeronly"
+                value={tanqueAuxData.volumenCapacidadTanqueAux}
+                onValueChange={(e) =>
+                  updateField(e.target.value, 'volumenCapacidadTanqueAux')
+                }
+              />
+            </div>{' '}
           </div>
         </div>
       </Dialog>

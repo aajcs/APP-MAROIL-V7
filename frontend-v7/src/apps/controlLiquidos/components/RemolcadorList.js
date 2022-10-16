@@ -169,28 +169,28 @@ const RemolcadorList = () => {
         responsiveLayout="scroll"
         breakpoint="960px"
       >
-        <Column field="nombreRemolcador" header="nombre Remolcador" />
-        <Column field="descripcionRemolcador" header="descripcionRemolcador" />
-        <Column field="estatusRemolcador" header="estatusRemolcador" />
-        <Column field="ubicacionRemolcador" header="ubicacionRemolcador" />
+        <Column field="nombreRemolcador" header="Remolcador" />
+        <Column field="descripcionRemolcador" header="Descripción" />
+        <Column field="estatusRemolcador" header="Estatus" />
+        <Column field="ubicacionRemolcador" header="Actividad" />
         <Column
           field="combustibleActualRemolcador"
-          header="combustibleActualRemolcador"
+          header="Combustible Actual"
         />
         <Column
           field="combustibleCapacidadRemolcador"
-          header="combustibleCapacidadRemolcador"
+          header="Combustible Capacidad"
         />
         <Column
           field="remolcadorCreado"
           body={fechaRemolcadorCreado}
-          header="remolcador Creado"
+          header="Remolcador Creado"
           dataType="date"
         />
         <Column
           field="remolcadorModificado"
           body={fechaRemolcadorModificado}
-          header="remolcador Modificado"
+          header="Remolcador Modificado"
           dataType="date"
         />
 

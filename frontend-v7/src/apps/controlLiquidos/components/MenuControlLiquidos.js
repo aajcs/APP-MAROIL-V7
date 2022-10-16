@@ -13,12 +13,21 @@ export const MenuControlLiquidos = () => {
         {
           label: 'INICIO',
           icon: 'pi pi-fw pi-home',
-          // to: '/apps/control/reportecargaGOMInfo',
-          permi: 'SUPERADMIN',
-          permi1: 'SUPERADMIN'
+          to: '/apps/controlLiquidos/inicioInfo',
+          permi: 'ADMIN',
+          permi1: 'LECTURA',
+          permi2: 'OPERADOR'
         },
         {
-          label: 'INFORMACIÓN VIAJE',
+          label: 'CONTROL DE SOLIDOS',
+          icon: 'pi pi-fw pi-info-circle',
+          to: '/apps/control/reportecargaGOMInfo',
+          permi: 'ADMIN',
+          permi1: 'LECTURA',
+          permi2: 'OPERADOR'
+        },
+        {
+          label: 'HISTORIAL DE VIAJES',
           icon: 'pi pi-fw pi-info-circle',
           to: '/apps/controlLiquidos/viajeinfo',
           permi: 'ADMIN',
@@ -80,6 +89,12 @@ export const MenuControlLiquidos = () => {
             label: 'VIAJE',
             icon: 'pi pi-fw pi-database',
             to: '/apps/controlLiquidos/viaje',
+            permi: 'SUPERADMIN'
+          },
+          {
+            label: 'VIAJEAUX',
+            icon: 'pi pi-fw pi-database',
+            to: '/apps/controlLiquidos/viajeAux',
             permi: 'SUPERADMIN'
           },
           {

@@ -43,7 +43,24 @@ function RemolcadorCard({ remolcadors }) {
               </h6>
             </div>
             <div className="col-6 text-right ">
-              <Tag className="w-100 p-2 text-900">
+              <Tag
+                className="w-100 p-2 text-900"
+                style={{
+                  'box-shadow':
+                    remolcadors.estatusRemolcador === 'OPERATIVO'
+                      ? '0px 6px 20px rgb(0 222 99 / 30%)'
+                      : remolcadors.estatusRemolcador === 'INICIADO'
+                      ? '0px 6px 20px rgb(0 109 222 / 30%)'
+                      : '0px 6px 20px rgb(222 0 92 / 30%)',
+                  fontSize: '12px',
+                  background:
+                    remolcadors.estatusRemolcador === 'OPERATIVO'
+                      ? '#157347'
+                      : remolcadors.estatusRemolcador === 'INICIADO'
+                      ? '#094db1'
+                      : '#97101d'
+                }}
+              >
                 <p className=" mb-0">{remolcadors.estatusRemolcador}</p>
               </Tag>
               {auth.isLogged() && auth.user.faidUser.roles[0] !== 'LECTURA' && (
@@ -90,10 +107,10 @@ function RemolcadorCard({ remolcadors }) {
                 src={
                   remolcadoresJPEG[
                     remolcadors.nombreRemolcador === 'MARE'
-                      ? 12
+                      ? 11
                       : remolcadors.nombreRemolcador === 'UMAY'
-                      ? 17
-                      : 14
+                      ? 15
+                      : 13
                   ]
                 }
                 alt="Image"

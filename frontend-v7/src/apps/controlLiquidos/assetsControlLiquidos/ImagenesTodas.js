@@ -8,8 +8,7 @@ import nasca2 from './nasca2.jpeg'
 import nasca3 from './nasca3.jpeg'
 import nasca4 from './nasca4.jpeg'
 import nasca5 from './nasca5.jpeg'
-import nasca6 from './nasca6.jpeg'
-import nasca7 from './nasca7.jpeg'
+
 import mare1 from './mare1.jpeg'
 import mare2 from './mare2.jpeg'
 import morocoto1 from './morocoto1.jpeg'
@@ -30,8 +29,6 @@ export default [
   nasca3,
   nasca4,
   nasca5,
-  nasca6,
-  nasca7,
   mare1,
   mare2,
   morocoto1,

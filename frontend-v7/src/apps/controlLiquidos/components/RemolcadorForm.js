@@ -253,7 +253,7 @@ const RemolcadorForm = (props) => {
             <label>Descripcion :</label>
           </div>
 
-          <div className="formgrid grid">
+          <div className="formgrid grid mt-3">
             <div className="field col-12 md:col-6">
               <label htmlFor="integeronly">Combustible Actual</label>
               <InputNumber
@@ -287,7 +287,7 @@ const RemolcadorForm = (props) => {
               />
             </div>
             <div className="field col-12 md:col-6">
-              <label>Ubicacion</label>
+              <label>Actividad</label>
               <Dropdown
                 value={selectedUbicacionRemolcador}
                 options={ubicacionRemolcadorList}

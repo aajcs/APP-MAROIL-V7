@@ -1,58 +1,38 @@
 const moment = require('moment') // require
 const { Schema, model } = require('mongoose')
 
-const cargaViajeSchema = new Schema(
+const ViajeAuxSchema = new Schema(
   {
     // requisicionMaterialesId: {
     //   type: Schema.Types.ObjectId,
     //   ref: 'RequisicionMateriales'
     // },
-    tipoCargaViaje: {
+    descripcionViajeAux: {
       type: String
     },
-    productoCargaViaje: {
+    paisViajeAux: {
       type: String
     },
-    descripcionCargaViaje: {
+    estatusViajeAux: {
       type: String
     },
-    puertoCargaViaje: {
-      type: String
-    },
-    estatusCargaViaje: {
-      type: String
-    },
-
-    fechaInicioCargaViaje: {
+    fechaArriboViajeAux: {
       type: Date,
       default: moment()
     },
-    fechaFinCargaViaje: {
+    fechaZarpeViajeAux: {
       type: Date,
       default: moment()
     },
-    rataCargaViaje: {
-      type: String
-    },
-
-    catidadActualCargaViaje: {
-      type: Number,
-      default: 0
-    },
-    catidadPruductoCargaViaje: {
-      type: Number,
-      default: 0
-    },
-    viajeAux: {
+    viaje: {
       type: Schema.Types.ObjectId,
-      ref: 'ViajeAux'
+      ref: 'Viaje'
     },
-
-    cargaViajeCreado: {
+    viajeAuxCreado: {
       type: Date,
       default: moment()
     },
-    cargaViajeModificado: {
+    viajeAuxModificado: {
       type: Date,
       default: moment()
     }
@@ -62,13 +42,13 @@ const cargaViajeSchema = new Schema(
     versionKey: false
   }
 )
-cargaViajeSchema.set('toJSON', {
+ViajeAuxSchema.set('toJSON', {
   transform: (document, returnedObject) => {
     returnedObject.id = returnedObject._id
     delete returnedObject._id
   }
 })
 
-const CargaViaje = model('CargaViaje', cargaViajeSchema)
+const ViajeAux = model('ViajeAux', ViajeAuxSchema)
 
-module.exports = CargaViaje
+module.exports = ViajeAux

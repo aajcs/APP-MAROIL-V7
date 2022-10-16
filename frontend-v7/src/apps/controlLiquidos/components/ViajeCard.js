@@ -5,18 +5,23 @@ import React, { useContext, useState, useEffect } from 'react'
 import moment from 'moment'
 import { Tag } from 'primereact/tag'
 // import { Image } from 'primereact/image'
-import { ProgressBar } from 'primereact/progressbar'
 
 import AuthUse from '../../../auth/AuthUse'
 
-import { CargaViajeContext } from '../contexts/CargaViajeContext'
-import CargaViajeCard from './CargaViajeCard'
+import { ViajeAuxContext } from '../contexts/ViajeAuxContext'
+import ViajeAuxCard from './ViajeAuxCard'
+import TanqueAuxCard from './TanqueAuxCard'
+import { TanqueAuxContext } from '../contexts/TanqueAuxContext'
+import { Dialog } from 'primereact/dialog'
+import { Button } from 'primereact/button'
 // import barcoJPEG from '../assetsControl/barco.jpeg'
 
 function ViajeCard({ viajes }) {
-  const { cargaViajes } = useContext(CargaViajeContext)
-  const [porcentajeCombustible, setPorcentajeCombustible] = useState(0)
+  const { viajeAuxs } = useContext(ViajeAuxContext)
+  const { tanqueAuxs } = useContext(TanqueAuxContext)
 
+  const [tanqueAuxEmbarcacion, setTanqueAuxEmbarcacion] = useState(null)
+  const [displayDetalleCarga, setDisplayDetalleCarga] = useState(false)
   const auth = AuthUse()
   const fecha1 = moment(viajes.fechaInicioViaje)
   const fecha2 = moment(viajes.fechaFinViaje ? viajes.fechaFinViaje : moment())
@@ -45,31 +50,53 @@ function ViajeCard({ viajes }) {
   }
 
   // const fecha4 = fecha2.diff(fecha1, 'days')
+
   useEffect(() => {
-    const handlesumar = () => {
-      if (viajes.cantidadActualCargaViaje) {
-        const porcentaje =
-          (100 * viajes.cantidadActualCargaViaje) / viajes.cantidadCargaViaje
-        setPorcentajeCombustible(porcentaje.toFixed(2))
-      }
+    const findBodegaBarco = (id) => {
+      const bodegaBarco = tanqueAuxs.filter((p) => p.embarcacion.id === id)
+
+      setTanqueAuxEmbarcacion(bodegaBarco)
     }
-
-    handlesumar()
-  }, [])
-
+    findBodegaBarco(viajes.embarcacion.id)
+  }, [tanqueAuxs])
+  const dialogFuncMap = {
+    displayDetalleCarga: setDisplayDetalleCarga
+  }
+  const onClick = (name) => {
+    dialogFuncMap[`${name}`](true)
+  }
+  const onHide = (name) => {
+    dialogFuncMap[`${name}`](false)
+  }
+  const renderFooter = (name) => {
+    return (
+      <div>
+        <Button
+          label="No"
+          icon="pi pi-times"
+          onClick={() => onHide(name)}
+          className="p-button-text"
+        />
+        <Button
+          label="Yes"
+          icon="pi pi-check"
+          onClick={() => onHide(name)}
+          autoFocus
+        />
+      </div>
+    )
+  }
   return (
     <div className="col-12 lg:col-12 xl:col-12 ">
       <div className="card mt-2 mb-0 pb-0 ">
         <div className="card-body p-0">
           <div className="grid ">
-            <div className="col-12 lg:col-6 xl:col-6">
+            <div className="col-12 lg:col-6 xl:col-5">
               <h3 className=" card-title mb-0">{viajes.nombreViaje}</h3>{' '}
-              <h6 className="text-400 card-title mt-0">
+              <h6 className="text-400 card-title m-0">
                 {viajes.descripcionViaje}
               </h6>
-            </div>
-            <div className="col-12 lg:col-6 xl:col-6col-6 text-right ">
-              <Tag className="w-100 p-2 text-900">
+              <Tag className="w-100 p-2 mt-3 text-900">
                 <p className=" mb-0">{viajes.estatusViaje}</p>
               </Tag>
               {auth.isLogged() && auth.user.faidUser.roles[0] !== 'LECTURA' && (
@@ -79,14 +106,7 @@ function ViajeCard({ viajes }) {
                     moment(viajes.updatedAt).format('DD/MM HH:mm')}{' '}
                 </span>
               )}
-            </div>
-          </div>
-          <div className="grid ">
-            <div
-              className="col-12 lg:col-6 xl:col-6 "
-              // onClick={() => onClick('displayDetalleCarga')}
-            >
-              <div className="skill-bars">
+              <div className="skill-bars mt-4">
                 <div className="bar mt-3">
                   <div className="progress-line mysql">
                     <div className="infosnippet-startpoint"></div>
@@ -108,8 +128,7 @@ function ViajeCard({ viajes }) {
                   </div>
                 </div>
               </div>
-
-              <div className="justify-content-around  flex flex-fill">
+              <div className="justify-content-between mt-0 flex flex-fill">
                 <h6 className="card-text mt-0 mb-2 ">
                   Inicio del Viaje:
                   <span className=" font-medium ml-2 text-green-500 font-bold">
@@ -129,45 +148,67 @@ function ViajeCard({ viajes }) {
                   </span>
                 </h6>
               </div>
-              <div className="justify-content-around  flex flex-fill">
-                <h6 className="card-text mt-2 mb-2">
-                  Embarcacion:
-                  <span className=" font-medium ml-2 font-italic">
-                    {viajes.embarcacion.nombreEmbarcacion}
-                  </span>
-                </h6>
-                <h6 className="card-text mt-2 mb-2">
-                  Remolcador:
-                  <span className=" font-medium ml-2 font-italic">
-                    {viajes.remolcador[0].nombreRemolcador}
-                  </span>
-                </h6>
+              <h6 className="text-400 card-title m-0">
+                Tiempo de Viaje {secondsToString(diff)}
+              </h6>
+            </div>
+            {/* <div className="col-12 lg:col-6 xl:col-5"></div> */}
+            <div className="col-12 lg:col-6 xl:col-7 ">
+              <div
+                className="col-12 lg:col-12 xl:col-12   "
+                onClick={() => onClick('displayDetalleCarga')}
+              >
+                <div className="justify-content-around  flex flex-fill">
+                  <h6 className="card-text mt-2 mb-2">
+                    Embarcacion:
+                    <span className=" font-medium ml-2 font-italic">
+                      {viajes.embarcacion.nombreEmbarcacion}
+                    </span>
+                    {/* <div onClick={() => onClick('displayDetalleCarga')}> */}
+                  </h6>
+                  <h6 className="card-text mt-2 mb-2">
+                    Remolcador:
+                    <span className=" font-medium ml-2 font-italic">
+                      {viajes.remolcador[0].nombreRemolcador}
+                    </span>
+                  </h6>
+                </div>
+                <div>
+                  <TanqueAuxCard
+                    tanqueAuxEmbarcacion={tanqueAuxEmbarcacion}
+                    embarcacions={viajes.embarcacion}
+                    heightTanque="180px"
+                  />
+                </div>
               </div>
             </div>
-
-            <div className="col-12 lg:col-6 xl:col-6 text-right ">
-              <h6 className="text-center">Porcentaje de Carga</h6>
-              <ProgressBar
-                className="mt-2 mb-3 "
-                color={porcentajeCombustible > 10 ? '#198754' : '#ff0000'}
-                value={porcentajeCombustible}
-              ></ProgressBar>
-              <h6 className="text-center  m-1">
-                Tiempo de Viaje {secondsToString(diff)}
-              </h6>{' '}
-            </div>
+          </div>
+          <Dialog
+            header="Detalle de carga en bodegas"
+            visible={displayDetalleCarga}
+            onHide={() => onHide('displayDetalleCarga')}
+            breakpoints={{ '960px': '75vw' }}
+            style={{ width: '75vw' }}
+            footer={renderFooter('displayDetalleCarga')}
+          >
+            <TanqueAuxCard
+              heightTanque="500px"
+              tanqueAuxEmbarcacion={tanqueAuxEmbarcacion}
+              embarcacions={viajes.embarcacion}
+              tolltip={true}
+            />
+          </Dialog>
+          <div className="grid ">
+            <div className="col-12 lg:col-6 xl:col-6 text-right "></div>
           </div>
           <hr className="mt-2 mb-2 " />
         </div>
         <div className="grid w-100 d-flex flex-row">
-          {cargaViajes.map(
-            (cargaViajes) =>
-              cargaViajes.viaje.id === viajes.id && (
+          {viajeAuxs.map(
+            (viajeAuxs) =>
+              viajeAuxs.viaje.id === viajes.id && (
                 <>
-                  <CargaViajeCard
-                    key={cargaViajes.id}
-                    cargaViajes={cargaViajes}
-                  />
+                  <ViajeAuxCard key={viajeAuxs.id} viajeAuxs={viajeAuxs} />
                 </>
                 // <ReporteCargaGOMInfoCard key={barcos.id} barcos={barcos} />
               )

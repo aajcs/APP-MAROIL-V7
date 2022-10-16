@@ -8,7 +8,6 @@ import { InputText } from 'primereact/inputtext'
 import { Toast } from 'primereact/toast'
 import { Dropdown } from 'primereact/dropdown'
 import { addLocale } from 'primereact/api'
-import { InputNumber } from 'primereact/inputnumber'
 import { Calendar } from 'primereact/calendar'
 
 import moment from 'moment'
@@ -24,13 +23,6 @@ const ViajeForm = (props) => {
     descripcionViaje: '',
     estatusViaje: '',
     destinoViaje: '',
-    etcViaje: '',
-    etaViaje: '',
-    etdViaje: '',
-    tipoCargaViaje: '',
-    cantidadCargaViaje: '',
-    cantidadActualCargaViaje: '',
-    rataCargaViaje: '',
     fechaInicioViaje: '',
     fechaFinViaje: '',
     embarcacion: '',
@@ -87,18 +79,15 @@ const ViajeForm = (props) => {
     useContext(ViajeContext)
   const { embarcacions } = useContext(EmbarcacionContext)
   const { remolcadors } = useContext(RemolcadorContext)
-
-  // const { createCargaBodega } = useContext(CargaBodegaContext)
   const { isVisible, setIsVisible } = props
   const [selectedViaje, setSelectedViaje] = useState(null)
   const [selectedEmbarcacion, setSelectedEmbarcacion] = useState(null)
   const [selectedRemolcador, setSelectedRemolcador] = useState(null)
   const [selectedDestinoViaje, setSelectedDestinoViaje] = useState(null)
-  const [selectedTipoCargaViaje, setSelectedTipoCargaViaje] = useState(null)
 
   const [dateFinal, setDateFinal] = useState(null)
   const [dateInicio, setDateInicio] = useState(null)
-  const [ViajeData, setViajeData] = useState(initialViajeForm)
+  const [viajeData, setViajeData] = useState(initialViajeForm)
   const estadoViaje = [
     { estatusViaje: 'INICIADO' },
     { estatusViaje: 'CULMINADO' }
@@ -113,22 +102,20 @@ const ViajeForm = (props) => {
   //   { remolcador: 'MOROCOTO' }
   // ]
   const destinoViajelist = [
-    { puertoCargaViaje: 'VENEZUELA' },
+    { destinoViaje: 'VENEZUELA' },
     { destinoViaje: 'DOMINICA' },
     { destinoViaje: 'SANTA LUCIA' },
     { destinoViaje: 'SAN VICENTE DE LAS GRANADINAS' },
     { destinoViaje: 'ST KITT AND NIEVES' }
   ]
-  const tipoCargaViajelist = [
-    { tipoCargaViaje: 'GASOLINA' },
-    { tipoCargaViaje: 'DIESEL' }
-  ]
+
   const onEstatusViaje = (e) => {
     setSelectedViaje(e.value)
     updateField(e.value.estatusViaje, 'estatusViaje')
   }
   const onEmbacacion = (e) => {
     setSelectedEmbarcacion(e.value)
+
     updateField(e.value.id, 'embarcacion')
   }
 
@@ -140,10 +127,6 @@ const ViajeForm = (props) => {
     setSelectedDestinoViaje(e.value)
     updateField(e.value.destinoViaje, 'destinoViaje')
   }
-  const onTipoCargaViaje = (e) => {
-    setSelectedTipoCargaViaje(e.value)
-    updateField(e.value.tipoCargaViaje, 'tipoCargaViaje')
-  }
 
   const toast = useRef(null)
 
@@ -153,16 +136,12 @@ const ViajeForm = (props) => {
       setSelectedViaje({
         estatusViaje: editViaje.estatusViaje
       })
-      setSelectedEmbarcacion(editViaje.embarcacion.nombreEmbarcacion)
-      setSelectedRemolcador({
-        nombreRemolcador: editViaje.remolcador.nombreRemolcador
-      })
+      setSelectedEmbarcacion(editViaje.embarcacion)
+      setSelectedRemolcador(editViaje.remolcador[0])
       setSelectedDestinoViaje({
         destinoViaje: editViaje.destinoViaje
       })
-      setSelectedTipoCargaViaje({
-        tipoCargaViaje: editViaje.tipoCargaViaje
-      })
+
       setDateInicio(
         editViaje.fechaInicioViaje && moment(editViaje.fechaInicioViaje)._d
       )
@@ -204,18 +183,20 @@ const ViajeForm = (props) => {
 
   const updateField = (data, field) => {
     setViajeData({
-      ...ViajeData,
+      ...viajeData,
       [field]: data
     })
   }
-
+  console.log(viajeData)
   const saveViaje = () => {
     if (!editViaje) {
-      createViaje(ViajeData)
+      createViaje(viajeData)
     } else {
       updateViaje({
-        ...ViajeData,
-        ViajeModificado: moment()
+        ...viajeData,
+        // embarcacion: viajeData.embarcacion.id,
+        // remolcador: editViaje.remolcador[0].id,
+        viajeModificado: moment()
       })
     }
     setViajeData(initialViajeForm)
@@ -224,7 +205,7 @@ const ViajeForm = (props) => {
     setSelectedEmbarcacion('')
     setSelectedRemolcador('')
     setSelectedDestinoViaje('')
-    setSelectedTipoCargaViaje('')
+
     setDateInicio(null)
     setDateFinal(null)
   }
@@ -247,7 +228,6 @@ const ViajeForm = (props) => {
     setSelectedEmbarcacion('')
     setSelectedRemolcador('')
     setSelectedDestinoViaje('')
-    setSelectedTipoCargaViaje('')
     setDateInicio(null)
     setDateFinal(null)
   }
@@ -327,25 +307,6 @@ const ViajeForm = (props) => {
       </div>
     )
   }
-  const selectedTipoCargaViajeTemplate = (option, props) => {
-    if (option) {
-      return (
-        <div className="country-item country-item-value">
-          <div>{option.tipoCargaViaje}</div>
-        </div>
-      )
-    }
-
-    return <span>{props.placeholder}</span>
-  }
-
-  const tipoCargaViajeTemplate = (option) => {
-    return (
-      <div className="country-item">
-        <div>{option.tipoCargaViaje}</div>
-      </div>
-    )
-  }
 
   return (
     <div className="dialog-demo">
@@ -363,7 +324,7 @@ const ViajeForm = (props) => {
             <div className="field col-12 md:col-3">
               <label>Nombre Viaje:</label>
               <InputText
-                value={ViajeData.nombreViaje}
+                value={viajeData.nombreViaje}
                 onChange={(e) => updateField(e.target.value, 'nombreViaje')}
               />
             </div>
@@ -407,7 +368,7 @@ const ViajeForm = (props) => {
             <div className="field col-12 ">
               <label>Descripcion de Viaje:</label>
               <InputText
-                value={ViajeData.descripcionViaje}
+                value={viajeData.descripcionViaje}
                 onChange={(e) =>
                   updateField(e.target.value, 'descripcionViaje')
                 }
@@ -425,56 +386,7 @@ const ViajeForm = (props) => {
                 itemTemplate={destinoViajeOptionTemplate}
               />
             </div>
-            <div className="field col-12 md:col-4">
-              <label>Tipo Carga</label>
-              <Dropdown
-                value={selectedTipoCargaViaje}
-                options={tipoCargaViajelist}
-                onChange={onTipoCargaViaje}
-                optionLabel="estatusTipoCargaViaje"
-                placeholder="Seleccione Tipo Carga"
-                valueTemplate={selectedTipoCargaViajeTemplate}
-                itemTemplate={tipoCargaViajeTemplate}
-              />
-            </div>
-            <div className="field col-12 md:col-4">
-              <label htmlFor="integeronly">Cantidad de Carga</label>
-              <InputNumber
-                inputId="integeronly"
-                value={ViajeData.cantidadCargaViaje}
-                onValueChange={(e) =>
-                  updateField(e.target.value, 'cantidadCargaViaje')
-                }
-              />
-            </div>
-            <div className="field col-12 md:col-4">
-              <label htmlFor="integeronly">ETA</label>
-              <InputText
-                value={ViajeData.etaViaje}
-                onChange={(e) => updateField(e.target.value, 'etaViaje')}
-              />
-            </div>
-            <div className="field col-12 md:col-4">
-              <label htmlFor="integeronly">ETC</label>
-              <InputText
-                value={ViajeData.etcViaje}
-                onChange={(e) => updateField(e.target.value, 'etcViaje')}
-              />
-            </div>
-            <div className="field col-12 md:col-4">
-              <label htmlFor="integeronly">ETD</label>
-              <InputText
-                value={ViajeData.etdViaje}
-                onChange={(e) => updateField(e.target.value, 'etdViaje')}
-              />
-            </div>
-            <div className="field col-12 md:col-3">
-              <label htmlFor="integeronly">Rata de Carga</label>
-              <InputText
-                value={ViajeData.rataCargaViaje}
-                onChange={(e) => updateField(e.target.value, 'rataCargaViaje')}
-              />
-            </div>
+
             <div className="field col-12 md:col-3">
               <label>Fecha Inicio Carga</label>
               <Calendar
@@ -505,16 +417,6 @@ const ViajeForm = (props) => {
                 locale="es"
                 // hourFormat="12"
                 showButtonBar
-              />
-            </div>
-            <div className="field col-12 md:col-3">
-              <label htmlFor="integeronly">Cantidad de Actual de Carga</label>
-              <InputNumber
-                inputId="integeronly"
-                value={ViajeData.cantidadActualCargaViaje}
-                onValueChange={(e) =>
-                  updateField(e.target.value, 'cantidadActualCargaViaje')
-                }
               />
             </div>
           </div>
