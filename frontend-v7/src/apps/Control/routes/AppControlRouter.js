@@ -29,6 +29,7 @@ import { ModeladoOperacionPage } from '../pages/ModeladoOperacionPage'
 import { ProgramacionVentanaAgendaPage } from '../pages/ProgramacionVentanaAgendaPage'
 import { ReporteCargaGOMInfoPageCrec10 } from '../pages/ReporteCargaGOMInfoPageCrec10'
 import { VolumetriaPage } from '../pages/VolumetriaPage'
+import { HistoricoBuquesPage } from '../pages/HistoricoBuquesPage'
 
 export default function appControlRouter() {
   const { staticMenuInactive, onToggleMenuClick } = useContext(ConfigContext)
@@ -153,6 +154,11 @@ export default function appControlRouter() {
               exact
               path="/apps/control/Volumetria"
               component={VolumetriaPage}
+            />
+            <PrivateRoute
+              exact
+              path="/apps/control/historicoBuques"
+              component={HistoricoBuquesPage}
             />
             <Route path="*">
               <Redirect to="/404" />

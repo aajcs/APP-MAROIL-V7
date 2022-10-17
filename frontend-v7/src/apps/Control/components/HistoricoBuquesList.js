@@ -1,3 +1,4 @@
+/* eslint-disable prefer-const */
 /* eslint-disable no-unused-vars */
 import React, { useContext, useState, useRef } from 'react'
 import { DataTable } from 'primereact/datatable'
@@ -10,9 +11,7 @@ import { Toast } from 'primereact/toast'
 import { BarcoContext } from '../contexts/BarcoContext'
 import moment from 'moment'
 
-import BarcoForm from './BarcoForm'
-
-const BarcoList = () => {
+const HistoricoBuquesList = () => {
   const { barcos, findBarco, deleteBarco, loading } = useContext(BarcoContext)
   const [barco, setBarco] = useState(barcos)
   const [deleteBarcoDialog, setDeleteBarcoDialog] = useState(false)
@@ -80,6 +79,9 @@ const BarcoList = () => {
     if (!validarFecha) return
     const fecha = moment(rowData.fechaFinalCarga)
     return fecha.format('dddDD/MM/YY HH:mm')
+  }
+  const blFinalBuqueTemplate = (rowData) => {
+    return new Intl.NumberFormat().format(rowData.blFinalBuque)
   }
 
   const fechaBarcoCreado = (rowData) => {
@@ -177,15 +179,42 @@ const BarcoList = () => {
   const clearSelected = () => {
     setDeleteBarcoDialog(false)
   }
+  const calculateCustomerTotal = (name) => {
+    let total = 0
 
+    if (barcos) {
+      for (let barco of barcos) {
+        if (barco.nombreBarco === name) {
+          total++
+        }
+      }
+    }
+
+    return total
+  }
+
+  const headerTemplate = (data) => {
+    console.log(data)
+    return (
+      <React.Fragment>
+        <span className="image-text">{data.nombreBarco}</span>
+      </React.Fragment>
+    )
+  }
+  const footerTemplate = (data) => {
+    return (
+      <React.Fragment>
+        <td colSpan="4" style={{ textAlign: 'right' }}>
+          Total Customers
+        </td>
+        {/* <td>{calculateCustomerTotal(data.representative.name)}</td> */}
+      </React.Fragment>
+    )
+  }
   return (
     <>
       <Toast ref={toast} />
-      <Toolbar
-        className="mb-4"
-        left={leftToolbarTemplate}
-        right={rightToolbarTemplate}
-      ></Toolbar>
+      <Toolbar className="mb-4" right={rightToolbarTemplate}></Toolbar>
 
       <DataTable
         ref={dt}
@@ -208,55 +237,23 @@ const BarcoList = () => {
         responsiveLayout="scroll"
         breakpoint="960px"
       >
-        <Column field="nombreBarco" header="nombre Barco" />
-        <Column field="descripcion" header="descripcion" />
-        <Column field="buqueCliente" header="buqueCliente" />
-        <Column field="buqueClienteVenta" header="buqueClienteVenta" />
-        <Column field="buquePaisDestino" header="buquePaisDestino" />
-        <Column field="toneladasCapacidad" header="toneladas Nominadas" />
-        <Column field="toneladasNominadas" header="toneladas Solicitadas" />
-        <Column field="toneladasActual" header="toneladas Actual" />
-        <Column field="blFinalBuque" header="BL Draft Final" />
-        <Column field="cantidadBodegas" header="cantidad Bodegas" />
-        <Column field="cantidadGruas" header="cantidad Gruas" />
+        <Column field="nombreBarco" header="Buque" sortable />
         <Column
-          field="barcoCreado"
-          body={fechaBarcoCreado}
-          header="barco Creado"
-          dataType="date"
-        />
-        <Column
-          field="barcoModificado"
-          body={fechaBarcoModificado}
-          header="barco Modificado"
-          dataType="date"
-        />
-        <Column
-          field="fechaAtraco"
-          header="fecha Atraco"
-          body={fechaAtracoTemplate}
-          dataType="date"
-        />
-        <Column
-          field="fechaInicioCarga"
-          header="fecha Inicio Carga"
-          body={fechaInicioCargaTemplate}
-          dataType="date"
+          field="blFinalBuque"
+          header="BL Draft Final"
+          sortable
+          body={blFinalBuqueTemplate}
         />
         <Column
           field="fechaFinalCarga"
-          header="fecha Final Carga"
+          header="Fecha Final Carga"
           body={fechaFinalCargaTemplate}
           dataType="date"
+          sortable
         />
-        <Column header="Dias Totales de Carga" body={diasTotalesCarga}></Column>
-
-        <Column field="estatusBarco" header="estatus Barco" />
-
-        <Column body={actionBodyTemplate}></Column>
+        <Column field="buqueCliente" header="Consignatario" sortable />
+        <Column field="buquePaisDestino" header="Pais Destino" sortable />
       </DataTable>
-
-      <BarcoForm isVisible={isVisible} setIsVisible={setIsVisible} />
 
       <Dialog
         visible={deleteBarcoDialog}
@@ -283,4 +280,4 @@ const BarcoList = () => {
   )
 }
 
-export default BarcoList
+export default HistoricoBuquesList

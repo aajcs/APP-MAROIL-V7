@@ -194,6 +194,7 @@ const OperacionesGOMBarco = () => {
         loading={loading}
         responsiveLayout="scroll"
       >
+        <Column body={actionBodyTemplate}></Column>
         <Column field="nombreBarco" header="Nombre Buque" sortable />
         <Column field="descripcion" header="Descripcion" />
         <Column field="buqueCliente" header="Consignatario" />
@@ -201,7 +202,7 @@ const OperacionesGOMBarco = () => {
         <Column field="buquePaisDestino" header="Pais Destino" />
         <Column field="toneladasCapacidad" header="Toneladas Nominadas" />
         <Column field="toneladasNominadas" header="Toneladas Solicitadas" />
-
+        <Column field="blFinalBuque" header="BL Draft Final" />
         <Column field="cantidadBodegas" header="Cantidad Bodegas" />
         <Column field="cantidadGruas" header="Cantidad Gruas" />
 
@@ -232,7 +233,6 @@ const OperacionesGOMBarco = () => {
           header="barco Modificado"
           dataType="date"
         />
-        <Column body={actionBodyTemplate}></Column>
       </DataTable>
 
       <OperacionesGOMBarcoForm

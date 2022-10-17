@@ -25,6 +25,7 @@ const OperacionesGOMBarcoForm = (props) => {
     buquePaisDestino: '',
     toneladasCapacidad: 0,
     toneladasNominadas: 0,
+    blFinalBuque: 0,
     toneladasActual: 0,
     totalGabarras: 0,
     cantidadBodegas: 0,
@@ -343,7 +344,7 @@ const OperacionesGOMBarcoForm = (props) => {
       <Dialog
         visible={isVisible}
         breakpoints={{ '960px': '75vw' }}
-        style={{ width: '30vw' }}
+        style={{ width: '40vw' }}
         header="Detalles de la Barco"
         footer={dialogFooter}
         onHide={() => clearSelected()}
@@ -424,7 +425,7 @@ const OperacionesGOMBarcoForm = (props) => {
               />
             </div>
 
-            <div className="field col-6 p-col-2 p-md-1">
+            <div className="field col-12  md:col-6 p-col-2 p-md-1">
               <label htmlFor="toneladasNominadas">Toneladas Solicitadas</label>
               <InputNumber
                 inputId="toneladasNominadas"
@@ -442,7 +443,28 @@ const OperacionesGOMBarcoForm = (props) => {
                 suffix=" TM"
               />
             </div>
-            <div className="field col-6 p-col-2 p-md-1">
+            <div className="field col-12  md:col-6 p-col-2 p-md-1">
+              <label htmlFor="blFinalBuque">BL Draft Final</label>
+              <InputNumber
+                inputId="blFinalBuque"
+                value={barcoData.blFinalBuque}
+                onValueChange={(e) =>
+                  updateField(e.target.value, 'blFinalBuque')
+                }
+                showButtons
+                buttonLayout="horizontal"
+                step={1}
+                decrementButtonClassName="p-button-danger"
+                incrementButtonClassName="p-button-success"
+                incrementButtonIcon="pi pi-plus"
+                decrementButtonIcon="pi pi-minus"
+                suffix=" TM"
+                mode="decimal"
+                minFractionDigits={3}
+              />
+              {/* <InputNumber id="quantity" value={product.quantity} onValueChange={(e) => onInputNumberChange(e, 'quantity')} integeronly /> */}
+            </div>
+            <div className="field col-12  md:col-6 p-col-2 p-md-1">
               <label htmlFor="totalGabarras">Total Gabarras</label>
               <InputNumber
                 inputId="totalGabarras"
@@ -460,7 +482,7 @@ const OperacionesGOMBarcoForm = (props) => {
               />
               {/* <InputNumber id="quantity" value={product.quantity} onValueChange={(e) => onInputNumberChange(e, 'quantity')} integeronly /> */}
             </div>
-            <div className="field col-6 p-col-2 p-md-1">
+            <div className="field col-12  md:col-6 p-col-2 p-md-1">
               <label htmlFor="cantidadBodegas">Cantidad Bodegas</label>
               <InputNumber
                 inputId="cantidadBodegas"
@@ -478,7 +500,7 @@ const OperacionesGOMBarcoForm = (props) => {
               />
               {/* <InputNumber id="quantity" value={product.quantity} onValueChange={(e) => onInputNumberChange(e, 'quantity')} integeronly /> */}
             </div>
-            <div className="field col-6 p-col-2 p-md-1">
+            <div className="field col-12  md:col-6 p-col-2 p-md-1">
               <label htmlFor="cantidadGruas">Cantidad Gruas</label>
               <InputNumber
                 inputId="cantidadGruas"

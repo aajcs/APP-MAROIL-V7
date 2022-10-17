@@ -28,6 +28,14 @@ export const MenuControl = () => {
           permi2: 'OPERADOR'
         },
         {
+          label: 'HISTORICO DE BUQUES',
+          icon: 'pi pi-fw pi-info-circle',
+          to: '/apps/control/historicoBuques',
+          permi: 'ADMIN',
+          permi1: 'LECTURA',
+          permi2: 'OPERADOR'
+        },
+        {
           label: 'CONTROL DE LIQUIDOS',
           icon: 'pi pi-fw pi-home',
           to: '/apps/controlLiquidos/inicioInfo',
