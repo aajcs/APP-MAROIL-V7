@@ -205,6 +205,7 @@ function EmbarcacionCard({ embarcacions }) {
               {new Intl.NumberFormat().format(
                 embarcacions.combustibleActualEmbarcacion
               )}
+              {embarcacions.nombreEmbarcacion === 'NASCA I' ? ' TM' : ' Gls'}
             </span>
           </h6>
           <h6 className="card-text mt-0 mb-2">
@@ -214,6 +215,7 @@ function EmbarcacionCard({ embarcacions }) {
               {new Intl.NumberFormat().format(
                 embarcacions.combustibleCapacidadEmbarcacion
               )}
+              {embarcacions.nombreEmbarcacion === 'NASCA I' ? ' TM' : ' Gls'}
             </span>
           </h6>
           <hr className="mt-2 mb-2 " />

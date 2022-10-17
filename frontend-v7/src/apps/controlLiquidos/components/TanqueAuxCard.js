@@ -184,7 +184,7 @@ function TanqueAuxCard({
               id="frame"
               src={
                 embarcacionJPEG[
-                  embarcacions.nombreEmbarcacion === 'NASCA 1' ? 17 : 16
+                  embarcacions.nombreEmbarcacion === 'NASCA I' ? 17 : 16
                 ]
               }
               onError={(e) => (e.target.src = { embarcacionJPEG })}

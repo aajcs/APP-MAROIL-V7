@@ -94,6 +94,10 @@ app.use(
   require('./appsControlLiquidos/routes/TanqueAuxRoutes')
 )
 app.use('/api/ViajeAux', require('./appsControlLiquidos/routes/ViajeAuxRoutes'))
+app.use(
+  '/api/GastosOperacionale',
+  require('./appsControlLiquidos/routes/GastosOperacionaleRoutes')
+)
 // Static Files
 // app.use(express.static(path.join(__dirname, '../public')));;
 app.use((req, res) => {

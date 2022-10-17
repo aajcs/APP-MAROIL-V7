@@ -14,13 +14,15 @@ import TanqueAuxCard from './TanqueAuxCard'
 import { TanqueAuxContext } from '../contexts/TanqueAuxContext'
 import { Dialog } from 'primereact/dialog'
 import { Button } from 'primereact/button'
+import { GastosOperacionaleContext } from '../contexts/GastosOperacionaleContext'
 // import barcoJPEG from '../assetsControl/barco.jpeg'
 
 function ViajeCard({ viajes }) {
   const { viajeAuxs } = useContext(ViajeAuxContext)
   const { tanqueAuxs } = useContext(TanqueAuxContext)
-
+  const { gastosOperacionales } = useContext(GastosOperacionaleContext)
   const [tanqueAuxEmbarcacion, setTanqueAuxEmbarcacion] = useState(null)
+  const [costoOperacionViaje, setCostoOperacionViaje] = useState(null)
   const [displayDetalleCarga, setDisplayDetalleCarga] = useState(false)
   const auth = AuthUse()
   const fecha1 = moment(viajes.fechaInicioViaje)
@@ -59,6 +61,20 @@ function ViajeCard({ viajes }) {
     }
     findBodegaBarco(viajes.embarcacion.id)
   }, [tanqueAuxs])
+  useEffect(() => {
+    const findGastosOperacion = (id) => {
+      const bodegaBarco = gastosOperacionales.filter((p) => p.viaje.id === id)
+      const sumaGastosOepacion =
+        bodegaBarco &&
+        bodegaBarco
+          .map((item) => item.montoGastosOperacionale)
+          .reduce((prev, curr) => prev + curr, 0)
+      // setCostosOperacionales(costosOperacion)
+      console.log(sumaGastosOepacion)
+      setCostoOperacionViaje(sumaGastosOepacion)
+    }
+    findGastosOperacion(viajes.id)
+  }, [gastosOperacionales])
   const dialogFuncMap = {
     displayDetalleCarga: setDisplayDetalleCarga
   }
@@ -150,6 +166,16 @@ function ViajeCard({ viajes }) {
               </div>
               <h6 className="text-400 card-title m-0">
                 Tiempo de Viaje {secondsToString(diff)}
+              </h6>
+              <h6 className="text-800 card-title ">
+                Costos Operacionales{' '}
+                <strong>
+                  {' '}
+                  <span className="text-yellow-700">
+                    {new Intl.NumberFormat().format(costoOperacionViaje)}
+                    {' $'}
+                  </span>
+                </strong>
               </h6>
             </div>
             {/* <div className="col-12 lg:col-6 xl:col-5"></div> */}

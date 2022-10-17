@@ -49,6 +49,14 @@ export const MenuControlLiquidos = () => {
           permi: 'ADMIN',
           permi1: 'LECTURA',
           permi2: 'OPERADOR'
+        },
+        {
+          label: 'INFORMACIÓN GASTOS',
+          icon: 'pi pi-fw pi-info-circle',
+          to: '/apps/controlLiquidos/gastosOperacionaleinfo',
+          permi: 'ADMIN',
+          permi1: 'LECTURA',
+          permi2: 'OPERADOR'
         }
       ]
     },
@@ -107,6 +115,12 @@ export const MenuControlLiquidos = () => {
             label: 'TANQUEAUX',
             icon: 'pi pi-fw pi-database',
             to: '/apps/controlLiquidos/TanqueAux',
+            permi: 'SUPERADMIN'
+          },
+          {
+            label: 'GASTOSOPERACIONALE',
+            icon: 'pi pi-fw pi-database',
+            to: '/apps/controlLiquidos/GastosOperacionale',
             permi: 'SUPERADMIN'
           }
         ]

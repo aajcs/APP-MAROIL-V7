@@ -27,6 +27,8 @@ import { CargaViajePage } from '../pages/CargaViajePage'
 import { TanqueAuxPage } from '../pages/TanqueAuxPage'
 import { ViajeAuxPage } from '../pages/ViajeAuxPage'
 import { InicioInfoPage } from '../pages/InicioInfoPage'
+import { GastosOperacionalePage } from '../pages/GastosOperacionalePage'
+import { GastosOperacionaleInfoPage } from '../pages/GastosOperacionaleInfoPage'
 
 export default function AppControlLiquidosRouter() {
   const { staticMenuInactive, onToggleMenuClick } = useContext(ConfigContext)
@@ -107,6 +109,16 @@ export default function AppControlLiquidosRouter() {
               exact
               path="/apps/controlLiquidos/TanqueAux"
               component={TanqueAuxPage}
+            />
+            <PrivateRoute
+              exact
+              path="/apps/controlLiquidos/GastosOperacionale"
+              component={GastosOperacionalePage}
+            />
+            <PrivateRoute
+              exact
+              path="/apps/controlLiquidos/gastosOperacionaleInfo"
+              component={GastosOperacionaleInfoPage}
             />
             <PrivateRoute
               exact

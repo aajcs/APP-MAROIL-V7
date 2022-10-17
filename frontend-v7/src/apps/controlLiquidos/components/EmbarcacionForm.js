@@ -86,8 +86,11 @@ const EmbarcacionForm = (props) => {
     { estatusEmbarcacion: 'CULMINADO' }
   ]
   const ubicacionEmbarcacionList = [
-    { ubicacionEmbarcacion: 'OPERATIVO2' },
-    { ubicacionEmbarcacion: 'CULMINADO2' }
+    { ubicacionEmbarcacion: 'FONDEADO' },
+    { ubicacionEmbarcacion: 'MANTENIMIENTO' },
+    { ubicacionEmbarcacion: 'CARGANDO' },
+    { ubicacionEmbarcacion: 'DESCARGANDO' },
+    { ubicacionEmbarcacion: 'TRAVESIA' }
   ]
   const onEstatusEmbarcacion = (e) => {
     setSelectedEmbarcacion(e.value)
