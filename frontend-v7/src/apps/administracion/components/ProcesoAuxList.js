@@ -6,19 +6,16 @@ import { Toolbar } from 'primereact/toolbar'
 import { Dialog } from 'primereact/dialog'
 import { InputText } from 'primereact/inputtext'
 import { Toast } from 'primereact/toast'
-import { CentroDeCostoAuxContext } from '../contexts/CentroDeCostoAuxContext'
+import { ProcesoAuxContext } from '../contexts/ProcesoAuxContext'
 import moment from 'moment'
 
-import CentroDeCostoAuxForm from './CentroDeCostoAuxForm'
+import ProcesoAuxForm from './ProcesoAuxForm'
 
-const CentroDeCostoAuxList = () => {
-  const {
-    centroDeCostoAuxs,
-    findCentroDeCostoAux,
-    deleteCentroDeCostoAux,
-    loading
-  } = useContext(CentroDeCostoAuxContext)
-  const [activo, setCentroDeCostoAux] = useState(centroDeCostoAuxs)
+const ProcesoAuxList = () => {
+  const { procesoAuxs, findProcesoAux, deleteProcesoAux, loading } =
+    useContext(ProcesoAuxContext)
+  console.log(procesoAuxs)
+  const [activo, setProcesoAux] = useState(procesoAuxs)
   const [deleteBarcoDialog, setDeleteBarcoDialog] = useState(false)
   const [globalFilter, setGlobalFilter] = useState(null)
   const [isVisible, setIsVisible] = useState(false)
@@ -26,7 +23,7 @@ const CentroDeCostoAuxList = () => {
   const dt = useRef(null)
   const toast = useRef(null)
   const saveBarco = (id) => {
-    findCentroDeCostoAux(id)
+    findProcesoAux(id)
     setIsVisible(true)
   }
 
@@ -67,17 +64,17 @@ const CentroDeCostoAuxList = () => {
     dt.current.exportCSV()
   }
 
-  const fechaCentroDeCostoAuxCreado = (rowData) => {
-    const fecha = moment(rowData.activoCreado)
+  const fechaProcesoCreado = (rowData) => {
+    const fecha = moment(rowData.procesoCreado)
     return fecha.format('dddDD/MM/YY HH:mm')
   }
-  const fechaCentroDeCostoAuxModificado = (rowData) => {
-    const fecha = moment(rowData.activoModificado)
+  const fechaProcesoModificado = (rowData) => {
+    const fecha = moment(rowData.procesoModificado)
     return fecha.format('dddDD/MM/YY HH:mm')
   }
 
   const eliminarBarco = () => {
-    deleteCentroDeCostoAux(activo.id)
+    deleteProcesoAux(activo.id)
     setDeleteBarcoDialog(false)
     toast.current.show({
       severity: 'error',
@@ -105,7 +102,7 @@ const CentroDeCostoAuxList = () => {
   )
 
   const confirmDeleteBarco = (barcos) => {
-    setCentroDeCostoAux(barcos)
+    setProcesoAux(barcos)
     setDeleteBarcoDialog(true)
   }
 
@@ -129,7 +126,7 @@ const CentroDeCostoAuxList = () => {
 
   const header = (
     <div className="flex flex-column md:flex-row md:justify-content-between md:align-items-center">
-      <h5 className="m-0">CentroDeCostoAux</h5>
+      <h5 className="m-0">ProcesoAux</h5>
       <span className="block mt-2 md:mt-0 p-input-icon-left">
         <i className="pi pi-search" />
         <InputText
@@ -154,7 +151,7 @@ const CentroDeCostoAuxList = () => {
 
       <DataTable
         ref={dt}
-        value={centroDeCostoAuxs}
+        value={procesoAuxs}
         dataKey="id"
         paginator
         rows={10}
@@ -173,28 +170,25 @@ const CentroDeCostoAuxList = () => {
         breakpoint="960px"
       >
         <Column body={actionBodyTemplate}></Column>
-        <Column field="codigoCentroDeCosto" header="codigoCentroDeCosto" />
-        <Column field="nombreCentroDeCosto" header="nombreCentroDeCosto" />
+        <Column field="codigoProceso" header="codigoProceso" />
+        <Column field="nombreProceso" header="nombreProceso" />
+        <Column field="descripcionProceso" header="descripcionProceso" />
+        <Column field="estatusProceso" header="estatusProceso" />
         <Column
-          field="descripcionCentroDeCosto"
-          header="descripcionCentroDeCosto"
-        />
-        <Column field="estatusCentroDeCosto" header="estatusCentroDeCosto" />
-        <Column
-          field="centroDeCostoAuxCreado"
-          body={fechaCentroDeCostoAuxCreado}
-          header="activoCreado"
+          field="procesoCreado"
+          body={fechaProcesoCreado}
+          header="procesoCreado"
           dataType="date"
         />
         <Column
-          field="centroDeCostoAuxModificado"
-          body={fechaCentroDeCostoAuxModificado}
-          header="centroDeCostoAuxModificado"
+          field="procesoModificado"
+          body={fechaProcesoModificado}
+          header="procesoModificado"
           dataType="date"
         />
       </DataTable>
 
-      <CentroDeCostoAuxForm isVisible={isVisible} setIsVisible={setIsVisible} />
+      <ProcesoAuxForm isVisible={isVisible} setIsVisible={setIsVisible} />
 
       <Dialog
         visible={deleteBarcoDialog}
@@ -221,4 +215,4 @@ const CentroDeCostoAuxList = () => {
   )
 }
 
-export default CentroDeCostoAuxList
+export default ProcesoAuxList

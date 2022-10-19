@@ -1,4 +1,4 @@
-/* eslint-disable no-unused-vars */
+// /* eslint-disable no-unused-vars */
 import React, { useContext, useState, useRef } from 'react'
 import { DataTable } from 'primereact/datatable'
 import { Column } from 'primereact/column'
@@ -10,17 +10,17 @@ import { Toast } from 'primereact/toast'
 import { IngresoGastoContext } from '../contexts/IngresoGastoContext'
 import moment from 'moment'
 
-// import IngresoGastoForm from './IngresoGastoForm'
+import IngresoGastoForm from './IngresoGastoForm'
 
 const IngresoGastoList = () => {
   const { ingresoGastos, findIngresoGasto, deleteIngresoGasto, loading } =
     useContext(IngresoGastoContext)
+  console.log(ingresoGastos)
   const [ingresoGasto, setIngresoGasto] = useState(ingresoGastos)
   const [deleteBarcoDialog, setDeleteBarcoDialog] = useState(false)
   const [globalFilter, setGlobalFilter] = useState(null)
   const [isVisible, setIsVisible] = useState(false)
 
-  const [selectedProducts, setSelectedProducts] = useState(null)
   const dt = useRef(null)
   const toast = useRef(null)
   const saveBarco = (id) => {
@@ -63,24 +63,6 @@ const IngresoGastoList = () => {
   }
   const exportCSV = () => {
     dt.current.exportCSV()
-  }
-  const fechaAtracoTemplate = (rowData) => {
-    const validarFecha = moment(rowData.fechaAtraco).isValid()
-    if (!validarFecha) return
-    const fecha = moment(rowData.fechaAtraco)
-    return fecha.format('dddDD/MM/YY HH:mm')
-  }
-  const fechaInicioCargaTemplate = (rowData) => {
-    const validarFecha = moment(rowData.fechaInicioCarga).isValid()
-    if (!validarFecha) return
-    const fecha = moment(rowData.fechaInicioCarga)
-    return fecha.format('dddDD/MM/YY HH:mm')
-  }
-  const fechaFinalCargaTemplate = (rowData) => {
-    const validarFecha = moment(rowData.fechaFinalCarga).isValid()
-    if (!validarFecha) return
-    const fecha = moment(rowData.fechaFinalCarga)
-    return fecha.format('dddDD/MM/YY HH:mm')
   }
 
   const fechaIngresoGastoCreado = (rowData) => {
@@ -142,25 +124,6 @@ const IngresoGastoList = () => {
       </div>
     )
   }
-  const diasTotalesCarga = (rowData) => {
-    function secondsToString(diff) {
-      const numdays = Math.floor(diff / 86400)
-      const numhours = Math.floor((diff % 86400) / 3600)
-      const numminutes = Math.floor(((diff % 86400) % 3600) / 60)
-      // const numseconds = ((diff % 86400) % 3600) % 60
-
-      return (
-        numdays + ' dias ' + numhours + ' horas ' + numminutes + ' minutos '
-      )
-    }
-    const fecha1 = moment(rowData.fechaInicioCarga)
-    const fecha2 = moment(
-      rowData.fechaFinalCarga ? rowData.fechaFinalCarga : moment()
-    ) //
-    const diff = fecha2.diff(fecha1, 'seconds') // Diff in days
-
-    return <div className="actions">{secondsToString(diff)}</div>
-  }
 
   const header = (
     <div className="flex flex-column md:flex-row md:justify-content-between md:align-items-center">
@@ -190,7 +153,7 @@ const IngresoGastoList = () => {
       <DataTable
         ref={dt}
         value={ingresoGastos}
-        onSelectionChange={(e) => setSelectedProducts(e.value_id)}
+        // onSelectionChange={(e) => setSelectedProducts(e.value_id)}
         dataKey="id"
         paginator
         rows={10}
@@ -213,8 +176,12 @@ const IngresoGastoList = () => {
         <Column field="conceptoIngresoGasto" header="conceptoIngresoGasto" />
         <Column field="ingresoIngresoGasto" header="ingresoIngresoGasto" />
         <Column field="egresoIngresoGasto" header="egresoIngresoGasto" />
-        <Column field="procesoAuxId" header="procesoAuxId" />
-        <Column field="proveedorId" header="proveedorId" />
+        <Column field="procesoAuxId.nombreProceso" header="procesoAuxId" />
+        <Column field="proveedorId.nombreProveedor" header="proveedorId" />
+        <Column
+          field="centroDeCostoAuxId.nombreCentroDeCosto"
+          header="centroDeCostoAuxId"
+        />
         <Column field="userCreatorId" header="userCreatorId" />
 
         <Column
@@ -231,7 +198,7 @@ const IngresoGastoList = () => {
         />
       </DataTable>
 
-      {/* <IngresoGastoForm isVisible={isVisible} setIsVisible={setIsVisible} /> */}
+      <IngresoGastoForm isVisible={isVisible} setIsVisible={setIsVisible} />
 
       <Dialog
         visible={deleteBarcoDialog}

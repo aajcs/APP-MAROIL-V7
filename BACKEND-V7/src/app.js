@@ -59,6 +59,10 @@ app.use(
   require('./appsAdministracion/routes/CentroDeCostoAuxRoutes')
 )
 app.use(
+  '/api/ProcesoAux',
+  require('./appsAdministracion/routes/ProcesoAuxRoutes')
+)
+app.use(
   '/api/RequisicionMaterialesItems',
   require('./appsProcura/routes/RequisicionMaterialesItemsRoutes')
 )

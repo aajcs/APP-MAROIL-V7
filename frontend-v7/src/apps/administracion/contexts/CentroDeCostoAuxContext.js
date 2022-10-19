@@ -88,7 +88,7 @@ const CentroDeCostoAuxContextProvider = (props) => {
       .then((data) =>
         setCentroDeCostoAuxs(
           centroDeCostoAuxs.map((p) =>
-            p.id === centroDeCostoAux.id ? data.updateCentroDeCostoAux : p
+            p.id === centroDeCostoAux.id ? data.updateCentroDeCosto : p
           )
         )
       )

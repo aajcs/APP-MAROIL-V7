@@ -46,6 +46,15 @@ ingresoGastoCtrl.createIngresoGasto = async (req, res) => {
 ingresoGastoCtrl.getIngresoGastos = async (req, res) => {
   try {
     const ingresoGasto = await IngresoGasto.find({})
+      .populate('procesoAuxId', {
+        nombreProceso: 1
+      })
+      .populate('proveedorId', {
+        nombreProveedor: 1
+      })
+      .populate('centroDeCostoAuxId', {
+        nombreCentroDeCosto: 1
+      })
     res.status(200).json(ingresoGasto)
   } catch (err) {
     console.log(err)

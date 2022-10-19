@@ -20,6 +20,7 @@ import { FacturaPage } from '../pages/FacturaPage'
 import { IngresoGastoPage } from '../pages/IngresoGastoPage'
 import { ProveedorPage } from '../pages/ProveedorPage'
 import { PresupuestoPage } from '../pages/PresupuestoPage'
+import { ProcesoAuxPage } from '../pages/ProcesoAuxPage'
 
 export default function appadministracionRouter() {
   const { staticMenuInactive, onToggleMenuClick } = useContext(ConfigContext)
@@ -69,6 +70,11 @@ export default function appadministracionRouter() {
               exact
               path="/apps/administracion/CentroDeCostoAux"
               component={CentroDeCostoAuxPage}
+            />
+            <PrivateRoute
+              exact
+              path="/apps/administracion/ProcesoAux"
+              component={ProcesoAuxPage}
             />
             <PrivateRoute
               exact

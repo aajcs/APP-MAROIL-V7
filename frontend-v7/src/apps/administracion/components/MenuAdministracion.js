@@ -59,6 +59,12 @@ export const MenuAdministracion = () => {
             permi: 'SUPERADMIN'
           },
           {
+            label: 'PROCESOAUX',
+            icon: 'pi pi-fw pi-database',
+            to: '/apps/administracion/ProcesoAux',
+            permi: 'SUPERADMIN'
+          },
+          {
             label: 'FACTURA',
             icon: 'pi pi-fw pi-database',
             to: '/apps/administracion/Factura',

@@ -1,7 +1,6 @@
-/* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
 import React, { useContext, useState, useEffect, useRef } from 'react'
-import { BarcoContext } from '../contexts/BarcoContext'
+import { IngresoGastoContext } from '../contexts/IngresoGastoContext'
 import { Dialog } from 'primereact/dialog'
 import { Button } from 'primereact/button'
 import { InputText } from 'primereact/inputtext'
@@ -12,29 +11,24 @@ import { Calendar } from 'primereact/calendar'
 import { addLocale } from 'primereact/api'
 
 import moment from 'moment'
-import { CargaBodegaContext } from '../contexts/CargaBodegaContext'
-import flagplaceholder from '../assetsControl/flagplaceholder.png'
+import { ProveedorContext } from '../contexts/ProveedorContext'
+import { CentroDeCostoAuxContext } from '../contexts/CentroDeCostoAuxContext'
+import { ProcesoAuxContext } from '../contexts/ProcesoAuxContext'
 
 const IngresoGastoForm = (props) => {
-  const initialBarcoForm = {
+  const initialIngresoGastoForm = {
     id: null,
-    nombreBarco: '',
-    descripcion: '',
-    buqueCliente: '',
-    buquePaisDestino: '',
-    toneladasCapacidad: 0,
-    toneladasNominadas: 0,
-    toneladasActual: 0,
-    totalGabarras: 0,
-    cantidadBodegas: 0,
-    cantidadGruas: 0,
-    barcoCreado: moment(),
-    barcoModificado: moment(),
-    fechaAtraco: '',
-    fechaInicioCarga: '',
-    fechaFinalCarga: '',
-    estatusBarco: '',
-    reporteCarga: []
+    fechaIngresoGasto: '',
+    conceptoIngresoGasto: '',
+    ingresoIngresoGasto: 0,
+    egresoIngresoGasto: 0,
+    estatusIngresoGasto: '',
+    procesoAuxId: null,
+    proveedorId: null,
+    centroDeCostoAuxId: null,
+    userCreatorId: null,
+    ingresoGastoCreado: moment(),
+    ingresoGastoModificado: moment()
   }
 
   addLocale('es', {
@@ -81,120 +75,105 @@ const IngresoGastoForm = (props) => {
     today: 'Hoy',
     clear: 'Limpiar'
   })
-  const { createBarco, editBarco, updateBarco, createBodegaBarco1 } =
-    useContext(BarcoContext)
-  const { createCargaBodega } = useContext(CargaBodegaContext)
+  const { createIngresoGasto, editIngresoGasto, updateIngresoGasto } =
+    useContext(IngresoGastoContext)
+  const { procesoAuxs } = useContext(ProcesoAuxContext)
+  const { proveedors } = useContext(ProveedorContext)
+  const { centroDeCostoAuxs } = useContext(CentroDeCostoAuxContext)
+
   const { isVisible, setIsVisible } = props
-  const [selectedBarco, setSelectedBarco] = useState(null)
-  const [selectedBuqueCliente, setSelectedBuqueCliente] = useState(null)
-  const [selectedCountry, setSelectedCountry] = useState(null)
-  const [barcoData, setBarcoData] = useState(initialBarcoForm)
-  const estadoBarco = [
-    { estatusBarco: 'OPERATIVO' },
-    { estatusBarco: 'CULMINADO' }
+  const [selectedIngresoGasto, setSelectedIngresoGasto] = useState(null)
+  const [selectedconceptoIngresoGasto, setSelectedconceptoIngresoGasto] =
+    useState(null)
+  const [selectedProcesoAuxId, setSelectedProcesoAuxId] = useState(null)
+  const [selectedProveedorId, setSelectedProveedorId] = useState(null)
+  const [selectedCentroDeCostoAuxId, setSelectedCentroDeCostoAuxId] =
+    useState(null)
+  const [ingresoGastoData, setIngresoGastoData] = useState(
+    initialIngresoGastoForm
+  )
+
+  const estadoIngresoGasto = [
+    { estatusIngresoGasto: 'PROCESADO' },
+    { estatusIngresoGasto: 'ANULADO' },
+    { estatusIngresoGasto: 'PENDIENTE' }
   ]
-  const onEstatusBarco = (e) => {
-    setSelectedBarco(e.value)
-    updateField(e.value.estatusBarco, 'estatusBarco')
+  const onEstatusIngresoGasto = (e) => {
+    setSelectedIngresoGasto(e.value)
+    updateField(e.value.estatusIngresoGasto, 'estatusIngresoGasto')
   }
-  const buqueCliente = [{ buqueCliente: 'MAROIL' }, { buqueCliente: 'PDVSA' }]
-  const onBuqueCliente = (e) => {
-    setSelectedBuqueCliente(e.value)
-    updateField(e.value.buqueCliente, 'buqueCliente')
-  }
-  const countries = [
-    { name: 'Turkey', code: 'TR' },
-    { name: 'Iran', code: 'IR' },
-    { name: 'Cuba', code: 'CU' },
-    { name: 'China', code: 'CN' },
-    { name: 'India', code: 'IN' },
-    { name: 'Brazil', code: 'BR' },
-    { name: 'Australia', code: 'AU' },
-    { name: 'Egypt', code: 'EG' },
-    { name: 'France', code: 'FR' },
-    { name: 'Germany', code: 'DE' },
-    { name: 'Japan', code: 'JP' },
-    { name: 'Spain', code: 'ES' },
-    { name: 'United States', code: 'US' }
+  const conceptoIngresoGasto = [
+    { conceptoIngresoGasto: 'NOMINAS Y GASTOS DEL PERSONAL' },
+    { conceptoIngresoGasto: 'SERVICIOS CONTRATADOS' },
+    { conceptoIngresoGasto: 'TRANSPORTE DE PERSONAL' },
+    { conceptoIngresoGasto: 'COMIDAS' },
+    { conceptoIngresoGasto: 'REPARACIONES Y MANTENIMIENTO' },
+    { conceptoIngresoGasto: 'SERVICIOS TECNICOS (LUBVENCA)' },
+    { conceptoIngresoGasto: 'SERVICIOS QUÍMICOS (LUBVENCA)' },
+    { conceptoIngresoGasto: 'GASTOS ADMIN. Y CONSUMIBLES DE OFICINA' },
+    { conceptoIngresoGasto: 'SIHO' },
+    { conceptoIngresoGasto: 'ACARREO' },
+    { conceptoIngresoGasto: 'OPERACIONES MARITIMAS' }
   ]
-  const onCountryChange = (e) => {
-    setSelectedCountry(e.value)
-    updateField(e.value.code, 'buquePaisDestino')
+
+  const onconceptoIngresoGasto = (e) => {
+    setSelectedconceptoIngresoGasto(e.value)
+    updateField(e.value.conceptoIngresoGasto, 'conceptoIngresoGasto')
   }
-  const [date, setDate] = useState(null)
-  const [dateAtraco, setDateAtraco] = useState(null)
-  const [dateInicio, setDateInicio] = useState(null)
-  const [dateFinal, setDateFinal] = useState(null)
+  const onProcesoAuxId = (e) => {
+    setSelectedProcesoAuxId(e.value)
+    updateField(e.value.id, 'procesoAuxId')
+  }
+  const onProveedorId = (e) => {
+    setSelectedProveedorId(e.value)
+    updateField(e.value.id, 'proveedorId')
+  }
+  const onCentroDeCostoAuxId = (e) => {
+    setSelectedCentroDeCostoAuxId(e.value)
+    updateField(e.value.id, 'centroDeCostoAuxId')
+  }
+
+  const [datefechaIngresoGasto, setDatefechaIngresoGasto] = useState(null)
+
   const toast = useRef(null)
 
   useEffect(() => {
-    if (editBarco) {
-      setBarcoData(editBarco)
-      setSelectedBarco({ estatusBarco: editBarco.estatusBarco })
-      setSelectedBuqueCliente({ buqueCliente: editBarco.buqueCliente })
-      setDate(moment(editBarco.barcoCreado)._d)
-      setDateAtraco(editBarco.fechaAtraco && moment(editBarco.fechaAtraco)._d)
-      setDateInicio(
-        editBarco.fechaInicioCarga && moment(editBarco.fechaInicioCarga)._d
+    if (editIngresoGasto) {
+      setIngresoGastoData(editIngresoGasto)
+      setSelectedIngresoGasto({
+        estatusIngresoGasto: editIngresoGasto.estatusIngresoGasto
+      })
+      setSelectedconceptoIngresoGasto({
+        conceptoIngresoGasto: editIngresoGasto.conceptoIngresoGasto
+      })
+
+      setDatefechaIngresoGasto(
+        editIngresoGasto.fechafechaIngresoGasto &&
+          moment(editIngresoGasto.fechafechaIngresoGasto)._d
       )
-      setDateFinal(
-        editBarco.fechaFinalCarga && moment(editBarco.fechaFinalCarga)._d
-      )
     }
-  }, [editBarco])
-  useEffect(() => {
-    if (createBodegaBarco1) {
-      createBodegaBarco(createBodegaBarco1)
-    }
-  }, [createBodegaBarco1])
-  const createBodegaBarco = (saveBarco) => {
-    const cargaBodega = {
-      barcoID: saveBarco.id,
-      nombreBodega: '',
-      estatusBodega: 'CARGANDO',
-      toneladasCargadasBodega: 0,
-      toneladasCapacidadBodega: 0
-    }
-
-    // let i = 1
-
-    // do {
-    //   cargaBodega.nombreBodega = `BODEGA ${i}`
-    //   cargaBodegaService.create(cargaBodega, token).then(i++)
-    // } while (i <= saveBarco.cantidadBodegas)
-    for (let i = 1; i <= saveBarco.cantidadBodegas; i++) {
-      cargaBodega.nombreBodega = `BODEGA ${i}`
-
-      createCargaBodega(cargaBodega)
-    }
-    // barcoService.create(CargaBodega, token).then((data) => {
-    //   setBarcos([...barcos, data.saveBarco])
-    //   console.log('barco creado', data.saveBarco)
-    // })
-  }
+  }, [editIngresoGasto])
 
   const updateField = (data, field) => {
-    setBarcoData({
-      ...barcoData,
+    setIngresoGastoData({
+      ...ingresoGastoData,
       [field]: data
     })
   }
 
-  const saveBarco = () => {
-    if (!editBarco) {
-      createBarco(barcoData)
+  const saveIngresoGasto = () => {
+    if (!editIngresoGasto) {
+      createIngresoGasto(ingresoGastoData)
     } else {
-      updateBarco({
-        ...barcoData,
-        barcoModificado: moment()
+      updateIngresoGasto({
+        ...ingresoGastoData,
+        ingresoGastoModificado: moment()
       })
     }
-    setBarcoData(initialBarcoForm)
+    setIngresoGastoData(initialIngresoGastoForm)
     setIsVisible(false)
-    setSelectedBarco('')
-    setDateAtraco(null)
-    setDateInicio(null)
-    setDateFinal(null)
+    setSelectedIngresoGasto('')
+    setDatefechaIngresoGasto(null)
   }
 
   const dialogFooter = (
@@ -204,23 +183,21 @@ const IngresoGastoForm = (props) => {
         icon="pi pi-times"
         onClick={() => clearSelected()}
       />
-      <Button label="Guardar" icon="pi pi-check" onClick={saveBarco} />
+      <Button label="Guardar" icon="pi pi-check" onClick={saveIngresoGasto} />
     </div>
   )
 
   const clearSelected = () => {
     setIsVisible(false)
-    setBarcoData(initialBarcoForm)
-    setSelectedBarco('')
-    setDateAtraco(null)
-    setDateInicio(null)
-    setDateFinal(null)
+    setIngresoGastoData(initialIngresoGastoForm)
+    setSelectedIngresoGasto('')
+    setDatefechaIngresoGasto(null)
   }
-  const selectedestatusBarcoTemplate = (option, props) => {
+  const selectedestatusIngresoGastoTemplate = (option, props) => {
     if (option) {
       return (
         <div className="country-item country-item-value">
-          <div>{option.estatusBarco}</div>
+          <div>{option.estatusIngresoGasto}</div>
         </div>
       )
     }
@@ -228,18 +205,18 @@ const IngresoGastoForm = (props) => {
     return <span>{props.placeholder}</span>
   }
 
-  const estatusBarcoOptionTemplate = (option) => {
+  const estatusIngresoGastoOptionTemplate = (option) => {
     return (
       <div className="country-item">
-        <div>{option.estatusBarco}</div>
+        <div>{option.estatusIngresoGasto}</div>
       </div>
     )
   }
-  const selectedBuqueClienteTemplate = (option, props) => {
+  const selectedconceptoIngresoGastoTemplate = (option, props) => {
     if (option) {
       return (
         <div className="country-item country-item-value">
-          <div>{option.buqueCliente}</div>
+          <div>{option.conceptoIngresoGasto}</div>
         </div>
       )
     }
@@ -247,33 +224,18 @@ const IngresoGastoForm = (props) => {
     return <span>{props.placeholder}</span>
   }
 
-  const buqueClienteOptionTemplate = (option) => {
+  const conceptoIngresoGastoOptionTemplate = (option) => {
     return (
       <div className="country-item">
-        <div>{option.buqueCliente}</div>
+        <div>{option.conceptoIngresoGasto}</div>
       </div>
     )
   }
-  const selectedCountryTemplate = (option, props) => {
+  const selectedTemplateProcesoAuxId = (option, props) => {
     if (option) {
       return (
         <div className="country-item country-item-value">
-          <img
-            alt={option.name}
-            src={flagplaceholder}
-            onError={(e) =>
-              (e.target.src =
-                'https://www.primefaces.org/wp-content/uploads/2020/05/placeholder.png')
-            }
-            className={`flag flag-${option.code.toLowerCase()}`}
-          />
-          <span
-            style={{ marginLeft: '.5em', verticalAlign: 'middle' }}
-            className="image-text"
-          >
-            {option.name}
-          </span>
-          {/* <div>{option.name}</div> */}
+          <div>{option.nombreProceso}</div>
         </div>
       )
     }
@@ -281,25 +243,48 @@ const IngresoGastoForm = (props) => {
     return <span>{props.placeholder}</span>
   }
 
-  const countryOptionTemplate = (option) => {
+  const optionTemplateProcesoAuxId = (option) => {
     return (
       <div className="country-item">
-        <img
-          alt={option.name}
-          src={flagplaceholder}
-          onError={(e) =>
-            (e.target.src =
-              'https://www.primefaces.org/wp-content/uploads/2020/05/placeholder.png')
-          }
-          className={`flag flag-${option.code.toLowerCase()}`}
-        />
-        <span
-          style={{ marginLeft: '.5em', verticalAlign: 'middle' }}
-          className="image-text"
-        >
-          {option.name}
-        </span>
-        {/* <div>{option.name}</div> */}
+        <div>{option.nombreProceso}</div>
+      </div>
+    )
+  }
+  const selectedTemplateProveedorId = (option, props) => {
+    if (option) {
+      return (
+        <div className="country-item country-item-value">
+          <div>{option.nombreProveedor}</div>
+        </div>
+      )
+    }
+
+    return <span>{props.placeholder}</span>
+  }
+
+  const optionTemplateProveedorId = (option) => {
+    return (
+      <div className="country-item">
+        <div>{option.nombreProveedor}</div>
+      </div>
+    )
+  }
+  const selectedTemplateCentroDeCostoAuxId = (option, props) => {
+    if (option) {
+      return (
+        <div className="country-item country-item-value">
+          <div>{option.nombreCentroDeCosto}</div>
+        </div>
+      )
+    }
+
+    return <span>{props.placeholder}</span>
+  }
+
+  const optionTemplateCentroDeCostoAuxId = (option) => {
+    return (
+      <div className="country-item">
+        <div>{option.nombreCentroDeCosto}</div>
       </div>
     )
   }
@@ -310,189 +295,136 @@ const IngresoGastoForm = (props) => {
       <Dialog
         visible={isVisible}
         breakpoints={{ '960px': '75vw' }}
-        style={{ width: '30vw' }}
-        header="Detalles de la Barco"
+        style={{ width: '40vw' }}
+        header="Detalles de la IngresoGasto"
         footer={dialogFooter}
         onHide={() => clearSelected()}
       >
         <div className="p-grid p-fluid">
           <br />
-          <div className="p-float-label">
-            <InputText
-              value={barcoData.nombreBarco}
-              onChange={(e) => updateField(e.target.value, 'nombreBarco')}
+
+          <div className="field col-12 md:col-6 mt-3 mb-0 ">
+            <label>conceptoIngresoGasto</label>
+
+            <Dropdown
+              value={selectedconceptoIngresoGasto}
+              options={conceptoIngresoGasto}
+              onChange={onconceptoIngresoGasto}
+              optionLabel="estatusconceptoIngresoGasto"
+              placeholder="Seleccione Cliente"
+              valueTemplate={selectedconceptoIngresoGastoTemplate}
+              itemTemplate={conceptoIngresoGastoOptionTemplate}
+              showClear
+              filter
+              filterBy="conceptoIngresoGasto"
             />
-            <label>Nombre del Barco:</label>
           </div>
           <br />
           <div className="p-float-label">
             <InputText
-              value={barcoData.descripcion}
+              value={ingresoGastoData.descripcion}
               onChange={(e) => updateField(e.target.value, 'descripcion')}
             />
             <label>Descripcion:</label>
           </div>
           <div className="formgrid grid">
             <div className="field col-12 md:col-6 mt-3 mb-0 ">
+              <label>procesoAuxId</label>
+
               <Dropdown
-                value={selectedBuqueCliente}
-                options={buqueCliente}
-                onChange={onBuqueCliente}
-                optionLabel="estatusbuqueCliente"
-                placeholder="Seleccione Cliente"
-                valueTemplate={selectedBuqueClienteTemplate}
-                itemTemplate={buqueClienteOptionTemplate}
+                value={selectedProcesoAuxId}
+                options={procesoAuxs}
+                onChange={onProcesoAuxId}
+                optionLabel="nombreProyecto"
+                placeholder="Seleccione procesoAuxId"
+                valueTemplate={selectedTemplateProcesoAuxId}
+                itemTemplate={optionTemplateProcesoAuxId}
                 showClear
-              />
-            </div>
-            <div className="field col-12 md:col-6 mt-3">
-              <Dropdown
-                value={selectedCountry}
-                options={countries}
-                onChange={onCountryChange}
-                optionLabel="name"
                 filter
-                showClear
-                filterBy="name"
-                placeholder="Pais de Destino"
-                valueTemplate={selectedCountryTemplate}
-                itemTemplate={countryOptionTemplate}
+                filterBy="procesoAuxs.nombreProyecto"
               />
             </div>
+            <div className="field col-12 md:col-6 mt-3 mb-0 ">
+              <label>proveedorId</label>
+
+              <Dropdown
+                value={selectedProveedorId}
+                options={proveedors}
+                onChange={onProveedorId}
+                optionLabel="nombreProveedor"
+                placeholder="Seleccione ProveedorId"
+                valueTemplate={selectedTemplateProveedorId}
+                itemTemplate={optionTemplateProveedorId}
+                showClear
+              />
+            </div>
+            <div className="field col-12 md:col-6 mt-3 mb-0 ">
+              <label>centroDeCostoAuxId</label>
+
+              <Dropdown
+                value={selectedCentroDeCostoAuxId}
+                options={centroDeCostoAuxs}
+                onChange={onCentroDeCostoAuxId}
+                optionLabel="nombreCentroDeCosto"
+                placeholder="Seleccione C
+                entroDeCostoAuxId"
+                valueTemplate={selectedTemplateCentroDeCostoAuxId}
+                itemTemplate={optionTemplateCentroDeCostoAuxId}
+                showClear
+              />
+            </div>
+
             <br />
             <div className="field col-6 p-col-2 p-md-1">
-              <label htmlFor="toneladasCapacidad">Toneladas Nominadas</label>
+              <label htmlFor="egresoIngresoGasto">egresoIngresoGasto</label>
               <InputNumber
-                inputId="toneladasCapacidad"
-                value={barcoData.toneladasCapacidad}
+                inputId="egresoIngresoGasto"
+                value={ingresoGastoData.egresoIngresoGasto}
                 onValueChange={(e) =>
-                  updateField(e.target.value, 'toneladasCapacidad')
+                  updateField(e.target.value, 'egresoIngresoGasto')
                 }
-                showButtons
-                buttonLayout="horizontal"
-                step={1}
-                decrementButtonClassName="p-button-danger"
-                incrementButtonClassName="p-button-success"
-                incrementButtonIcon="pi pi-plus"
-                decrementButtonIcon="pi pi-minus"
-                suffix=" TM"
+                mode="currency"
+                currency="USD"
+                locale="en-US"
               />
             </div>
 
             <div className="field col-6 p-col-2 p-md-1">
-              <label htmlFor="toneladasNominadas">Toneladas Solicitadas</label>
+              <label htmlFor="ingresoIngresoGasto">ingresoIngresoGasto</label>
               <InputNumber
-                inputId="toneladasNominadas"
-                value={barcoData.toneladasNominadas}
+                inputId="ingresoIngresoGasto"
+                value={ingresoGastoData.ingresoIngresoGasto}
                 onValueChange={(e) =>
-                  updateField(e.target.value, 'toneladasNominadas')
+                  updateField(e.target.value, 'ingresoIngresoGasto')
                 }
-                showButtons
-                buttonLayout="horizontal"
-                step={1}
-                decrementButtonClassName="p-button-danger"
-                incrementButtonClassName="p-button-success"
-                incrementButtonIcon="pi pi-plus"
-                decrementButtonIcon="pi pi-minus"
-                suffix=" TM"
+                mode="currency"
+                currency="USD"
+                locale="en-US"
               />
-            </div>
-            <div className="field col-6 p-col-2 p-md-1">
-              <label htmlFor="toneladasActual">Toneladas Actual</label>
-              <InputNumber
-                inputId="toneladasActual"
-                value={barcoData.toneladasActual}
-                onValueChange={(e) =>
-                  updateField(e.target.value, 'toneladasActual')
-                }
-                showButtons
-                buttonLayout="horizontal"
-                step={1}
-                decrementButtonClassName="p-button-danger"
-                incrementButtonClassName="p-button-success"
-                incrementButtonIcon="pi pi-plus"
-                decrementButtonIcon="pi pi-minus"
-                suffix=" TM"
-              />
-              {/* <InputNumber id="quantity" value={product.quantity} onValueChange={(e) => onInputNumberChange(e, 'quantity')} integeronly /> */}
-            </div>
-            <div className="field col-6 p-col-2 p-md-1">
-              <label htmlFor="totalGabarras">Total Gabarras</label>
-              <InputNumber
-                inputId="totalGabarras"
-                value={barcoData.totalGabarras}
-                onValueChange={(e) =>
-                  updateField(e.target.value, 'totalGabarras')
-                }
-                showButtons
-                buttonLayout="horizontal"
-                step={1}
-                decrementButtonClassName="p-button-danger"
-                incrementButtonClassName="p-button-success"
-                incrementButtonIcon="pi pi-plus"
-                decrementButtonIcon="pi pi-minus"
-              />
-              {/* <InputNumber id="quantity" value={product.quantity} onValueChange={(e) => onInputNumberChange(e, 'quantity')} integeronly /> */}
-            </div>
-            <div className="field col-6 p-col-2 p-md-1">
-              <label htmlFor="cantidadBodegas">Cantidad Bodegas</label>
-              <InputNumber
-                inputId="cantidadBodegas"
-                value={barcoData.cantidadBodegas}
-                onValueChange={(e) =>
-                  updateField(e.target.value, 'cantidadBodegas')
-                }
-                showButtons
-                buttonLayout="horizontal"
-                step={1}
-                decrementButtonClassName="p-button-danger"
-                incrementButtonClassName="p-button-success"
-                incrementButtonIcon="pi pi-plus"
-                decrementButtonIcon="pi pi-minus"
-              />
-              {/* <InputNumber id="quantity" value={product.quantity} onValueChange={(e) => onInputNumberChange(e, 'quantity')} integeronly /> */}
-            </div>
-            <div className="field col-6 p-col-2 p-md-1">
-              <label htmlFor="cantidadGruas">Cantidad Gruas</label>
-              <InputNumber
-                inputId="cantidadGruas"
-                value={barcoData.cantidadGruas}
-                onValueChange={(e) =>
-                  updateField(e.target.value, 'cantidadGruas')
-                }
-                showButtons
-                buttonLayout="horizontal"
-                step={1}
-                decrementButtonClassName="p-button-danger"
-                incrementButtonClassName="p-button-success"
-                incrementButtonIcon="pi pi-plus"
-                decrementButtonIcon="pi pi-minus"
-              />
-              {/* <InputNumber id="quantity" value={product.quantity} onValueChange={(e) => onInputNumberChange(e, 'quantity')} integeronly /> */}
             </div>
           </div>
           <div className="formgrid grid">
             <div className="field col-12 md:col-6">
               <label>Estado</label>
               <Dropdown
-                value={selectedBarco}
-                options={estadoBarco}
-                onChange={onEstatusBarco}
-                optionLabel="estatusBarco"
+                value={selectedIngresoGasto}
+                options={estadoIngresoGasto}
+                onChange={onEstatusIngresoGasto}
+                optionLabel="estatusIngresoGasto"
                 placeholder="Seleccione Estado"
-                valueTemplate={selectedestatusBarcoTemplate}
-                itemTemplate={estatusBarcoOptionTemplate}
+                valueTemplate={selectedestatusIngresoGastoTemplate}
+                itemTemplate={estatusIngresoGastoOptionTemplate}
               />
             </div>
             <div className="field col-12 md:col-6">
-              <label>Fecha de Atraque</label>
+              <label>fechaIngresoGasto</label>
               <Calendar
                 className="p-datepicker-today"
                 id="time24"
-                value={dateAtraco !== null && dateAtraco}
+                value={datefechaIngresoGasto !== null && datefechaIngresoGasto}
                 onChange={(e) => {
-                  setDateAtraco(e.target.value)
-                  updateField(e.target.value, 'fechaAtraco')
+                  setDatefechaIngresoGasto(e.target.value)
+                  updateField(e.target.value, 'fechaIngresoGasto')
                 }}
                 showTime
                 locale="es"
@@ -500,51 +432,6 @@ const IngresoGastoForm = (props) => {
                 showButtonBar
               />
             </div>
-            <div className="field col-12 md:col-6">
-              <label>Fecha Inicio Carga</label>
-              <Calendar
-                className="p-datepicker-today"
-                id="time24"
-                value={dateInicio !== null && dateInicio}
-                onChange={(e) => {
-                  setDateInicio(e.value)
-                  updateField(e.target.value, 'fechaInicioCarga')
-                }}
-                showTime
-                locale="es"
-                // hourFormat="12"
-                showButtonBar
-              />
-            </div>
-            <div className="field col-12 md:col-6">
-              <label>Fecha Final Carga</label>
-              <Calendar
-                className="p-datepicker-today"
-                id="time24"
-                value={dateFinal !== null && dateFinal}
-                onChange={(e) => {
-                  setDateFinal(e.value)
-                  updateField(e.target.value, 'fechaFinalCarga')
-                }}
-                showTime
-                locale="es"
-                // hourFormat="12"
-                showButtonBar
-              />
-            </div>
-            {/* <div className="field col-12 md:col-6">
-              <h5>Fecha</h5>
-              <Calendar
-                className="p-datepicker-today"
-                id="time24"
-                value={date}
-                onChange={(e) => setDate(e.value)}
-                showTime
-                locale="es"
-                // hourFormat="12"
-                showButtonBar
-              />
-            </div> */}
           </div>
         </div>
       </Dialog>

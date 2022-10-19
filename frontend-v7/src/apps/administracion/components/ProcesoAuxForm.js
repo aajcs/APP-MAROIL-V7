@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 import React, { useContext, useState, useEffect, useRef } from 'react'
-import { CentroDeCostoAuxContext } from '../contexts/CentroDeCostoAuxContext'
+import { ProcesoAuxContext } from '../contexts/ProcesoAuxContext'
 import { Dialog } from 'primereact/dialog'
 import { Button } from 'primereact/button'
 import { InputText } from 'primereact/inputtext'
@@ -9,16 +9,16 @@ import { Dropdown } from 'primereact/dropdown'
 import { addLocale } from 'primereact/api'
 import moment from 'moment'
 
-const CentroDeCostoAuxForm = (props) => {
-  const initialCentroDeCostoAuxForm = {
+const ProcesoAuxForm = (props) => {
+  const initialProcesoAuxForm = {
     id: null,
 
-    codigoCentroDeCosto: '',
-    nombreCentroDeCosto: '',
-    descripcionCentroDeCosto: '',
-    estatusCentroDeCosto: '',
-    CentroDeCostoCreado: moment(),
-    CentroDeCostoModificado: moment()
+    codigoProceso: '',
+    nombreProceso: '',
+    descripcionProceso: '',
+    estatusProceso: '',
+    ProcesoCreado: moment(),
+    ProcesoModificado: moment()
   }
 
   addLocale('es', {
@@ -65,56 +65,51 @@ const CentroDeCostoAuxForm = (props) => {
     today: 'Hoy',
     clear: 'Limpiar'
   })
-  const {
-    createCentroDeCostoAux,
-    editCentroDeCostoAux,
-    updateCentroDeCostoAux
-  } = useContext(CentroDeCostoAuxContext)
+  const { createProcesoAux, editProcesoAux, updateProcesoAux } =
+    useContext(ProcesoAuxContext)
 
   const { isVisible, setIsVisible } = props
-  const [selectedCentroDeCosto, setSelectedCentroDeCosto] = useState(null)
-  const [CentroDeCostoAuxData, setCentroDeCostoAuxData] = useState(
-    initialCentroDeCostoAuxForm
-  )
-  const estadoCentroDeCosto = [
-    { estatusCentroDeCosto: 'OPERATIVO' },
-    { estatusCentroDeCosto: 'INOPERATIVO' }
+  const [selectedProceso, setSelectedProceso] = useState(null)
+  const [procesoAuxData, setProcesoAuxData] = useState(initialProcesoAuxForm)
+  const estadoProceso = [
+    { estatusProceso: 'OPERATIVO' },
+    { estatusProceso: 'INOPERATIVO' }
   ]
-  const onEstatusCentroDeCosto = (e) => {
-    setSelectedCentroDeCosto(e.value)
-    updateField(e.value.estatusCentroDeCosto, 'estatusCentroDeCosto')
+  const onEstatusProceso = (e) => {
+    setSelectedProceso(e.value)
+    updateField(e.value.estatusProceso, 'estatusProceso')
   }
 
   const toast = useRef(null)
 
   useEffect(() => {
-    if (editCentroDeCostoAux) {
-      setCentroDeCostoAuxData(editCentroDeCostoAux)
-      setSelectedCentroDeCosto({
-        estatusCentroDeCosto: editCentroDeCostoAux.estatusCentroDeCosto
+    if (editProcesoAux) {
+      setProcesoAuxData(editProcesoAux)
+      setSelectedProceso({
+        estatusProceso: editProcesoAux.estatusProceso
       })
     }
-  }, [editCentroDeCostoAux])
+  }, [editProcesoAux])
 
   const updateField = (data, field) => {
-    setCentroDeCostoAuxData({
-      ...CentroDeCostoAuxData,
+    setProcesoAuxData({
+      ...procesoAuxData,
       [field]: data
     })
   }
 
-  const saveCentroDeCostoAux = () => {
-    if (!editCentroDeCostoAux) {
-      createCentroDeCostoAux(CentroDeCostoAuxData)
+  const saveProcesoAux = () => {
+    if (!editProcesoAux) {
+      createProcesoAux(procesoAuxData)
     } else {
-      updateCentroDeCostoAux({
-        ...CentroDeCostoAuxData,
-        CentroDeCostoAuxModificado: moment()
+      updateProcesoAux({
+        ...procesoAuxData,
+        ProcesoModificado: moment()
       })
     }
-    setCentroDeCostoAuxData(initialCentroDeCostoAuxForm)
+    setProcesoAuxData(initialProcesoAuxForm)
     setIsVisible(false)
-    setSelectedCentroDeCosto('')
+    setSelectedProceso('')
   }
 
   const dialogFooter = (
@@ -124,24 +119,20 @@ const CentroDeCostoAuxForm = (props) => {
         icon="pi pi-times"
         onClick={() => clearSelected()}
       />
-      <Button
-        label="Guardar"
-        icon="pi pi-check"
-        onClick={saveCentroDeCostoAux}
-      />
+      <Button label="Guardar" icon="pi pi-check" onClick={saveProcesoAux} />
     </div>
   )
 
   const clearSelected = () => {
     setIsVisible(false)
-    setCentroDeCostoAuxData(initialCentroDeCostoAuxForm)
-    setSelectedCentroDeCosto('')
+    setProcesoAuxData(initialProcesoAuxForm)
+    setSelectedProceso('')
   }
-  const selectedestatusCentroDeCostoTemplate = (option, props) => {
+  const selectedestatusProcesoTemplate = (option, props) => {
     if (option) {
       return (
         <div className="country-item country-item-value">
-          <div>{option.estatusCentroDeCosto}</div>
+          <div>{option.estatusProceso}</div>
         </div>
       )
     }
@@ -149,10 +140,10 @@ const CentroDeCostoAuxForm = (props) => {
     return <span>{props.placeholder}</span>
   }
 
-  const estatusCentroDeCostoOptionTemplate = (option) => {
+  const estatusProcesoOptionTemplate = (option) => {
     return (
       <div className="country-item">
-        <div>{option.estatusCentroDeCosto}</div>
+        <div>{option.estatusProceso}</div>
       </div>
     )
   }
@@ -164,7 +155,7 @@ const CentroDeCostoAuxForm = (props) => {
         visible={isVisible}
         breakpoints={{ '960px': '75vw' }}
         style={{ width: '30vw' }}
-        header="Detalles de la CentroDeCosto"
+        header="Detalles de la Proceso"
         footer={dialogFooter}
         onHide={() => clearSelected()}
       >
@@ -172,29 +163,25 @@ const CentroDeCostoAuxForm = (props) => {
           <br />
           <div className="p-float-label">
             <InputText
-              value={CentroDeCostoAuxData.codigoCentroDeCosto}
-              onChange={(e) =>
-                updateField(e.target.value, 'codigoCentroDeCosto')
-              }
+              value={procesoAuxData.codigoProceso}
+              onChange={(e) => updateField(e.target.value, 'codigoProceso')}
             />
-            <label>codigoCentroDeCosto:</label>
+            <label>codigoProceso:</label>
           </div>
           <br />
           <div className="p-float-label">
             <InputText
-              value={CentroDeCostoAuxData.nombreCentroDeCosto}
-              onChange={(e) =>
-                updateField(e.target.value, 'nombreCentroDeCosto')
-              }
+              value={procesoAuxData.nombreProceso}
+              onChange={(e) => updateField(e.target.value, 'nombreProceso')}
             />
-            <label>Nombre del CentroDeCosto:</label>
+            <label>Nombre del Proceso:</label>
           </div>
           <br />
           <div className="p-float-label">
             <InputText
-              value={CentroDeCostoAuxData.descripcionCentroDeCosto}
+              value={procesoAuxData.descripcionProceso}
               onChange={(e) =>
-                updateField(e.target.value, 'descripcionCentroDeCosto')
+                updateField(e.target.value, 'descripcionProceso')
               }
             />
             <label>Descripcion:</label>
@@ -204,13 +191,13 @@ const CentroDeCostoAuxForm = (props) => {
             <div className="field col-12 md:col-6">
               <label>Estado</label>
               <Dropdown
-                value={selectedCentroDeCosto}
-                options={estadoCentroDeCosto}
-                onChange={onEstatusCentroDeCosto}
-                optionLabel="estatusCentroDeCosto"
+                value={selectedProceso}
+                options={estadoProceso}
+                onChange={onEstatusProceso}
+                optionLabel="estatusProceso"
                 placeholder="Seleccione Estado"
-                valueTemplate={selectedestatusCentroDeCostoTemplate}
-                itemTemplate={estatusCentroDeCostoOptionTemplate}
+                valueTemplate={selectedestatusProcesoTemplate}
+                itemTemplate={estatusProcesoOptionTemplate}
               />
             </div>
           </div>
@@ -221,4 +208,4 @@ const CentroDeCostoAuxForm = (props) => {
   )
 }
 
-export default CentroDeCostoAuxForm
+export default ProcesoAuxForm
