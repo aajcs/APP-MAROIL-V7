@@ -172,10 +172,7 @@ function CargaViajeCard({ cargaViajes }) {
                   :
                   <span className=" font-medium">
                     {' '}
-                    {new Intl.NumberFormat()
-                      .format(cargaViajes.rataCargaViaje)
-                      .charAt(0)
-                      .toUpperCase()}
+                    {new Intl.NumberFormat().format(cargaViajes.rataCargaViaje)}
                     {' Bbls/h(GSV)'}
                   </span>
                 </h6>

@@ -32,7 +32,8 @@ const cargaViajeSchema = new Schema(
       default: moment()
     },
     rataCargaViaje: {
-      type: String
+      type: Number,
+      default: 0
     },
 
     catidadActualCargaViaje: {

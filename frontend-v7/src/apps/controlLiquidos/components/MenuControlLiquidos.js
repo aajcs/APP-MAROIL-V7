@@ -68,8 +68,8 @@ export const MenuControlLiquidos = () => {
         items: [
           {
             label: 'CARGA DE INFORMACIÓN',
-            icon: 'pi pi-fw pi-server'
-            // to: '/apps/control/gabarraestatus'
+            icon: 'pi pi-fw pi-server',
+            to: '/apps/controlLiquidos/cargaInformacion'
           }
         ]
       },

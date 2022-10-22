@@ -170,9 +170,15 @@ const CargaViajeForm = (props) => {
 
   useEffect(() => {
     if (editCargaViaje) {
-      setCargaViajeData(editCargaViaje)
+      setCargaViajeData({
+        ...editCargaViaje,
+        viajeAux: editCargaViaje.viajeAux && editCargaViaje.viajeAux.id
+      })
 
-      setSelectedPaisViajeAux(editCargaViaje.viajeAux)
+      const viajeSelecEdit =
+        editCargaViaje.viajeAux &&
+        viajeAuxs.find((p) => p.id === editCargaViaje.viajeAux.id)
+      setSelectedPaisViajeAux(viajeSelecEdit)
       setSelectedCargaViaje({
         estatusCargaViaje: editCargaViaje.estatusCargaViaje
       })
@@ -251,16 +257,7 @@ const CargaViajeForm = (props) => {
           CargaViajeModificado: moment()
         })
       }
-      setCargaViajeData(initialCargaViajeForm)
-      setIsVisible(false)
-      setSelectedCargaViaje('')
-      setSelectedViaje('')
-
-      setSelectedTipoCargaViaje('')
-      setDateInicioCargaViaje(null)
-      setDisabledPaisAsociado(true)
-
-      setDateFinCargaViaje(null)
+      clearSelected()
     } else {
       showError()
     }
@@ -280,13 +277,19 @@ const CargaViajeForm = (props) => {
   const clearSelected = () => {
     setIsVisible(false)
     setCargaViajeData(initialCargaViajeForm)
-    setSelectedCargaViaje('')
-    setSelectedViaje('')
+    setSelectedCargaViaje(null)
+    setSelectedViaje(null)
     setSelectedTipoCargaViaje('')
     setDateInicioCargaViaje(null)
 
     setDateFinCargaViaje(null)
     setDisabledPaisAsociado(true)
+
+    setPaisViajeAux(null)
+    setSelectedPaisViajeAux(null)
+    setSelectedProductoCargaViaje(null)
+    setSelectedPuertoCargaViaje(null)
+    setDateFinCargaViaje(null)
   }
   const selectedestatusCargaViajeTemplate = (option, props) => {
     if (option) {
@@ -433,7 +436,7 @@ const CargaViajeForm = (props) => {
               <label>Pais Asociado</label>
               <Dropdown
                 value={selectedPaisViajeAux}
-                options={paisViajeAux}
+                options={paisViajeAux || viajeAuxs}
                 onChange={OnPaisViajeAux}
                 optionLabel="paisViajeAux"
                 placeholder="Seleccione paisViajeAux"

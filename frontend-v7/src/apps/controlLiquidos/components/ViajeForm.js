@@ -132,10 +132,15 @@ const ViajeForm = (props) => {
 
   useEffect(() => {
     if (editViaje) {
-      setViajeData(editViaje)
+      setViajeData({
+        ...editViaje,
+        embarcacion: editViaje.embarcacion && editViaje.embarcacion.id,
+        remolcador: editViaje.remolcador && editViaje.remolcador[0].id
+      })
       setSelectedViaje({
         estatusViaje: editViaje.estatusViaje
       })
+
       setSelectedEmbarcacion(editViaje.embarcacion)
       setSelectedRemolcador(editViaje.remolcador[0])
       setSelectedDestinoViaje({
@@ -187,7 +192,6 @@ const ViajeForm = (props) => {
       [field]: data
     })
   }
-  console.log(viajeData)
   const saveViaje = () => {
     if (!editViaje) {
       createViaje(viajeData)

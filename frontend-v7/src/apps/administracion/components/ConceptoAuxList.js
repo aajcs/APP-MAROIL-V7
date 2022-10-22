@@ -1,4 +1,3 @@
-// /* eslint-disable no-unused-vars */
 import React, { useContext, useState, useRef } from 'react'
 import { DataTable } from 'primereact/datatable'
 import { Column } from 'primereact/column'
@@ -7,31 +6,27 @@ import { Toolbar } from 'primereact/toolbar'
 import { Dialog } from 'primereact/dialog'
 import { InputText } from 'primereact/inputtext'
 import { Toast } from 'primereact/toast'
-import { IngresoGastoContext } from '../contexts/IngresoGastoContext'
+import { ConceptoAuxContext } from '../contexts/ConceptoAuxContext'
 import moment from 'moment'
 
-import IngresoGastoForm from './IngresoGastoForm'
+import ConceptoAuxForm from './ConceptoAuxForm'
 
-const IngresoGastoList = () => {
-  const { ingresoGastos, findIngresoGasto, deleteIngresoGasto, loading } =
-    useContext(IngresoGastoContext)
-  console.log(ingresoGastos)
-  const [ingresoGasto, setIngresoGasto] = useState(ingresoGastos)
-  const [deleteIngresoGastoDialog, setDeleteIngresoGastoDialog] =
-    useState(false)
+const ConceptoAuxList = () => {
+  const { conceptoAuxs, findConceptoAux, deleteConceptoAux, loading } =
+    useContext(ConceptoAuxContext)
+  console.log(conceptoAuxs)
+  const [activo, setConceptoAux] = useState(conceptoAuxs)
+  const [deleteBarcoDialog, setDeleteBarcoDialog] = useState(false)
   const [globalFilter, setGlobalFilter] = useState(null)
   const [isVisible, setIsVisible] = useState(false)
 
   const dt = useRef(null)
   const toast = useRef(null)
-  const saveIngresoGasto = (id) => {
-    findIngresoGasto(id)
+  const saveBarco = (id) => {
+    findConceptoAux(id)
     setIsVisible(true)
   }
-  const totalEgreso = ingresoGastos
-    .map((egreso) => egreso.egresoIngresoGasto)
-    .reduce((a, b) => a + b, 0)
-  console.log(totalEgreso)
+
   // cabecera de la tabla
   const leftToolbarTemplate = () => {
     return (
@@ -69,50 +64,46 @@ const IngresoGastoList = () => {
     dt.current.exportCSV()
   }
 
-  const fechaIngresoGastoCreado = (rowData) => {
-    const fecha = moment(rowData.ingresoGastoCreado)
+  const fechaConceptoAuxCreado = (rowData) => {
+    const fecha = moment(rowData.ConceptoAuxCreado)
     return fecha.format('dddDD/MM/YY HH:mm')
   }
-  const datefechaIngresoGasto = (rowData) => {
-    const fecha = moment(rowData.fechaIngresoGasto)
-    return fecha.format('MMMM YYYY ')
-  }
-  const fechaIngresoGastoModificado = (rowData) => {
-    const fecha = moment(rowData.ingresoGastoModificado)
+  const fechaConceptoAuxModificado = (rowData) => {
+    const fecha = moment(rowData.conceptoAuxModificado)
     return fecha.format('dddDD/MM/YY HH:mm')
   }
 
-  const eliminarIngresoGasto = () => {
-    deleteIngresoGasto(ingresoGasto.id)
-    setDeleteIngresoGastoDialog(false)
+  const eliminarBarco = () => {
+    deleteConceptoAux(activo.id)
+    setDeleteBarcoDialog(false)
     toast.current.show({
       severity: 'error',
       summary: 'Eliminar',
-      detail: 'IngresoGasto Eliminado',
+      detail: 'Barco Eliminado',
       life: 3000
     })
   }
 
-  const deleteIngresoGastoDialogFooter = (
+  const deleteBarcoDialogFooter = (
     <>
       <Button
         label="No"
         icon="pi pi-times"
         className="p-button-text"
-        onClick={() => setDeleteIngresoGastoDialog(false)}
+        onClick={() => setDeleteBarcoDialog(false)}
       />
       <Button
         label="Si"
         icon="pi pi-check"
         className="p-button-text"
-        onClick={() => eliminarIngresoGasto()}
+        onClick={() => eliminarBarco()}
       />
     </>
   )
 
-  const confirmDeleteIngresoGasto = (IngresoGasto) => {
-    setIngresoGasto(IngresoGasto)
-    setDeleteIngresoGastoDialog(true)
+  const confirmDeleteBarco = (barcos) => {
+    setConceptoAux(barcos)
+    setDeleteBarcoDialog(true)
   }
 
   const actionBodyTemplate = (rowData) => {
@@ -121,13 +112,13 @@ const IngresoGastoList = () => {
         <Button
           icon="pi pi-pencil"
           className="p-button-rounded p-button-success mr-2 mb-2"
-          onClick={() => saveIngresoGasto(rowData.id)}
+          onClick={() => saveBarco(rowData.id)}
         />
 
         <Button
           icon="pi pi-trash"
           className="p-button-rounded  p-button-danger"
-          onClick={() => confirmDeleteIngresoGasto(rowData)}
+          onClick={() => confirmDeleteBarco(rowData)}
         />
       </div>
     )
@@ -135,7 +126,7 @@ const IngresoGastoList = () => {
 
   const header = (
     <div className="flex flex-column md:flex-row md:justify-content-between md:align-items-center">
-      <h5 className="m-0">IngresoGasto</h5>
+      <h5 className="m-0">ConceptoAux</h5>
       <span className="block mt-2 md:mt-0 p-input-icon-left">
         <i className="pi pi-search" />
         <InputText
@@ -147,7 +138,7 @@ const IngresoGastoList = () => {
     </div>
   )
   const clearSelected = () => {
-    setDeleteIngresoGastoDialog(false)
+    setDeleteBarcoDialog(false)
   }
   return (
     <>
@@ -160,8 +151,7 @@ const IngresoGastoList = () => {
 
       <DataTable
         ref={dt}
-        value={ingresoGastos}
-        // onSelectionChange={(e) => setSelectedProducts(e.value_id)}
+        value={conceptoAuxs}
         dataKey="id"
         paginator
         rows={10}
@@ -169,65 +159,46 @@ const IngresoGastoList = () => {
         className="datatable-responsive"
         selectionMode="single"
         paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
-        currentPageReportTemplate="Muestra {first} a {last} de {totalRecords} IngresoGastos"
+        currentPageReportTemplate="Muestra {first} a {last} de {totalRecords} Barcos"
         globalFilter={globalFilter}
-        emptyMessage="No hay IngresoGastos."
+        emptyMessage="No hay ConceptoAux."
         header={header}
-        sortField="IngresoGastoCreado"
+        sortField="ConceptoAuxCreado"
         sortOrder={-1}
         loading={loading}
         responsiveLayout="scroll"
         breakpoint="960px"
       >
         <Column body={actionBodyTemplate}></Column>
+        <Column field="codigoConceptoAux" header="codigoConceptoAux" />
+        <Column field="nombreConceptoAux" header="nombreConceptoAux" />
         <Column
-          field="fechaIngresoGasto"
-          header="fechaIngresoGasto"
-          body={datefechaIngresoGasto}
-          dataType="date"
+          field="descripcionConceptoAux"
+          header="descripcionConceptoAux"
         />
-
+        <Column field="estatusConceptoAux" header="estatusConceptoAux" />
         <Column
-          field="conceptoAuxId.nombreConceptoAux"
-          header="conceptoIngresoGasto"
-        />
-        <Column
-          field="descripcionIngresoGasto"
-          header="descripcionIngresoGasto"
-        />
-        <Column field="ingresoIngresoGasto" header="ingresoIngresoGasto" />
-        <Column field="egresoIngresoGasto" header="egresoIngresoGasto" />
-        <Column field="procesoAuxId.nombreProceso" header="procesoAuxId" />
-        <Column field="proveedorId.nombreProveedor" header="proveedorId" />
-        <Column
-          field="centroDeCostoAuxId.nombreCentroDeCosto"
-          header="centroDeCostoAuxId"
-        />
-        <Column field="userCreatorId" header="userCreatorId" />
-        <Column field="estatusIngresoGasto" header="estatusIngresoGasto" />
-
-        <Column
-          field="ingresoGastoCreado"
-          body={fechaIngresoGastoCreado}
-          header="ingresoGastoCreado"
+          field="conceptoAuxCreado"
+          body={fechaConceptoAuxCreado}
+          header="conceptoAuxCreado"
           dataType="date"
         />
         <Column
-          field="ingresoGastoModificado"
-          body={fechaIngresoGastoModificado}
-          header="ingresoGastoModificado"
+          field="conceptoAuxModificado"
+          body={fechaConceptoAuxModificado}
+          header="conceptoAuxModificado"
           dataType="date"
         />
       </DataTable>
 
-      <IngresoGastoForm isVisible={isVisible} setIsVisible={setIsVisible} />
+      <ConceptoAuxForm isVisible={isVisible} setIsVisible={setIsVisible} />
 
       <Dialog
-        visible={deleteIngresoGastoDialog}
+        visible={deleteBarcoDialog}
         style={{ width: '450px' }}
         header="Confirm"
         modal
-        footer={deleteIngresoGastoDialogFooter}
+        footer={deleteBarcoDialogFooter}
         onHide={() => clearSelected()}
       >
         <div className="flex align-items-center justify-content-center">
@@ -235,10 +206,10 @@ const IngresoGastoList = () => {
             className="pi pi-exclamation-triangle mr-3"
             style={{ fontSize: '2rem' }}
           />
-          {ingresoGasto && (
+          {activo && (
             <span>
-              Esta seguro que quiere eliminar la IngresoGasto{' '}
-              <b>{ingresoGasto.nombreProyecto}</b>?
+              Esta seguro que quiere eliminar la ConceptoAux{' '}
+              <b>{activo.nombreConceptoAux}</b>?
             </span>
           )}
         </div>
@@ -247,4 +218,4 @@ const IngresoGastoList = () => {
   )
 }
 
-export default IngresoGastoList
+export default ConceptoAuxList

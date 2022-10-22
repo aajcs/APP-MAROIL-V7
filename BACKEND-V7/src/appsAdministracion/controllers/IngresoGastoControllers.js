@@ -5,9 +5,10 @@ const IngresoGasto = require('../models/IngresoGastoModels')
 ingresoGastoCtrl.createIngresoGasto = async (req, res) => {
   const {
     fechaIngresoGasto,
-    conceptoIngresoGasto,
+    conceptoAuxId,
     ingresoIngresoGasto,
     egresoIngresoGasto,
+    descripcionIngresoGasto,
     estatusIngresoGasto,
     procesoAuxId,
     proveedorId,
@@ -19,8 +20,9 @@ ingresoGastoCtrl.createIngresoGasto = async (req, res) => {
   try {
     const newIngresoGasto = new IngresoGasto({
       fechaIngresoGasto,
-      conceptoIngresoGasto,
+      conceptoAuxId,
       ingresoIngresoGasto,
+      descripcionIngresoGasto,
       egresoIngresoGasto,
       estatusIngresoGasto,
       procesoAuxId,
@@ -30,12 +32,35 @@ ingresoGastoCtrl.createIngresoGasto = async (req, res) => {
       ingresoGastoCreado,
       ingresoGastoModificado
     })
-    const saveIngresoGasto = await newIngresoGasto.save()
+    const saveIngresoGasto1 = await newIngresoGasto.save()
 
-    res.status(200).json({
-      saveIngresoGasto,
-      message: 'Nuevo IngresoGasto Agregado.'
-    })
+    const saveIngresoGasto = await IngresoGasto.findById(saveIngresoGasto1.id)
+      .populate('procesoAuxId', {
+        nombreProceso: 1
+      })
+      .populate('proveedorId', {
+        nombreProveedor: 1
+      })
+      .populate('centroDeCostoAuxId', {
+        nombreCentroDeCosto: 1
+      })
+      .populate('conceptoAuxId', {
+        nombreConceptoAux: 1
+      })
+    if (saveIngresoGasto) {
+      res.status(200).json({
+        saveIngresoGasto,
+        message: 'Nuevo IngresoGasto Agregado.'
+      })
+    } else {
+      res.status(404).end()
+    }
+
+    // console.log(saveIngresoGasto)
+    // res.status(200).json({
+    //   saveIngresoGasto,
+    //   message: 'Nuevo IngresoGasto Agregado.'
+    // })
   } catch (err) {
     res.status(400).json({
       error: err
@@ -54,6 +79,9 @@ ingresoGastoCtrl.getIngresoGastos = async (req, res) => {
       })
       .populate('centroDeCostoAuxId', {
         nombreCentroDeCosto: 1
+      })
+      .populate('conceptoAuxId', {
+        nombreConceptoAux: 1
       })
     res.status(200).json(ingresoGasto)
   } catch (err) {
@@ -94,9 +122,10 @@ ingresoGastoCtrl.updateIngresoGasto = async (req, res) => {
   }
   const {
     fechaIngresoGasto,
-    conceptoIngresoGasto,
+    conceptoAuxId,
     ingresoIngresoGasto,
     egresoIngresoGasto,
+    descripcionIngresoGasto,
     estatusIngresoGasto,
     procesoAuxId,
     proveedorId,
@@ -111,9 +140,10 @@ ingresoGastoCtrl.updateIngresoGasto = async (req, res) => {
       id,
       {
         fechaIngresoGasto,
-        conceptoIngresoGasto,
+        conceptoAuxId,
         ingresoIngresoGasto,
         egresoIngresoGasto,
+        descripcionIngresoGasto,
         estatusIngresoGasto,
         procesoAuxId,
         proveedorId,
@@ -124,6 +154,18 @@ ingresoGastoCtrl.updateIngresoGasto = async (req, res) => {
       },
       { new: true }
     )
+      .populate('procesoAuxId', {
+        nombreProceso: 1
+      })
+      .populate('proveedorId', {
+        nombreProveedor: 1
+      })
+      .populate('centroDeCostoAuxId', {
+        nombreCentroDeCosto: 1
+      })
+      .populate('conceptoAuxId', {
+        nombreConceptoAux: 1
+      })
     // VERIFICAR QUE UPDATE NO SEA NULL
     res.status(200).json({
       updateIngresoGasto,

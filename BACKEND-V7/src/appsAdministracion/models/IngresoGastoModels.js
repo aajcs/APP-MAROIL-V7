@@ -11,14 +11,15 @@ const ingresoGastoSchema = new Schema(
       type: Date,
       default: moment()
     },
-    conceptoIngresoGasto: {
-      type: String
-    },
+
     ingresoIngresoGasto: {
       type: Number
     },
     egresoIngresoGasto: {
       type: Number
+    },
+    descripcionIngresoGasto: {
+      type: String
     },
     estatusIngresoGasto: {
       type: String
@@ -34,6 +35,10 @@ const ingresoGastoSchema = new Schema(
     centroDeCostoAuxId: {
       type: Schema.Types.ObjectId,
       ref: 'CentroDeCostoAux'
+    },
+    conceptoAuxId: {
+      type: Schema.Types.ObjectId,
+      ref: 'ConceptoAux'
     },
     userCreatorId: {
       type: Schema.Types.ObjectId,

@@ -5,7 +5,7 @@ export class ProcesoAuxService {
   // baseUrl = '  https://apimaroil.herokuapp.com/api/'
   // baseUrl = "http://10.20.40.159:4000/api/";
   // baseUrl = "https://hg-rest-api.herokuapp.com/api/ProcesoAuxs/";
-  baseUrl = 'http://localhost:4000/api/'
+  baseUrl = 'https://apimaroil.herokuapp.com/api/'
   // baseUrl = 'https://apimaroil.herokuapp.com/api/'
 
   readAll(token) {

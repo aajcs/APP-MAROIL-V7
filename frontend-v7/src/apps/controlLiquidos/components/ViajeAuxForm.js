@@ -24,7 +24,7 @@ const ViajeAuxForm = (props) => {
     estatusViajeAux: '',
     fechaArriboViajeAux: '',
     fechaZarpeViajeAux: '',
-    viaje: '',
+    viaje: null,
     cargaViajeCreado: moment(),
     cargaViajeModificado: moment()
   }
@@ -117,10 +117,13 @@ const ViajeAuxForm = (props) => {
     updateField(e.value.estatusViajeAux, 'estatusViajeAux')
   }
   const onViaje = (e) => {
-    setSelectedViaje(e.value)
-    updateField(e.value.id, 'viaje')
+    console.log(e.value.id)
+    // eslint-disable-next-line no-unused-expressions
+    e.value
+      ? (setSelectedViaje(e.value), updateField(e.value.id, 'viaje'))
+      : (setSelectedViaje(null), updateField(null, 'viaje'))
   }
-
+  console.log(viajeAuxData)
   const onPaisViajeAux = (e) => {
     setSelectedPaisViajeAux(e.value)
     updateField(e.value.paisViajeAux, 'paisViajeAux')
@@ -130,8 +133,12 @@ const ViajeAuxForm = (props) => {
 
   useEffect(() => {
     if (editViajeAux) {
-      setviajeAuxData(editViajeAux)
-      setSelectedViaje(editViajeAux.viaje)
+      console.log(editViajeAux.viaje)
+      setviajeAuxData({
+        ...editViajeAux,
+        viaje: editViajeAux.viaje && editViajeAux.viaje.id
+      })
+
       setSelectedViajeAux({
         estatusViajeAux: editViajeAux.estatusViajeAux
       })
@@ -139,6 +146,10 @@ const ViajeAuxForm = (props) => {
         paisViajeAux: editViajeAux.paisViajeAux
       })
 
+      const viajeSelecEdit =
+        editViajeAux.viaje && viajes.find((p) => p.id === editViajeAux.viaje.id)
+      console.log(viajeSelecEdit)
+      setSelectedViaje(viajeSelecEdit)
       setDateArriboViajeAux(
         editViajeAux.fechaArriboViajeAux &&
           moment(editViajeAux.fechaArriboViajeAux)._d
@@ -193,17 +204,11 @@ const ViajeAuxForm = (props) => {
     } else {
       updateViajeAux({
         ...viajeAuxData,
-        viaje: editViajeAux.viaje.id,
+
         ViajeAuxModificado: moment()
       })
     }
-    setviajeAuxData(initialViajeAuxForm)
-    setIsVisible(false)
-    setSelectedViajeAux('')
-    setSelectedViaje('')
-
-    setDateZarpeViajeAux(null)
-    setDateArriboViajeAux(null)
+    clearSelected()
   }
 
   const dialogFooter = (
@@ -221,8 +226,10 @@ const ViajeAuxForm = (props) => {
     setIsVisible(false)
     setviajeAuxData(initialViajeAuxForm)
     setSelectedViajeAux('')
-    setSelectedViaje('')
 
+    setSelectedPaisViajeAux(null)
+
+    setSelectedViaje(null)
     setDateZarpeViajeAux(null)
     setDateArriboViajeAux(null)
   }

@@ -18,7 +18,7 @@ const ViajeAuxList = () => {
   const [deleteViajeAuxDialog, setDeleteViajeAuxDialog] = useState(false)
   const [globalFilter, setGlobalFilter] = useState(null)
   const [isVisible, setIsVisible] = useState(false)
-
+  console.log(viajeAuxs)
   const dt = useRef(null)
   const toast = useRef(null)
   const saveViajeAux = (id) => {
@@ -147,6 +147,7 @@ const ViajeAuxList = () => {
   const clearSelected = () => {
     setDeleteViajeAuxDialog(false)
   }
+
   return (
     <>
       <Toast ref={toast} />

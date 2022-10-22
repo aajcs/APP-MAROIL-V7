@@ -39,7 +39,7 @@ cargaViajeCtrl.createCargaViaje = async (req, res) => {
       cargaViajeModificado
     })
     const saveCargaViaje = await newCargaViaje.save()
-
+    await saveCargaViaje.populate('viajeAux')
     res.status(200).json({
       saveCargaViaje,
       message: 'Nuevo CargaViaje Agregado.'
@@ -130,7 +130,7 @@ cargaViajeCtrl.updateCargaViaje = async (req, res) => {
         cargaViajeModificado
       },
       { new: true }
-    )
+    ).populate('viajeAux')
     // VERIFICAR QUE UPDATE NO SEA NULL
     res.status(200).json({
       updateCargaViaje,

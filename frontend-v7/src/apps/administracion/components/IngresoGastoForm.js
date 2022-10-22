@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-expressions */
 /* eslint-disable react/prop-types */
 import React, { useContext, useState, useEffect, useRef } from 'react'
 import { IngresoGastoContext } from '../contexts/IngresoGastoContext'
@@ -14,14 +15,16 @@ import moment from 'moment'
 import { ProveedorContext } from '../contexts/ProveedorContext'
 import { CentroDeCostoAuxContext } from '../contexts/CentroDeCostoAuxContext'
 import { ProcesoAuxContext } from '../contexts/ProcesoAuxContext'
+import { ConceptoAuxContext } from '../contexts/ConceptoAuxContext'
 
 const IngresoGastoForm = (props) => {
   const initialIngresoGastoForm = {
     id: null,
     fechaIngresoGasto: '',
-    conceptoIngresoGasto: '',
+    conceptoAuxId: null,
     ingresoIngresoGasto: 0,
     egresoIngresoGasto: 0,
+    descripcionIngresoGasto: '',
     estatusIngresoGasto: '',
     procesoAuxId: null,
     proveedorId: null,
@@ -80,15 +83,15 @@ const IngresoGastoForm = (props) => {
   const { procesoAuxs } = useContext(ProcesoAuxContext)
   const { proveedors } = useContext(ProveedorContext)
   const { centroDeCostoAuxs } = useContext(CentroDeCostoAuxContext)
-
+  const { conceptoAuxs } = useContext(ConceptoAuxContext)
   const { isVisible, setIsVisible } = props
   const [selectedIngresoGasto, setSelectedIngresoGasto] = useState(null)
-  const [selectedconceptoIngresoGasto, setSelectedconceptoIngresoGasto] =
-    useState(null)
+  const [selectedConceptoAux, setSelectedConceptoAux] = useState(null)
   const [selectedProcesoAuxId, setSelectedProcesoAuxId] = useState(null)
   const [selectedProveedorId, setSelectedProveedorId] = useState(null)
   const [selectedCentroDeCostoAuxId, setSelectedCentroDeCostoAuxId] =
     useState(null)
+
   const [ingresoGastoData, setIngresoGastoData] = useState(
     initialIngresoGastoForm
   )
@@ -102,35 +105,31 @@ const IngresoGastoForm = (props) => {
     setSelectedIngresoGasto(e.value)
     updateField(e.value.estatusIngresoGasto, 'estatusIngresoGasto')
   }
-  const conceptoIngresoGasto = [
-    { conceptoIngresoGasto: 'NOMINAS Y GASTOS DEL PERSONAL' },
-    { conceptoIngresoGasto: 'SERVICIOS CONTRATADOS' },
-    { conceptoIngresoGasto: 'TRANSPORTE DE PERSONAL' },
-    { conceptoIngresoGasto: 'COMIDAS' },
-    { conceptoIngresoGasto: 'REPARACIONES Y MANTENIMIENTO' },
-    { conceptoIngresoGasto: 'SERVICIOS TECNICOS (LUBVENCA)' },
-    { conceptoIngresoGasto: 'SERVICIOS QUÍMICOS (LUBVENCA)' },
-    { conceptoIngresoGasto: 'GASTOS ADMIN. Y CONSUMIBLES DE OFICINA' },
-    { conceptoIngresoGasto: 'SIHO' },
-    { conceptoIngresoGasto: 'ACARREO' },
-    { conceptoIngresoGasto: 'OPERACIONES MARITIMAS' }
-  ]
-
   const onconceptoIngresoGasto = (e) => {
-    setSelectedconceptoIngresoGasto(e.value)
-    updateField(e.value.conceptoIngresoGasto, 'conceptoIngresoGasto')
+    e.value
+      ? (setSelectedConceptoAux(e.value),
+        updateField(e.value.id, 'conceptoAuxId'))
+      : (setSelectedConceptoAux(null), updateField(null, 'conceptoAuxId'))
   }
   const onProcesoAuxId = (e) => {
-    setSelectedProcesoAuxId(e.value)
-    updateField(e.value.id, 'procesoAuxId')
+    e.value
+      ? (setSelectedProcesoAuxId(e.value),
+        updateField(e.value.id, 'procesoAuxId'))
+      : (setSelectedProcesoAuxId(null), updateField(null, 'procesoAuxId'))
   }
   const onProveedorId = (e) => {
-    setSelectedProveedorId(e.value)
-    updateField(e.value.id, 'proveedorId')
+    e.value
+      ? (setSelectedProveedorId(e.value),
+        updateField(e.value.id, 'proveedorId'))
+      : (setSelectedProveedorId(e.value),
+        updateField(e.value.id, 'proveedorId'))
   }
   const onCentroDeCostoAuxId = (e) => {
-    setSelectedCentroDeCostoAuxId(e.value)
-    updateField(e.value.id, 'centroDeCostoAuxId')
+    e.value
+      ? (setSelectedCentroDeCostoAuxId(e.value),
+        updateField(e.value.id, 'centroDeCostoAuxId'))
+      : (setSelectedCentroDeCostoAuxId(null),
+        updateField(null, 'centroDeCostoAuxId'))
   }
 
   const [datefechaIngresoGasto, setDatefechaIngresoGasto] = useState(null)
@@ -139,17 +138,41 @@ const IngresoGastoForm = (props) => {
 
   useEffect(() => {
     if (editIngresoGasto) {
-      setIngresoGastoData(editIngresoGasto)
+      setIngresoGastoData({
+        ...editIngresoGasto,
+        procesoAuxId:
+          editIngresoGasto.procesoAuxId && editIngresoGasto.procesoAuxId.id,
+        proveedorId:
+          editIngresoGasto.proveedorId && editIngresoGasto.proveedorId.id,
+        centroDeCostoAuxId:
+          editIngresoGasto.centroDeCostoAuxId &&
+          editIngresoGasto.centroDeCostoAuxId.id
+      })
       setSelectedIngresoGasto({
         estatusIngresoGasto: editIngresoGasto.estatusIngresoGasto
       })
-      setSelectedconceptoIngresoGasto({
-        conceptoIngresoGasto: editIngresoGasto.conceptoIngresoGasto
-      })
-
+      const conceptoAuxSelecEdit =
+        editIngresoGasto.conceptoAuxId &&
+        conceptoAuxs.find((p) => p.id === editIngresoGasto.conceptoAuxId.id)
+      console.log(conceptoAuxSelecEdit)
+      setSelectedConceptoAux(conceptoAuxSelecEdit)
+      const procesoSelecEdit =
+        editIngresoGasto.procesoAuxId &&
+        procesoAuxs.find((p) => p.id === editIngresoGasto.procesoAuxId.id)
+      setSelectedProcesoAuxId(procesoSelecEdit)
+      const centroDeCostoSelecEdit =
+        editIngresoGasto.centroDeCostoAuxId &&
+        centroDeCostoAuxs.find(
+          (p) => p.id === editIngresoGasto.centroDeCostoAuxId.id
+        )
+      setSelectedCentroDeCostoAuxId(centroDeCostoSelecEdit)
+      const proveedorSelecEdit =
+        editIngresoGasto.proveedorId &&
+        proveedors.find((p) => p.id === editIngresoGasto.proveedorId.id)
+      setSelectedProveedorId(proveedorSelecEdit)
       setDatefechaIngresoGasto(
-        editIngresoGasto.fechafechaIngresoGasto &&
-          moment(editIngresoGasto.fechafechaIngresoGasto)._d
+        editIngresoGasto.fechaIngresoGasto &&
+          moment(editIngresoGasto.fechaIngresoGasto)._d
       )
     }
   }, [editIngresoGasto])
@@ -170,10 +193,7 @@ const IngresoGastoForm = (props) => {
         ingresoGastoModificado: moment()
       })
     }
-    setIngresoGastoData(initialIngresoGastoForm)
-    setIsVisible(false)
-    setSelectedIngresoGasto('')
-    setDatefechaIngresoGasto(null)
+    clearSelected()
   }
 
   const dialogFooter = (
@@ -192,6 +212,11 @@ const IngresoGastoForm = (props) => {
     setIngresoGastoData(initialIngresoGastoForm)
     setSelectedIngresoGasto('')
     setDatefechaIngresoGasto(null)
+    setSelectedIngresoGasto(null)
+    setSelectedConceptoAux(null)
+    setSelectedProcesoAuxId(null)
+    setSelectedProveedorId(null)
+    setSelectedCentroDeCostoAuxId(null)
   }
   const selectedestatusIngresoGastoTemplate = (option, props) => {
     if (option) {
@@ -212,44 +237,44 @@ const IngresoGastoForm = (props) => {
       </div>
     )
   }
-  const selectedconceptoIngresoGastoTemplate = (option, props) => {
-    if (option) {
-      return (
-        <div className="country-item country-item-value">
-          <div>{option.conceptoIngresoGasto}</div>
-        </div>
-      )
-    }
+  // const selectedconceptoIngresoGastoTemplate = (option, props) => {
+  //   if (option) {
+  //     return (
+  //       <div className="country-item country-item-value">
+  //         <div>{option.conceptoIngresoGasto}</div>
+  //       </div>
+  //     )
+  //   }
 
-    return <span>{props.placeholder}</span>
-  }
+  //   return <span>{props.placeholder}</span>
+  // }
 
-  const conceptoIngresoGastoOptionTemplate = (option) => {
-    return (
-      <div className="country-item">
-        <div>{option.conceptoIngresoGasto}</div>
-      </div>
-    )
-  }
-  const selectedTemplateProcesoAuxId = (option, props) => {
-    if (option) {
-      return (
-        <div className="country-item country-item-value">
-          <div>{option.nombreProceso}</div>
-        </div>
-      )
-    }
+  // const conceptoIngresoGastoOptionTemplate = (option) => {
+  //   return (
+  //     <div className="country-item">
+  //       <div>{option.conceptoIngresoGasto}</div>
+  //     </div>
+  //   )
+  // }
+  // const selectedTemplateProcesoAuxId = (option, props) => {
+  //   if (option) {
+  //     return (
+  //       <div className="country-item country-item-value">
+  //         <div>{option.nombreProceso}</div>
+  //       </div>
+  //     )
+  //   }
 
-    return <span>{props.placeholder}</span>
-  }
+  //   return <span>{props.placeholder}</span>
+  // }
 
-  const optionTemplateProcesoAuxId = (option) => {
-    return (
-      <div className="country-item">
-        <div>{option.nombreProceso}</div>
-      </div>
-    )
-  }
+  // const optionTemplateProcesoAuxId = (option) => {
+  //   return (
+  //     <div className="country-item">
+  //       <div>{option.nombreProceso}</div>
+  //     </div>
+  //   )
+  // }
   const selectedTemplateProveedorId = (option, props) => {
     if (option) {
       return (
@@ -307,23 +332,25 @@ const IngresoGastoForm = (props) => {
             <label>conceptoIngresoGasto</label>
 
             <Dropdown
-              value={selectedconceptoIngresoGasto}
-              options={conceptoIngresoGasto}
+              value={selectedConceptoAux}
+              options={conceptoAuxs}
               onChange={onconceptoIngresoGasto}
-              optionLabel="estatusconceptoIngresoGasto"
-              placeholder="Seleccione Cliente"
-              valueTemplate={selectedconceptoIngresoGastoTemplate}
-              itemTemplate={conceptoIngresoGastoOptionTemplate}
+              optionLabel="nombreConceptoAux"
+              placeholder="Seleccione nombreConceptoAux"
+              // valueTemplate={selectedconceptoIngresoGastoTemplate}
+              // itemTemplate={conceptoIngresoGastoOptionTemplate}
               showClear
               filter
-              filterBy="conceptoIngresoGasto"
+              filterBy="nombreConceptoAux"
             />
           </div>
           <br />
           <div className="p-float-label">
             <InputText
-              value={ingresoGastoData.descripcion}
-              onChange={(e) => updateField(e.target.value, 'descripcion')}
+              value={ingresoGastoData.descripcionIngresoGasto}
+              onChange={(e) =>
+                updateField(e.target.value, 'descripcionIngresoGasto')
+              }
             />
             <label>Descripcion:</label>
           </div>
@@ -335,13 +362,13 @@ const IngresoGastoForm = (props) => {
                 value={selectedProcesoAuxId}
                 options={procesoAuxs}
                 onChange={onProcesoAuxId}
-                optionLabel="nombreProyecto"
+                optionLabel="nombreProceso"
                 placeholder="Seleccione procesoAuxId"
-                valueTemplate={selectedTemplateProcesoAuxId}
-                itemTemplate={optionTemplateProcesoAuxId}
+                // valueTemplate={selectedTemplateProcesoAuxId}
+                // itemTemplate={optionTemplateProcesoAuxId}
                 showClear
                 filter
-                filterBy="procesoAuxs.nombreProyecto"
+                filterBy="nombreProceso"
               />
             </div>
             <div className="field col-12 md:col-6 mt-3 mb-0 ">

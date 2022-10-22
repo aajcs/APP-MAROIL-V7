@@ -25,7 +25,7 @@ viajeAuxCtrl.createViajeAux = async (req, res) => {
       viajeAuxModificado
     })
     const saveViajeAux = await newViajeAux.save()
-
+    await saveViajeAux.populate('viaje')
     res.status(200).json({
       saveViajeAux,
       message: 'Nuevo ViajeAux Agregado.'
@@ -102,7 +102,7 @@ viajeAuxCtrl.updateViajeAux = async (req, res) => {
         viajeAuxModificado
       },
       { new: true }
-    )
+    ).populate('viaje')
     // VERIFICAR QUE UPDATE NO SEA NULL
     res.status(200).json({
       updateViajeAux,

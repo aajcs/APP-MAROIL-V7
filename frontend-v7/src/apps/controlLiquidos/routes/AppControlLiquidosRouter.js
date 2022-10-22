@@ -29,6 +29,7 @@ import { ViajeAuxPage } from '../pages/ViajeAuxPage'
 import { InicioInfoPage } from '../pages/InicioInfoPage'
 import { GastosOperacionalePage } from '../pages/GastosOperacionalePage'
 import { GastosOperacionaleInfoPage } from '../pages/GastosOperacionaleInfoPage'
+import { CargaInformacionPage } from '../pages/CargaInformacionPage'
 
 export default function AppControlLiquidosRouter() {
   const { staticMenuInactive, onToggleMenuClick } = useContext(ConfigContext)
@@ -124,6 +125,11 @@ export default function AppControlLiquidosRouter() {
               exact
               path="/apps/controlLiquidos/ViajeAux"
               component={ViajeAuxPage}
+            />
+            <PrivateRoute
+              exact
+              path="/apps/controlLiquidos/CargaInformacion"
+              component={CargaInformacionPage}
             />
             <Route path="*">
               <Redirect to="/404" />

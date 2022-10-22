@@ -1,10 +1,10 @@
 import axios from 'axios'
 
-export class IngresoGastoService {
-  // baseUrl = "http://localhost:8080/api/IngresoGastos/";
+export class ConceptoAuxService {
+  // baseUrl = "http://localhost:8080/api/ConceptoAuxs/";
   // baseUrl = '  https://apimaroil.herokuapp.com/api/'
   // baseUrl = "http://10.20.40.159:4000/api/";
-  // baseUrl = "https://hg-rest-api.herokuapp.com/api/IngresoGastos/";
+  // baseUrl = "https://hg-rest-api.herokuapp.com/api/ConceptoAuxs/";
   baseUrl = 'https://apimaroil.herokuapp.com/api/'
   // baseUrl = 'https://apimaroil.herokuapp.com/api/'
 
@@ -15,33 +15,29 @@ export class IngresoGastoService {
       }
     }
     return axios
-      .get(this.baseUrl + 'IngresoGasto/', config)
+      .get(this.baseUrl + 'ConceptoAux/', config)
       .then((res) => res.data)
   }
 
-  create(IngresoGasto, token) {
+  create(ConceptoAux, token) {
     const config = {
       headers: {
         authorization: token
       }
     }
     return axios
-      .post(this.baseUrl + 'IngresoGasto/', IngresoGasto, config)
+      .post(this.baseUrl + 'ConceptoAux/', ConceptoAux, config)
       .then((res) => res.data)
   }
 
-  update(IngresoGasto, token) {
+  update(ConceptoAux, token) {
     const config = {
       headers: {
         authorization: token
       }
     }
     return axios
-      .put(
-        this.baseUrl + 'IngresoGasto/' + IngresoGasto.id,
-        IngresoGasto,
-        config
-      )
+      .put(this.baseUrl + 'ConceptoAux/' + ConceptoAux.id, ConceptoAux, config)
       .then((res) => res.data)
   }
 
@@ -52,7 +48,7 @@ export class IngresoGastoService {
       }
     }
     return axios
-      .delete(this.baseUrl + 'IngresoGasto/' + id, config)
+      .delete(this.baseUrl + 'ConceptoAux/' + id, config)
       .then((res) => res.data)
   }
 }

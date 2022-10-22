@@ -63,6 +63,10 @@ app.use(
   require('./appsAdministracion/routes/ProcesoAuxRoutes')
 )
 app.use(
+  '/api/ConceptoAux',
+  require('./appsAdministracion/routes/ConceptoAuxRoutes')
+)
+app.use(
   '/api/RequisicionMaterialesItems',
   require('./appsProcura/routes/RequisicionMaterialesItemsRoutes')
 )
