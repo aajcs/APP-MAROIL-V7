@@ -3,6 +3,7 @@ import CargaViajeContextProvider from '../contexts/CargaViajeContext'
 
 import EmbarcacionContextProvider from '../contexts/EmbarcacionContext'
 import RemolcadorContextProvider from '../contexts/RemolcadorContext'
+import TanqueAuxContextProvider from '../contexts/TanqueAuxContext'
 import ViajeAuxContextProvider from '../contexts/ViajeAuxContext'
 import ViajeContextProvider from '../contexts/ViajeContext'
 
@@ -15,9 +16,11 @@ export const CargaInformacionPage = () => {
             <EmbarcacionContextProvider>
               <RemolcadorContextProvider>
                 <ViajeContextProvider>
-                  <CargaViajeContextProvider>
-                    <CargaInformacionPanel />
-                  </CargaViajeContextProvider>
+                  <TanqueAuxContextProvider>
+                    <CargaViajeContextProvider>
+                      <CargaInformacionPanel />
+                    </CargaViajeContextProvider>
+                  </TanqueAuxContextProvider>
                 </ViajeContextProvider>
               </RemolcadorContextProvider>
             </EmbarcacionContextProvider>

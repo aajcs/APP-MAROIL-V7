@@ -69,7 +69,9 @@ export const MenuControlLiquidos = () => {
           {
             label: 'CARGA DE INFORMACIÓN',
             icon: 'pi pi-fw pi-server',
-            to: '/apps/controlLiquidos/cargaInformacion'
+            to: '/apps/controlLiquidos/cargaInformacion',
+            permi: 'ADMIN',
+            permi2: 'OPERADOR'
           }
         ]
       },

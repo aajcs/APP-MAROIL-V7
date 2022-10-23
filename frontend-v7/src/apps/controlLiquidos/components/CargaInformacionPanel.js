@@ -8,6 +8,7 @@ import { TabView, TabPanel } from 'primereact/tabview'
 
 import AuthUse from '../../../auth/AuthUse'
 import CargaInformacionList from './CargaInformacionList'
+import { CargaInformacionTanqueList } from './CargaInformacionTanqueList'
 
 const CargaInformacionPanel = () => {
   const auth = AuthUse()
@@ -26,7 +27,7 @@ const CargaInformacionPanel = () => {
         {(auth.user.faidUser.roles[0] === 'ADMIN' ||
           auth.user.faidUser.roles[0] === 'SUPERADMIN') && (
           <TabPanel header="Carga de Tanques" leftIcon="pi pi-user">
-            <h1>hola</h1>
+            <CargaInformacionTanqueList />
           </TabPanel>
         )}
       </TabView>
