@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-expressions */
 /* eslint-disable react/prop-types */
 
 import React, { useContext, useState, useEffect, useRef } from 'react'
@@ -15,8 +16,6 @@ import { EmbarcacionContext } from '../contexts/EmbarcacionContext'
 import { RemolcadorContext } from '../contexts/RemolcadorContext'
 import { ViajeContext } from '../contexts/ViajeContext'
 import { Calendar } from 'primereact/calendar'
-// import { CargaBodegaContext } from '../contexts/CargaBodegaContext'
-// import flagplaceholder from '../assetsControl/flagplaceholder.png'
 
 const GastosOperacionaleForm = (props) => {
   const initialGastosOperacionaleForm = {
@@ -97,6 +96,7 @@ const GastosOperacionaleForm = (props) => {
   const [GastosOperacionaleData, setGastosOperacionaleData] = useState(
     initialGastosOperacionaleForm
   )
+  console.log(GastosOperacionaleData)
   const [selectedEmbarcacion, setSelectedEmbarcacion] = useState(null)
   const [selectedRemolcador, setSelectedRemolcador] = useState(null)
   const [selectedViaje, setSelectedViaje] = useState(null)
@@ -124,32 +124,61 @@ const GastosOperacionaleForm = (props) => {
     updateField(e.value.nombreGastosOperacionale, 'nombreGastosOperacionale')
   }
   const onEmbacacion = (e) => {
-    setSelectedEmbarcacion(e.value)
-
-    updateField(e.value.id, 'embarcacion')
+    e.value
+      ? (setSelectedEmbarcacion(e.value),
+        updateField(e.value.id, 'embarcacion'))
+      : (setSelectedEmbarcacion(null), updateField(null, 'embarcacion'))
   }
 
   const onRemolcador = (e) => {
-    setSelectedRemolcador(e.value)
-    updateField(e.value.id, 'remolcador')
+    e.value
+      ? (setSelectedRemolcador(e.value), updateField(e.value.id, 'remolcador'))
+      : (setSelectedRemolcador(null), updateField(null, 'remolcador'))
   }
   const onViaje = (e) => {
-    setSelectedViaje(e.value)
-    updateField(e.value.id, 'viaje')
+    e.value
+      ? (setSelectedViaje(e.value), updateField(e.value.id, 'viaje'))
+      : (setSelectedViaje(null), updateField(null, 'viaje'))
   }
   const toast = useRef(null)
 
   useEffect(() => {
     if (editGastosOperacionale) {
-      setGastosOperacionaleData(editGastosOperacionale)
+      console.log(editGastosOperacionale)
+      setGastosOperacionaleData({
+        ...editGastosOperacionale,
+        viaje: editGastosOperacionale.viaje && editGastosOperacionale.viaje.id,
+        embarcacion:
+          editGastosOperacionale.embarcacion &&
+          editGastosOperacionale.embarcacion.id,
+        remolcador:
+          editGastosOperacionale.remolcador &&
+          editGastosOperacionale.remolcador.id
+      })
+
+      const embarcacionSelecEdit =
+        editGastosOperacionale.embarcacion &&
+        embarcacions.find((p) => p.id === editGastosOperacionale.embarcacion.id)
+
+      setSelectedEmbarcacion(embarcacionSelecEdit)
+      const remolcadorSelecEdit =
+        editGastosOperacionale.remolcador &&
+        remolcadors.find((p) => p.id === editGastosOperacionale.remolcador.id)
+
+      setSelectedRemolcador(remolcadorSelecEdit)
+      const viajeSelecEdit =
+        editGastosOperacionale.viaje &&
+        viajes.find((p) => p.id === editGastosOperacionale.viaje.id)
+
+      setSelectedViaje(viajeSelecEdit)
       setSelectedGastosOperacionale({
         estatusGastosOperacionale:
           editGastosOperacionale.estatusGastosOperacionale
       })
 
       setSelectedNombreGastosOperacionale({
-        ubicacionGastosOperacionale:
-          editGastosOperacionale.ubicacionGastosOperacionale
+        nombreGastosOperacionale:
+          editGastosOperacionale.nombreGastosOperacionale
       })
       setDateFechaGasto(
         editGastosOperacionale.fechaGastosOperacionale &&
@@ -375,6 +404,9 @@ const GastosOperacionaleForm = (props) => {
                 placeholder="Seleccione Viaje"
                 valueTemplate={selectedViajeTemplate}
                 itemTemplate={viajeOptionTemplate}
+                showClear
+                filter
+                filterBy="nombreViaje"
               />
             </div>
             <div className="field col-12 md:col-6">
@@ -387,6 +419,9 @@ const GastosOperacionaleForm = (props) => {
                 placeholder="Seleccione Embarcacion"
                 valueTemplate={selectedEmbarcacionTemplate}
                 itemTemplate={embarcacionOptionTemplate}
+                showClear
+                filter
+                filterBy="nombreEmbarcacion"
               />
             </div>
             <div className="field col-12 md:col-6">
@@ -399,6 +434,9 @@ const GastosOperacionaleForm = (props) => {
                 placeholder="Seleccione remolcador"
                 valueTemplate={selectedRemolcadorTemplate}
                 itemTemplate={remolcadorOptionTemplate}
+                showClear
+                filter
+                filterBy="nombreEmbarcacion"
               />
             </div>
             <div className="field col-12 md:col-6">

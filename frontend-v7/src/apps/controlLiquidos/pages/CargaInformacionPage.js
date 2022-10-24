@@ -2,6 +2,7 @@ import CargaInformacionPanel from '../components/CargaInformacionPanel'
 import CargaViajeContextProvider from '../contexts/CargaViajeContext'
 
 import EmbarcacionContextProvider from '../contexts/EmbarcacionContext'
+import GastosOperacionaleContextProvider from '../contexts/GastosOperacionaleContext'
 import RemolcadorContextProvider from '../contexts/RemolcadorContext'
 import TanqueAuxContextProvider from '../contexts/TanqueAuxContext'
 import ViajeAuxContextProvider from '../contexts/ViajeAuxContext'
@@ -18,7 +19,9 @@ export const CargaInformacionPage = () => {
                 <ViajeContextProvider>
                   <TanqueAuxContextProvider>
                     <CargaViajeContextProvider>
-                      <CargaInformacionPanel />
+                      <GastosOperacionaleContextProvider>
+                        <CargaInformacionPanel />
+                      </GastosOperacionaleContextProvider>
                     </CargaViajeContextProvider>
                   </TanqueAuxContextProvider>
                 </ViajeContextProvider>

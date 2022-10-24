@@ -28,8 +28,13 @@ viajeCtrl.createGastosOperacionale = async (req, res) => {
       gastosOperacionaleCreado,
       gastosOperacionaleModificado
     })
-    const saveGastosOperacionale = await newGastosOperacionale.save()
-
+    const saveGastosOperacionale1 = await newGastosOperacionale.save()
+    const saveGastosOperacionale = await GastosOperacionale.findById(
+      saveGastosOperacionale1.id
+    )
+      .populate('viaje')
+      .populate('embarcacion')
+      .populate('remolcador')
     res.status(200).json({
       saveGastosOperacionale,
       message: 'Nuevo GastosOperacionale Agregado.'
@@ -114,6 +119,9 @@ viajeCtrl.updateGastosOperacionale = async (req, res) => {
       },
       { new: true }
     )
+      .populate('embarcacion')
+      .populate('remolcador')
+      .populate('viaje')
     // VERIFICAR QUE UPDATE NO SEA NULL
     res.status(200).json({
       updateGastosOperacionale,

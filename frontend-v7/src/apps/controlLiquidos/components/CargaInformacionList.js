@@ -74,8 +74,6 @@ const CargaInformacionList = () => {
             className="p-button-success mr-2"
             onClick={() => setIsVisibleViajeAux(true)}
           />
-
-          <span>Paises Asociados al Viaje </span>
         </div>
       </React.Fragment>
     )
@@ -90,8 +88,6 @@ const CargaInformacionList = () => {
             className="p-button-success mr-2"
             onClick={() => setIsVisibleCargaViaje(true)}
           />
-
-          <span>Cargar del Pais Asociado </span>
         </div>
       </React.Fragment>
     )
@@ -228,7 +224,7 @@ const CargaInformacionList = () => {
   )
   const headerViajeAux = (
     <div className="flex flex-column md:flex-row md:justify-content-between md:align-items-center">
-      <h5 className="m-0">ViajeAux</h5>
+      <h5 className="m-0">Bitácora de viaje</h5>
       {leftToolbarTemplateViajeAux()}
       <span className="block mt-2 md:mt-0 p-input-icon-left">
         <i className="pi pi-search" />
@@ -242,7 +238,7 @@ const CargaInformacionList = () => {
   )
   const headerCargaViaje = (
     <div className="flex flex-column md:flex-row md:justify-content-between md:align-items-center">
-      <h5 className="m-0">CargaViaje</h5>
+      <h5 className="m-0">Opeacion en Puerto </h5>
       {leftToolbarTemplateCargaViaje()}
       <span className="block mt-2 md:mt-0 p-input-icon-left">
         <i className="pi pi-search" />
@@ -258,11 +254,9 @@ const CargaInformacionList = () => {
     setDeleteViajeDialog(false)
   }
   const tableViajeAux = (data) => {
-    console.log(data.id)
-
     const viajeAux = viajeAuxs.filter((p) => p.viaje.id === data.id && p)
     // const probando = viajeAuxs.map((p) => console.log(p.viaje.id))
-    console.log(viajeAux)
+
     return (
       <div className="orders-subtable">
         <DataTable
@@ -281,6 +275,7 @@ const CargaInformacionList = () => {
           loading={loading}
           ref={dt}
           breakpoint="960px"
+          rowClassName={rowClassViajeAux}
         >
           <Column expander style={{ width: '3em' }} />
           <Column body={actionBodyTemplateViajeAux}></Column>
@@ -311,13 +306,13 @@ const CargaInformacionList = () => {
     console.log(cargaViajes)
     return (
       <div className="orders-subtable">
-        <h5>Reporte GOM del buque {data.estatusViajeAux}</h5>
         <DataTable
           value={cargaViaje}
           responsiveLayout="scroll"
           sortField="data.reporteCargaGOMModificado"
           sortOrder={-1}
           header={headerCargaViaje}
+          rowClassName={rowClassCargaViaje}
         >
           <Column body={actionBodyTemplateCargaViaje}></Column>
           <Column field="descripcionCargaViaje" header="Descripción" />
@@ -365,12 +360,24 @@ const CargaInformacionList = () => {
       life: 3000
     })
   }
+
   const rowClass = (data) => {
+    console.log(data)
     return {
       'row-accessories': data.destinoViaje
     }
   }
-
+  const rowClassViajeAux = (data) => {
+    console.log(data)
+    return {
+      'row-accessoriesViajeAux': data.id
+    }
+  }
+  const rowClassCargaViaje = (data) => {
+    return {
+      'row-accessoriesargaViaje': data.id
+    }
+  }
   return (
     <>
       <Toast ref={toast} />

@@ -436,3 +436,9 @@ hr {
 .datatable-style-demo .row-accessories {
   background-color: rgba(0, 0, 0, 0.15) !important;
 }
+.datatable-style-demo .row-accessoriesViajeAux {
+  background-color: rgba(238, 3, 3, 0.15) !important;
+}
+.datatable-style-demo .row-accessoriesargaViaje {
+  background-color: rgba(27, 14, 214, 0.15) !important;
+}

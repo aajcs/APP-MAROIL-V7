@@ -12,11 +12,10 @@ import { CargaInformacionTanqueCard } from './CargaInformacionTanqueCard'
 export const CargaInformacionTanqueList = () => {
   const [selecteEmbaracionID, setSelectedBarcoIDGOM] = useState(null)
   const [tanqueEmbarcacions, setTanqueEmbarcacion] = useState(null)
-  console.log(tanqueEmbarcacions)
+
   const { embarcacions } = useContext(EmbarcacionContext)
-  console.log(embarcacions)
-  const { tanqueAuxs } = useContext(TanqueAuxContext)
-  console.log(tanqueAuxs)
+
+  const { tanqueAuxs, updateTanqueAux } = useContext(TanqueAuxContext)
 
   const onuEmbarcacionID = (e) => {
     setSelectedBarcoIDGOM(e.value)
@@ -37,25 +36,22 @@ export const CargaInformacionTanqueList = () => {
 
     setTanqueEmbarcacion(tanqueEmbarcacion)
   }
-  // const actualizarCargaBodega = (cargaBodegasid, cargaBodegaActual) => {
-  //   cargaBodegas.map((bodega) => {
-  //     if (bodega.id === cargaBodegasid) {
-  //       updateCargaBodega({
-  //         ...bodega,
-  //         barcoID: bodega.barcoID.id,
-  //         estatusBodega: cargaBodegaActual.estatusBodega
-  //           ? cargaBodegaActual.estatusBodega
-  //           : bodega.estatusBodega,
-  //         toneladasCapacidadBodega: cargaBodegaActual.toneladasCapacidadBodega
-  //           ? cargaBodegaActual.toneladasCapacidadBodega
-  //           : bodega.toneladasCapacidadBodega,
-  //         toneladasCargadasBodega: cargaBodegaActual.toneladasCargadasBodega
-  //           ? cargaBodegaActual.toneladasCargadasBodega
-  //           : bodega.toneladasCargadasBodega
-  //       })
-  //     }
-  //   })
-  // }
+  const actualizarCargaTanque = (cargaTanquesid, cargaTanqueActual) => {
+    tanqueAuxs.map((tanque) => {
+      if (tanque.id === cargaTanquesid) {
+        console.log(tanque)
+        console.log(cargaTanqueActual)
+        // const {
+        //   estatusTanqueAux,
+        //   volumenActualTanqueAux,
+        //   volumenCapacidadTanqueAux,
+        //   tipoCargaTanqueAux,
+        //   tanqueAuxModificado
+        // } = cargaTanqueActual
+        updateTanqueAux(cargaTanqueActual)
+      }
+    })
+  }
   return (
     <>
       <Dropdown
@@ -85,7 +81,7 @@ export const CargaInformacionTanqueList = () => {
               <CargaInformacionTanqueCard
                 key={tanque.id}
                 tanqueItem={tanque}
-                // actualizarCargaBodega={actualizarCargaBodega}
+                actualizarCargaTanque={actualizarCargaTanque}
               />
             ))
           : null}

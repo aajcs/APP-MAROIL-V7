@@ -13,7 +13,6 @@ import '../styles/stylesProcura.css'
 
 import { ProyectoAuxPage } from '../pages/ProyectoAuxPage'
 import { MenuAdministracion } from '../components/MenuAdministracion'
-import { HomeAdministracion } from '../pages/HomeAdministracionPage'
 import { ActivoPage } from '../pages/ActivoPage'
 import { CentroDeCostoAuxPage } from '../pages/CentroDeCostoAuxPage'
 import { FacturaPage } from '../pages/FacturaPage'
@@ -22,6 +21,7 @@ import { ProveedorPage } from '../pages/ProveedorPage'
 import { PresupuestoPage } from '../pages/PresupuestoPage'
 import { ProcesoAuxPage } from '../pages/ProcesoAuxPage'
 import { ConceptoAuxPage } from '../pages/ConceptoAuxPage'
+import { HomeAdministracionPage } from '../pages/HomeAdministracionPage'
 
 export default function appadministracionRouter() {
   const { staticMenuInactive, onToggleMenuClick } = useContext(ConfigContext)
@@ -55,7 +55,7 @@ export default function appadministracionRouter() {
             <PrivateRoute
               exact
               path="/apps/administracion"
-              component={HomeAdministracion}
+              component={HomeAdministracionPage}
             />
             <PrivateRoute
               exact

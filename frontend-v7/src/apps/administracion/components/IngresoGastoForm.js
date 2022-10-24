@@ -154,7 +154,7 @@ const IngresoGastoForm = (props) => {
       const conceptoAuxSelecEdit =
         editIngresoGasto.conceptoAuxId &&
         conceptoAuxs.find((p) => p.id === editIngresoGasto.conceptoAuxId.id)
-      console.log(conceptoAuxSelecEdit)
+
       setSelectedConceptoAux(conceptoAuxSelecEdit)
       const procesoSelecEdit =
         editIngresoGasto.procesoAuxId &&

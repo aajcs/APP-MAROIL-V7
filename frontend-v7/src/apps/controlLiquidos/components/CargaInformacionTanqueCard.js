@@ -9,31 +9,36 @@ import { Button } from 'primereact/button'
 
 export const CargaInformacionTanqueCard = ({
   tanqueItem,
-  actualizarCargaBodega
+  actualizarCargaTanque
 }) => {
-  const initialCargaBodegaForm = {
-    id: null,
-    barcoID: '',
-    nombreBodega: '',
-    toneladasCargadasBodega: '',
-    toneladasCapacidadBodega: '',
-    estatusCargaBodega: '',
-    cargaBodegaCreado: moment(),
-    cargaBodegaModificado: moment()
+  const initialCargaTanqueForm = {
+    id: tanqueItem.id,
+    estatusTanqueAux: tanqueItem.estatusTanqueAux,
+
+    volumenActualTanqueAux: tanqueItem.volumenActualTanqueAux,
+    volumenCapacidadTanqueAux: tanqueItem.volumenCapacidadTanqueAux,
+    tipoCargaTanqueAux: tanqueItem.tipoCargaTanqueAux,
+
+    tanqueAuxModificado: moment()
   }
-  const [reporteCargaGOMData, setCargaBodegaData] = useState(
-    initialCargaBodegaForm
-  )
+  const [tanqueData, setTanqueData] = useState(initialCargaTanqueForm)
   console.log(tanqueItem)
   const [porcenBar, setporcenBar] = useState(null)
-  const [estatusTanque, setEstatusBodega] = useState(null)
-  const [actualizarBodega, setActualizarBodega] = useState(true)
+  const [estatusTanque, setEstatusTanque] = useState(null)
+  const [tipoCargaTanque, setTipoCargaTanque] = useState(null)
+  const [actualizarTanque, setActualizarTanque] = useState(true)
+
   const cboEstatus = [
     { estatusTanque: 'OPERATIVO' },
     { estatusTanque: 'INOOPERATIVO' }
   ]
+  const cboTipoCargaTanque = [
+    { tipoCargaTanque: 'GASOLINA' },
+    { tipoCargaTanque: 'DIESEL' }
+  ]
   useEffect(() => {
-    setEstatusBodega({ estatusTanque: tanqueItem.estatusTanqueAux })
+    setEstatusTanque({ estatusTanque: tanqueItem.estatusTanqueAux })
+    setTipoCargaTanque({ tipoCargaTanque: tanqueItem.tipoCargaTanqueAux })
     setporcenBar(
       (
         (100 * tanqueItem.volumenActualTanqueAux) /
@@ -41,9 +46,13 @@ export const CargaInformacionTanqueCard = ({
       ).toFixed(2)
     )
   }, [])
-  const onuEstatusBodega = (e) => {
-    setEstatusBodega(e.value)
-    updateField(e.value.estatusTanque, 'estatusTanque')
+  const onuEstatusTanque = (e) => {
+    setEstatusTanque(e.value)
+    updateField(e.value.estatusTanque, 'estatusTanqueAux')
+  }
+  const onTipoCargaTanque = (e) => {
+    setTipoCargaTanque(e.value)
+    updateField(e.value.tipoCargaTanque, 'tipoCargaTanqueAux')
   }
   const selectedestatusTanqueTemplate = (option, props) => {
     if (option) {
@@ -65,15 +74,15 @@ export const CargaInformacionTanqueCard = ({
     )
   }
   const updateField = (data, field) => {
-    setCargaBodegaData({
-      ...reporteCargaGOMData,
+    setTanqueData({
+      ...tanqueData,
       [field]: data
     })
-    setActualizarBodega(false)
+    setActualizarTanque(false)
   }
-  const updateBodega = () => {
-    actualizarCargaBodega(tanqueItem.id, reporteCargaGOMData)
-    setActualizarBodega(true)
+  const updateTanque = () => {
+    actualizarCargaTanque(tanqueItem.id, tanqueData)
+    setActualizarTanque(true)
   }
 
   return (
@@ -87,43 +96,53 @@ export const CargaInformacionTanqueCard = ({
           <div className="col-6 text-right ">
             <Button
               // {gabarra.estatus==='dsfdsfsd' ? 'Cargado' : 'Cargando'}
-              disabled={actualizarBodega}
+              disabled={actualizarTanque}
               label="Actualizar"
               type="button"
               icon="pi pi-plus"
-              onClick={() => updateBodega()}
+              onClick={() => updateTanque()}
               className="p-button-rounded p-button-success ml-2"
             ></Button>
           </div>
-          <div className="field col-12 md:col-4">
+          <div className="field col-12 md:col-12 m-0">
+            <label htmlFor="currency-germany">tipoCargaTanque</label>
+            <Dropdown
+              value={tipoCargaTanque}
+              options={cboTipoCargaTanque}
+              onChange={onTipoCargaTanque}
+              optionLabel="tipoCargaTanque"
+              placeholder="Seleccione el tipoCargaTanque"
+            />
+          </div>
+          <div className="field col-12 md:col-12 m-0">
             <label htmlFor="currency-germany">Estado</label>
             <Dropdown
               value={estatusTanque}
               options={cboEstatus}
-              onChange={onuEstatusBodega}
+              onChange={onuEstatusTanque}
               optionLabel="estatusTanque"
               placeholder="Seleccione el Estatus"
               valueTemplate={selectedestatusTanqueTemplate}
               itemTemplate={estatusTanqueOptionTemplate}
             />
           </div>
-          <div className="field col-12 md:col-4">
+          <div className="field col-12 md:col-6">
             <label htmlFor="currency-germany">Carga Actual</label>
             <InputNumber
               inputId="currency-germany"
               value={tanqueItem.volumenActualTanqueAux}
               onValueChange={(e) =>
-                updateField(e.target.value, 'toneladasCargadasBodega')
+                updateField(e.target.value, 'volumenActualTanqueAux')
               }
             />
           </div>
-          <div className="field col-12 md:col-4">
+          <div className="field col-12 md:col-6">
             <label htmlFor="currency-india">Capacidad</label>
             <InputNumber
               inputId="currency-india"
               value={tanqueItem.volumenCapacidadTanqueAux}
               onValueChange={(e) =>
-                updateField(e.target.value, 'toneladasCapacidadBodega')
+                updateField(e.target.value, 'volumenCapacidadTanqueAux')
               }
             />
           </div>

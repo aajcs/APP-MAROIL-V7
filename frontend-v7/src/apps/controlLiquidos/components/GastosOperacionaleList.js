@@ -8,10 +8,11 @@ import { InputText } from 'primereact/inputtext'
 import { Toast } from 'primereact/toast'
 import { GastosOperacionaleContext } from '../contexts/GastosOperacionaleContext'
 import moment from 'moment'
-
+import AuthUse from '../../../auth/AuthUse'
 import GastosOperacionaleForm from './GastosOperacionaleForm'
 
 const GastosOperacionaleList = () => {
+  const auth = AuthUse()
   const {
     gastosOperacionales,
     findGastosOperacionale,
@@ -119,12 +120,14 @@ const GastosOperacionaleList = () => {
           className="p-button-rounded p-button-success mr-2 mb-2"
           onClick={() => saveGastosOperacionale(rowData.id)}
         />
-
-        <Button
-          icon="pi pi-trash"
-          className="p-button-rounded  p-button-danger"
-          onClick={() => confirmDeleteGastosOperacionale(rowData)}
-        />
+        {(auth.user.faidUser.roles[0] === 'ADMIN' ||
+          auth.user.faidUser.roles[0] === 'SUPERADMIN') && (
+          <Button
+            icon="pi pi-trash"
+            className="p-button-rounded  p-button-danger"
+            onClick={() => confirmDeleteGastosOperacionale(rowData)}
+          />
+        )}
       </div>
     )
   }
@@ -175,48 +178,47 @@ const GastosOperacionaleList = () => {
         responsiveLayout="scroll"
         breakpoint="960px"
       >
+        <Column body={actionBodyTemplate}></Column>
         <Column
           field="nombreGastosOperacionale"
-          header="nombreGastosOperacionale"
+          header="Concepto Gasto"
+          sortable
         />
-        <Column
-          field="descripcionGastosOperacionale"
-          header="descripcionGastosOperacionale"
-        />
+        <Column field="descripcionGastosOperacionale" header="descripcion" />
         <Column
           field="montoGastosOperacionale"
-          header="montoGastosOperacionale"
+          header="monto Gastos"
+          sortable
         />
-        <Column
-          field="fechaGastosOperacionale"
-          header="fechaGastosOperacionale"
-        />
-        <Column
-          field="estatusGastosOperacionale"
-          header="estatusGastosOperacionale"
-        />
+        <Column field="fechaGastosOperacionale" header="fecha" sortable />
+        <Column field="estatusGastosOperacionale" header="estatus" sortable />
         <Column
           field="embarcacion.nombreEmbarcacion"
-          header="embarcacion.nombreEmbarcacion"
+          header="embarcacion"
+          sortable
         />
         <Column
           field="remolcador.nombreRemolcador"
-          header="remolcador.nombreRemolcador"
+          header="remolcador"
+          sortable
         />
-        <Column field="viaje.nombreViaje" header="viaje.nombreViaje" />
-        <Column
-          field="gastosOperacionaleCreado"
-          body={fechaGastosOperacionaleCreado}
-          header="GastosOperacionale Creado"
-          dataType="date"
-        />
-        <Column
-          field="gastosOperacionaleModificado"
-          body={fechaGastosOperacionaleModificado}
-          header="GastosOperacionale Modificado"
-          dataType="date"
-        />
-        <Column body={actionBodyTemplate}></Column>
+        <Column field="viaje.nombreViaje" header="viaje" sortable />
+        {auth.user.faidUser.roles[0] === 'SUPERADMIN' && (
+          <Column
+            field="gastosOperacionaleCreado"
+            body={fechaGastosOperacionaleCreado}
+            header="GastosOperacionale Creado"
+            dataType="date"
+          />
+        )}
+        {auth.user.faidUser.roles[0] === 'SUPERADMIN' && (
+          <Column
+            field="gastosOperacionaleModificado"
+            body={fechaGastosOperacionaleModificado}
+            header="GastosOperacionale Modificado"
+            dataType="date"
+          />
+        )}
       </DataTable>
 
       <GastosOperacionaleForm

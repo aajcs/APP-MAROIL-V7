@@ -13,7 +13,7 @@ export const MenuAdministracion = () => {
         {
           label: 'INICIO',
           icon: 'pi pi-fw pi-home',
-          // to: '/apps/control/reportecargaGOMInfo',
+          to: '/apps/administracion',
           permi: 'SUPERADMIN',
           permi1: 'SUPERADMIN'
         }
