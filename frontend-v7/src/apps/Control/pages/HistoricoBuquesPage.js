@@ -1,5 +1,6 @@
 import BarcoContextProvider from '../contexts/BarcoContext'
 import HistoricoBuquesList from '../components/HistoricoBuquesList'
+import CargaBodegaContextProvider from '../contexts/CargaBodegaContext'
 
 export const HistoricoBuquesPage = () => {
   return (
@@ -7,7 +8,9 @@ export const HistoricoBuquesPage = () => {
       <div className="col-12">
         <div className="card">
           <BarcoContextProvider>
-            <HistoricoBuquesList />
+            <CargaBodegaContextProvider>
+              <HistoricoBuquesList />
+            </CargaBodegaContextProvider>
           </BarcoContextProvider>
         </div>
       </div>

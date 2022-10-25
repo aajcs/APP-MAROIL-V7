@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable prefer-const */
 // /* eslint-disable no-unused-vars */
 import { useContext, useEffect, useState } from 'react'
@@ -6,8 +7,24 @@ import { IngresoGastoContext } from '../contexts/IngresoGastoContext'
 import moment from 'moment'
 
 const HomeAdministracion = () => {
+  const initialIngresoGasto = {
+    enero: 0,
+    febrero: 0,
+    marzo: 0,
+    abril: 0,
+    mayo: 0,
+    junio: 0,
+    julio: 0,
+    agosto: 0,
+    septiembre: 0,
+    octubre: 0,
+    noviembre: 0,
+    diciembre: 0
+  }
   const { ingresoGastos } = useContext(IngresoGastoContext)
-  console.log(ingresoGastos)
+
+  const [ingresoGastoData, setIngresoGastoData] = useState(initialIngresoGasto)
+
   const [basicData, setBasicData] = useState({
     labels: [
       'enero',
@@ -39,10 +56,43 @@ const HomeAdministracion = () => {
   const [data, setdata] = useState()
   const { labels, datasets } = basicData
   // const { data } = datasets
-  console.log(basicData)
+
   console.log(labels)
   console.log(datasets)
 
+  const tarjetaGatosTotalesMeses = (data) => {
+    console.log(data)
+    return (
+      <div
+        className=" col-12 lg:col-6 xl:col-3 "
+        // onClick={onAppsControlClick}
+      >
+        <div className="cardAPPS card mb-0">
+          <div className="flex justify-content-between mb-1">
+            <div>
+              <span className="block text-500 font-medium mb-1">
+                {data.mesNombre}
+              </span>
+              <div className="text-500 font-medium  ">
+                {'Gastos Totales: '}
+                <span className="text-900 text-xl">
+                  <strong>
+                    {new Intl.NumberFormat().format(data.totalGastoMes)}
+                  </strong>
+                </span>
+              </div>
+            </div>
+            <div
+              className="flex align-items-center justify-content-center bg-blue-100 border-round"
+              style={{ width: '2.5rem', height: '2.5rem' }}
+            >
+              <i className="pi pi-chart-bar text-blue-500 text-xl" />
+            </div>
+          </div>
+        </div>
+      </div>
+    )
+  }
   useEffect(() => {
     setBasicData({ ...setBasicData, labels: auxOtro3, datasets: auxOtro4 })
     buquesToneladasDias()
@@ -55,14 +105,14 @@ const HomeAdministracion = () => {
       plugins: {
         legend: {
           labels: {
-            color: '#495057'
+            color: '#fffcf3'
           }
         }
       },
       scales: {
         x: {
           ticks: {
-            color: '#495057'
+            color: '#fffcf3'
           },
           grid: {
             color: '#ebedef'
@@ -70,7 +120,7 @@ const HomeAdministracion = () => {
         },
         y: {
           ticks: {
-            color: '#495057'
+            color: '#fffcf3'
           },
           grid: {
             color: '#ebedef'
@@ -88,7 +138,6 @@ const HomeAdministracion = () => {
   const totalEgreso = ingresoGastos
     .map((egreso) => egreso.egresoIngresoGasto)
     .reduce((a, b) => a + b, 0)
-  console.log(totalEgreso)
   // cabecera de la tabla
   const mesesDelAno = [
     '2022-01-20',
@@ -125,20 +174,24 @@ const HomeAdministracion = () => {
   let diasTotales = []
   const buquesToneladasDias = () => {
     mesesDelAno.forEach((dataset, i) => {
-      console.log(dataset)
       let ingresoGasto = ingresoGastos.filter((p) =>
         moment(dataset).isSame(p.fechaIngresoGasto, 'month')
       )
       const totalEgreso = ingresoGasto
         .map((egreso) => egreso.egresoIngresoGasto)
         .reduce((a, b) => a + b, 0)
-      console.log(totalEgreso)
-      console.log(ingresoGasto)
+      let mes = mesesDelAnoNombre[i]
+
+      // auxOtro2.push({ [mes]: totalEgreso })
+      auxOtro2.push({ mesNombre: mes, totalGastoMes: totalEgreso })
       diasTotales = diasTotales.concat(totalEgreso)
     })
-    console.log(diasTotales)
 
-    auxOtro2.push({ meses: mesesDelAnoNombre, valores: diasTotales })
+    // setIngresoGastoData({
+    //   ...ingresoGastoData,
+    //   [mesesDelAnoNombre]: diasTotales
+    // })
+    // auxOtro2.push(diasTotales)
     auxOtro3.push(...mesesDelAnoNombre)
     auxOtro4.push({
       type: 'bar',
@@ -150,8 +203,13 @@ const HomeAdministracion = () => {
   console.log(data)
   return (
     <>
-      <h1>aqui {totalEgreso}</h1>
-      <Chart type="bar" data={basicData} options={basicOptions} />
+      {' '}
+      <div className="grid  animate__animated animate__rotateInUpRight animate__slower">
+        {data && data.map((data) => tarjetaGatosTotalesMeses(data))}
+      </div>
+      <div className="card">
+        <Chart type="bar" data={basicData} options={basicOptions} />
+      </div>
     </>
   )
 }
