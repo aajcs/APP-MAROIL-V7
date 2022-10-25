@@ -1,6 +1,6 @@
 /* eslint-disable prefer-const */
 // /* eslint-disable no-unused-vars */
-import React, { useContext, useEffect, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import { Chart } from 'primereact/chart'
 import { IngresoGastoContext } from '../contexts/IngresoGastoContext'
 import moment from 'moment'
@@ -36,10 +36,17 @@ const HomeAdministracion = () => {
       }
     ]
   })
+  const [data, setdata] = useState()
+  const { labels, datasets } = basicData
+  // const { data } = datasets
   console.log(basicData)
+  console.log(labels)
+  console.log(datasets)
+
   useEffect(() => {
     setBasicData({ ...setBasicData, labels: auxOtro3, datasets: auxOtro4 })
     buquesToneladasDias()
+    setdata(auxOtro2)
   }, [ingresoGastos])
   const getLightTheme = () => {
     const basicOptions = {
@@ -111,6 +118,7 @@ const HomeAdministracion = () => {
     'noviembre',
     'diciembre'
   ]
+  let auxOtro2 = []
   let auxOtro3 = []
   let auxOtro4 = []
 
@@ -129,6 +137,8 @@ const HomeAdministracion = () => {
       diasTotales = diasTotales.concat(totalEgreso)
     })
     console.log(diasTotales)
+
+    auxOtro2.push({ meses: mesesDelAnoNombre, valores: diasTotales })
     auxOtro3.push(...mesesDelAnoNombre)
     auxOtro4.push({
       type: 'bar',
@@ -137,6 +147,7 @@ const HomeAdministracion = () => {
       data: [...diasTotales]
     })
   }
+  console.log(data)
   return (
     <>
       <h1>aqui {totalEgreso}</h1>
