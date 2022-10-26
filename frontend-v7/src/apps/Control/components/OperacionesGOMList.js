@@ -20,6 +20,7 @@ import OperacionesGOMBarco from './OperacionesGOMBarco'
 import OperacionesGOMVentana from './OperacionesGOMVentana'
 import AuthUse from '../../../auth/AuthUse'
 import { BarcoService } from '../services/BarcoService'
+import VolumetriaListCargaDatos from './VolumetriaListCargaDatos'
 
 const OperacionesGOMList = () => {
   const barcoService = new BarcoService()
@@ -324,6 +325,9 @@ const OperacionesGOMList = () => {
         </TabPanel>
         <TabPanel header="Carga de Barcos" leftIcon="pi pi-user">
           <OperacionesGOMBarco />
+        </TabPanel>
+        <TabPanel header="Volumetria Totales" leftIcon="pi pi-user">
+          <VolumetriaListCargaDatos />
         </TabPanel>
         {(auth.user.faidUser.roles[0] === 'ADMIN' ||
           auth.user.faidUser.roles[0] === 'SUPERADMIN') && (

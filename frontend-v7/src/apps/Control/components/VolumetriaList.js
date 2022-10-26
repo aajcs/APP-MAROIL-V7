@@ -151,7 +151,7 @@ const VolumetriaList = () => {
     const numeroTonelada = new Intl.NumberFormat('de-DE').format(
       rowData.blFinalVolumetria
     )
-    return Number(numeroTonelada).toFixed(3) + ' TM'
+    return numeroTonelada + ' TM'
   }
   console.log(volumetrias)
   const totalVolumetria = volumetrias

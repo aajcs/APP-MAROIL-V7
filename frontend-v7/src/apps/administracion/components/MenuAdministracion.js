@@ -14,8 +14,8 @@ export const MenuAdministracion = () => {
           label: 'INICIO',
           icon: 'pi pi-fw pi-home',
           to: '/apps/administracion',
-          permi: 'SUPERADMIN',
-          permi1: 'SUPERADMIN'
+          permi: 'ADMIN',
+          permi2: 'OPERADOR'
         }
       ]
     },
@@ -26,76 +26,76 @@ export const MenuAdministracion = () => {
         icon: 'pi pi-fw pi-shopping-cart',
         items: [
           {
-            label: 'REQUISICIÓN',
-            icon: 'pi pi-fw pi-server'
-            // to: '/apps/control/gabarraestatus'
+            label: 'CARGA DE INFORMACION',
+            icon: 'pi pi-fw pi-server',
+            to: '/apps/administracion/cargaInformacion',
+            permi: 'ADMIN',
+            permi2: 'OPERADOR'
           }
         ]
       },
 
-    auth.user.faidUser.roles[0] !== 'CLIENTE' &&
-      auth.user.faidUser.roles[0] !== 'LECTURA' &&
-      auth.user.faidUser.roles[0] !== 'ADMIN' && {
-        label: 'CARGA DE INFORMACION',
-        icon: 'pi pi-fw pi-envelope',
-        permi: 'SUPERADMIN',
-        items: [
-          {
-            label: 'PROYECTOS',
-            icon: 'pi pi-fw pi-database',
-            to: '/apps/administracion/proyectoaux',
-            permi: 'SUPERADMIN'
-          },
-          {
-            label: 'ACTIVOS',
-            icon: 'pi pi-fw pi-database',
-            to: '/apps/administracion/Activo',
-            permi: 'SUPERADMIN'
-          },
-          {
-            label: 'CENTRODECOSTOSAUX',
-            icon: 'pi pi-fw pi-database',
-            to: '/apps/administracion/CentroDeCostoAux',
-            permi: 'SUPERADMIN'
-          },
-          {
-            label: 'PROCESOAUX',
-            icon: 'pi pi-fw pi-database',
-            to: '/apps/administracion/ProcesoAux',
-            permi: 'SUPERADMIN'
-          },
-          {
-            label: 'CONCEPTOAUX',
-            icon: 'pi pi-fw pi-database',
-            to: '/apps/administracion/ConceptoAux',
-            permi: 'SUPERADMIN'
-          },
-          {
-            label: 'FACTURA',
-            icon: 'pi pi-fw pi-database',
-            to: '/apps/administracion/Factura',
-            permi: 'SUPERADMIN'
-          },
-          {
-            label: 'INGRESOGASTO',
-            icon: 'pi pi-fw pi-database',
-            to: '/apps/administracion/IngresoGasto',
-            permi: 'SUPERADMIN'
-          },
-          {
-            label: 'PROVEEDOR',
-            icon: 'pi pi-fw pi-database',
-            to: '/apps/administracion/Proveedor',
-            permi: 'SUPERADMIN'
-          },
-          {
-            label: 'PRESUPUESTO',
-            icon: 'pi pi-fw pi-database',
-            to: '/apps/administracion/Presupuesto',
-            permi: 'SUPERADMIN'
-          }
-        ]
-      }
+    auth.user.faidUser.roles[0] === 'SUPERADMIN' && {
+      label: 'CARGA DE INFORMACION',
+      icon: 'pi pi-fw pi-envelope',
+      permi: 'SUPERADMIN',
+      items: [
+        {
+          label: 'PROYECTOS',
+          icon: 'pi pi-fw pi-database',
+          to: '/apps/administracion/proyectoaux',
+          permi: 'SUPERADMIN'
+        },
+        {
+          label: 'ACTIVOS',
+          icon: 'pi pi-fw pi-database',
+          to: '/apps/administracion/Activo',
+          permi: 'SUPERADMIN'
+        },
+        {
+          label: 'CENTRODECOSTOSAUX',
+          icon: 'pi pi-fw pi-database',
+          to: '/apps/administracion/CentroDeCostoAux',
+          permi: 'SUPERADMIN'
+        },
+        {
+          label: 'PROCESOAUX',
+          icon: 'pi pi-fw pi-database',
+          to: '/apps/administracion/ProcesoAux',
+          permi: 'SUPERADMIN'
+        },
+        {
+          label: 'CONCEPTOAUX',
+          icon: 'pi pi-fw pi-database',
+          to: '/apps/administracion/ConceptoAux',
+          permi: 'SUPERADMIN'
+        },
+        {
+          label: 'FACTURA',
+          icon: 'pi pi-fw pi-database',
+          to: '/apps/administracion/Factura',
+          permi: 'SUPERADMIN'
+        },
+        {
+          label: 'INGRESOGASTO',
+          icon: 'pi pi-fw pi-database',
+          to: '/apps/administracion/IngresoGasto',
+          permi: 'SUPERADMIN'
+        },
+        {
+          label: 'PROVEEDOR',
+          icon: 'pi pi-fw pi-database',
+          to: '/apps/administracion/Proveedor',
+          permi: 'SUPERADMIN'
+        },
+        {
+          label: 'PRESUPUESTO',
+          icon: 'pi pi-fw pi-database',
+          to: '/apps/administracion/Presupuesto',
+          permi: 'SUPERADMIN'
+        }
+      ]
+    }
   ]
 
   return (

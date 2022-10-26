@@ -9,10 +9,11 @@ import { InputText } from 'primereact/inputtext'
 import { Toast } from 'primereact/toast'
 import { IngresoGastoContext } from '../contexts/IngresoGastoContext'
 import moment from 'moment'
-
+import AuthUse from '../../../auth/AuthUse'
 import IngresoGastoForm from './IngresoGastoForm'
 
 const IngresoGastoList = () => {
+  const auth = AuthUse()
   const { ingresoGastos, findIngresoGasto, deleteIngresoGasto, loading } =
     useContext(IngresoGastoContext)
   console.log(ingresoGastos)
@@ -123,12 +124,13 @@ const IngresoGastoList = () => {
           className="p-button-rounded p-button-success mr-2 mb-2"
           onClick={() => saveIngresoGasto(rowData.id)}
         />
-
-        <Button
-          icon="pi pi-trash"
-          className="p-button-rounded  p-button-danger"
-          onClick={() => confirmDeleteIngresoGasto(rowData)}
-        />
+        {auth.user.faidUser.roles[0] === 'SUPERADMIN' && (
+          <Button
+            icon="pi pi-trash"
+            className="p-button-rounded  p-button-danger"
+            onClick={() => confirmDeleteIngresoGasto(rowData)}
+          />
+        )}
       </div>
     )
   }
@@ -241,22 +243,27 @@ const IngresoGastoList = () => {
           sortable
           body={estatusTemplate}
         />
-        <Column field="userCreatorId" header="user Creator Id" sortable />
-
-        <Column
-          field="ingresoGastoCreado"
-          body={fechaIngresoGastoCreado}
-          header="ingresoGastoCreado"
-          dataType="date"
-          sortable
-        />
-        <Column
-          field="ingresoGastoModificado"
-          body={fechaIngresoGastoModificado}
-          header="ingresoGastoModificado"
-          dataType="date"
-          sortable
-        />
+        {auth.user.faidUser.roles[0] === 'SUPERADMIN' && (
+          <Column field="userCreatorId" header="user Creator Id" sortable />
+        )}
+        {auth.user.faidUser.roles[0] === 'SUPERADMIN' && (
+          <Column
+            field="ingresoGastoCreado"
+            body={fechaIngresoGastoCreado}
+            header="ingresoGastoCreado"
+            dataType="date"
+            sortable
+          />
+        )}
+        {auth.user.faidUser.roles[0] === 'SUPERADMIN' && (
+          <Column
+            field="ingresoGastoModificado"
+            body={fechaIngresoGastoModificado}
+            header="ingresoGastoModificado"
+            dataType="date"
+            sortable
+          />
+        )}
       </DataTable>
 
       <IngresoGastoForm isVisible={isVisible} setIsVisible={setIsVisible} />

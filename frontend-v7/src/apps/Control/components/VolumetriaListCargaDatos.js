@@ -1,9 +1,7 @@
-/* eslint-disable prefer-const */
-/* eslint-disable no-unused-vars */
-/* eslint-disable react/prop-types */
-
 import React, { useContext, useState, useRef, useEffect } from 'react'
 import { DataTable } from 'primereact/datatable'
+import { ColumnGroup } from 'primereact/columngroup'
+import { Row } from 'primereact/row'
 import { Column } from 'primereact/column'
 import { Button } from 'primereact/button'
 import { Toolbar } from 'primereact/toolbar'
@@ -17,35 +15,28 @@ import moment from 'moment'
 import { BarcoService } from '../services/BarcoService'
 import AuthUse from '../../../auth/AuthUse'
 
-const VolumetriaList = () => {
+const VolumetriaListCargaDatos = () => {
   const barcoService = new BarcoService()
   const auth = AuthUse()
   const token = auth.user.token
   const { volumetrias, findVolumetria, deleteVolumetria, loading } =
     useContext(VolumetriaContext)
+
   const { barcos } = useContext(BarcoContext)
   const [barcostodos, setBarcostodos] = useState(barcos)
 
   const [volumetria, setVolumetria] = useState(volumetrias)
   const [deleteVolumetriaDialog, setDeleteVolumetriaDialog] = useState(false)
   const [globalFilter, setGlobalFilter] = useState(null)
-  const [expandedRows, setExpandedRows] = useState([])
   const [expandedRows2, setExpandedRows2] = useState(null)
   const [isVisible, setIsVisible] = useState(false)
-  const [selectedProducts, setSelectedProducts] = useState(null)
+
   const dt = useRef(null)
+  const dt2 = useRef(null)
   const toast = useRef(null)
   const saveVolumetria = (id) => {
     findVolumetria(id)
     setIsVisible(true)
-  }
-  const onRowGroupExpand = (event) => {
-    toast.current.show({
-      severity: 'info',
-      summary: 'Grupo de filas ampliado',
-      detail: 'Buque: ' + event.data.barcoID.nombreBarco,
-      life: 3000
-    })
   }
 
   useEffect(() => {
@@ -53,22 +44,6 @@ const VolumetriaList = () => {
       setBarcostodos(data)
     })
   }, [volumetrias])
-
-  const onRowGroupCollapse = (event) => {
-    toast.current.show({
-      severity: 'success',
-      summary: 'Grupo de filas contraído',
-      detail: 'Bueque: ' + event.data.barcoID.nombreBarco,
-      life: 3000
-    })
-  }
-  const headerTemplate = (data) => {
-    return (
-      <React.Fragment>
-        <span className="image-text">{data.barcoID.nombreBarco}</span>
-      </React.Fragment>
-    )
-  }
 
   const leftToolbarTemplate = () => {
     return (
@@ -157,12 +132,12 @@ const VolumetriaList = () => {
     <div className="flex flex-column md:flex-row md:justify-content-between md:align-items-center">
       <h5 className="m-0">Volumetria</h5>
       <span className="block mt-2 md:mt-0 p-input-icon-left">
-        <i className="pi pi-search" />
-        <InputText
+        {/* <i className="pi pi-search" />
+         <InputText
           type="search"
           onInput={(e) => setGlobalFilter(e.target.value)}
           placeholder="Buscar..."
-        />
+        /> */}
       </span>
     </div>
   )
@@ -192,7 +167,19 @@ const VolumetriaList = () => {
     const validarFecha = moment(rowData.fechaFinalCarga).isValid()
     if (!validarFecha) return
     const fecha = moment(rowData.fechaFinalCarga)
-    return fecha.format('dddDD/MM/YY HH:mm')
+    return fecha.format('MMMM/YY')
+  }
+  const blFinalVolumetriaBodyTemplate = (rowData) => {
+    const numeroTonelada = new Intl.NumberFormat('de-DE').format(
+      rowData.blFinalVolumetria
+    )
+    return numeroTonelada + ' TM'
+  }
+  const blFinalBuqueBodyTemplate = (rowData) => {
+    const numeroTonelada = new Intl.NumberFormat('de-DE').format(
+      rowData.blFinalBuque
+    )
+    return numeroTonelada + ' TM'
   }
   const onRowExpand = (event) => {
     toast.current.show({
@@ -212,7 +199,7 @@ const VolumetriaList = () => {
     })
   }
   const expandAll = () => {
-    let _expandedRows = {}
+    const _expandedRows = {}
     barcos.forEach((p) => (_expandedRows[`${p.id}`] = true))
 
     setExpandedRows2(_expandedRows)
@@ -241,51 +228,86 @@ const VolumetriaList = () => {
     </div>
   )
 
-  const rowExpansionTemplate = (data) => {
+  const blVolumetriaTotal = (data) => {
+    let total = 0
+
+    for (const data1 of data) {
+      total += data1.blFinalVolumetria
+    }
+
+    return new Intl.NumberFormat('de-DE').format(total) + ' TM'
+  }
+
+  const footerGroup = (data) => {
+    console.log(data)
     return (
-      <div className="orders-subtable">
-        <h5>Volumetria por terminal del buque {data.nombreBarco}</h5>
-        <DataTable
-          value={data.volumetria}
-          responsiveLayout="scroll"
-          sortField="data.volumetriaCreado"
-          sortOrder={1}
-        >
-          <Column body={actionBodyTemplate}></Column>
-          <Column field="terminalAuxId" header="terminalAuxId" />
-          <Column field="centroDeCostoAuxId" header="centroDeCostoAuxId" />
-
-          <Column field="blFinalVolumetria" header="blFinalVolumetria" />
-
+      <ColumnGroup>
+        <Row>
           <Column
-            field="Fecha Efectiva"
-            header="fechaBlFinalVolumetria"
-            body={fechaBlFinalVolumetriaTemplate}
-            dataType="date"
-            sortable
+            footer="Totals:"
+            colSpan={4}
+            footerStyle={{ textAlign: 'right' }}
           />
-          <Column
-            field="volumetriaCreado"
-            header="reporte CargaGOM Creado"
-            body={volumetriaCreadoTemplate}
-            dataType="date"
-            sortable
-          />
-          <Column
-            field="volumetriaModificado"
-            body={volumetriaModificadoTemplate}
-            header="reporte CargaGOM Modificado"
-            dataType="date"
-          />
-        </DataTable>
-      </div>
+          <Column footer={blVolumetriaTotal(data)} />
+        </Row>
+      </ColumnGroup>
     )
   }
-  const estatusTemplate = (rowData) => {
+  const rowExpansionTemplate = (data) => {
+    const volumetriaBuques = volumetrias.filter(
+      (p) => p.barcoID.id === data.id && p
+    )
+
     return (
-      <span className={`text-gray-900 ml-3 status-${rowData.estatusBarco}`}>
-        {rowData.estatusBarco}
-      </span>
+      <div className="orders-subtable">
+        <DataTable
+          ref={dt2}
+          value={volumetriaBuques}
+          responsiveLayout="scroll"
+          dataKey="id"
+          header={header}
+          globalFilter={globalFilter}
+          groupRowsBy="blFinalVolumetria"
+          footerColumnGroup={footerGroup(volumetriaBuques)}
+          sortField="estatusBarco"
+          sortOrder={-1}
+          loading={loading}
+        >
+          <Column body={actionBodyTemplate}></Column>
+          <Column field="barcoID.nombreBarco" header="Buque" sortable />
+          <Column field="barcoID.buqueCliente" header="buqueCliente" sortable />
+          <Column field="terminalAuxId" header="terminalAuxId" sortable />
+          <Column
+            field="blFinalVolumetria"
+            header="blFinalVolumetria"
+            sortable
+            body={blFinalVolumetriaBodyTemplate}
+          />
+          <Column
+            field="fechaBlFinalVolumetria"
+            header="fechaBlFinalVolumetria"
+            sortable
+            body={fechaBlFinalVolumetriaTemplate}
+            dataType="date"
+          />
+          {auth.user.faidUser.roles[0] === 'SUPERADMIN' && (
+            <Column
+              field="volumetriaCreado"
+              header="volumetriaCreado"
+              body={volumetriaCreadoTemplate}
+              dataType="date"
+            />
+          )}
+          {auth.user.faidUser.roles[0] === 'SUPERADMIN' && (
+            <Column
+              field="volumetriaModificado"
+              header="volumetriaModificado"
+              dataType="date"
+              body={volumetriaModificadoTemplate}
+            />
+          )}
+        </DataTable>
+      </div>
     )
   }
 
@@ -315,19 +337,13 @@ const VolumetriaList = () => {
         >
           <Column expander style={{ width: '3em' }} />
           <Column field="nombreBarco" header="Buque" sortable />
-          <Column field="buqueCliente" header="buqueCliente" sortable />
 
           <Column
-            field="toneladasCapacidad"
-            header="toneladas Nominadas"
+            field="blFinalBuque"
+            header="toneladas Finales"
             sortable
+            body={blFinalBuqueBodyTemplate}
           />
-          <Column
-            field="toneladasNominadas"
-            header="toneladas Solicitadas"
-            sortable
-          />
-          <Column field="blFinalBuque" header="toneladas Finales" sortable />
           <Column
             field="fechaFinalCarga"
             header="fechaFinalCarga"
@@ -362,4 +378,4 @@ const VolumetriaList = () => {
   )
 }
 
-export default VolumetriaList
+export default VolumetriaListCargaDatos

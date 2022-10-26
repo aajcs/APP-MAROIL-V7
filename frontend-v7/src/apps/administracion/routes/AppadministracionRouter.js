@@ -22,6 +22,7 @@ import { PresupuestoPage } from '../pages/PresupuestoPage'
 import { ProcesoAuxPage } from '../pages/ProcesoAuxPage'
 import { ConceptoAuxPage } from '../pages/ConceptoAuxPage'
 import { HomeAdministracionPage } from '../pages/HomeAdministracionPage'
+import { CargaInformacionPage } from '../pages/CargaInformacionPage'
 
 export default function appadministracionRouter() {
   const { staticMenuInactive, onToggleMenuClick } = useContext(ConfigContext)
@@ -96,6 +97,11 @@ export default function appadministracionRouter() {
               exact
               path="/apps/administracion/proveedor"
               component={ProveedorPage}
+            />
+            <PrivateRoute
+              exact
+              path="/apps/administracion/cargaInformacion"
+              component={CargaInformacionPage}
             />
             <PrivateRoute
               exact
