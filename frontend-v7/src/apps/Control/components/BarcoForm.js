@@ -553,23 +553,9 @@ const BarcoForm = (props) => {
                 showButtonBar
               />
             </div>
-            {/* <div className="field col-12 md:col-6">
-              <h5>Fecha</h5>
-              <Calendar
-                className="p-datepicker-today"
-                id="time24"
-                value={date}
-                onChange={(e) => setDate(e.value)}
-                showTime
-                locale="es"
-                // hourFormat="12"
-                showButtonBar
-              />
-            </div> */}
           </div>
         </div>
       </Dialog>
-      {/* </div> */}
     </div>
   )
 }

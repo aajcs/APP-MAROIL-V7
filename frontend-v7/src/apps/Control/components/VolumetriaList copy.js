@@ -1,4 +1,8 @@
-import React, { useContext, useState, useRef } from 'react'
+/* eslint-disable prefer-const */
+/* eslint-disable no-unused-vars */
+/* eslint-disable react/prop-types */
+
+import React, { useContext, useState, useRef, useEffect } from 'react'
 import { DataTable } from 'primereact/datatable'
 import { Column } from 'primereact/column'
 import { Button } from 'primereact/button'
@@ -6,26 +10,64 @@ import { Toolbar } from 'primereact/toolbar'
 import { Dialog } from 'primereact/dialog'
 import { Toast } from 'primereact/toast'
 import { VolumetriaContext } from '../contexts/VolumetriaContext'
+import { BarcoContext } from '../contexts/BarcoContext'
 import VolumetriaForm from './VolumetriaForm'
 import { InputText } from 'primereact/inputtext'
 import moment from 'moment'
+import { BarcoService } from '../services/BarcoService'
 import AuthUse from '../../../auth/AuthUse'
 
 const VolumetriaList = () => {
+  const barcoService = new BarcoService()
   const auth = AuthUse()
-  console.log(auth)
+  const token = auth.user.token
   const { volumetrias, findVolumetria, deleteVolumetria, loading } =
     useContext(VolumetriaContext)
-  console.log(volumetrias)
+  const { barcos } = useContext(BarcoContext)
+  const [barcostodos, setBarcostodos] = useState(barcos)
+
   const [volumetria, setVolumetria] = useState(volumetrias)
   const [deleteVolumetriaDialog, setDeleteVolumetriaDialog] = useState(false)
   const [globalFilter, setGlobalFilter] = useState(null)
+  const [expandedRows, setExpandedRows] = useState([])
+  const [expandedRows2, setExpandedRows2] = useState(null)
   const [isVisible, setIsVisible] = useState(false)
+  const [selectedProducts, setSelectedProducts] = useState(null)
   const dt = useRef(null)
   const toast = useRef(null)
   const saveVolumetria = (id) => {
     findVolumetria(id)
     setIsVisible(true)
+  }
+  const onRowGroupExpand = (event) => {
+    toast.current.show({
+      severity: 'info',
+      summary: 'Grupo de filas ampliado',
+      detail: 'Buque: ' + event.data.barcoID.nombreBarco,
+      life: 3000
+    })
+  }
+
+  useEffect(() => {
+    barcoService.readAll(token).then((data) => {
+      setBarcostodos(data)
+    })
+  }, [volumetrias])
+
+  const onRowGroupCollapse = (event) => {
+    toast.current.show({
+      severity: 'success',
+      summary: 'Grupo de filas contraído',
+      detail: 'Bueque: ' + event.data.barcoID.nombreBarco,
+      life: 3000
+    })
+  }
+  const headerTemplate = (data) => {
+    return (
+      <React.Fragment>
+        <span className="image-text">{data.barcoID.nombreBarco}</span>
+      </React.Fragment>
+    )
   }
 
   const leftToolbarTemplate = () => {
@@ -146,18 +188,107 @@ const VolumetriaList = () => {
     const fecha = moment(rowData.volumetriaModificado)
     return fecha.format('dddDD/MM/YY HH:mm')
   }
-
-  const blFinalVolumetriaBodyTemplate = (rowData) => {
-    const numeroTonelada = new Intl.NumberFormat('de-DE').format(
-      rowData.blFinalVolumetria
-    )
-    return Number(numeroTonelada).toFixed(3) + ' TM'
+  const fechaFinalCargaTemplate = (rowData) => {
+    const validarFecha = moment(rowData.fechaFinalCarga).isValid()
+    if (!validarFecha) return
+    const fecha = moment(rowData.fechaFinalCarga)
+    return fecha.format('dddDD/MM/YY HH:mm')
   }
-  console.log(volumetrias)
-  const totalVolumetria = volumetrias
-    .map((volumetria) => volumetria.blFinalVolumetria)
-    .reduce((a, b) => a + b, 0)
-  console.log(totalVolumetria)
+  const onRowExpand = (event) => {
+    toast.current.show({
+      severity: 'info',
+      summary: 'Grupo de filas ampliado',
+      detail: 'Buque: ' + event.data.nombreBarco,
+      life: 3000
+    })
+  }
+
+  const onRowCollapse = (event) => {
+    toast.current.show({
+      severity: 'success',
+      summary: 'Product Collapsed',
+      detail: event.data.name,
+      life: 3000
+    })
+  }
+  const expandAll = () => {
+    let _expandedRows = {}
+    barcos.forEach((p) => (_expandedRows[`${p.id}`] = true))
+
+    setExpandedRows2(_expandedRows)
+  }
+
+  const collapseAll = () => {
+    setExpandedRows2(null)
+  }
+  const header2 = (
+    <div className="flex flex-column md:flex-row md:justify-content-between md:align-items-center">
+      <Button
+        icon="pi pi-plus"
+        label="Expand All"
+        onClick={expandAll}
+        className="mr-2"
+      />
+      <Button icon="pi pi-minus" label="Collapse All" onClick={collapseAll} />
+      <span className="block mt-2 md:mt-0 p-input-icon-left">
+        <i className="pi pi-search" />
+        <InputText
+          type="search"
+          onInput={(e) => setGlobalFilter(e.target.value)}
+          placeholder="Buscar..."
+        />
+      </span>
+    </div>
+  )
+
+  const rowExpansionTemplate = (data) => {
+    return (
+      <div className="orders-subtable">
+        <h5>Volumetria por terminal del buque {data.nombreBarco}</h5>
+        <DataTable
+          value={data.volumetria}
+          responsiveLayout="scroll"
+          sortField="data.volumetriaCreado"
+          sortOrder={1}
+        >
+          <Column body={actionBodyTemplate}></Column>
+          <Column field="terminalAuxId" header="terminalAuxId" />
+          <Column field="centroDeCostoAuxId" header="centroDeCostoAuxId" />
+
+          <Column field="blFinalVolumetria" header="blFinalVolumetria" />
+
+          <Column
+            field="Fecha Efectiva"
+            header="fechaBlFinalVolumetria"
+            body={fechaBlFinalVolumetriaTemplate}
+            dataType="date"
+            sortable
+          />
+          <Column
+            field="volumetriaCreado"
+            header="reporte CargaGOM Creado"
+            body={volumetriaCreadoTemplate}
+            dataType="date"
+            sortable
+          />
+          <Column
+            field="volumetriaModificado"
+            body={volumetriaModificadoTemplate}
+            header="reporte CargaGOM Modificado"
+            dataType="date"
+          />
+        </DataTable>
+      </div>
+    )
+  }
+  const estatusTemplate = (rowData) => {
+    return (
+      <span className={`text-gray-900 ml-3 status-${rowData.estatusBarco}`}>
+        {rowData.estatusBarco}
+      </span>
+    )
+  }
+
   return (
     <>
       <Toast ref={toast} />
@@ -169,44 +300,39 @@ const VolumetriaList = () => {
 
       <div className="card">
         <DataTable
-          ref={dt}
-          value={volumetrias}
+          value={barcostodos}
+          expandedRows={expandedRows2}
+          onRowToggle={(e) => setExpandedRows2(e.data)}
+          onRowExpand={onRowExpand}
+          onRowCollapse={onRowCollapse}
           responsiveLayout="scroll"
+          rowExpansionTemplate={rowExpansionTemplate}
           dataKey="id"
-          header={header}
+          header={header2}
           globalFilter={globalFilter}
           sortField="estatusBarco"
           sortOrder={-1}
-          loading={loading}
         >
-          <Column body={actionBodyTemplate}></Column>
-          <Column field="barcoID.nombreBarco" header="Buque" sortable />
-          <Column field="barcoID.buqueCliente" header="buqueCliente" sortable />
-          <Column field="terminalAuxId" header="terminalAuxId" sortable />
+          <Column expander style={{ width: '3em' }} />
+          <Column field="nombreBarco" header="Buque" sortable />
+          <Column field="buqueCliente" header="buqueCliente" sortable />
+
           <Column
-            field="blFinalVolumetria"
-            header="blFinalVolumetria"
+            field="toneladasCapacidad"
+            header="toneladas Nominadas"
             sortable
-            body={blFinalVolumetriaBodyTemplate}
           />
           <Column
-            field="fechaBlFinalVolumetria"
-            header="fechaBlFinalVolumetria"
+            field="toneladasNominadas"
+            header="toneladas Solicitadas"
             sortable
-            body={fechaBlFinalVolumetriaTemplate}
-            dataType="date"
           />
+          <Column field="blFinalBuque" header="toneladas Finales" sortable />
           <Column
-            field="volumetriaCreado"
-            header="volumetriaCreado"
-            body={volumetriaCreadoTemplate}
-            dataType="date"
-          />
-          <Column
-            field="volumetriaModificado"
-            header="volumetriaModificado"
-            dataType="date"
-            body={volumetriaModificadoTemplate}
+            field="fechaFinalCarga"
+            header="fechaFinalCarga"
+            sortable
+            body={fechaFinalCargaTemplate}
           />
         </DataTable>
       </div>

@@ -146,7 +146,9 @@ const IngresoGastoForm = (props) => {
           editIngresoGasto.proveedorId && editIngresoGasto.proveedorId.id,
         centroDeCostoAuxId:
           editIngresoGasto.centroDeCostoAuxId &&
-          editIngresoGasto.centroDeCostoAuxId.id
+          editIngresoGasto.centroDeCostoAuxId.id,
+        conceptoAuxId:
+          editIngresoGasto.conceptoAuxId && editIngresoGasto.conceptoAuxId.id
       })
       setSelectedIngresoGasto({
         estatusIngresoGasto: editIngresoGasto.estatusIngresoGasto
@@ -237,44 +239,7 @@ const IngresoGastoForm = (props) => {
       </div>
     )
   }
-  // const selectedconceptoIngresoGastoTemplate = (option, props) => {
-  //   if (option) {
-  //     return (
-  //       <div className="country-item country-item-value">
-  //         <div>{option.conceptoIngresoGasto}</div>
-  //       </div>
-  //     )
-  //   }
 
-  //   return <span>{props.placeholder}</span>
-  // }
-
-  // const conceptoIngresoGastoOptionTemplate = (option) => {
-  //   return (
-  //     <div className="country-item">
-  //       <div>{option.conceptoIngresoGasto}</div>
-  //     </div>
-  //   )
-  // }
-  // const selectedTemplateProcesoAuxId = (option, props) => {
-  //   if (option) {
-  //     return (
-  //       <div className="country-item country-item-value">
-  //         <div>{option.nombreProceso}</div>
-  //       </div>
-  //     )
-  //   }
-
-  //   return <span>{props.placeholder}</span>
-  // }
-
-  // const optionTemplateProcesoAuxId = (option) => {
-  //   return (
-  //     <div className="country-item">
-  //       <div>{option.nombreProceso}</div>
-  //     </div>
-  //   )
-  // }
   const selectedTemplateProveedorId = (option, props) => {
     if (option) {
       return (
@@ -320,50 +285,38 @@ const IngresoGastoForm = (props) => {
       <Dialog
         visible={isVisible}
         breakpoints={{ '960px': '75vw' }}
-        style={{ width: '40vw' }}
+        style={{ width: '50vw' }}
         header="Detalles de la IngresoGasto"
         footer={dialogFooter}
         onHide={() => clearSelected()}
       >
         <div className="p-grid p-fluid">
-          <br />
-
-          <div className="field col-12 md:col-6 mt-3 mb-0 ">
-            <label>conceptoIngresoGasto</label>
-
-            <Dropdown
-              value={selectedConceptoAux}
-              options={conceptoAuxs}
-              onChange={onconceptoIngresoGasto}
-              optionLabel="nombreConceptoAux"
-              placeholder="Seleccione nombreConceptoAux"
-              // valueTemplate={selectedconceptoIngresoGastoTemplate}
-              // itemTemplate={conceptoIngresoGastoOptionTemplate}
-              showClear
-              filter
-              filterBy="nombreConceptoAux"
-            />
-          </div>
-          <br />
-          <div className="p-float-label">
-            <InputText
-              value={ingresoGastoData.descripcionIngresoGasto}
-              onChange={(e) =>
-                updateField(e.target.value, 'descripcionIngresoGasto')
-              }
-            />
-            <label>Descripcion:</label>
-          </div>
           <div className="formgrid grid">
-            <div className="field col-12 md:col-6 mt-3 mb-0 ">
-              <label>procesoAuxId</label>
+            <div className="field col-12 md:col-6  ">
+              <label>Seleccione Concepto</label>
+
+              <Dropdown
+                value={selectedConceptoAux}
+                options={conceptoAuxs}
+                onChange={onconceptoIngresoGasto}
+                optionLabel="nombreConceptoAux"
+                placeholder="Seleccione Concepto"
+                // valueTemplate={selectedconceptoIngresoGastoTemplate}
+                // itemTemplate={conceptoIngresoGastoOptionTemplate}
+                showClear
+                filter
+                filterBy="nombreConceptoAux"
+              />
+            </div>
+            <div className="field col-12 md:col-6 ">
+              <label>Seleccione Proceso</label>
 
               <Dropdown
                 value={selectedProcesoAuxId}
                 options={procesoAuxs}
                 onChange={onProcesoAuxId}
                 optionLabel="nombreProceso"
-                placeholder="Seleccione procesoAuxId"
+                placeholder="Seleccione Proceso"
                 // valueTemplate={selectedTemplateProcesoAuxId}
                 // itemTemplate={optionTemplateProcesoAuxId}
                 showClear
@@ -371,39 +324,46 @@ const IngresoGastoForm = (props) => {
                 filterBy="nombreProceso"
               />
             </div>
-            <div className="field col-12 md:col-6 mt-3 mb-0 ">
-              <label>proveedorId</label>
+
+            <div className="p-float-label col-12 mt-3 mb-3">
+              <InputText
+                value={ingresoGastoData.descripcionIngresoGasto}
+                onChange={(e) =>
+                  updateField(e.target.value, 'descripcionIngresoGasto')
+                }
+              />
+              <label>Descripcion:</label>
+            </div>
+            <div className="field col-12 md:col-6  ">
+              <label>Seleccione Proveedor</label>
 
               <Dropdown
                 value={selectedProveedorId}
                 options={proveedors}
                 onChange={onProveedorId}
                 optionLabel="nombreProveedor"
-                placeholder="Seleccione ProveedorId"
+                placeholder="Seleccione Proveedor"
                 valueTemplate={selectedTemplateProveedorId}
                 itemTemplate={optionTemplateProveedorId}
                 showClear
               />
             </div>
-            <div className="field col-12 md:col-6 mt-3 mb-0 ">
-              <label>centroDeCostoAuxId</label>
+            <div className="field col-12 md:col-6 ">
+              <label>Seleccione Centro De Costo</label>
 
               <Dropdown
                 value={selectedCentroDeCostoAuxId}
                 options={centroDeCostoAuxs}
                 onChange={onCentroDeCostoAuxId}
                 optionLabel="nombreCentroDeCosto"
-                placeholder="Seleccione C
-                entroDeCostoAuxId"
+                placeholder="Seleccione Centro De Costo"
                 valueTemplate={selectedTemplateCentroDeCostoAuxId}
                 itemTemplate={optionTemplateCentroDeCostoAuxId}
                 showClear
               />
             </div>
-
-            <br />
-            <div className="field col-6 p-col-2 p-md-1">
-              <label htmlFor="egresoIngresoGasto">egresoIngresoGasto</label>
+            <div className="field col-12 md:col-6">
+              <label htmlFor="egresoIngresoGasto">Egreso</label>
               <InputNumber
                 inputId="egresoIngresoGasto"
                 value={ingresoGastoData.egresoIngresoGasto}
@@ -415,9 +375,8 @@ const IngresoGastoForm = (props) => {
                 locale="en-US"
               />
             </div>
-
-            <div className="field col-6 p-col-2 p-md-1">
-              <label htmlFor="ingresoIngresoGasto">ingresoIngresoGasto</label>
+            <div className="field col-12 md:col-6">
+              <label htmlFor="ingresoIngresoGasto">Ingreso</label>
               <InputNumber
                 inputId="ingresoIngresoGasto"
                 value={ingresoGastoData.ingresoIngresoGasto}
@@ -429,8 +388,6 @@ const IngresoGastoForm = (props) => {
                 locale="en-US"
               />
             </div>
-          </div>
-          <div className="formgrid grid">
             <div className="field col-12 md:col-6">
               <label>Estado</label>
               <Dropdown
@@ -444,7 +401,7 @@ const IngresoGastoForm = (props) => {
               />
             </div>
             <div className="field col-12 md:col-6">
-              <label>fechaIngresoGasto</label>
+              <label>Fecha Efectiva</label>
               <Calendar
                 className="p-datepicker-today"
                 id="time24"

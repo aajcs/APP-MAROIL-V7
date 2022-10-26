@@ -149,6 +149,22 @@ const IngresoGastoList = () => {
   const clearSelected = () => {
     setDeleteIngresoGastoDialog(false)
   }
+  const formatCurrency = (value) => {
+    return value.toLocaleString('en-US', { style: 'currency', currency: 'USD' })
+  }
+  const egresoBodyTemplate = (rowData) => {
+    return formatCurrency(rowData.egresoIngresoGasto)
+  }
+  const ingresoBodyTemplate = (rowData) => {
+    return formatCurrency(rowData.ingresoIngresoGasto)
+  }
+  const estatusTemplate = (rowData) => {
+    return (
+      <span className={`  status-${rowData.estatusIngresoGasto}`}>
+        {rowData.estatusIngresoGasto}
+      </span>
+    )
+  }
   return (
     <>
       <Toast ref={toast} />
@@ -182,41 +198,64 @@ const IngresoGastoList = () => {
         <Column body={actionBodyTemplate}></Column>
         <Column
           field="fechaIngresoGasto"
-          header="fechaIngresoGasto"
+          header="Fecha"
           body={datefechaIngresoGasto}
           dataType="date"
+          sortable
         />
 
         <Column
           field="conceptoAuxId.nombreConceptoAux"
-          header="conceptoIngresoGasto"
+          header="Concepto"
+          sortable
+        />
+        <Column field="descripcionIngresoGasto" header="Descripcion" sortable />
+        <Column
+          field="ingresoIngresoGasto"
+          header="Ingreso"
+          sortable
+          dataType="numeric"
+          body={ingresoBodyTemplate}
         />
         <Column
-          field="descripcionIngresoGasto"
-          header="descripcionIngresoGasto"
+          field="egresoIngresoGasto"
+          header="Egreso"
+          sortable
+          dataType="numeric"
+          body={egresoBodyTemplate}
         />
-        <Column field="ingresoIngresoGasto" header="ingresoIngresoGasto" />
-        <Column field="egresoIngresoGasto" header="egresoIngresoGasto" />
-        <Column field="procesoAuxId.nombreProceso" header="procesoAuxId" />
-        <Column field="proveedorId.nombreProveedor" header="proveedorId" />
+        <Column field="procesoAuxId.nombreProceso" header="Proceso" sortable />
+        <Column
+          field="proveedorId.nombreProveedor"
+          header="Proveedor"
+          sortable
+        />
         <Column
           field="centroDeCostoAuxId.nombreCentroDeCosto"
-          header="centroDeCostoAuxId"
+          header="Centro De Costo"
+          sortable
         />
-        <Column field="userCreatorId" header="userCreatorId" />
-        <Column field="estatusIngresoGasto" header="estatusIngresoGasto" />
+        <Column
+          field="estatusIngresoGasto"
+          header="Estatus"
+          sortable
+          body={estatusTemplate}
+        />
+        <Column field="userCreatorId" header="user Creator Id" sortable />
 
         <Column
           field="ingresoGastoCreado"
           body={fechaIngresoGastoCreado}
           header="ingresoGastoCreado"
           dataType="date"
+          sortable
         />
         <Column
           field="ingresoGastoModificado"
           body={fechaIngresoGastoModificado}
           header="ingresoGastoModificado"
           dataType="date"
+          sortable
         />
       </DataTable>
 

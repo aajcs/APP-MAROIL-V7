@@ -22,8 +22,13 @@ volumetriaCtrl.createVolumetria = async (req, res) => {
       volumetriaCreado,
       volumetriaModificado
     })
-    const saveVolumetria = await newVolumetria.save()
-
+    const saveVolumetria1 = await newVolumetria.save()
+    const saveVolumetria = await Volumetria.findById(
+      saveVolumetria1.id
+    ).populate('barcoID', {
+      nombreBarco: 1,
+      buqueCliente: 1
+    })
     res.status(200).json({
       saveVolumetria,
       message: 'Nuevo Volumetria Agregado.'
@@ -37,7 +42,10 @@ volumetriaCtrl.createVolumetria = async (req, res) => {
 
 volumetriaCtrl.getVolumetrias = async (req, res) => {
   try {
-    const volumetria = await Volumetria.find({})
+    const volumetria = await Volumetria.find({}).populate('barcoID', {
+      nombreBarco: 1,
+      buqueCliente: 1
+    })
     res.status(200).json(volumetria)
   } catch (err) {
     console.log(err)
@@ -98,7 +106,10 @@ volumetriaCtrl.updateVolumetria = async (req, res) => {
         volumetriaModificado
       },
       { new: true }
-    )
+    ).populate('barcoID', {
+      nombreBarco: 1,
+      buqueCliente: 1
+    })
     // VERIFICAR QUE UPDATE NO SEA NULL
     res.status(200).json({
       updateVolumetria,

@@ -11,17 +11,12 @@ const volumetriaSchema = new Schema(
     terminalAuxId: {
       type: String
     },
-    centroDeCostoAuxId: {
-      type: Schema.Types.ObjectId,
-      ref: 'CentroDeCostoAux'
-    },
     blFinalVolumetria: {
       type: Number,
       default: 0
     },
     fechaBlFinalVolumetria: {
-      type: Date,
-      default: moment()
+      type: Date
     },
     volumetriaCreado: {
       type: Date,

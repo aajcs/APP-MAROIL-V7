@@ -14,13 +14,17 @@
   top: 0;
   left: 0;
 }
-.status-OPERATIVO {
+.status-PROCESADO {
   background: #C8E6C9;
   color: #256029;
 }
-.status-CULMINADO {
+.status-ANULADO {
   background: #FFCDD2;
   color: #C63737;
+}
+.status-PENDIENTE {
+  background: #fbff00ec;
+  color: #282b05;
 }
 
 @media (prefers-reduced-motion: no-preference) {

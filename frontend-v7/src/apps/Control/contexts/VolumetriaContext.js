@@ -41,7 +41,7 @@ const VolumetriaContextProvider = (props) => {
   const createVolumetria = (volumetria) => {
     volumetriaService
       .create(volumetria, token)
-      .then((data) => setVolumetrias([...volumetrias, data.savenewVolumetria]))
+      .then((data) => setVolumetrias([...volumetrias, data.saveVolumetria]))
   }
 
   const updateVolumetria = (volumetria) => {
@@ -70,6 +70,7 @@ const VolumetriaContextProvider = (props) => {
         createVolumetria,
         updateVolumetria,
         deleteVolumetria,
+        setEditVolumetria,
         editVolumetria,
         volumetrias,
         loading

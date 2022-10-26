@@ -9,7 +9,7 @@ import classNames from 'classnames'
 
 import { ConfigContext } from '../../../contexts/ConfigContext'
 
-import '../styles/stylesProcura.css'
+import '../styles/stylesAdministracion.css'
 
 import { ProyectoAuxPage } from '../pages/ProyectoAuxPage'
 import { MenuAdministracion } from '../components/MenuAdministracion'
