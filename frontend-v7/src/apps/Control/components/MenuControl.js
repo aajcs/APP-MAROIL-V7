@@ -92,6 +92,12 @@ export const MenuControl = () => {
           to: '/apps/control/BuquesPorCliente',
           permi: 'ADMIN'
         },
+        userBloqueo.length === 0 && {
+          label: 'MÓDULO DE VOLUMETRIA',
+          icon: 'pi pi-fw pi-chart-bar',
+          to: '/apps/control/VolumetriaEstadistica',
+          permi: 'ADMIN'
+        },
         {
           label: 'MAPA',
           icon: 'pi pi-fw pi-map',
