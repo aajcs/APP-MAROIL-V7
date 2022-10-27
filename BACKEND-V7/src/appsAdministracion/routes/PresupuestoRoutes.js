@@ -9,7 +9,7 @@ const {
   updatePresupuesto
 } = require('../controllers/PresupuestoControllers')
 const auth = require('../../middlewares/authMiddleware')
-const { isAppControl } = require('../../middlewares/AppsMiddleware')
+const { isAppAdministracion } = require('../../middlewares/AppsMiddleware')
 const {
   isOperador,
   isSuperAdmin,
@@ -18,13 +18,13 @@ const {
 
 router
   .route('/')
-  .get([auth, isAppControl, isLectura], getPresupuestos)
-  .post([auth, isAppControl, isOperador], createPresupuesto)
+  .get([auth, isAppAdministracion, isLectura], getPresupuestos)
+  .post([auth, isAppAdministracion, isOperador], createPresupuesto)
 
 router
   .route('/:id')
-  .get([auth, isAppControl, isOperador], getPresupuesto)
-  .delete([auth, isAppControl, isSuperAdmin], deletePresupuesto)
-  .put([auth, isAppControl, isOperador], updatePresupuesto)
+  .get([auth, isAppAdministracion, isOperador], getPresupuesto)
+  .delete([auth, isAppAdministracion, isSuperAdmin], deletePresupuesto)
+  .put([auth, isAppAdministracion, isOperador], updatePresupuesto)
 
 module.exports = router

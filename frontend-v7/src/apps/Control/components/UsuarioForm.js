@@ -86,7 +86,7 @@ const UsuarioForm = (props) => {
     { name: 'SUPERAPPS' },
     { name: 'ADMINAPPS' },
     { name: 'CONTROLAPPS' },
-    { name: 'AMINISTACIONAPPS' }
+    { name: 'AMINISTRACIONAPPS' }
   ]
 
   const onRolesChange = (e) => {
@@ -97,8 +97,10 @@ const UsuarioForm = (props) => {
     updateField(value, 'roles')
   }
   const onAppsChange = (e) => {
+    const valeArray = e.value
+    const value = valeArray.map((p) => p.name)
     setSelectedApps(e.value)
-    updateField(e.value.name, 'apps')
+    updateField(value, 'apps')
   }
 
   const [date, setDate] = useState(null)
@@ -217,7 +219,7 @@ const UsuarioForm = (props) => {
             </div>
             <div className="field col-12 md:col-6">
               <h5>Apps</h5>
-              <Dropdown
+              <MultiSelect
                 value={selectedApps}
                 options={cboApps}
                 onChange={onAppsChange}

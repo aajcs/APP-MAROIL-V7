@@ -10,6 +10,7 @@ import VolumetriaForm from './VolumetriaForm'
 import { InputText } from 'primereact/inputtext'
 import moment from 'moment'
 import AuthUse from '../../../auth/AuthUse'
+import VolumetriaEstadistica from './VolumetriaEstadistica'
 
 const VolumetriaList = () => {
   const auth = AuthUse()
@@ -166,7 +167,10 @@ const VolumetriaList = () => {
         left={leftToolbarTemplate}
         right={rightToolbarTemplate}
       ></Toolbar>
-
+      <div className="card">
+        <h1>aqui va la grafica </h1>
+        <VolumetriaEstadistica />
+      </div>
       <div className="card">
         <DataTable
           ref={dt}

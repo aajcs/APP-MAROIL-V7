@@ -9,7 +9,7 @@ const {
   updateProcesoAux
 } = require('../controllers/ProcesoAuxControllers')
 const auth = require('../../middlewares/authMiddleware')
-const { isAppControl } = require('../../middlewares/AppsMiddleware')
+const { isAppAdministracion } = require('../../middlewares/AppsMiddleware')
 const {
   isOperador,
   isSuperAdmin,
@@ -18,13 +18,13 @@ const {
 
 router
   .route('/')
-  .get([auth, isAppControl, isLectura], getProcesoAuxs)
-  .post([auth, isAppControl, isOperador], createProcesoAux)
+  .get([auth, isAppAdministracion, isLectura], getProcesoAuxs)
+  .post([auth, isAppAdministracion, isOperador], createProcesoAux)
 
 router
   .route('/:id')
-  .get([auth, isAppControl, isOperador], getProcesoAux)
-  .delete([auth, isAppControl, isSuperAdmin], deleteProcesoAux)
-  .put([auth, isAppControl, isOperador], updateProcesoAux)
+  .get([auth, isAppAdministracion, isOperador], getProcesoAux)
+  .delete([auth, isAppAdministracion, isSuperAdmin], deleteProcesoAux)
+  .put([auth, isAppAdministracion, isOperador], updateProcesoAux)
 
 module.exports = router

@@ -1,6 +1,15 @@
 import { useHistory } from 'react-router-dom'
+import AuthUse from '../auth/AuthUse'
 
 export default function Apps() {
+  const auth = AuthUse()
+  const appsPermiso = auth.user.faidUser.apps
+  console.log(appsPermiso)
+  const validarAccesoApp = (apps) => {
+    const accesoApps = appsPermiso.find((p) => p === apps || p === 'SUPERAPPS')
+    console.log(accesoApps)
+    return accesoApps
+  }
   const history = useHistory()
   const onAppsControlClick = () => {
     history.push('/apps/control')
@@ -9,7 +18,8 @@ export default function Apps() {
     history.push('/apps/controlLiquidos')
   }
   const onAppsAdministracionClick = () => {
-    history.push('/apps/administracion')
+    validarAccesoApp('AMINISTRACIONAPPS') &&
+      history.push('/apps/administracion')
   }
   const onAppsProcuraClick = () => {
     history.push('/apps/procura')

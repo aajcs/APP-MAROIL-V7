@@ -9,7 +9,7 @@ const {
   updateProveedor
 } = require('../controllers/ProveedorControllers')
 const auth = require('../../middlewares/authMiddleware')
-const { isAppControl } = require('../../middlewares/AppsMiddleware')
+const { isAppAdministracion } = require('../../middlewares/AppsMiddleware')
 const {
   isOperador,
   isSuperAdmin,
@@ -18,13 +18,13 @@ const {
 
 router
   .route('/')
-  .get([auth, isAppControl, isLectura], getProveedors)
-  .post([auth, isAppControl, isOperador], createProveedor)
+  .get([auth, isAppAdministracion, isLectura], getProveedors)
+  .post([auth, isAppAdministracion, isOperador], createProveedor)
 
 router
   .route('/:id')
-  .get([auth, isAppControl, isOperador], getProveedor)
-  .delete([auth, isAppControl, isSuperAdmin], deleteProveedor)
-  .put([auth, isAppControl, isOperador], updateProveedor)
+  .get([auth, isAppAdministracion, isOperador], getProveedor)
+  .delete([auth, isAppAdministracion, isSuperAdmin], deleteProveedor)
+  .put([auth, isAppAdministracion, isOperador], updateProveedor)
 
 module.exports = router

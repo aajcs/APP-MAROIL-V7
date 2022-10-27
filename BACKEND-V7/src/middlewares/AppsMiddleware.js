@@ -17,6 +17,22 @@ ControllerAppsCtrl.isAppControl = async (req, res, next) => {
     return res.status(500).send({ message: error })
   }
 }
+ControllerAppsCtrl.isAppAdministracion = async (req, res, next) => {
+  try {
+    const apps = req.user.apps
+
+    for (let i = 0; i < apps.length; i++) {
+      if (apps[i] === 'SUPERAPPS' || apps[i] === 'AMINISTRACIONAPPS') {
+        next()
+        return
+      }
+    }
+    return res.status(403).json({ message: 'No tiene permiso para esta App' })
+  } catch (error) {
+    console.log(error)
+    return res.status(500).send({ message: error })
+  }
+}
 ControllerAppsCtrl.isAdmin = async (req, res, next) => {
   try {
     const roles = req.user.roles

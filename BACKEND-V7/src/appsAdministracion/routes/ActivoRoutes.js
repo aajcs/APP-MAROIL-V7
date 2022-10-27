@@ -9,7 +9,7 @@ const {
   updateActivo
 } = require('../controllers/ActivoControllers')
 const auth = require('../../middlewares/authMiddleware')
-const { isAppControl } = require('../../middlewares/AppsMiddleware')
+const { isAppAdministracion } = require('../../middlewares/AppsMiddleware')
 const {
   isOperador,
   isSuperAdmin,
@@ -18,13 +18,13 @@ const {
 
 router
   .route('/')
-  .get([auth, isAppControl, isLectura], getActivos)
-  .post([auth, isAppControl, isOperador], createActivo)
+  .get([auth, isAppAdministracion, isLectura], getActivos)
+  .post([auth, isAppAdministracion, isOperador], createActivo)
 
 router
   .route('/:id')
-  .get([auth, isAppControl, isOperador], getActivo)
-  .delete([auth, isAppControl, isSuperAdmin], deleteActivo)
-  .put([auth, isAppControl, isOperador], updateActivo)
+  .get([auth, isAppAdministracion, isOperador], getActivo)
+  .delete([auth, isAppAdministracion, isSuperAdmin], deleteActivo)
+  .put([auth, isAppAdministracion, isOperador], updateActivo)
 
 module.exports = router

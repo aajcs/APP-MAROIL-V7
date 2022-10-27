@@ -9,7 +9,7 @@ const {
   updateCentroDeCostoAux
 } = require('../controllers/CentroDeCostoAuxControllers')
 const auth = require('../../middlewares/authMiddleware')
-const { isAppControl } = require('../../middlewares/AppsMiddleware')
+const { isAppAdministracion } = require('../../middlewares/AppsMiddleware')
 const {
   isOperador,
   isSuperAdmin,
@@ -18,13 +18,13 @@ const {
 
 router
   .route('/')
-  .get([auth, isAppControl, isLectura], getCentroDeCostoAuxs)
-  .post([auth, isAppControl, isOperador], createCentroDeCostoAux)
+  .get([auth, isAppAdministracion, isLectura], getCentroDeCostoAuxs)
+  .post([auth, isAppAdministracion, isOperador], createCentroDeCostoAux)
 
 router
   .route('/:id')
-  .get([auth, isAppControl, isOperador], getCentroDeCostoAux)
-  .delete([auth, isAppControl, isSuperAdmin], deleteCentroDeCostoAux)
-  .put([auth, isAppControl, isOperador], updateCentroDeCostoAux)
+  .get([auth, isAppAdministracion, isOperador], getCentroDeCostoAux)
+  .delete([auth, isAppAdministracion, isSuperAdmin], deleteCentroDeCostoAux)
+  .put([auth, isAppAdministracion, isOperador], updateCentroDeCostoAux)
 
 module.exports = router
