@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 import IngresoGastoEstadistica from './IngresoGastoEstadistica'
 
 const HomeAdministracion = () => {
