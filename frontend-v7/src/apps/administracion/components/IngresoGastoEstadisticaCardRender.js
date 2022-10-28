@@ -12,7 +12,9 @@ const IngresoGastoEstadisticaCardRender = ({ data }) => {
     'animate__animated animate__zoomInDown animate__slower',
     'animate__animated animate__rotateIn animate__slower'
   ]
-
+  const formatCurrency = (value) => {
+    return value.toLocaleString('en-US', { style: 'currency', currency: 'USD' })
+  }
   return (
     <div
       className=" col-12 lg:col-6 xl:col-3 "
@@ -27,33 +29,25 @@ const IngresoGastoEstadisticaCardRender = ({ data }) => {
             <div className="text-500 font-medium  ">
               {'Gastos Maroil: '}
               <span className="text-900 text-xl">
-                <strong>
-                  {new Intl.NumberFormat().format(data.totalGastoMaroil)}
-                </strong>
+                <strong>{formatCurrency(data.totalGastoMaroil)}</strong>
               </span>
             </div>
             <div className="text-500 font-medium  ">
               {'Gastos Cedeño: '}
               <span className="text-900 text-xl">
-                <strong>
-                  {new Intl.NumberFormat().format(data.totalGastoCedeno)}
-                </strong>
+                <strong>{formatCurrency(data.totalGastoCedeno)}</strong>
               </span>
             </div>
             <div className="text-500 font-medium  ">
               {'Gastos San Felix: '}
               <span className="text-900 text-xl">
-                <strong>
-                  {new Intl.NumberFormat().format(data.totalGastoSanFelix)}
-                </strong>
+                <strong>{formatCurrency(data.totalGastoSanFelix)}</strong>
               </span>
             </div>
             <div className="text-500 font-medium  ">
               {'Gastos Totales: '}
               <span className="text-900 text-xl">
-                <strong>
-                  {new Intl.NumberFormat().format(data.totalGastoMes)}
-                </strong>
+                <strong>{formatCurrency(data.totalGastoMes)}</strong>
               </span>
             </div>
           </div>

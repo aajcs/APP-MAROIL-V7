@@ -8,6 +8,7 @@ import { HomeAIT } from '../apps/ait/pages/HomeAIT'
 import ConfigProvider from '../apps/Control/contexts/ConfigProvider'
 import appProcuraRouter from '../apps/procura/routes/AppProcuraRouter'
 import appadministracionRouter from '../apps/administracion/routes/AppadministracionRouter'
+import appReporteGerenciaRouter from '../apps/reporteGerencia/routes/AppreporteGerenciaRouter'
 
 export default function appRouter() {
   return (
@@ -19,6 +20,10 @@ export default function appRouter() {
           <PrivateRoute
             path="/apps/controlLiquidos"
             component={appControlLiquidosRouter}
+          />
+          <PrivateRoute
+            path="/apps/reportegerencia"
+            component={appReporteGerenciaRouter}
           />
           <PrivateRoute path="/apps/procura" component={appProcuraRouter} />
           <PrivateRoute

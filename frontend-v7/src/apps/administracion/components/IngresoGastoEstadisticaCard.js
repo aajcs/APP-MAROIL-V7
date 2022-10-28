@@ -46,19 +46,28 @@ const IngresoGastoEstadisticaCard = () => {
   ]
   let auxOtro2 = []
   let diasTotales = []
+  console.log(ingresoGastos)
   const buquesToneladasDias = () => {
     mesesDelAno.forEach((dataset, i) => {
-      let ingresoGastoMes = ingresoGastos.filter((p) =>
-        moment(dataset).isSame(p.fechaIngresoGasto, 'month')
+      let ingresoGastoMes = ingresoGastos.filter(
+        (p) =>
+          p.estatusIngresoGasto === 'PROCESADO' &&
+          moment(dataset).isSame(p.fechaIngresoGasto, 'month')
       )
       let ingresoGastoMaroilMes = ingresoGastoMes.filter(
-        (p) => p.centroDeCostoAuxId.id === '63504235a9d055063b6447f0'
+        (p) =>
+          p.centroDeCostoAuxId !== null &&
+          p.centroDeCostoAuxId.id === '63504235a9d055063b6447f0'
       )
       let ingresoGastoSanFelixMes = ingresoGastoMes.filter(
-        (p) => p.centroDeCostoAuxId.id === '62de20b986f66dbfa7f25dde'
+        (p) =>
+          p.centroDeCostoAuxId !== null &&
+          p.centroDeCostoAuxId.id === '62de20b986f66dbfa7f25dde'
       )
       let ingresoGastoCedenoMes = ingresoGastoMes.filter(
-        (p) => p.centroDeCostoAuxId.id === '6350424ca9d055063b6447f3'
+        (p) =>
+          p.centroDeCostoAuxId !== null &&
+          p.centroDeCostoAuxId.id === '6350424ca9d055063b6447f3'
       )
 
       const totalEgreso = ingresoGastoMes
@@ -91,7 +100,8 @@ const IngresoGastoEstadisticaCard = () => {
   }
   return (
     <div className="grid  ">
-      {data &&
+      {ingresoGastos.length !== 0 &&
+        data &&
         data.map((data) => (
           <IngresoGastoEstadisticaCardRender data={data} key={data.id} />
         ))}

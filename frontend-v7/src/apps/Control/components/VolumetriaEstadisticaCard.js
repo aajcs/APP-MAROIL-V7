@@ -88,7 +88,8 @@ const VolumetriaEstadisticaCard = () => {
   }
   return (
     <div className="grid  ">
-      {data &&
+      {volumetrias.length !== 0 &&
+        data &&
         data.map((data) => (
           <VolumetriaEstadisticaCardRender data={data} key={data.id} />
         ))}

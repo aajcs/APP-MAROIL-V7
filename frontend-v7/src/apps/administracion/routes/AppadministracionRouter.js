@@ -23,6 +23,8 @@ import { ProcesoAuxPage } from '../pages/ProcesoAuxPage'
 import { ConceptoAuxPage } from '../pages/ConceptoAuxPage'
 import { HomeAdministracionPage } from '../pages/HomeAdministracionPage'
 import { CargaInformacionPage } from '../pages/CargaInformacionPage'
+import { MensualidadOpMesPage } from '../pages/MensualidadOpMesPage'
+import { CostoTmMesPage } from '../pages/CostoTmMesPage'
 
 export default function appadministracionRouter() {
   const { staticMenuInactive, onToggleMenuClick } = useContext(ConfigContext)
@@ -82,6 +84,16 @@ export default function appadministracionRouter() {
               exact
               path="/apps/administracion/ConceptoAux"
               component={ConceptoAuxPage}
+            />
+            <PrivateRoute
+              exact
+              path="/apps/administracion/MensualidadOpMes"
+              component={MensualidadOpMesPage}
+            />
+            <PrivateRoute
+              exact
+              path="/apps/administracion/CostoTmMes"
+              component={CostoTmMesPage}
             />
             <PrivateRoute
               exact

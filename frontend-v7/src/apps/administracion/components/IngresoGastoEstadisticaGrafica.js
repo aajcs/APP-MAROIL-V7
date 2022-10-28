@@ -111,20 +111,51 @@ const IngresoGastoEstadisticaGrafica = () => {
   let auxOtro3 = []
   let auxOtro4 = []
 
-  let diasTotales = []
+  let gastosTotalesMes = []
+  let gastosMaroilMes = []
+  let gastosSanFelixMes = []
+  let gastosCedenolMes = []
+
   const buquesToneladasDias = () => {
     mesesDelAno.forEach((dataset, i) => {
       let ingresoGasto = ingresoGastos.filter((p) =>
         moment(dataset).isSame(p.fechaIngresoGasto, 'month')
       )
+      let ingresoGastoMaroilMes = ingresoGasto.filter(
+        (p) =>
+          p.centroDeCostoAuxId !== null &&
+          p.centroDeCostoAuxId.id === '63504235a9d055063b6447f0'
+      )
+      let ingresoGastoSanFelixMes = ingresoGasto.filter(
+        (p) =>
+          p.centroDeCostoAuxId !== null &&
+          p.centroDeCostoAuxId.id === '62de20b986f66dbfa7f25dde'
+      )
+      let ingresoGastoCedenoMes = ingresoGasto.filter(
+        (p) =>
+          p.centroDeCostoAuxId !== null &&
+          p.centroDeCostoAuxId.id === '6350424ca9d055063b6447f3'
+      )
       const totalEgreso = ingresoGasto
         .map((egreso) => egreso.egresoIngresoGasto)
         .reduce((a, b) => a + b, 0)
       let mes = mesesDelAnoNombre[i]
+      const totalingresoGastoMaroil = ingresoGastoMaroilMes
+        .map((egreso) => egreso.egresoIngresoGasto)
+        .reduce((a, b) => a + b, 0)
+      const totalingresoSanFelix = ingresoGastoSanFelixMes
+        .map((egreso) => egreso.egresoIngresoGasto)
+        .reduce((a, b) => a + b, 0)
+      const totalingresoGastoCedeno = ingresoGastoCedenoMes
+        .map((egreso) => egreso.egresoIngresoGasto)
+        .reduce((a, b) => a + b, 0)
 
       // auxOtro2.push({ [mes]: totalEgreso })
       auxOtro2.push({ mesNombre: mes, totalGastoMes: totalEgreso })
-      diasTotales = diasTotales.concat(totalEgreso)
+      gastosTotalesMes = gastosTotalesMes.concat(totalEgreso)
+      gastosMaroilMes = gastosMaroilMes.concat(totalingresoGastoMaroil)
+      gastosSanFelixMes = gastosSanFelixMes.concat(totalingresoSanFelix)
+      gastosCedenolMes = gastosCedenolMes.concat(totalingresoGastoCedeno)
     })
 
     // setIngresoGastoData({
@@ -133,16 +164,38 @@ const IngresoGastoEstadisticaGrafica = () => {
     // })
     // auxOtro2.push(diasTotales)
     auxOtro3.push(...mesesDelAnoNombre)
-    auxOtro4.push({
-      type: 'bar',
-      label: 'Gastos Totales',
-      backgroundColor: '#d9a406',
-      data: [...diasTotales]
-    })
+    auxOtro4.push(
+      {
+        type: 'bar',
+        label: 'Gastos Totales',
+        backgroundColor: '#198754',
+        data: [...gastosTotalesMes]
+      },
+      {
+        type: 'bar',
+        label: 'Gastos Maroil',
+        backgroundColor: '#0d6efd',
+        data: [...gastosMaroilMes]
+      },
+      {
+        type: 'bar',
+        label: 'Gastos Cedeño',
+        backgroundColor: '#dc3545',
+        data: [...gastosCedenolMes]
+      },
+      {
+        type: 'bar',
+        label: 'Gastos San Felix',
+        backgroundColor: '#ffc107',
+        data: [...gastosSanFelixMes]
+      }
+    )
   }
   return (
     <div className="card">
-      <Chart type="bar" data={basicData} options={basicOptions} />
+      {ingresoGastos.length !== 0 && (
+        <Chart type="bar" data={basicData} options={basicOptions} />
+      )}
     </div>
   )
 }

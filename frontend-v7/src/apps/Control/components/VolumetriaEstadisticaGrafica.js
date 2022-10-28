@@ -111,39 +111,87 @@ const VolumetriaEstadisticaGrafica = () => {
   let auxOtro3 = []
   let auxOtro4 = []
   console.log(volumetrias)
-  let diasTotales = []
+  let tmTotalesMes = []
+  let tmTotalesMaroilMes = []
+  let tmTotalesSanFelixMes = []
+  let tmTotalesCedenoMes = []
   const volumetiraMeses = () => {
     mesesDelAno.forEach((dataset, i) => {
       let volumetria = volumetrias.filter((p) =>
         moment(dataset).isSame(p.fechaBlFinalVolumetria, 'month')
       )
+      let volumetriaMaroilMes = volumetria.filter(
+        (p) => p.terminalAuxId !== null && p.terminalAuxId === 'MAROIL TERMINAL'
+      )
+      let volumetriaSanFelixMes = volumetria.filter(
+        (p) => p.terminalAuxId !== null && p.terminalAuxId === 'PETRO SAN FELIX'
+      )
+      let volumetriaCedenoMes = volumetria.filter(
+        (p) => p.terminalAuxId !== null && p.terminalAuxId === 'PETRO CEDENO'
+      )
       const totalVolumetria = volumetria
         .map((blFinal) => blFinal.blFinalVolumetria)
         .reduce((a, b) => a + b, 0)
       let mes = mesesDelAnoNombre[i]
+      const totalVolumetriaMaroil = volumetriaMaroilMes
+        .map((blFinal) => blFinal.blFinalVolumetria)
+        .reduce((a, b) => a + b, 0)
+      const totalVolumetriaSanFelix = volumetriaSanFelixMes
+        .map((blFinal) => blFinal.blFinalVolumetria)
+        .reduce((a, b) => a + b, 0)
+      const totalVolumetriaCedeno = volumetriaCedenoMes
+        .map((blFinal) => blFinal.blFinalVolumetria)
+        .reduce((a, b) => a + b, 0)
 
       // auxOtro2.push({ [mes]: totalEgreso })
       auxOtro2.push({ mesNombre: mes, totalGastoMes: totalVolumetria })
-      diasTotales = diasTotales.concat(totalVolumetria)
+      tmTotalesMes = tmTotalesMes.concat(totalVolumetria)
+      tmTotalesMaroilMes = tmTotalesMaroilMes.concat(totalVolumetriaMaroil)
+      tmTotalesSanFelixMes = tmTotalesSanFelixMes.concat(
+        totalVolumetriaSanFelix
+      )
+      tmTotalesCedenoMes = tmTotalesCedenoMes.concat(totalVolumetriaCedeno)
     })
 
     // setIngresoGastoData({
     //   ...ingresoGastoData,
-    //   [mesesDelAnoNombre]: diasTotales
+    //   [mesesDelAnoNombre]: tmTotalesMes
     // })
-    // auxOtro2.push(diasTotales)
+    // auxOtro2.push(tmTotalesMes)
     auxOtro3.push(...mesesDelAnoNombre)
-    auxOtro4.push({
-      type: 'bar',
-      label: 'Toneladas Totales',
-      backgroundColor: '#d9a406',
-      data: [...diasTotales]
-    })
+    auxOtro4.push(
+      {
+        type: 'bar',
+        label: 'Toneladas Totales',
+        backgroundColor: '#198754',
+        data: [...tmTotalesMes]
+      },
+      {
+        // type: 'bar',
+        label: 'Toneladas Maroil',
+        backgroundColor: '#0d6efd',
+        data: [...tmTotalesMaroilMes]
+      },
+      {
+        // type: 'bar',
+        label: 'Toneladas San Felix',
+        backgroundColor: '#dc3545',
+        data: [...tmTotalesSanFelixMes]
+      },
+      {
+        // type: 'bar',
+        label: 'Toneladas Cedeño',
+        backgroundColor: '#ffc107',
+        data: [...tmTotalesCedenoMes]
+      }
+    )
   }
 
   return (
     <div className="card">
-      <Chart type="bar" data={basicData} options={basicOptions} />
+      {volumetrias.length !== 0 && (
+        <Chart type="bar" data={basicData} options={basicOptions} />
+      )}
     </div>
   )
 }

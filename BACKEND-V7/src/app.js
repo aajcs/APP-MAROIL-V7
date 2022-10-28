@@ -67,6 +67,14 @@ app.use(
   require('./appsAdministracion/routes/ConceptoAuxRoutes')
 )
 app.use(
+  '/api/MensualidadOpMes',
+  require('./appsAdministracion/routes/MensualidadOpMesRoutes')
+)
+app.use(
+  '/api/CostoTmMes',
+  require('./appsAdministracion/routes/CostoTmMesRoutes')
+)
+app.use(
   '/api/RequisicionMaterialesItems',
   require('./appsProcura/routes/RequisicionMaterialesItemsRoutes')
 )

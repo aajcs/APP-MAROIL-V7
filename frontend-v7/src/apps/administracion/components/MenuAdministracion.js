@@ -93,6 +93,18 @@ export const MenuAdministracion = () => {
           icon: 'pi pi-fw pi-database',
           to: '/apps/administracion/Presupuesto',
           permi: 'SUPERADMIN'
+        },
+        {
+          label: 'MENSUALIDAD OPERATIVA',
+          icon: 'pi pi-fw pi-database',
+          to: '/apps/administracion/MensualidadOpMes',
+          permi: 'SUPERADMIN'
+        },
+        {
+          label: 'COSTO TM MES',
+          icon: 'pi pi-fw pi-database',
+          to: '/apps/administracion/CostoTmMes',
+          permi: 'SUPERADMIN'
         }
       ]
     }
