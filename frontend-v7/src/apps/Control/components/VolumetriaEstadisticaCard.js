@@ -49,8 +49,10 @@ const VolumetriaEstadisticaCard = () => {
 
   const volumetiraMeses = () => {
     mesesDelAno.forEach((dataset, i) => {
-      let volumetriaMes = volumetrias.filter((p) =>
-        moment(dataset).isSame(p.fechaBlFinalVolumetria, 'month')
+      let volumetriaMes = volumetrias.filter(
+        (p) =>
+          p.estatusVolumetria !== 'VOLUMETRIA ESTIMADA' &&
+          moment(dataset).isSame(p.fechaBlFinalVolumetria, 'month')
       )
       let volumetriaMaroilMes = volumetriaMes.filter(
         (p) => p.terminalAuxId === 'MAROIL TERMINAL'

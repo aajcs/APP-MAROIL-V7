@@ -11,6 +11,11 @@ const CostoPorTmReporteEstadisticaCard = ({ dataDataCompleta }) => {
     dataDataCompleta.totalVolumenMes
   const servicoOperativa =
     dataDataCompleta.totalVolumenMes * dataDataCompleta.totalCostoTmMes
+  console.log('servicioOperativa' + servicoOperativa)
+  console.log('totalVolumenMes' + dataDataCompleta.totalVolumenMes)
+  console.log(
+    'dataDataCompleta.totalCostoTmMes' + dataDataCompleta.totalCostoTmMes
+  )
 
   const utilidadConOperativa =
     dataDataCompleta.totalVolumenMes * dataDataCompleta.totalCostoTmMes -

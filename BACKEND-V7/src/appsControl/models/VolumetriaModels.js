@@ -15,6 +15,9 @@ const volumetriaSchema = new Schema(
       type: Number,
       default: 0
     },
+    estatusVolumetria: {
+      type: String
+    },
     fechaBlFinalVolumetria: {
       type: Date
     },

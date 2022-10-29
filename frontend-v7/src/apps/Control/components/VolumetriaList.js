@@ -194,6 +194,11 @@ const VolumetriaList = () => {
             body={blFinalVolumetriaBodyTemplate}
           />
           <Column
+            field="estatusVolumetria"
+            header="estatusVolumetria"
+            sortable
+          />
+          <Column
             field="fechaBlFinalVolumetria"
             header="fechaBlFinalVolumetria"
             sortable

@@ -18,6 +18,7 @@ const VolumetriaForm = (props) => {
     barcoID: null,
     terminalAuxId: '',
     blFinalVolumetria: 0,
+    estatusVolumetria: '',
     fechaBlFinalVolumetria: null,
     volumetriaCreado: moment(),
     volumetriaModificado: moment()
@@ -81,9 +82,16 @@ const VolumetriaForm = (props) => {
     useState(null)
 
   const [volumetriaData, setVolumetriaData] = useState(initialVolumetriaForm)
-
+  const [estatusVolumetria, setEstatusVolumetria] = useState(null)
   const barcoIDGOM = barcos
-
+  const estadoVolumetria = [
+    { estatusVolumetria: 'VOLUMETRIA FINAL' },
+    { estatusVolumetria: 'VOLUMETRIA ESTIMADA' }
+  ]
+  const onEstatusVolumetria = (e) => {
+    setEstatusVolumetria(e.value)
+    updateField(e.value.estatusVolumetria, 'estatusVolumetria')
+  }
   const terminalAuxIdVolumetria = [
     { name: 'MAROIL TERMINAL' },
     { name: 'PETRO CEDENO' },
@@ -120,6 +128,9 @@ const VolumetriaForm = (props) => {
         editVolumetria.fechaBlFinalVolumetria &&
           moment(editVolumetria.fechaBlFinalVolumetria)._d
       )
+      setEstatusVolumetria({
+        estatusVolumetria: editVolumetria.estatusVolumetria
+      })
     }
   }, [editVolumetria])
 
@@ -160,6 +171,7 @@ const VolumetriaForm = (props) => {
     setSelectedterminalAuxIdVolumetria(null)
     setEditVolumetria(null)
     setDateFinal(null)
+    setEstatusVolumetria(null)
   }
   const selectedUbicacionBuqueTemplate = (option, props) => {
     if (option) {
@@ -241,6 +253,17 @@ const VolumetriaForm = (props) => {
                 minFractionDigits={3}
               />
             </div>
+            <div className="field col-12 md:col-6">
+              <label>Estado</label>
+              <Dropdown
+                value={estatusVolumetria}
+                options={estadoVolumetria}
+                onChange={onEstatusVolumetria}
+                optionLabel="estatusVolumetria"
+                placeholder="Seleccione Estado"
+              />
+            </div>
+
             <div className="field col-12 md:col-6">
               <label>Fecha Final Carga</label>
               <Calendar

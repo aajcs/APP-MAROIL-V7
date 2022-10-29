@@ -117,8 +117,10 @@ const VolumetriaEstadisticaGrafica = () => {
   let tmTotalesCedenoMes = []
   const volumetiraMeses = () => {
     mesesDelAno.forEach((dataset, i) => {
-      let volumetria = volumetrias.filter((p) =>
-        moment(dataset).isSame(p.fechaBlFinalVolumetria, 'month')
+      let volumetria = volumetrias.filter(
+        (p) =>
+          p.estatusVolumetria !== 'VOLUMETRIA ESTIMADA' &&
+          moment(dataset).isSame(p.fechaBlFinalVolumetria, 'month')
       )
       let volumetriaMaroilMes = volumetria.filter(
         (p) => p.terminalAuxId !== null && p.terminalAuxId === 'MAROIL TERMINAL'

@@ -9,6 +9,7 @@ volumetriaCtrl.createVolumetria = async (req, res) => {
     centroDeCostoAuxId,
     blFinalVolumetria,
     fechaBlFinalVolumetria,
+    estatusVolumetria,
     volumetriaCreado,
     volumetriaModificado
   } = req.body
@@ -19,6 +20,7 @@ volumetriaCtrl.createVolumetria = async (req, res) => {
       centroDeCostoAuxId,
       blFinalVolumetria,
       fechaBlFinalVolumetria,
+      estatusVolumetria,
       volumetriaCreado,
       volumetriaModificado
     })
@@ -89,6 +91,7 @@ volumetriaCtrl.updateVolumetria = async (req, res) => {
     centroDeCostoAuxId,
     blFinalVolumetria,
     fechaBlFinalVolumetria,
+    estatusVolumetria,
     volumetriaCreado,
     volumetriaModificado
   } = req.body
@@ -102,6 +105,7 @@ volumetriaCtrl.updateVolumetria = async (req, res) => {
         centroDeCostoAuxId,
         blFinalVolumetria,
         fechaBlFinalVolumetria,
+        estatusVolumetria,
         volumetriaCreado,
         volumetriaModificado
       },
