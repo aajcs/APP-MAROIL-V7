@@ -12,10 +12,10 @@ import { ConfigContext } from '../../../contexts/ConfigContext'
 
 import '../styles/stylesReporteGerencia.css'
 
-import { ReporteGerenciaPages } from '../pages/ReporteGerenciaPages'
 import { AdministracionReportePage } from '../pages/AdministracionReportePage'
 import { ControlSolidosReportePage } from '../pages/ControlSolidosReportePage'
 import { CostoPorTmReportePage } from '../pages/CostoPorTmReportePage'
+import { ReporteGerenciaHomePages } from '../pages/ReporteGerenciaHomePages'
 
 export default function appReporteGerenciaRouter() {
   const { staticMenuInactive, onToggleMenuClick } = useContext(ConfigContext)
@@ -49,7 +49,7 @@ export default function appReporteGerenciaRouter() {
             <PrivateRoute
               exact
               path="/apps/reportegerencia"
-              component={ReporteGerenciaPages}
+              component={ReporteGerenciaHomePages}
             />
             <PrivateRoute
               exact

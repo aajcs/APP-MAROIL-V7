@@ -7,7 +7,6 @@ export default function Apps() {
   console.log(appsPermiso)
   const validarAccesoApp = (apps) => {
     const accesoApps = appsPermiso.find((p) => p === apps || p === 'SUPERAPPS')
-    console.log(accesoApps)
     return accesoApps
   }
   const history = useHistory()
@@ -15,7 +14,7 @@ export default function Apps() {
     history.push('/apps/control')
   }
   const onAppsControlLiquidosClick = () => {
-    history.push('/apps/controlLiquidos')
+    validarAccesoApp('CONTROLAPPS') && history.push('/apps/controlLiquidos')
   }
   const onAppsAdministracionClick = () => {
     validarAccesoApp('AMINISTRACIONAPPS') &&
