@@ -10,8 +10,9 @@ import { ProcesoAuxContext } from '../contexts/ProcesoAuxContext'
 import moment from 'moment'
 
 import ProcesoAuxForm from './ProcesoAuxForm'
-
+import AuthUse from '../../../auth/AuthUse'
 const ProcesoAuxList = () => {
+  const auth = AuthUse()
   const { procesoAuxs, findProcesoAux, deleteProcesoAux, loading } =
     useContext(ProcesoAuxContext)
   console.log(procesoAuxs)
@@ -92,6 +93,7 @@ const ProcesoAuxList = () => {
         className="p-button-text"
         onClick={() => setDeleteBarcoDialog(false)}
       />
+
       <Button
         label="Si"
         icon="pi pi-check"
@@ -114,12 +116,13 @@ const ProcesoAuxList = () => {
           className="p-button-rounded p-button-success mr-2 mb-2"
           onClick={() => saveBarco(rowData.id)}
         />
-
-        <Button
-          icon="pi pi-trash"
-          className="p-button-rounded  p-button-danger"
-          onClick={() => confirmDeleteBarco(rowData)}
-        />
+        {auth.user.faidUser.roles[0] === 'SUPERADMIN' && (
+          <Button
+            icon="pi pi-trash"
+            className="p-button-rounded  p-button-danger"
+            onClick={() => confirmDeleteBarco(rowData)}
+          />
+        )}
       </div>
     )
   }

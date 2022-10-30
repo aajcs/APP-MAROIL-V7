@@ -10,8 +10,9 @@ import { CentroDeCostoAuxContext } from '../contexts/CentroDeCostoAuxContext'
 import moment from 'moment'
 
 import CentroDeCostoAuxForm from './CentroDeCostoAuxForm'
-
+import AuthUse from '../../../auth/AuthUse'
 const CentroDeCostoAuxList = () => {
+  const auth = AuthUse()
   const {
     centroDeCostoAuxs,
     findCentroDeCostoAux,
@@ -94,7 +95,7 @@ const CentroDeCostoAuxList = () => {
         icon="pi pi-times"
         className="p-button-text"
         onClick={() => setDeleteBarcoDialog(false)}
-      />
+      />{' '}
       <Button
         label="Si"
         icon="pi pi-check"
@@ -117,12 +118,13 @@ const CentroDeCostoAuxList = () => {
           className="p-button-rounded p-button-success mr-2 mb-2"
           onClick={() => saveBarco(rowData.id)}
         />
-
-        <Button
-          icon="pi pi-trash"
-          className="p-button-rounded  p-button-danger"
-          onClick={() => confirmDeleteBarco(rowData)}
-        />
+        {auth.user.faidUser.roles[0] === 'SUPERADMIN' && (
+          <Button
+            icon="pi pi-trash"
+            className="p-button-rounded  p-button-danger"
+            onClick={() => confirmDeleteBarco(rowData)}
+          />
+        )}
       </div>
     )
   }

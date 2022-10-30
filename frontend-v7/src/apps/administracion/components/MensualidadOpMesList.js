@@ -8,10 +8,11 @@ import { InputText } from 'primereact/inputtext'
 import { Toast } from 'primereact/toast'
 import { MensualidadOpMesContext } from '../contexts/MensualidadOpMesContext'
 import moment from 'moment'
-
+import AuthUse from '../../../auth/AuthUse'
 import MensualidadOpMesForm from './MensualidadOpMesForm'
 
 const MensualidadOpMesList = () => {
+  const auth = AuthUse()
   const {
     mensualidadOpMess,
     findMensualidadOpMes,
@@ -118,12 +119,13 @@ const MensualidadOpMesList = () => {
           className="p-button-rounded p-button-success mr-2 mb-2"
           onClick={() => saveBarco(rowData.id)}
         />
-
-        <Button
-          icon="pi pi-trash"
-          className="p-button-rounded  p-button-danger"
-          onClick={() => confirmDeleteBarco(rowData)}
-        />
+        {auth.user.faidUser.roles[0] === 'SUPERADMIN' && (
+          <Button
+            icon="pi pi-trash"
+            className="p-button-rounded  p-button-danger"
+            onClick={() => confirmDeleteBarco(rowData)}
+          />
+        )}
       </div>
     )
   }

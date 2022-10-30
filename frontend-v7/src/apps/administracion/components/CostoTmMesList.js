@@ -8,10 +8,11 @@ import { InputText } from 'primereact/inputtext'
 import { Toast } from 'primereact/toast'
 import { CostoTmMesContext } from '../contexts/CostoTmMesContext'
 import moment from 'moment'
-
+import AuthUse from '../../../auth/AuthUse'
 import CostoTmMesForm from './CostoTmMesForm'
 
 const CostoTmMesList = () => {
+  const auth = AuthUse()
   const { costoTmMess, findCostoTmMes, deleteCostoTmMes, loading } =
     useContext(CostoTmMesContext)
   console.log(costoTmMess)
@@ -117,12 +118,13 @@ const CostoTmMesList = () => {
           className="p-button-rounded p-button-success mr-2 mb-2"
           onClick={() => saveBarco(rowData.id)}
         />
-
-        <Button
-          icon="pi pi-trash"
-          className="p-button-rounded  p-button-danger"
-          onClick={() => confirmDeleteBarco(rowData)}
-        />
+        {auth.user.faidUser.roles[0] === 'SUPERADMIN' && (
+          <Button
+            icon="pi pi-trash"
+            className="p-button-rounded  p-button-danger"
+            onClick={() => confirmDeleteBarco(rowData)}
+          />
+        )}
       </div>
     )
   }

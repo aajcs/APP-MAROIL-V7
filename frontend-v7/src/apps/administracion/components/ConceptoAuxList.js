@@ -10,8 +10,9 @@ import { ConceptoAuxContext } from '../contexts/ConceptoAuxContext'
 import moment from 'moment'
 
 import ConceptoAuxForm from './ConceptoAuxForm'
-
+import AuthUse from '../../../auth/AuthUse'
 const ConceptoAuxList = () => {
+  const auth = AuthUse()
   const { conceptoAuxs, findConceptoAux, deleteConceptoAux, loading } =
     useContext(ConceptoAuxContext)
   console.log(conceptoAuxs)
@@ -114,12 +115,13 @@ const ConceptoAuxList = () => {
           className="p-button-rounded p-button-success mr-2 mb-2"
           onClick={() => saveBarco(rowData.id)}
         />
-
-        <Button
-          icon="pi pi-trash"
-          className="p-button-rounded  p-button-danger"
-          onClick={() => confirmDeleteBarco(rowData)}
-        />
+        {auth.user.faidUser.roles[0] === 'SUPERADMIN' && (
+          <Button
+            icon="pi pi-trash"
+            className="p-button-rounded  p-button-danger"
+            onClick={() => confirmDeleteBarco(rowData)}
+          />
+        )}
       </div>
     )
   }
