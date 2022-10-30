@@ -191,6 +191,7 @@ const VolumetriaEstadisticaGrafica = () => {
 
   return (
     <div className="card">
+      <h5>VOLUMETRIA TOTAL</h5>
       {volumetrias.length !== 0 && (
         <Chart type="bar" data={basicData} options={basicOptions} />
       )}

@@ -24,7 +24,7 @@ const IngresoGastoEstadisticaCardRender = ({ data }) => {
         <div className="flex justify-content-between mb-1">
           <div>
             <span className="block text-500 font-medium mb-1">
-              {data.mesNombre}
+              {data.mesNombre.toUpperCase()}
             </span>
             <div className="text-500 font-medium  ">
               {'Gastos Maroil: '}

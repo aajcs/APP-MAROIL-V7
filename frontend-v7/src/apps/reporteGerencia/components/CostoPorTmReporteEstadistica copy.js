@@ -6,57 +6,22 @@ import { IngresoGastoContext } from '../../administracion/contexts/IngresoGastoC
 import { VolumetriaContext } from '../../Control/contexts/VolumetriaContext'
 import { CostoTmMesContext } from '../../administracion/contexts/CostoTmMesContext'
 import { MensualidadOpMesContext } from '../../administracion/contexts/MensualidadOpMesContext'
-import CostoPorTmHomeCard from './CostoPorTmHomeCard'
-import CostoPorTmHomeGrafica from './CostoPorTmHomeGrafica'
-import IngresoGastoEstadisticaGrafica from '../../administracion/components/IngresoGastoEstadisticaGrafica'
-import VolumetriaEstadisticaGrafica from '../../Control/components/VolumetriaEstadisticaGrafica'
+import CostoPorTmReporteEstadisticaCard from './CostoPorTmReporteEstadisticaCard'
 
-const HomeInfo = () => {
+const CostoPorTmReporteEstadistica = () => {
   const { ingresoGastos } = useContext(IngresoGastoContext)
   const { volumetrias } = useContext(VolumetriaContext)
   const { costoTmMess } = useContext(CostoTmMesContext)
   const { mensualidadOpMess } = useContext(MensualidadOpMesContext)
+  console.log(ingresoGastos)
+  console.log(volumetrias)
+  console.log(costoTmMess)
+  console.log(mensualidadOpMess)
 
   const [dataDataCompleta, setdataDataCompleta] = useState()
-  const [dataGraficaCostoTmMuelle, setDataGraficaCostoTmMuelle] = useState({
-    labels: [
-      'enero',
-      'febrero',
-      'marzo',
-      'abril',
-      'mayo',
-      'junio',
-      'julio',
-      'agosto',
-      'septiembre',
-      'octubre',
-      'noviembre',
-      'diciembre'
-    ],
-    datasets: [
-      {
-        label: 'MAROIL',
-        backgroundColor: '#094db1',
-        data: [65, 59, 80, 81, 56, 55, 40, 65, 59, 80, 81, 56]
-      },
-      {
-        label: 'SAN FELIX',
-        backgroundColor: '#20c94f',
-        data: [65, 59, 80, 81, 56, 55, 40, 65, 59, 80, 81, 56]
-      },
-      {
-        label: 'CEDEÑO',
-        backgroundColor: '#dc3545',
-        data: [65, 59, 80, 81, 56, 55, 40, 65, 59, 80, 81, 56]
-      }
-    ]
-  })
+
+  console.log(dataDataCompleta)
   useEffect(() => {
-    setDataGraficaCostoTmMuelle({
-      ...setDataGraficaCostoTmMuelle,
-      labels: arrayMesesGrafica,
-      datasets: arrayContoTmMuelles
-    })
     dataMesCompleta()
     setdataDataCompleta(arrayDataCompleta)
   }, [ingresoGastos, volumetrias, costoTmMess, mensualidadOpMess])
@@ -95,13 +60,7 @@ const HomeInfo = () => {
     'noviembre',
     'diciembre'
   ]
-  let arrayMesesGrafica = []
-  let arrayContoTmMuelles = []
-  let costoTmMesTotalesMes = []
-  let costoTmMesTotalesMesConUtilidad = []
-  let costoTmMesMaroilTotalesMes = []
-  let costoTmMesCedenoTotalesMes = []
-  let costoTmMesSanFelixTotalesMes = []
+
   const dataMesCompleta = () => {
     mesesDelAno.forEach((dataset, i) => {
       // GATOS
@@ -186,7 +145,6 @@ const HomeInfo = () => {
         .reduce((a, b) => a + b, 0)
       arrayDataCompleta.push({
         mesNombre: mes,
-        fechaEfectiva: dataset,
         totalGastoMes: totalEgreso,
         totalGastoMaroil: totalingresoGastoMaroil,
         totalGastoSanFelix: totalingresoGastoSanFelix,
@@ -198,74 +156,25 @@ const HomeInfo = () => {
         totalCostoTmMes: totalCostoTmMes,
         totalmensualidadOpMes: totalMensualidadOpMes
       })
-      console.log(totalingresoGastoMaroil)
-      console.log(totalVolumetriaMaroil)
-      // COSTO TONELADAS METRICAS MUELLE
-      costoTmMesTotalesMes = costoTmMesTotalesMes.concat(
-        totalEgreso / totalVolumetria
-      )
-      costoTmMesTotalesMesConUtilidad = costoTmMesTotalesMesConUtilidad.concat(
-        (totalEgreso + totalMensualidadOpMes) / totalVolumetria
-      )
-      costoTmMesMaroilTotalesMes = costoTmMesMaroilTotalesMes.concat(
-        totalingresoGastoMaroil / totalVolumetriaMaroil
-      )
-      costoTmMesCedenoTotalesMes = costoTmMesCedenoTotalesMes.concat(
-        totalingresoGastoCedeno / totalVolumetriaCedeno
-      )
-      costoTmMesSanFelixTotalesMes = costoTmMesSanFelixTotalesMes.concat(
-        totalingresoGastoSanFelix / totalVolumetriaSanFelix
-      )
-    })
-    console.log(costoTmMesMaroilTotalesMes)
-    arrayContoTmMuelles.push({
-      type: 'bar',
-      label: 'COSTO SI MENSUALIDAD OPERATIVA',
-      backgroundColor: '#094db1',
-      data: [...costoTmMesTotalesMes]
-    })
-    arrayContoTmMuelles.push({
-      type: 'bar',
-      label: 'COSTO CON MENSUALIDAD OPERATIVA',
-      backgroundColor: '#20c94f',
-      data: [...costoTmMesTotalesMesConUtilidad]
     })
   }
-  console.log(costoTmMesMaroilTotalesMes)
-  arrayMesesGrafica.push(...mesesDelAnoNombre)
 
   // cabecera de la tabla
 
   return (
     <>
-      <div className=" ">
+      <div className="grid  ">
         {ingresoGastos.length !== 0 &&
-          volumetrias.length !== 0 &&
-          costoTmMess.length !== 0 &&
-          mensualidadOpMess.length !== 0 &&
           dataDataCompleta &&
-          dataDataCompleta.map(
-            (dataDataCompleta) =>
-              moment(dataDataCompleta.fechaEfectiva).isSame(
-                moment().subtract(1, 'months'),
-                'month'
-              ) && (
-                <>
-                  <CostoPorTmHomeCard
-                    dataDataCompleta={dataDataCompleta}
-                    key={dataDataCompleta.id}
-                  />
-                </>
-              )
-          )}
-        <CostoPorTmHomeGrafica
-          dataGraficaCostoTmMuelle={dataGraficaCostoTmMuelle}
-        />
-        <IngresoGastoEstadisticaGrafica />
-        <VolumetriaEstadisticaGrafica />
+          dataDataCompleta.map((dataDataCompleta) => (
+            <CostoPorTmReporteEstadisticaCard
+              dataDataCompleta={dataDataCompleta}
+              key={dataDataCompleta.id}
+            />
+          ))}
       </div>
     </>
   )
 }
 
-export default HomeInfo
+export default CostoPorTmReporteEstadistica

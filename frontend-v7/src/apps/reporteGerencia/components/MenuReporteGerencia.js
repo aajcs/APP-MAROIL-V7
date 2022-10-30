@@ -14,61 +14,49 @@ export const MenuReporteGerencia = () => {
           label: 'INICIO',
           icon: 'pi pi-fw pi-home',
           to: '/apps/ReporteGerencia',
-          permi: 'SUPERADMIN',
-          permi1: 'SUPERADMIN'
+          permi: 'ADMIN',
+          permi1: 'LECTURA',
+          permi2: 'OPERADOR'
         },
         {
           label: 'ADMINISTRACION',
           icon: 'pi pi-fw pi-home',
           to: '/apps/reportegerencia/AdministracionReporte',
-          permi: 'SUPERADMIN',
-          permi1: 'SUPERADMIN'
+          permi: 'ADMIN',
+          permi1: 'LECTURA',
+          permi2: 'OPERADOR'
         },
         {
           label: 'CONTROL SOLIDOS',
           icon: 'pi pi-fw pi-home',
           to: '/apps/reportegerencia/ControlSolidoReporte',
-          permi: 'SUPERADMIN',
-          permi1: 'SUPERADMIN'
+          permi: 'ADMIN',
+          permi1: 'LECTURA',
+          permi2: 'OPERADOR'
         },
         {
           label: 'COSTO POR TONELADA',
           icon: 'pi pi-fw pi-home',
           to: '/apps/reportegerencia/CostoPorTm',
-          permi: 'SUPERADMIN',
-          permi1: 'SUPERADMIN'
+          permi: 'ADMIN',
+          permi1: 'LECTURA',
+          permi2: 'OPERADOR'
         }
       ]
     },
 
-    auth.user.faidUser.roles[0] !== 'LECTURA' &&
-      auth.user.faidUser.roles[0] !== 'CLIENTE' && {
-        label: 'OPERACIONES',
-        icon: 'pi pi-fw pi-shopping-cart',
-        items: [
-          {
-            label: 'REQUISICIÓN',
-            icon: 'pi pi-fw pi-server'
-            // to: '/apps/control/gabarraestatus'
-          }
-        ]
-      },
+    auth.user.faidUser.roles[0] !== 'SUPERADMIN' && {
+      label: 'OPERACIONES',
+      icon: 'pi pi-fw pi-shopping-cart',
+      items: []
+    },
 
-    auth.user.faidUser.roles[0] !== 'CLIENTE' &&
-      auth.user.faidUser.roles[0] !== 'LECTURA' &&
-      auth.user.faidUser.roles[0] !== 'ADMIN' && {
-        label: 'CARGA DE INFORMACION',
-        icon: 'pi pi-fw pi-envelope',
-        permi: 'SUPERADMIN',
-        items: [
-          {
-            label: 'PROYECTOS',
-            icon: 'pi pi-fw pi-database',
-            // to: '/apps/ReporteGerencia/proyectoaux',
-            permi: 'SUPERADMIN'
-          }
-        ]
-      }
+    auth.user.faidUser.roles[0] !== 'SUPERADMIN' && {
+      label: 'CARGA DE INFORMACION',
+      icon: 'pi pi-fw pi-envelope',
+      permi: 'SUPERADMIN',
+      items: []
+    }
   ]
 
   return (

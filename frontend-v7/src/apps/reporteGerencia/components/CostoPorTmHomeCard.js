@@ -21,6 +21,15 @@ const CostoPorTmHomeCard = ({ dataDataCompleta }) => {
     dataDataCompleta.totalVolumenMes
   const servicoOperativa =
     dataDataCompleta.totalVolumenMes * dataDataCompleta.totalCostoTmMes
+  const servicoOperativaMaroil =
+    dataDataCompleta.totalVolumenTerminalMaroil *
+    dataDataCompleta.totalCostoTmMes
+  const servicoOperativaCedeno =
+    dataDataCompleta.totalVolumenTerminalCedeno *
+    dataDataCompleta.totalCostoTmMes
+  const servicoOperativaSanFelix =
+    dataDataCompleta.totalVolumenTerminalSanFelix *
+    dataDataCompleta.totalCostoTmMes
 
   const utilidadConOperativa =
     dataDataCompleta.totalVolumenMes * dataDataCompleta.totalCostoTmMes -
@@ -39,298 +48,280 @@ const CostoPorTmHomeCard = ({ dataDataCompleta }) => {
     return value.toLocaleString('en-US', { style: 'currency', currency: 'USD' })
   }
   return (
-    <div
-      className=" col-12 lg:col-12 xl:col-12 "
-      // onClick={onAppsControlClick}
-    >
-      <div className={`  mb-0 ${efectoTarjeta[getRandomInt(4)]}`}>
-        <div className="grid">
-          <div className="col-12 lg:col-6 xl:col-4">
-            <div className="card  cardAPPS">
-              <div
-                className="card Pb-0 border-bottom-0 border-start-0 border-2  mb-0 text-end animate__animated animate__rotateInDownRight animate__slower"
-                style={{ 'border-color': '#094db1', padding: 0 }}
-              >
-                <span className="mr-2  fst-italic ">
-                  {'MAROIL TRADING ING'}
-                </span>{' '}
+    <>
+      <div className="card  ">
+        <span className="text-900 text-center fw-bold fst-italic ">
+          {dataDataCompleta.mesNombre.toUpperCase()}
+        </span>
+      </div>
+      <div
+        className="flex justify-content-between mb-1 col-12 lg:col-12 xl:col-12 "
+        // onClick={onAppsControlClick}
+      >
+        {' '}
+        <div
+          className={`cardAPPS card m-2 mt-0 col-12 lg:col-12 xl:col-6 ${
+            efectoTarjeta[getRandomInt(4)]
+          }`}
+        >
+          <div className="flex justify-content-between mb-1 p-3">
+            <div>
+              {/* <div className="text-500 font-medium  ">
+            {'Gastos Maroil: '}
+            <span className="text-900 ">
+              <strong>
+                {formatCurrency(dataDataCompleta.totalGastoMaroil)}
+              </strong>
+            </span>
+          </div>
+          <div className="text-500 font-medium  ">
+            {'Gastos Cedeño: '}
+            <span className="text-900 ">
+              <strong>
+                {formatCurrency(dataDataCompleta.totalGastoCedeno)}
+              </strong>
+            </span>
+          </div>
+          <div className="text-500 font-medium  ">
+            {'Gastos San Felix: '}
+            <span className="text-900 ">
+              <strong>
+                {formatCurrency(dataDataCompleta.totalGastoSanFelix)}
+              </strong>
+            </span>
+          </div> */}{' '}
+              <div className="text-500 font-medium  ">
+                {'Gastos Totales: '}
+                <span className="text-900 ">
+                  <strong>
+                    {formatCurrency(dataDataCompleta.totalGastoMes)}
+                  </strong>
+                </span>
+              </div>{' '}
+              <div className="text-500 font-medium  ">
+                {'Toneladas Totales: '}
+                <span className="text-900 ">
+                  <strong>
+                    {new Intl.NumberFormat().format(
+                      dataDataCompleta.totalVolumenMes
+                    )}{' '}
+                    Tm
+                  </strong>
+                </span>
               </div>
-
-              <div
-                className="card Pb-2 border-top-0 border-end-0 border-2 animate__animated animate__zoomInLeft animate__slower animate__delay-2s"
-                style={{ 'border-color': '#094db1' }}
-              >
-                <div className="flex justify-content-between">
-                  <div>
-                    <span className="text-500"> {'Gastos => '}</span>
-                    <span className="text-900 font-medium text-xl">
-                      {formatCurrency(dataDataCompleta.totalGastoMaroil)}
-                    </span>
-                  </div>
-                  <div className="">
-                    <span style={{ height: '2.5rem', 'font-size': '0.8rem' }}>
-                      Costo TM <br />
-                    </span>
-                    <span>
-                      <strong>{formatCurrency(costoPorMaroilTm)}</strong>
-                    </span>
-                  </div>
-                </div>
-
-                <div>
-                  <span className="text-500"> {'Toneladas => '}</span>
-                  <span className="text-900 font-medium text-xl">
+              {/* <div className="text-500 font-medium  ">
+            {'Toneladas Terminal Maroil: '}
+            <span className="text-900 ">
+              <strong>
+                {new Intl.NumberFormat().format(
+                  dataDataCompleta.totalVolumenTerminalMaroil
+                )}{' '}
+                Tm
+              </strong>
+            </span>
+          </div>
+          <div className="text-500 font-medium  ">
+            {'Toneladas San Felix: '}
+            <span className="text-900 ">
+              <strong>
+                {new Intl.NumberFormat().format(
+                  dataDataCompleta.totalVolumenTerminalSanFelix
+                )}{' '}
+                Tm
+              </strong>
+            </span>
+          </div>
+          <div className="text-500 font-medium  ">
+            {'Toneladas Cedeno: '}
+            <span className="text-900 ">
+              <strong>
+                {new Intl.NumberFormat().format(
+                  dataDataCompleta.totalVolumenTerminalCedeno
+                )}{' '}
+                Tm
+              </strong>
+            </span>
+          </div> */}
+              <div className="text-500 font-medium  ">
+                {'Costo por Tonelada'}
+                <span className="text-900 ">
+                  <strong>{formatCurrency(costoPorTm)}</strong>
+                </span>
+              </div>
+              <div className="text-500 font-medium  ">
+                {'Mensualidad Operacional: '}
+                <span className="text-900 ">
+                  <strong>
+                    {formatCurrency(dataDataCompleta.totalmensualidadOpMes)}
+                  </strong>
+                </span>
+              </div>
+              <div className="text-500 font-medium  ">
+                {'Total Gasto con Mensualida Operativa: '}
+                <span className="text-900 ">
+                  <strong>
+                    {formatCurrency(
+                      dataDataCompleta.totalmensualidadOpMes +
+                        dataDataCompleta.totalGastoMes
+                    )}
+                  </strong>
+                </span>
+              </div>
+              <div className="text-500 font-medium  ">
+                {'Costo por Tonelada Con Mensualidad Operativa'}
+                <span className="text-900 ">
+                  <strong>{formatCurrency(costoPorTmMensualidaOp)}</strong>
+                </span>
+              </div>
+              <div className="text-500 font-medium  ">
+                {'costo por Tonelada Del Servicio De Operacion: '}
+                <span className="text-900 ">
+                  <strong>
+                    {formatCurrency(dataDataCompleta.totalCostoTmMes)}
+                  </strong>
+                </span>
+              </div>
+              <div className="text-500 font-medium  ">
+                {'Servicio de operacion'}
+                <span className="text-900 ">
+                  <strong>{formatCurrency(servicoOperativa)}</strong>
+                </span>
+              </div>
+              <div className="text-500 font-medium  ">
+                {'Utilidad sin mensualidad operativa'}
+                <span className="text-900 ">
+                  <strong>{formatCurrency(utilidadConOperativa)}</strong>
+                </span>
+              </div>
+              <div className="text-500 font-medium  ">
+                {'Utilidad con mensualidad operativa'}
+                <span className="text-900 ">
+                  <strong>{formatCurrency(utilidadSinOperativa)}</strong>
+                </span>
+              </div>
+            </div>
+            <div
+              className="flex align-items-center justify-content-center bg-blue-100 border-round"
+              style={{ width: '2.5rem', height: '2.5rem' }}
+            >
+              <i className="pi pi-chart-bar text-blue-500 " />
+            </div>
+          </div>
+        </div>
+        <div
+          className={`cardAPPS card m-2 mt-0 col-12 lg:col-12 xl:col-6 ${
+            efectoTarjeta[getRandomInt(4)]
+          }`}
+        >
+          <div className="flex justify-content-between mb-1 p-3">
+            <div>
+              <div className="text-500 font-medium  ">
+                {'Gastos Maroil: '}
+                <span className="text-900 ">
+                  <strong>
+                    {formatCurrency(dataDataCompleta.totalGastoMaroil)}
+                  </strong>
+                </span>
+              </div>
+              <div className="text-500 font-medium  ">
+                {'Toneladas Terminal Maroil: '}
+                <span className="text-900 ">
+                  <strong>
                     {new Intl.NumberFormat().format(
                       dataDataCompleta.totalVolumenTerminalMaroil
                     )}{' '}
                     Tm
-                  </span>
-                </div>
+                  </strong>
+                </span>
               </div>
-            </div>
-          </div>
-          <div className="col-12 lg:col-6 xl:col-4">
-            <div className="card cardAPPS ">
-              <div
-                className="card Pb-0 border-bottom-0 border-start-0 border-2  mb-0 text-end animate__animated animate__rotateInDownRight animate__slower"
-                style={{ 'border-color': '#d9a406', padding: 0 }}
-              >
-                <span className="mr-2  fst-italic ">{'PETRO CEDEÑO'}</span>{' '}
+              <div className="text-500 font-medium  ">
+                {'servicio operacional: '}
+                <span className="text-900 ">
+                  <strong>{formatCurrency(servicoOperativaMaroil)}</strong>
+                </span>
               </div>
-
-              <div
-                className="card Pb-2 border-top-0 border-end-0 border-2 animate__animated animate__zoomInLeft animate__slower animate__delay-2s"
-                style={{ 'border-color': '#d9a406' }}
-              >
-                <div className="flex justify-content-between">
-                  <div>
-                    <span className="text-500"> {'Gastos => '}</span>
-                    <span className="text-900 font-medium text-xl">
-                      {formatCurrency(dataDataCompleta.totalGastoCedeno)}
-                    </span>
-                  </div>
-                  <div className="">
-                    <span style={{ height: '2.5rem', 'font-size': '0.8rem' }}>
-                      Costo TM <br />
-                    </span>
-                    <span>
-                      <strong>{formatCurrency(costoPorCedenoTm)}</strong>
-                    </span>
-                  </div>
-                </div>
-
-                <div>
-                  <span className="text-500"> {'Toneladas => '}</span>
-                  <span className="text-900 font-medium text-xl">
+              <div className="text-500 font-medium  ">
+                {'Costo por Toneladas: '}
+                <span className="text-900 ">
+                  <strong>{formatCurrency(costoPorMaroilTm)}</strong>
+                </span>
+              </div>
+              <hr className="mt-2 mb-2 " />
+              <div className="text-500 font-medium  ">
+                {'Gastos Cedeño: '}
+                <span className="text-900 ">
+                  <strong>
+                    {formatCurrency(dataDataCompleta.totalGastoCedeno)}
+                  </strong>
+                </span>
+              </div>
+              <div className="text-500 font-medium  ">
+                {'Toneladas Cedeno: '}
+                <span className="text-900 ">
+                  <strong>
                     {new Intl.NumberFormat().format(
                       dataDataCompleta.totalVolumenTerminalCedeno
                     )}{' '}
                     Tm
-                  </span>
-                </div>
+                  </strong>
+                </span>
               </div>
-            </div>
-          </div>
-          <div className="col-12 lg:col-6 xl:col-4">
-            <div className="card  cardAPPS">
-              <div
-                className="card Pb-0 border-bottom-0 border-start-0 border-2  mb-0 text-end animate__animated animate__rotateInDownRight animate__slower"
-                style={{ 'border-color': '#157347', padding: 0 }}
-              >
-                <span className="mr-2  fst-italic ">{'PETRO SAN FÉLIX'}</span>{' '}
+              <div className="text-500 font-medium  ">
+                {'servicio operacional: '}
+                <span className="text-900 ">
+                  <strong>{formatCurrency(servicoOperativaCedeno)}</strong>
+                </span>
+              </div>
+              <div className="text-500 font-medium  ">
+                {'Costo por Toneladas: '}
+                <span className="text-900 ">
+                  <strong>{formatCurrency(costoPorCedenoTm)}</strong>
+                </span>
+              </div>
+              <hr className="mt-2 mb-2 " />
+              <div className="text-500 font-medium  ">
+                {'Gastos San Felix: '}
+                <span className="text-900 ">
+                  <strong>
+                    {formatCurrency(dataDataCompleta.totalGastoSanFelix)}
+                  </strong>
+                </span>
               </div>
 
-              <div
-                className="card Pb-2 border-top-0 border-end-0 border-2 animate__animated animate__zoomInLeft animate__slower animate__delay-2s"
-                style={{ 'border-color': '#157347' }}
-              >
-                <div className="flex justify-content-between">
-                  <div>
-                    <span className="text-500"> {'Gastos => '}</span>
-                    <span className="text-900 font-medium text-xl">
-                      {formatCurrency(dataDataCompleta.totalGastoSanFelix)}
-                    </span>
-                  </div>
-                  <div className="">
-                    <span style={{ height: '2.5rem', 'font-size': '0.8rem' }}>
-                      Costo TM <br />
-                    </span>
-                    <span>
-                      <strong>{formatCurrency(costoPorSanFelixTm)}</strong>
-                    </span>
-                  </div>
-                </div>
-
-                <div>
-                  <span className="text-500"> {'Toneladas => '}</span>
-                  <span className="text-900 font-medium text-xl">
+              <div className="text-500 font-medium  ">
+                {'Toneladas San Felix: '}
+                <span className="text-900 ">
+                  <strong>
                     {new Intl.NumberFormat().format(
                       dataDataCompleta.totalVolumenTerminalSanFelix
                     )}{' '}
                     Tm
-                  </span>
-                </div>
+                  </strong>
+                </span>
+              </div>
+              <div className="text-500 font-medium  ">
+                {'servicio operacional: '}
+                <span className="text-900 ">
+                  <strong>{formatCurrency(servicoOperativaSanFelix)}</strong>
+                </span>
+              </div>
+              <div className="text-500 font-medium  ">
+                {'Costo por Toneladas: '}
+                <span className="text-900 ">
+                  <strong>{formatCurrency(costoPorSanFelixTm)}</strong>
+                </span>
               </div>
             </div>
-          </div>
-        </div>
-        <div className="grid">
-          <div className="col-12 lg:col-6 xl:col-6">
-            <div className="card  cardAPPS">
-              <div
-                className="card Pb-0 border-bottom-0 border-start-0 border-2  mb-0 text-end animate__animated animate__rotateInDownRight animate__slower"
-                style={{ 'border-color': '#157347', padding: 0 }}
-              >
-                <span className="mr-2  fst-italic ">
-                  {'UTILIDAD SIN MENSUALIDAD OPERATIVA'}
-                </span>{' '}
-              </div>
-
-              <div
-                className="card Pb-2 border-top-0 border-end-0 border-2 animate__animated animate__zoomInLeft animate__slower animate__delay-2s"
-                style={{ 'border-color': '#157347' }}
-              >
-                <div>
-                  <span className="text-500"> {'Toneladas => '}</span>
-                  <span className="text-900 font-medium text-xl">
-                    {new Intl.NumberFormat().format(
-                      dataDataCompleta.totalVolumenMes
-                    )}{' '}
-                    Tm
-                  </span>
-                </div>
-                <div className="flex justify-content-between">
-                  <div>
-                    <span className="text-500"> {'Gastos => '}</span>
-                    <span className="text-900 font-medium text-xl">
-                      {formatCurrency(dataDataCompleta.totalGastoMes)}
-                    </span>
-                  </div>
-                  <div className="">
-                    <span style={{ height: '2.5rem', 'font-size': '0.8rem' }}>
-                      Costo TM <br />
-                    </span>
-                    <span>
-                      <strong>{formatCurrency(costoPorTm)}</strong>
-                    </span>
-                  </div>
-                </div>
-                <div className="flex justify-content-between">
-                  <div>
-                    <span className="text-500"> {'Ingreso => '}</span>
-                    <span className="text-900 font-medium text-xl">
-                      {formatCurrency(servicoOperativa)}
-                    </span>
-                  </div>
-                  <div className="">
-                    <span style={{ height: '2.5rem', 'font-size': '0.8rem' }}>
-                      Valor TM <br />
-                    </span>
-                    <span>
-                      <strong>
-                        {formatCurrency(dataDataCompleta.totalCostoTmMes)}
-                      </strong>
-                    </span>
-                  </div>
-                </div>
-              </div>
-              <div
-                className="card Pb-0 border-top-0 border-start-0 border-2  mb-0 text-end animate__animated animate__rotateInDownRight animate__slower"
-                style={{ 'border-color': '#157347', padding: 0 }}
-              >
-                <div className="flex justify-content-center">
-                  <span className="text-500"> {'Utilidad => '}</span>
-                  <span className="text-900 font-medium text-xl">
-                    {formatCurrency(utilidadConOperativa)}
-                  </span>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div className="col-12 lg:col-6 xl:col-6">
-            <div className="card cardAPPS ">
-              <div
-                className="card Pb-0 border-bottom-0 border-start-0 border-2  mb-0 text-end animate__animated animate__rotateInDownRight animate__slower"
-                style={{ 'border-color': '#157347', padding: 0 }}
-              >
-                <div className="flex justify-content-around">
-                  <span className="text-900 font-medium text-xl">
-                    {formatCurrency(dataDataCompleta.totalmensualidadOpMes)}
-                  </span>
-                  <span className="mr-2  fst-italic ">
-                    {'UTILIDAD CON MENSUALIDAD OPERATIVA'}
-                  </span>{' '}
-                </div>
-              </div>
-
-              <div
-                className="card Pb-2 border-top-0 border-end-0 border-2 animate__animated animate__zoomInLeft animate__slower animate__delay-2s"
-                style={{ 'border-color': '#157347' }}
-              >
-                {' '}
-                <div>
-                  <span className="text-500"> {'Toneladas => '}</span>
-                  <span className="text-900 font-medium text-xl">
-                    {new Intl.NumberFormat().format(
-                      dataDataCompleta.totalVolumenMes
-                    )}{' '}
-                    Tm
-                  </span>
-                </div>
-                <div className="flex justify-content-between">
-                  <div>
-                    <span className="text-500"> {'Gastos => '}</span>
-                    <span className="text-900 font-medium text-xl">
-                      {formatCurrency(
-                        dataDataCompleta.totalGastoMes +
-                          dataDataCompleta.totalmensualidadOpMes
-                      )}
-                    </span>
-                  </div>
-                  <div className="">
-                    <span style={{ height: '2.5rem', 'font-size': '0.8rem' }}>
-                      Costo TM <br />
-                    </span>
-                    <span>
-                      <strong>{formatCurrency(costoPorTmMensualidaOp)}</strong>
-                    </span>
-                  </div>
-                </div>
-                <div className="flex justify-content-between">
-                  <div>
-                    <span className="text-500"> {'Ingreso => '}</span>
-                    <span className="text-900 font-medium text-xl">
-                      {formatCurrency(servicoOperativa)}
-                    </span>
-                  </div>
-                  <div className="">
-                    <span style={{ height: '2.5rem', 'font-size': '0.8rem' }}>
-                      Valor TM <br />
-                    </span>
-                    <span>
-                      <strong>
-                        {formatCurrency(dataDataCompleta.totalCostoTmMes)}
-                      </strong>
-                    </span>
-                  </div>
-                </div>
-              </div>
-              <div
-                className="card Pb-0 border-top-0 border-start-0 border-2  mb-0 text-end animate__animated animate__rotateInDownRight animate__slower"
-                style={{ 'border-color': '#157347', padding: 0 }}
-              >
-                <div className="flex justify-content-center">
-                  <span className="text-500"> {'Utilidad => '}</span>
-                  <span className="text-900 font-medium text-xl">
-                    {formatCurrency(utilidadSinOperativa)}
-                  </span>
-                </div>
-              </div>
+            <div
+              className="flex align-items-center justify-content-center bg-blue-100 border-round"
+              style={{ width: '2.5rem', height: '2.5rem' }}
+            >
+              <i className="pi pi-chart-bar text-blue-500 " />
             </div>
           </div>
         </div>
       </div>
-    </div>
+    </>
   )
 }
 

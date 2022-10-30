@@ -21,7 +21,7 @@ const VolumetriaEstadisticaCardRender = ({ data }) => {
         <div className="flex justify-content-between mb-1">
           <div>
             <span className="block text-500 font-medium mb-1">
-              {data.mesNombre}
+              {data.mesNombre.toUpperCase()}
             </span>
             <div className="text-500 font-medium  ">
               {'Toneladas Terminal Maroil: '}
@@ -49,7 +49,7 @@ const VolumetriaEstadisticaCardRender = ({ data }) => {
               </span>
             </div>
             <div className="text-500 font-medium  ">
-              {'Toneladas Totales: '}
+              <span className="text-blue-500 "> {'Toneladas Totales: '}</span>
               <span className="text-900 ">
                 <strong>
                   {new Intl.NumberFormat().format(data.totalGastoMes)} Tm

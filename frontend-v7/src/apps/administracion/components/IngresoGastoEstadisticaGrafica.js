@@ -193,6 +193,7 @@ const IngresoGastoEstadisticaGrafica = () => {
   }
   return (
     <div className="card">
+      <h5>GASTOS MENSUALES</h5>
       {ingresoGastos.length !== 0 && (
         <Chart type="bar" data={basicData} options={basicOptions} />
       )}
