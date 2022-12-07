@@ -49,7 +49,10 @@ const CostoPorTmHomeCard = ({ dataDataCompleta }) => {
   }
   return (
     <>
-      <div className="card  ">
+      <div
+        className="card Pb-0 border-bottom-0 border-start-0 border-2  mb-0 text-end animate__animated animate__rotateInDownRight animate__slower"
+        style={{ 'border-color': '#094db1', padding: 0 }}
+      >
         <span className="text-900 text-center fw-bold fst-italic ">
           {dataDataCompleta.mesNombre.toUpperCase()}
         </span>

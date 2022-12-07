@@ -102,7 +102,13 @@ const OperacionesGOMBarcoForm = (props) => {
     updateField(e.value.estatusBarco, 'estatusBarco')
   }
   const buqueCliente = [{ buqueCliente: 'MAROIL' }, { buqueCliente: 'PDVSA' }]
-  const buqueClienteVenta = [{ buqueClienteVenta: 'CREC 10' }]
+  const buqueClienteVenta = [
+    { buqueClienteVenta: 'CREC 10' },
+    { buqueClienteVenta: 'SHIMSUPA' },
+    { buqueClienteVenta: 'ATLAS' },
+    { buqueClienteVenta: 'JRD' },
+    { buqueClienteVenta: 'BESTIN INDUSTRY DEVELOPMENT' }
+  ]
   const onBuqueCliente = (e) => {
     setSelectedBuqueCliente(e.value)
     updateField(e.value.buqueCliente, 'buqueCliente')

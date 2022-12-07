@@ -135,18 +135,18 @@ const VolumetriaList = () => {
     const fecha = moment(rowData.fechaBlFinalVolumetria)
     return fecha.format('dddDD/MM/YY HH:mm')
   }
-  const volumetriaCreadoTemplate = (rowData) => {
-    const validarFecha = moment(rowData.volumetriaCreado).isValid()
-    if (!validarFecha) return
-    const fecha = moment(rowData.volumetriaCreado)
-    return fecha.format('dddDD/MM/YY HH:mm')
-  }
-  const volumetriaModificadoTemplate = (rowData) => {
-    const validarFecha = moment(rowData.volumetriaModificado).isValid()
-    if (!validarFecha) return
-    const fecha = moment(rowData.volumetriaModificado)
-    return fecha.format('dddDD/MM/YY HH:mm')
-  }
+  // const volumetriaCreadoTemplate = (rowData) => {
+  //   const validarFecha = moment(rowData.volumetriaCreado).isValid()
+  //   if (!validarFecha) return
+  //   const fecha = moment(rowData.volumetriaCreado)
+  //   return fecha.format('dddDD/MM/YY HH:mm')
+  // }
+  // const volumetriaModificadoTemplate = (rowData) => {
+  //   const validarFecha = moment(rowData.volumetriaModificado).isValid()
+  //   if (!validarFecha) return
+  //   const fecha = moment(rowData.volumetriaModificado)
+  //   return fecha.format('dddDD/MM/YY HH:mm')
+  // }
 
   const blFinalVolumetriaBodyTemplate = (rowData) => {
     const numeroTonelada = new Intl.NumberFormat('de-DE').format(
@@ -205,7 +205,7 @@ const VolumetriaList = () => {
             body={fechaBlFinalVolumetriaTemplate}
             dataType="date"
           />
-          <Column
+          {/* <Column
             field="volumetriaCreado"
             header="volumetriaCreado"
             body={volumetriaCreadoTemplate}
@@ -216,7 +216,7 @@ const VolumetriaList = () => {
             header="volumetriaModificado"
             dataType="date"
             body={volumetriaModificadoTemplate}
-          />
+          /> */}
         </DataTable>
       </div>
 

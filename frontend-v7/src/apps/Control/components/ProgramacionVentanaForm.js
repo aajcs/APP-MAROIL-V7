@@ -123,7 +123,18 @@ const ProgramacionVentanaForm = (props) => {
     { buqueCliente: 'PDVSA PRIORIDAD' },
     { buqueCliente: 'MANTENIMIENTO' }
   ]
-  const buqueClienteVenta = [{ buqueClienteVenta: 'CREC 10' }]
+  const buqueClienteVenta = [
+    { buqueClienteVenta: 'CREC 10' }
+    
+    
+
+    
+    ,
+    { buqueClienteVenta: 'SHIMSUPA' },
+    { buqueClienteVenta: 'ATLAS' },
+    { buqueClienteVenta: 'JRD' },
+    { buqueClienteVenta: 'BESTIN INDUSTRY DEVELOPMENT' }
+  ]
   const onBuqueCliente = (e) => {
     setSelectedBuqueCliente(e.value)
     updateField(e.value.buqueCliente, 'buqueCliente')

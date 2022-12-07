@@ -37,7 +37,7 @@ function ReporteCargaGOMInfoCard({ barcos }) {
     barcos.fechaFinalCarga ? barcos.fechaFinalCarga : moment()
   )
   // const fecha3 = moment(fecha1 - fecha2).format('HH:mm')
-
+  console.log(barcos.buqueClienteVenta)
   // Diff in hours
   const diff = fecha2.diff(fecha1, 'seconds') // Diff in days
 
@@ -119,6 +119,7 @@ function ReporteCargaGOMInfoCard({ barcos }) {
               <h3 className=" card-title mb-0">{barcos.nombreBarco}</h3>
               <h5 className="text-400 card-title mt-0">
                 ({barcos.buqueCliente}){' '}
+                {barcos.buqueClienteVenta && `(${barcos.buqueClienteVenta})`}
               </h5>
             </div>
             <div className="col-6 text-right ">
@@ -141,6 +142,7 @@ function ReporteCargaGOMInfoCard({ barcos }) {
                   </p>
                 )}
               </Tag>
+
               {auth.isLogged() && auth.user.faidUser.roles[0] !== 'LECTURA' && (
                 <span className="text-sm text-400">
                   Act.{' '}
