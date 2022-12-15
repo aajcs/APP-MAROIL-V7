@@ -10,6 +10,7 @@ const GanadorContextProvider = (props) => {
   // const cargaBodegaService = new CargaBodegaService()
 
   const [ganadors, setGanadors] = useState([])
+  const [ganadors36, setGanadors36] = useState([])
   const [createBodegaGanador1, setCreateBodegaGanador1] = useState([])
   const [ganadorcargando, setganadorcargando] = useState(null)
   const [editGanador, setEditGanador] = useState(null)
@@ -22,17 +23,18 @@ const GanadorContextProvider = (props) => {
   useEffect(() => {
     ganadorService.readAll(token).then((data) => {
       setGanadors(data)
+      setGanadors36(data)
       setLoading(false)
     })
   }, [])
   useEffect(() => {
     const interval = setInterval(() => {
       ganadorService.readAll(token).then((data) => {
-        setGanadors(data)
+        setGanadors36(data)
         setLoading(false)
       })
       setActuallizar(actuallizar + 1)
-    }, 600000)
+    }, 52000)
     return () => {
       clearInterval(interval)
     }
@@ -106,7 +108,8 @@ const GanadorContextProvider = (props) => {
         ganadorcargando,
         ganadors,
         loading,
-        createBodegaGanador1
+        createBodegaGanador1,
+        ganadors36
       }}
     >
       {props.children}

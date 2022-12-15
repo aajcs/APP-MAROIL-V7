@@ -1,6 +1,5 @@
 /* eslint-disable react/prop-types */
 const SorteoCardRender = ({ data }) => {
-  console.log(data.nombreGanador)
   const getRandomInt = (max) => {
     return Math.floor(Math.random() * max)
   }
@@ -10,11 +9,11 @@ const SorteoCardRender = ({ data }) => {
     'animate__animated animate__backInLeft',
     'animate__animated animate__backInRight',
     'animate__animated animate__backInUp',
-    'animate__animated animate__backOutDown',
-    'animate__animated animate__backInDown',
-    'animate__animated animate__backOutLeft',
-    'animate__animated animate__backOutRight',
-    'animate__animated animate__backOutUp'
+    'animate__animated animate__bounce',
+    'animate__animated animate__flash',
+    'animate__animated animate__shakeX',
+    'animate__animated animate__swing',
+    'animate__animated animate__wobble'
   ]
 
   return (
