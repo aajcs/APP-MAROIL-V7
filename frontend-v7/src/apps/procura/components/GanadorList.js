@@ -7,15 +7,15 @@ import { Toolbar } from 'primereact/toolbar'
 import { Dialog } from 'primereact/dialog'
 import { InputText } from 'primereact/inputtext'
 import { Toast } from 'primereact/toast'
-import { ProyectoAuxContext } from '../contexts/ProyectoAuxContext'
+import { GanadorContext } from '../contexts/GanadorContext'
 import moment from 'moment'
 
-// import ProyectoAuxForm from './ProyectoAuxForm'
+// import GanadorForm from './GanadorForm'
 
-const ProyectoAuxList = () => {
-  const { proyectoAuxs, findProyectoAux, deleteProyectoAux, loading } =
-    useContext(ProyectoAuxContext)
-  const [proyectoAux, setProyectoAux] = useState(proyectoAuxs)
+const GanadorList = () => {
+  const { ganadors, findGanador, deleteGanador, loading } =
+    useContext(GanadorContext)
+  const [ganador, setGanador] = useState(ganadors)
   const [deleteBarcoDialog, setDeleteBarcoDialog] = useState(false)
   const [globalFilter, setGlobalFilter] = useState(null)
   const [isVisible, setIsVisible] = useState(false)
@@ -24,7 +24,7 @@ const ProyectoAuxList = () => {
   const dt = useRef(null)
   const toast = useRef(null)
   const saveBarco = (id) => {
-    findProyectoAux(id)
+    findGanador(id)
     setIsVisible(true)
   }
 
@@ -83,17 +83,17 @@ const ProyectoAuxList = () => {
     return fecha.format('dddDD/MM/YY HH:mm')
   }
 
-  const fechaProyectoAuxCreado = (rowData) => {
-    const fecha = moment(rowData.proyectoAuxCreado)
+  const fechaGanadorCreado = (rowData) => {
+    const fecha = moment(rowData.ganadorCreado)
     return fecha.format('dddDD/MM/YY HH:mm')
   }
-  const fechaProyectoAuxModificado = (rowData) => {
-    const fecha = moment(rowData.proyectoAuxModificado)
+  const fechaGanadorModificado = (rowData) => {
+    const fecha = moment(rowData.ganadorModificado)
     return fecha.format('dddDD/MM/YY HH:mm')
   }
 
   const eliminarBarco = () => {
-    deleteProyectoAux(proyectoAux.id)
+    deleteGanador(ganador.id)
     setDeleteBarcoDialog(false)
     toast.current.show({
       severity: 'error',
@@ -121,7 +121,7 @@ const ProyectoAuxList = () => {
   )
 
   const confirmDeleteBarco = (barcos) => {
-    setProyectoAux(barcos)
+    setGanador(barcos)
     setDeleteBarcoDialog(true)
   }
 
@@ -164,7 +164,7 @@ const ProyectoAuxList = () => {
 
   const header = (
     <div className="flex flex-column md:flex-row md:justify-content-between md:align-items-center">
-      <h5 className="m-0">ProyectoAux</h5>
+      <h5 className="m-0">Ganador</h5>
       <span className="block mt-2 md:mt-0 p-input-icon-left">
         <i className="pi pi-search" />
         <InputText
@@ -189,45 +189,30 @@ const ProyectoAuxList = () => {
 
       <DataTable
         ref={dt}
-        value={proyectoAuxs}
+        value={ganadors}
         onSelectionChange={(e) => setSelectedProducts(e.value_id)}
         dataKey="id"
         paginator
         rows={50}
-        rowsPerPageOptions={[5, 10, 25]}
+        rowsPerOptions={[5, 10, 25]}
         className="datatable-responsive"
         selectionMode="single"
-        paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
-        currentPageReportTemplate="Muestra {first} a {last} de {totalRecords} Barcos"
+        paginatorTemplate="FirstLink PrevLink Links NextLink LastLink CurrentReport RowsPerDropdown"
+        currentReportTemplate="Muestra {first} a {last} de {totalRecords} Barcos"
         globalFilter={globalFilter}
         emptyMessage="No hay barcos."
         header={header}
-        sortField="barcoCreado"
-        sortOrder={-1}
         loading={loading}
         responsiveLayout="scroll"
         breakpoint="960px"
       >
         <Column body={actionBodyTemplate}></Column>
-        <Column field="nombreProyecto" header="nombreProyecto" />
-        <Column field="descripcionProyecto" header="descripcionProyecto" />
-        <Column field="estatusProyecto" header="estatusProyecto" />
+        <Column field="nombreGanador" header="nombreGanador" />
 
-        <Column
-          field="proyectoAuxCreado"
-          body={fechaProyectoAuxCreado}
-          header="proyectoAuxCreado"
-          dataType="date"
-        />
-        <Column
-          field="proyectoAuxModificado"
-          body={fechaProyectoAuxModificado}
-          header="proyectoAuxModificado"
-          dataType="date"
-        />
+        <Column field="estatusGanador" header="estatusGanador" />
       </DataTable>
 
-      {/* <ProyectoAuxForm isVisible={isVisible} setIsVisible={setIsVisible} /> */}
+      {/* <GanadorForm isVisible={isVisible} setIsVisible={setIsVisible} /> */}
 
       <Dialog
         visible={deleteBarcoDialog}
@@ -242,10 +227,10 @@ const ProyectoAuxList = () => {
             className="pi pi-exclamation-triangle mr-3"
             style={{ fontSize: '2rem' }}
           />
-          {proyectoAux && (
+          {ganador && (
             <span>
               Esta seguro que quiere eliminar la barco{' '}
-              <b>{proyectoAux.nombreProyecto}</b>?
+              <b>{ganador.nombreProyecto}</b>?
             </span>
           )}
         </div>
@@ -254,4 +239,4 @@ const ProyectoAuxList = () => {
   )
 }
 
-export default ProyectoAuxList
+export default GanadorList

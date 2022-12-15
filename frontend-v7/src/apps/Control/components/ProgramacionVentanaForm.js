@@ -124,12 +124,7 @@ const ProgramacionVentanaForm = (props) => {
     { buqueCliente: 'MANTENIMIENTO' }
   ]
   const buqueClienteVenta = [
-    { buqueClienteVenta: 'CREC 10' }
-    
-    
-
-    
-    ,
+    { buqueClienteVenta: 'CREC 10' },
     { buqueClienteVenta: 'SHIMSUPA' },
     { buqueClienteVenta: 'ATLAS' },
     { buqueClienteVenta: 'JRD' },

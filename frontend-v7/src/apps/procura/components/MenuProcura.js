@@ -45,6 +45,12 @@ export const MenuProcura = () => {
             icon: 'pi pi-fw pi-database',
             to: '/apps/procura/proyectoaux',
             permi: 'SUPERADMIN'
+          },
+          {
+            label: 'CONCURSO',
+            icon: 'pi pi-fw pi-database',
+            to: '/apps/procura/ganador',
+            permi: 'SUPERADMIN'
           }
         ]
       }

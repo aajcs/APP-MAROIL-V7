@@ -135,10 +135,8 @@ export default function Apps() {
           <div className="cardAPPS card mb-0">
             <div className="flex justify-content-between mb-3">
               <div>
-                <span className="block text-500 font-medium mb-3">PROCURA</span>
-                <div className="text-900 font-medium text-xl">
-                  Orden de Compra
-                </div>
+                <span className="block text-500 font-medium mb-3">SORTEO</span>
+                <div className="text-900 font-medium text-xl">Maroil 2022</div>
               </div>
               <div
                 className="flex align-items-center justify-content-center bg-cyan-100 border-round"

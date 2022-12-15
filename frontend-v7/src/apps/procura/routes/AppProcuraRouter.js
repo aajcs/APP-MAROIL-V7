@@ -15,6 +15,7 @@ import '../styles/stylesProcura.css'
 import { HomeProura } from '../pages/HomeProura'
 import ReporteCargaGOMInfoCard from '../../Control/components/ReporteCargaGOMInfoCard'
 import { ProyectoAuxPage } from '../pages/ProyectoAuxPage'
+import { GanadorPage } from '../pages/GanadorPage'
 
 export default function appProcuraRouter() {
   const { staticMenuInactive, onToggleMenuClick } = useContext(ConfigContext)
@@ -50,6 +51,11 @@ export default function appProcuraRouter() {
               exact
               path="/apps/procura/proyectoaux"
               component={ProyectoAuxPage}
+            />
+            <PrivateRoute
+              exact
+              path="/apps/procura/ganador"
+              component={GanadorPage}
             />
 
             <Route path="*">

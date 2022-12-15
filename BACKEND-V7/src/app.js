@@ -114,6 +114,9 @@ app.use(
   '/api/GastosOperacionale',
   require('./appsControlLiquidos/routes/GastosOperacionaleRoutes')
 )
+app.use('/api/Ganador', require('./appsProcura/routes/GanadorRoutes'))
+app.use('/api/Concursante', require('./appsProcura/routes/ConcursanteRoutes'))
+app.use('/api/ViajeAux', require('./appsControlLiquidos/routes/ViajeAuxRoutes'))
 // Static Files
 // app.use(express.static(path.join(__dirname, '../public')));;
 app.use((req, res) => {
