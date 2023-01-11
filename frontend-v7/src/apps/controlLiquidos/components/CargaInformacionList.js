@@ -398,7 +398,7 @@ const CargaInformacionList = () => {
           dataKey="id"
           header={header}
           globalFilter={globalFilter}
-          sortField="estatusBarco"
+          sortField="viajeCreado"
           sortOrder={-1}
           loading={loading}
           ref={dt}
@@ -424,6 +424,7 @@ const CargaInformacionList = () => {
             body={fechaViajeCreado}
             header="Viaje Creado"
             dataType="date"
+            sortable
           />
           <Column
             field="viajeModificado"

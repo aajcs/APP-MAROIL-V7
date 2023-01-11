@@ -18,12 +18,16 @@ const SorteoCardRender = ({ data }) => {
 
   return (
     <div
-      className=" col-12 lg:col-6 xl:col-2 "
+      className=" col-2 lg:col-2 xl:col-2 "
+      style={{
+        position: 'relative',
+        display: 'inline-block'
+      }}
       // onClick={onAppsControlClick}
     >
       <div
         className={`cardAPPS card mb-0 ${
-          efectoTarjeta[getRandomInt(7)]
+          efectoTarjeta[getRandomInt(3)]
         } animate__slower`}
       >
         <div className="flex justify-content-between mb-1">

@@ -16,13 +16,20 @@ import { CargaBodegaContext } from '../contexts/CargaBodegaContext'
 import BarChartDemo from './BarChart'
 import flagplaceholder from '../assetsControl/flagplaceholder.png'
 import { Tag } from 'primereact/tag'
+import { Calendar } from 'primereact/calendar'
+import VolumetriaEstadisticaCardRender from './VolumetriaEstadisticaCardRender'
+import VolumetriaEstadisticaCard from './VolumetriaEstadisticaCard'
+import HistoricoBuqueGastosTM from './HistoricoBuqueGastosTM'
 const HistoricoBuquesList = () => {
   const { barcos, findBarco, deleteBarco, loading } = useContext(BarcoContext)
+
   const { cargaBodegas } = useContext(CargaBodegaContext)
   const [layout, setLayout] = useState('grid')
+  const [buquesHistorico, setBuquesHistorico] = useState(null)
   const [sortKey, setSortKey] = useState(null)
-  const [sortOrder, setSortOrder] = useState(null)
-  const [sortField, setSortField] = useState(null)
+  const [sortOrder, setSortOrder] = useState(-1)
+  const [sortField, setSortField] = useState('barcoCreado')
+  const [date9, setDate9] = useState(moment())
   const [bodegasDelBarco, setBodegasDelBarco] = useState(null)
   function secondsToString(diff) {
     const numdays = Math.floor(diff / 86400)
@@ -41,12 +48,28 @@ const HistoricoBuquesList = () => {
   //   findBodegaBarco(barcos.id)
   // }, [cargaBodegas])
   const sortOptions = [
-    { label: 'Price High to Low', value: '!price' },
-    { label: 'Price Low to High', value: 'price' }
+    { label: 'Price High to Low', value: '!barcoCreado' },
+    { label: 'Price Low to High', value: 'barcoCreado' }
   ]
+  useEffect(() => {
+    console.log(barcos)
+    const barcosMes = barcos.filter((p) =>
+      moment(p.fechaFinalCarga).isSame(moment(), 'month')
+    )
+    setBuquesHistorico(barcosMes)
+    console.log(buquesHistorico)
+  }, [barcos])
+  const filtroMes = (event) => {
+    console.log(barcos)
+    const barcosMes = barcos.filter((p) =>
+      moment(p.fechaFinalCarga).isSame(event, 'month')
+    )
+    setBuquesHistorico(barcosMes)
+    console.log(buquesHistorico)
+  }
   const onSortChange = (event) => {
     const value = event.value
-
+    console.log(event)
     if (value.indexOf('!') === 0) {
       setSortOrder(-1)
       setSortField(value.substring(1, value.length))
@@ -139,7 +162,6 @@ const HistoricoBuquesList = () => {
 
   const renderGridItem = (data) => {
     console.log(data)
-
     const fecha1 = moment(data.fechaInicioCarga)
     const fecha2 = moment(
       data.fechaFinalCarga ? data.fechaFinalCarga : moment()
@@ -201,6 +223,12 @@ const HistoricoBuquesList = () => {
                   moment(data.updatedAt).format('DD/MM HH:mm')}
               </span>
             </div>
+            <div className="product-description">
+              <span className="text-sm text-400">{data.costoDemora}</span>
+            </div>
+            <div className="product-description">
+              <span className="text-sm text-400">{data.tiempoDemora}</span>
+            </div>
           </div>
           <div className="product-grid-item-bottom">
             <span className="product-price">
@@ -233,7 +261,7 @@ const HistoricoBuquesList = () => {
   const renderHeader = () => {
     return (
       <div className="grid grid-nogutter">
-        <div className="col-6" style={{ textAlign: 'left' }}>
+        {/* <div className="col-4" style={{ textAlign: 'left' }}>
           <Dropdown
             options={sortOptions}
             value={sortKey}
@@ -241,8 +269,25 @@ const HistoricoBuquesList = () => {
             placeholder="Sort By Price"
             onChange={onSortChange}
           />
+        </div> */}
+        <div className="field col-12 md:col-4">
+          {/* <label htmlFor="monthpicker">Month Picker</label> */}
+          <Calendar
+            id="monthpicker"
+            value={date9}
+            onChange={(e) => {
+              setDate9(e.value)
+              filtroMes(e.target.value)
+            }}
+            view="month"
+            dateFormat="mm/yy"
+            inline
+          />
         </div>
-        <div className="col-6" style={{ textAlign: 'right' }}>
+        <div className="field col-12 md:col-7">
+          <HistoricoBuqueGastosTM date9={date9} />
+        </div>
+        <div className="col-1" style={{ textAlign: 'right' }}>
           <DataViewLayoutOptions
             layout={layout}
             onChange={(e) => setLayout(e.value)}
@@ -257,7 +302,7 @@ const HistoricoBuquesList = () => {
     <div className="dataview-demo">
       <div className="card">
         <DataView
-          value={barcos}
+          value={buquesHistorico}
           layout={layout}
           header={header}
           itemTemplate={itemTemplate}

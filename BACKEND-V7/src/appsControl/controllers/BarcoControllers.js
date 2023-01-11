@@ -22,6 +22,8 @@ barcoCtrl.createBarco = async (req, res) => {
     estatusBarco,
     reporteCarga,
     reporteCargaGOM,
+    tiempoDemora,
+    costoDemora,
     barcoCreado,
     barcoModificado
   } = req.body
@@ -45,6 +47,8 @@ barcoCtrl.createBarco = async (req, res) => {
       estatusBarco,
       reporteCarga,
       reporteCargaGOM,
+      tiempoDemora,
+      costoDemora,
       barcoCreado,
       barcoModificado
     })
@@ -121,6 +125,8 @@ barcoCtrl.updateBarco = async (req, res) => {
     fechaInicioCarga,
     fechaFinalCarga,
     estatusBarco,
+    tiempoDemora,
+    costoDemora,
     barcoCreado,
     barcoModificado
   } = req.body
@@ -160,6 +166,8 @@ barcoCtrl.updateBarco = async (req, res) => {
         fechaInicioCarga,
         fechaFinalCarga,
         estatusBarco,
+        tiempoDemora,
+        costoDemora,
         barcoCreado,
         barcoModificado
       },

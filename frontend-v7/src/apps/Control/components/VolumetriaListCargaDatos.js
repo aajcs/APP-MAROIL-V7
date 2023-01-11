@@ -254,10 +254,11 @@ const VolumetriaListCargaDatos = () => {
     )
   }
   const rowExpansionTemplate = (data) => {
+    console.log(data)
     const volumetriaBuques = volumetrias.filter(
-      (p) => p.barcoID.id === data.id && p
+      (p) => p.barcoID && p.barcoID.id === data.id && p
     )
-
+    console.log(volumetriaBuques)
     return (
       <div className="orders-subtable">
         <DataTable

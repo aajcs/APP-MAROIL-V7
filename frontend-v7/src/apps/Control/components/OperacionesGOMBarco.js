@@ -202,6 +202,8 @@ const OperacionesGOMBarco = () => {
         <Column field="buquePaisDestino" header="Pais Destino" />
         <Column field="toneladasCapacidad" header="Toneladas Nominadas" />
         <Column field="toneladasNominadas" header="Toneladas Solicitadas" />
+        <Column field="tiempoDemora" header="Tiempo Demora" />
+        <Column field="costoDemora" header="Costo Demora" />
         <Column field="blFinalBuque" header="BL Draft Final" />
         <Column field="cantidadBodegas" header="Cantidad Bodegas" />
         <Column field="cantidadGruas" header="Cantidad Gruas" />

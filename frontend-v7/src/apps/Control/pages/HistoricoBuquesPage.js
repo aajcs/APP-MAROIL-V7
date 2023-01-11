@@ -1,6 +1,10 @@
 import BarcoContextProvider from '../contexts/BarcoContext'
 import HistoricoBuquesList from '../components/HistoricoBuquesList'
 import CargaBodegaContextProvider from '../contexts/CargaBodegaContext'
+import VolumetriaContextProvider from '../contexts/VolumetriaContext'
+import IngresoGastoContextProvider from '../../administracion/contexts/IngresoGastoContext'
+import CostoTmMesContextProvider from '../../administracion/contexts/CostoTmMesContext'
+import MensualidadOpMesContextProvider from '../../administracion/contexts/MensualidadOpMesContext'
 
 export const HistoricoBuquesPage = () => {
   return (
@@ -9,7 +13,15 @@ export const HistoricoBuquesPage = () => {
         <div className="card">
           <BarcoContextProvider>
             <CargaBodegaContextProvider>
-              <HistoricoBuquesList />
+              <VolumetriaContextProvider>
+                <IngresoGastoContextProvider>
+                  <CostoTmMesContextProvider>
+                    <MensualidadOpMesContextProvider>
+                      <HistoricoBuquesList />
+                    </MensualidadOpMesContextProvider>
+                  </CostoTmMesContextProvider>
+                </IngresoGastoContextProvider>
+              </VolumetriaContextProvider>
             </CargaBodegaContextProvider>
           </BarcoContextProvider>
         </div>

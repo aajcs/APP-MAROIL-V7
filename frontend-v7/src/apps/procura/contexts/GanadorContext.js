@@ -41,8 +41,8 @@ const GanadorContextProvider = (props) => {
   }, [actuallizar])
 
   useEffect(() => {
-    const ganador = ganadors.find((p) => p.estatusGanador === 'OPERATIVO')
-    setganadorcargando(ganador)
+    // const ganador = ganadors.find((p) => p.estatusGanador === 'OPERATIVO')
+    setganadorcargando(ganadors)
   }, [ganadors])
 
   const findGanador = (id) => {

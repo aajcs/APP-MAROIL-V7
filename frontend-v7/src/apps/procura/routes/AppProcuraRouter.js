@@ -19,6 +19,7 @@ import { GanadorPage } from '../pages/GanadorPage'
 
 export default function appProcuraRouter() {
   const { staticMenuInactive, onToggleMenuClick } = useContext(ConfigContext)
+  console.log(staticMenuInactive)
   const [layoutMode, setLayoutMode] = useState('static')
   const [overlayMenuActive, setOverlayMenuActive] = useState(false)
   const [inputStyle, setInputStyle] = useState('outlined')
@@ -29,20 +30,18 @@ export default function appProcuraRouter() {
   const wrapperClass = classNames('layout-wrapper', {
     'layout-overlay': layoutMode === 'overlay',
     'layout-static': layoutMode === 'static',
-    'layout-static-sidebar-inactive':
-      staticMenuInactive && layoutMode === 'static',
-    'layout-overlay-sidebar-active':
-      staticMenuInactive && layoutMode === 'static',
-    'layout-mobile-sidebar-active': staticMenuInactive,
+    'layout-static-sidebar-inactive': true && layoutMode === 'static',
+    'layout-overlay-sidebar-active': true && layoutMode === 'static',
+    'layout-mobile-sidebar-active': true,
     'p-input-filled': inputStyle === 'filled',
     'p-ripple-disabled': ripple === false,
     'layout-theme-light': layoutColorMode === 'light'
   })
   return (
     <div className={wrapperClass}>
-      <div className="layout-sidebar">
+      {/* <div className="layout-sidebar">
         <MenuProcura />
-      </div>
+      </div> */}
       <div className="layout-main-container">
         <div className="layout-main">
           <Switch>

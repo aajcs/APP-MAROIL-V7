@@ -30,6 +30,8 @@ const OperacionesGOMBarcoForm = (props) => {
     totalGabarras: 0,
     cantidadBodegas: 0,
     cantidadGruas: 0,
+    tiempoDemora: 0,
+    costoDemora: 0,
     barcoCreado: moment(),
     barcoModificado: moment(),
     fechaAtraco: '',
@@ -488,7 +490,7 @@ const OperacionesGOMBarcoForm = (props) => {
               />
               {/* <InputNumber id="quantity" value={product.quantity} onValueChange={(e) => onInputNumberChange(e, 'quantity')} integeronly /> */}
             </div>
-            <div className="field col-12  md:col-6 p-col-2 p-md-1">
+            <div className="field col-12  md:col-3 p-col-2 p-md-1">
               <label htmlFor="cantidadBodegas">Cantidad Bodegas</label>
               <InputNumber
                 inputId="cantidadBodegas"
@@ -506,13 +508,49 @@ const OperacionesGOMBarcoForm = (props) => {
               />
               {/* <InputNumber id="quantity" value={product.quantity} onValueChange={(e) => onInputNumberChange(e, 'quantity')} integeronly /> */}
             </div>
-            <div className="field col-12  md:col-6 p-col-2 p-md-1">
+            <div className="field col-12  md:col-3 p-col-2 p-md-1">
               <label htmlFor="cantidadGruas">Cantidad Gruas</label>
               <InputNumber
                 inputId="cantidadGruas"
                 value={barcoData.cantidadGruas}
                 onValueChange={(e) =>
                   updateField(e.target.value, 'cantidadGruas')
+                }
+                showButtons
+                buttonLayout="horizontal"
+                step={1}
+                decrementButtonClassName="p-button-danger"
+                incrementButtonClassName="p-button-success"
+                incrementButtonIcon="pi pi-plus"
+                decrementButtonIcon="pi pi-minus"
+              />
+              {/* <InputNumber id="quantity" value={product.quantity} onValueChange={(e) => onInputNumberChange(e, 'quantity')} integeronly /> */}
+            </div>
+            <div className="field col-12  md:col-6 p-col-2 p-md-1">
+              <label htmlFor="tiempoDemora">Horas Demora</label>
+              <InputNumber
+                inputId="tiempoDemora"
+                value={barcoData.tiempoDemora}
+                onValueChange={(e) =>
+                  updateField(e.target.value, 'tiempoDemora')
+                }
+                showButtons
+                buttonLayout="horizontal"
+                step={1}
+                decrementButtonClassName="p-button-danger"
+                incrementButtonClassName="p-button-success"
+                incrementButtonIcon="pi pi-plus"
+                decrementButtonIcon="pi pi-minus"
+              />
+              {/* <InputNumber id="quantity" value={product.quantity} onValueChange={(e) => onInputNumberChange(e, 'quantity')} integeronly /> */}
+            </div>
+            <div className="field col-12  md:col-6 p-col-2 p-md-1">
+              <label htmlFor="costoDemora">Costo dia Demora</label>
+              <InputNumber
+                inputId="costoDemora"
+                value={barcoData.costoDemora}
+                onValueChange={(e) =>
+                  updateField(e.target.value, 'costoDemora')
                 }
                 showButtons
                 buttonLayout="horizontal"

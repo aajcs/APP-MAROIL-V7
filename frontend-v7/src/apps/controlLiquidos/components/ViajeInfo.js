@@ -6,6 +6,7 @@ import ViajeCard from './ViajeCard'
 
 function ViajeInfo() {
   const { viajes } = useContext(ViajeContext)
+  viajes.reverse()
   // console.table(viajes)
   return (
     <>

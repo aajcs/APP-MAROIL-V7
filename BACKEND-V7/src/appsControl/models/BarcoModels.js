@@ -45,6 +45,14 @@ const barcoSchema = new Schema(
       type: Number,
       default: 0
     },
+    tiempoDemora: {
+      type: Number,
+      default: 0
+    },
+    costoDemora: {
+      type: Number,
+      default: 0
+    },
     cantidadGruas: {
       type: Number,
       default: 0

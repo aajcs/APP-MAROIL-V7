@@ -1,18 +1,31 @@
+/* eslint-disable react/prop-types */
+/* eslint-disable multiline-ternary */
 /* eslint-disable prefer-const */
 import { useContext, useEffect, useState } from 'react'
 import moment from 'moment'
 import { VolumetriaContext } from '../contexts/VolumetriaContext'
 import VolumetriaEstadisticaCardRender from './VolumetriaEstadisticaCardRender'
+import HistoricoEstadisticaCardRender from './HistoricoEstadisticaCardRender'
 
-const VolumetriaEstadisticaCard = () => {
+const VolumetriaEstadisticaCard = ({ date9, valor }) => {
+  const validarFecha = moment(date9).isValid()
+  console.log(validarFecha)
+  console.log(valor)
   const { volumetrias } = useContext(VolumetriaContext)
-
+  console.log(volumetrias)
   const [data, setdata] = useState()
 
   useEffect(() => {
     volumetiraMeses()
-    setdata(auxOtro2)
-  }, [volumetrias])
+    if (valor) {
+      const barcosMes = auxOtro2.filter((p) =>
+        moment(p.mesCompletoNombre).isSame(date9, 'month')
+      )
+      setdata(barcosMes)
+    } else {
+      setdata(auxOtro2)
+    }
+  }, [volumetrias, date9])
 
   // cabecera de la tabla
   const mesesDelAno = [
@@ -77,9 +90,11 @@ const VolumetriaEstadisticaCard = () => {
         .map((blFinal) => blFinal.blFinalVolumetria)
         .reduce((a, b) => a + b, 0)
       let mes = mesesDelAnoNombre[i]
+      let mesCompleto = mesesDelAno[i]
 
       auxOtro2.push({
         mesNombre: mes,
+        mesCompletoNombre: mesCompleto,
         totalGastoMes: totalVolumetria,
         totalTerminalMaroil: totalVolumetriaMaroil,
         totalTerminalSanFelix: totalVolumetriaSanFelix,
@@ -92,9 +107,13 @@ const VolumetriaEstadisticaCard = () => {
     <div className="grid  ">
       {volumetrias.length !== 0 &&
         data &&
-        data.map((data) => (
-          <VolumetriaEstadisticaCardRender data={data} key={data.id} />
-        ))}
+        data.map((data) =>
+          valor ? (
+            <HistoricoEstadisticaCardRender data={data} key={data.id} />
+          ) : (
+            <VolumetriaEstadisticaCardRender data={data} key={data.id} />
+          )
+        )}
     </div>
   )
 }
