@@ -15,7 +15,7 @@ const CostoTmMesList = () => {
   const auth = AuthUse()
   const { costoTmMess, findCostoTmMes, deleteCostoTmMes, loading } =
     useContext(CostoTmMesContext)
-  console.log(costoTmMess)
+
   const [activo, setCostoTmMes] = useState(costoTmMess)
   const [deleteBarcoDialog, setDeleteBarcoDialog] = useState(false)
   const [globalFilter, setGlobalFilter] = useState(null)

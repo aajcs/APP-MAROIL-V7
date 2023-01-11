@@ -61,8 +61,7 @@ const IngresoGastoEstadistica = () => {
   const getRandomInt = (max) => {
     return Math.floor(Math.random() * max)
   }
-  console.log(labels)
-  console.log(datasets)
+
   const efectoTarjeta = [
     'animate__animated animate__rotateInUpRight animate__slower',
     'animate__animated animate__rubberBand animate__slower',
@@ -71,7 +70,6 @@ const IngresoGastoEstadistica = () => {
     'animate__animated animate__rotateIn animate__slower'
   ]
   const tarjetaGatosTotalesMeses = (data) => {
-    console.log(data)
     return (
       <div
         className=" col-12 lg:col-6 xl:col-3 "

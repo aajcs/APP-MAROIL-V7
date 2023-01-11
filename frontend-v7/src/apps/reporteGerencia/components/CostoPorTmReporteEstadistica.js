@@ -196,8 +196,7 @@ const CostoPorTmReporteEstadistica = () => {
         totalCostoTmMes: totalCostoTmMes,
         totalmensualidadOpMes: totalMensualidadOpMes
       })
-      console.log(totalingresoGastoMaroil)
-      console.log(totalVolumetriaMaroil)
+
       // COSTO TONELADAS METRICAS MUELLE
       costoTmMesTotalesMes = costoTmMesTotalesMes.concat(
         totalEgreso / totalVolumetria
@@ -215,7 +214,7 @@ const CostoPorTmReporteEstadistica = () => {
         totalingresoGastoSanFelix / totalVolumetriaSanFelix
       )
     })
-    console.log(costoTmMesMaroilTotalesMes)
+
     arrayContoTmMuelles.push({
       type: 'bar',
       label: 'COSTO SI MENSUALIDAD OPERATIVA',
@@ -229,7 +228,7 @@ const CostoPorTmReporteEstadistica = () => {
       data: [...costoTmMesTotalesMesConUtilidad]
     })
   }
-  console.log(costoTmMesMaroilTotalesMes)
+
   arrayMesesGrafica.push(...mesesDelAnoNombre)
 
   // cabecera de la tabla

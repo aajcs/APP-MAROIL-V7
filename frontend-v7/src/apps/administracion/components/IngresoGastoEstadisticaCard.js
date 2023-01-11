@@ -46,7 +46,7 @@ const IngresoGastoEstadisticaCard = () => {
   ]
   let auxOtro2 = []
   let diasTotales = []
-  console.log(ingresoGastos)
+
   const buquesToneladasDias = () => {
     mesesDelAno.forEach((dataset, i) => {
       let ingresoGastoMes = ingresoGastos.filter(
@@ -77,7 +77,7 @@ const IngresoGastoEstadisticaCard = () => {
       const totalingresoGastoMaroil = ingresoGastoMaroilMes
         .map((egreso) => egreso.egresoIngresoGasto)
         .reduce((a, b) => a + b, 0)
-      console.log(ingresoGastoMaroilMes)
+
       const totalingresoGastoSanFelix = ingresoGastoSanFelixMes
         .map((egreso) => egreso.egresoIngresoGasto)
         .reduce((a, b) => a + b, 0)

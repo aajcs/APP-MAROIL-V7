@@ -39,8 +39,6 @@ export const CargaInformacionTanqueList = () => {
   const actualizarCargaTanque = (cargaTanquesid, cargaTanqueActual) => {
     tanqueAuxs.map((tanque) => {
       if (tanque.id === cargaTanquesid) {
-        console.log(tanque)
-        console.log(cargaTanqueActual)
         // const {
         //   estatusTanqueAux,
         //   volumenActualTanqueAux,

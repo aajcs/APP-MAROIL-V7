@@ -52,7 +52,6 @@ export const HomeProura = () => {
   useEffect(() => {
     const intervalId = setInterval(() => {
       setPersonalMaroilData(personalMaroil2)
-      console.log('aqui')
     }, 3000)
 
     return () => clearInterval(intervalId)

@@ -7,7 +7,7 @@ import ViajeCard from './ViajeCard'
 function InicioInfo() {
   const { viajes } = useContext(ViajeContext)
   // console(viajes)
-  console.log(viajes)
+
   viajes.sort((o1, o2) => {
     if (o1.id < o2.id) {
       return -1

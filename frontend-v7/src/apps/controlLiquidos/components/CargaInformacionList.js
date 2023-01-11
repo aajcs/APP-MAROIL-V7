@@ -28,7 +28,7 @@ const CargaInformacionList = () => {
   const [isVisible, setIsVisible] = useState(false)
   const [isVisibleViajeAux, setIsVisibleViajeAux] = useState(false)
   const [isVisibleCargaViaje, setIsVisibleCargaViaje] = useState(false)
-  console.log(viajes)
+
   const dt = useRef(null)
   const toast = useRef(null)
   const saveViaje = (id) => {
@@ -299,11 +299,9 @@ const CargaInformacionList = () => {
     )
   }
   const tablaCargaViaje = (data) => {
-    console.log(data.id)
-
     const cargaViaje = cargaViajes.filter((p) => p.viajeAux.id === data.id && p)
     // const probando = viajeAuxs.map((p) => console.log(p.viaje.id))
-    console.log(cargaViajes)
+
     return (
       <div className="orders-subtable">
         <DataTable
@@ -362,13 +360,11 @@ const CargaInformacionList = () => {
   }
 
   const rowClass = (data) => {
-    console.log(data)
     return {
       'row-accessories': data.destinoViaje
     }
   }
   const rowClassViajeAux = (data) => {
-    console.log(data)
     return {
       'row-accessoriesViajeAux': data.id
     }

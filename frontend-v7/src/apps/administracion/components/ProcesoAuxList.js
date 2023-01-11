@@ -15,7 +15,7 @@ const ProcesoAuxList = () => {
   const auth = AuthUse()
   const { procesoAuxs, findProcesoAux, deleteProcesoAux, loading } =
     useContext(ProcesoAuxContext)
-  console.log(procesoAuxs)
+
   const [activo, setProcesoAux] = useState(procesoAuxs)
   const [deleteBarcoDialog, setDeleteBarcoDialog] = useState(false)
   const [globalFilter, setGlobalFilter] = useState(null)

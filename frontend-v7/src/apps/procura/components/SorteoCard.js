@@ -21,8 +21,7 @@ const SorteoCard = () => {
   const ganadors36Fill = ganadors36.filter(
     (p) => p.estatusGanador === 'concursante' && p
   )
-  console.log(ganadors36)
-  console.log(ganadors36Fill)
+
   const onLoadingClick1 = () => {
     setLoading1(true)
     setCount(10)
@@ -38,7 +37,7 @@ const SorteoCard = () => {
     // console.log(ganadors36[numAleatorio].nombreGanador)
     setGanadorFinal(ganadors36Fill[numAleatorio].nombreGanador)
     updateField(ganadors36Fill[numAleatorio].nombreGanador, 'nombreGanador')
-    console.log(ganadors36Fill[numAleatorio])
+
     saveGanador(ganadors36Fill[numAleatorio])
     setCount(0)
   }
@@ -68,13 +67,10 @@ const SorteoCard = () => {
       ...e,
       estatusGanador: 'ganador'
     })
-    console.log(initialGanadorForm)
 
     // setGanadorData(initialGanadorForm)
   }
   const updateField = (data, field) => {
-    console.log(data)
-    console.log(field)
     setGanadorData({
       ...ganadorData,
       [field]: data

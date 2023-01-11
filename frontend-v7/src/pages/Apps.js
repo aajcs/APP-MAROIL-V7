@@ -4,7 +4,7 @@ import AuthUse from '../auth/AuthUse'
 export default function Apps() {
   const auth = AuthUse()
   const appsPermiso = auth.user.faidUser.apps
-  console.log(appsPermiso)
+
   const validarAccesoApp = (apps) => {
     const accesoApps = appsPermiso.find((p) => p === apps || p === 'SUPERAPPS')
     return accesoApps

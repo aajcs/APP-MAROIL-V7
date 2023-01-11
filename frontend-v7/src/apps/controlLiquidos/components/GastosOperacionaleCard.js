@@ -9,7 +9,7 @@ import AuthUse from '../../../auth/AuthUse'
 
 function GastosOperacionaleCard({ gastosOperacionales }) {
   const auth = AuthUse()
-  console.log(gastosOperacionales)
+
   // const fecha4 = fecha2.diff(fecha1, 'days')
 
   return (

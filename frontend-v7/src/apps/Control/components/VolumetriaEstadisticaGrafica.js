@@ -110,7 +110,7 @@ const VolumetriaEstadisticaGrafica = () => {
   let auxOtro2 = []
   let auxOtro3 = []
   let auxOtro4 = []
-  console.log(volumetrias)
+
   let tmTotalesMes = []
   let tmTotalesMaroilMes = []
   let tmTotalesSanFelixMes = []

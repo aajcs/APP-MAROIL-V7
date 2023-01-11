@@ -19,7 +19,7 @@ import { GanadorPage } from '../pages/GanadorPage'
 
 export default function appProcuraRouter() {
   const { staticMenuInactive, onToggleMenuClick } = useContext(ConfigContext)
-  console.log(staticMenuInactive)
+
   const [layoutMode, setLayoutMode] = useState('static')
   const [overlayMenuActive, setOverlayMenuActive] = useState(false)
   const [inputStyle, setInputStyle] = useState('outlined')

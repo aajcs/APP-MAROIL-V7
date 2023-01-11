@@ -96,7 +96,7 @@ const GastosOperacionaleForm = (props) => {
   const [GastosOperacionaleData, setGastosOperacionaleData] = useState(
     initialGastosOperacionaleForm
   )
-  console.log(GastosOperacionaleData)
+
   const [selectedEmbarcacion, setSelectedEmbarcacion] = useState(null)
   const [selectedRemolcador, setSelectedRemolcador] = useState(null)
   const [selectedViaje, setSelectedViaje] = useState(null)
@@ -144,7 +144,6 @@ const GastosOperacionaleForm = (props) => {
 
   useEffect(() => {
     if (editGastosOperacionale) {
-      console.log(editGastosOperacionale)
       setGastosOperacionaleData({
         ...editGastosOperacionale,
         viaje: editGastosOperacionale.viaje && editGastosOperacionale.viaje.id,

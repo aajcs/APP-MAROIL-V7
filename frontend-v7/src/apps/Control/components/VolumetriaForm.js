@@ -122,7 +122,7 @@ const VolumetriaForm = (props) => {
       const barcoIDSelecEdit =
         editVolumetria.barcoID &&
         barcos.find((p) => p.id === editVolumetria.barcoID.id)
-      console.log(barcoIDSelecEdit)
+
       setSelectedBarcoIDGOM(barcoIDSelecEdit)
       setDateFinal(
         editVolumetria.fechaBlFinalVolumetria &&

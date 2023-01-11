@@ -194,7 +194,6 @@ const HistoricoBuquesList = () => {
   }
 
   const headerTemplate = (data) => {
-    console.log(data)
     return (
       <React.Fragment>
         <span className="image-text">{data.nombreBarco}</span>

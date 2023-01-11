@@ -19,7 +19,7 @@ const MensualidadOpMesList = () => {
     deleteMensualidadOpMes,
     loading
   } = useContext(MensualidadOpMesContext)
-  console.log(mensualidadOpMess)
+
   const [activo, setMensualidadOpMes] = useState(mensualidadOpMess)
   const [deleteBarcoDialog, setDeleteBarcoDialog] = useState(false)
   const [globalFilter, setGlobalFilter] = useState(null)

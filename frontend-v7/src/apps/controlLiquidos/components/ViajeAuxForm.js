@@ -117,13 +117,12 @@ const ViajeAuxForm = (props) => {
     updateField(e.value.estatusViajeAux, 'estatusViajeAux')
   }
   const onViaje = (e) => {
-    console.log(e.value.id)
     // eslint-disable-next-line no-unused-expressions
     e.value
       ? (setSelectedViaje(e.value), updateField(e.value.id, 'viaje'))
       : (setSelectedViaje(null), updateField(null, 'viaje'))
   }
-  console.log(viajeAuxData)
+
   const onPaisViajeAux = (e) => {
     setSelectedPaisViajeAux(e.value)
     updateField(e.value.paisViajeAux, 'paisViajeAux')
@@ -133,7 +132,6 @@ const ViajeAuxForm = (props) => {
 
   useEffect(() => {
     if (editViajeAux) {
-      console.log(editViajeAux.viaje)
       setviajeAuxData({
         ...editViajeAux,
         viaje: editViajeAux.viaje && editViajeAux.viaje.id
@@ -148,7 +146,7 @@ const ViajeAuxForm = (props) => {
 
       const viajeSelecEdit =
         editViajeAux.viaje && viajes.find((p) => p.id === editViajeAux.viaje.id)
-      console.log(viajeSelecEdit)
+
       setSelectedViaje(viajeSelecEdit)
       setDateArriboViajeAux(
         editViajeAux.fechaArriboViajeAux &&

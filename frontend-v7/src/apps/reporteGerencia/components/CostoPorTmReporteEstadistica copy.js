@@ -13,14 +13,9 @@ const CostoPorTmReporteEstadistica = () => {
   const { volumetrias } = useContext(VolumetriaContext)
   const { costoTmMess } = useContext(CostoTmMesContext)
   const { mensualidadOpMess } = useContext(MensualidadOpMesContext)
-  console.log(ingresoGastos)
-  console.log(volumetrias)
-  console.log(costoTmMess)
-  console.log(mensualidadOpMess)
 
   const [dataDataCompleta, setdataDataCompleta] = useState()
 
-  console.log(dataDataCompleta)
   useEffect(() => {
     dataMesCompleta()
     setdataDataCompleta(arrayDataCompleta)

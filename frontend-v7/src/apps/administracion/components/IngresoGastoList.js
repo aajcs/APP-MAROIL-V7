@@ -16,7 +16,7 @@ const IngresoGastoList = () => {
   const auth = AuthUse()
   const { ingresoGastos, findIngresoGasto, deleteIngresoGasto, loading } =
     useContext(IngresoGastoContext)
-  console.log(ingresoGastos)
+
   const [ingresoGasto, setIngresoGasto] = useState(ingresoGastos)
   const [deleteIngresoGastoDialog, setDeleteIngresoGastoDialog] =
     useState(false)
@@ -29,10 +29,10 @@ const IngresoGastoList = () => {
     findIngresoGasto(id)
     setIsVisible(true)
   }
-  const totalEgreso = ingresoGastos
-    .map((egreso) => egreso.egresoIngresoGasto)
-    .reduce((a, b) => a + b, 0)
-  console.log(totalEgreso)
+  // const totalEgreso = ingresoGastos
+  //   .map((egreso) => egreso.egresoIngresoGasto)
+  //   .reduce((a, b) => a + b, 0)
+
   // cabecera de la tabla
   const leftToolbarTemplate = () => {
     return (

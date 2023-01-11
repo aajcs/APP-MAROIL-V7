@@ -22,7 +22,7 @@ export const CargaInformacionTanqueCard = ({
     tanqueAuxModificado: moment()
   }
   const [tanqueData, setTanqueData] = useState(initialCargaTanqueForm)
-  console.log(tanqueItem)
+
   const [porcenBar, setporcenBar] = useState(null)
   const [estatusTanque, setEstatusTanque] = useState(null)
   const [tipoCargaTanque, setTipoCargaTanque] = useState(null)

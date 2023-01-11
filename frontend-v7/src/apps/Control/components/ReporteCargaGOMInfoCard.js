@@ -37,7 +37,7 @@ function ReporteCargaGOMInfoCard({ barcos }) {
     barcos.fechaFinalCarga ? barcos.fechaFinalCarga : moment()
   )
   // const fecha3 = moment(fecha1 - fecha2).format('HH:mm')
-  console.log(barcos.buqueClienteVenta)
+
   // Diff in hours
   const diff = fecha2.diff(fecha1, 'seconds') // Diff in days
 

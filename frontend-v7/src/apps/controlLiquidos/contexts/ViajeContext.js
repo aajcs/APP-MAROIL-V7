@@ -80,7 +80,6 @@ const ViajeContextProvider = (props) => {
   }
 
   const updateViaje = (viaje) => {
-    console.log(viaje)
     viajeService
       .update(viaje, token)
       .then((data) =>

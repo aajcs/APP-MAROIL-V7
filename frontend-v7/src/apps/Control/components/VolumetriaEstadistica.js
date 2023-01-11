@@ -61,8 +61,7 @@ const VolumetriaEstadistica = () => {
   const getRandomInt = (max) => {
     return Math.floor(Math.random() * max)
   }
-  console.log(labels)
-  console.log(datasets)
+
   const efectoTarjeta = [
     'animate__animated animate__rotateInUpRight animate__slower',
     'animate__animated animate__rubberBand animate__slower',
@@ -71,7 +70,6 @@ const VolumetriaEstadistica = () => {
     'animate__animated animate__rotateIn animate__slower'
   ]
   const tarjetaGatosTotalesMeses = (data) => {
-    console.log(data)
     return (
       <div
         className=" col-12 lg:col-6 xl:col-3 "
@@ -180,7 +178,7 @@ const VolumetriaEstadistica = () => {
   let auxOtro2 = []
   let auxOtro3 = []
   let auxOtro4 = []
-  console.log(volumetrias)
+
   let diasTotales = []
   const volumetiraMeses = () => {
     mesesDelAno.forEach((dataset, i) => {
@@ -210,7 +208,7 @@ const VolumetriaEstadistica = () => {
       data: [...diasTotales]
     })
   }
-  console.log(data)
+
   return (
     <>
       <div className="grid  ">

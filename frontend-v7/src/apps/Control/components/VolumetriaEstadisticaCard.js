@@ -9,10 +9,9 @@ import HistoricoEstadisticaCardRender from './HistoricoEstadisticaCardRender'
 
 const VolumetriaEstadisticaCard = ({ date9, valor }) => {
   const validarFecha = moment(date9).isValid()
-  console.log(validarFecha)
-  console.log(valor)
+
   const { volumetrias } = useContext(VolumetriaContext)
-  console.log(volumetrias)
+
   const [data, setdata] = useState()
 
   useEffect(() => {

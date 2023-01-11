@@ -239,7 +239,6 @@ const VolumetriaListCargaDatos = () => {
   }
 
   const footerGroup = (data) => {
-    console.log(data)
     return (
       <ColumnGroup>
         <Row>
@@ -254,11 +253,10 @@ const VolumetriaListCargaDatos = () => {
     )
   }
   const rowExpansionTemplate = (data) => {
-    console.log(data)
     const volumetriaBuques = volumetrias.filter(
       (p) => p.barcoID && p.barcoID.id === data.id && p
     )
-    console.log(volumetriaBuques)
+
     return (
       <div className="orders-subtable">
         <DataTable

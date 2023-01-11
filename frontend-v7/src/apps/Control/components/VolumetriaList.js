@@ -9,15 +9,13 @@ import { VolumetriaContext } from '../contexts/VolumetriaContext'
 import VolumetriaForm from './VolumetriaForm'
 import { InputText } from 'primereact/inputtext'
 import moment from 'moment'
-import AuthUse from '../../../auth/AuthUse'
+
 import VolumetriaEstadistica from './VolumetriaEstadistica'
 
 const VolumetriaList = () => {
-  const auth = AuthUse()
-  console.log(auth)
   const { volumetrias, findVolumetria, deleteVolumetria, loading } =
     useContext(VolumetriaContext)
-  console.log(volumetrias)
+
   const [volumetria, setVolumetria] = useState(volumetrias)
   const [deleteVolumetriaDialog, setDeleteVolumetriaDialog] = useState(false)
   const [globalFilter, setGlobalFilter] = useState(null)
@@ -154,11 +152,11 @@ const VolumetriaList = () => {
     )
     return numeroTonelada + ' TM'
   }
-  console.log(volumetrias)
-  const totalVolumetria = volumetrias
-    .map((volumetria) => volumetria.blFinalVolumetria)
-    .reduce((a, b) => a + b, 0)
-  console.log(totalVolumetria)
+
+  // const totalVolumetria = volumetrias
+  //   .map((volumetria) => volumetria.blFinalVolumetria)
+  //   .reduce((a, b) => a + b, 0)
+
   return (
     <>
       <Toast ref={toast} />

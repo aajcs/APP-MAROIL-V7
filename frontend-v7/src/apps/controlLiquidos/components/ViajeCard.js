@@ -28,7 +28,7 @@ function ViajeCard({ viajes }) {
   const fecha1 = moment(viajes.fechaInicioViaje)
   const fecha2 = moment(viajes.fechaFinViaje ? viajes.fechaFinViaje : moment())
   const fecha3 = moment()
-  console.log(viajeAuxs)
+
   viajeAuxs.sort((o1, o2) => {
     if (moment(o1.createdAt) > moment(o2.createdAt)) {
       return -1
@@ -38,7 +38,7 @@ function ViajeCard({ viajes }) {
       return 0
     }
   })
-  console.log(viajeAuxs)
+
   // const fecha3 = moment(fecha1 - fecha2).format('HH:mm')
 
   // Diff in hours
@@ -80,7 +80,7 @@ function ViajeCard({ viajes }) {
           .map((item) => item.montoGastosOperacionale)
           .reduce((prev, curr) => prev + curr, 0)
       // setCostosOperacionales(costosOperacion)
-      console.log(sumaGastosOepacion)
+
       setCostoOperacionViaje(sumaGastosOepacion)
     }
     findGastosOperacion(viajes.id)

@@ -133,7 +133,7 @@ const BarChartDemo = ({
   }
 
   const { multiAxisOptions } = getLightTheme()
-  console.log(heightBogega)
+
   return (
     <div>
       <div className="card ">

@@ -15,7 +15,7 @@ const ConceptoAuxList = () => {
   const auth = AuthUse()
   const { conceptoAuxs, findConceptoAux, deleteConceptoAux, loading } =
     useContext(ConceptoAuxContext)
-  console.log(conceptoAuxs)
+
   const [activo, setConceptoAux] = useState(conceptoAuxs)
   const [deleteBarcoDialog, setDeleteBarcoDialog] = useState(false)
   const [globalFilter, setGlobalFilter] = useState(null)

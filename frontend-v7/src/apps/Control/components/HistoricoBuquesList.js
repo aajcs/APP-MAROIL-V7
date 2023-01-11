@@ -20,7 +20,10 @@ import { Calendar } from 'primereact/calendar'
 import VolumetriaEstadisticaCardRender from './VolumetriaEstadisticaCardRender'
 import VolumetriaEstadisticaCard from './VolumetriaEstadisticaCard'
 import HistoricoBuqueGastosTM from './HistoricoBuqueGastosTM'
+import AuthUse from '../../../auth/AuthUse'
 const HistoricoBuquesList = () => {
+  const auth = AuthUse()
+
   const { barcos, findBarco, deleteBarco, loading } = useContext(BarcoContext)
 
   const { cargaBodegas } = useContext(CargaBodegaContext)
@@ -52,24 +55,20 @@ const HistoricoBuquesList = () => {
     { label: 'Price Low to High', value: 'barcoCreado' }
   ]
   useEffect(() => {
-    console.log(barcos)
     const barcosMes = barcos.filter((p) =>
       moment(p.fechaFinalCarga).isSame(moment(), 'month')
     )
     setBuquesHistorico(barcosMes)
-    console.log(buquesHistorico)
   }, [barcos])
   const filtroMes = (event) => {
-    console.log(barcos)
     const barcosMes = barcos.filter((p) =>
       moment(p.fechaFinalCarga).isSame(event, 'month')
     )
     setBuquesHistorico(barcosMes)
-    console.log(buquesHistorico)
   }
   const onSortChange = (event) => {
     const value = event.value
-    console.log(event)
+
     if (value.indexOf('!') === 0) {
       setSortOrder(-1)
       setSortField(value.substring(1, value.length))
@@ -161,7 +160,6 @@ const HistoricoBuquesList = () => {
   }
 
   const renderGridItem = (data) => {
-    console.log(data)
     const fecha1 = moment(data.fechaInicioCarga)
     const fecha2 = moment(
       data.fechaFinalCarga ? data.fechaFinalCarga : moment()
@@ -178,7 +176,7 @@ const HistoricoBuquesList = () => {
             <div>
               <i className="pi pi-history product-category-icon"></i>
               <span className="product-category">
-                {moment(data.fechaFinalCarga)
+                {moment(data.fechaInicioCarga)
                   .format('MMMM DD YYYY')
                   .toUpperCase()}
               </span>
@@ -224,16 +222,40 @@ const HistoricoBuquesList = () => {
               </span>
             </div>
             <div className="product-description">
-              <span className="text-sm text-400">{data.costoDemora}</span>
+              <span className="text-sm text-400">
+                Tiempo Demora. {data.tiempoDemora}
+                {' Hrs'}
+              </span>
+
+              <span className="text-sm text-400">
+                {' //'} Costo Demora.{' '}
+                {new Intl.NumberFormat().format(data.costoDemora)}
+                {' $'}
+              </span>
             </div>
             <div className="product-description">
-              <span className="text-sm text-400">{data.tiempoDemora}</span>
+              {' '}
+              <span className="text-sm text-400">
+                Total Demora.{' '}
+                {new Intl.NumberFormat().format(
+                  (data.tiempoDemora / 24) * data.costoDemora
+                )}{' '}
+                {' $'}
+              </span>
             </div>
           </div>
           <div className="product-grid-item-bottom">
-            <span className="product-price">
-              {new Intl.NumberFormat().format(data.blFinalBuque)} tm
-            </span>
+            <div>
+              <span className="product-price">
+                {new Intl.NumberFormat().format(data.blFinalBuque)} tm
+              </span>
+              <br />
+              <span className="product-price text-sm">
+                {new Intl.NumberFormat().format(data.blFinalBuque * 12.5)} $
+                Costo Operación
+              </span>
+            </div>
+
             <Tag
               className=" p-2 text-900"
               style={{
@@ -285,7 +307,11 @@ const HistoricoBuquesList = () => {
           />
         </div>
         <div className="field col-12 md:col-7">
-          <HistoricoBuqueGastosTM date9={date9} />
+          {(auth.user.faidUser.roles[0] === 'ADMIN' ||
+            auth.user.faidUser.user === 'QUILLONLAM' ||
+            auth.user.faidUser.roles[0] === 'SUPERADMIN') && (
+            <HistoricoBuqueGastosTM date9={date9} />
+          )}{' '}
         </div>
         <div className="col-1" style={{ textAlign: 'right' }}>
           <DataViewLayoutOptions
