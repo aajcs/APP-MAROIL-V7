@@ -14,6 +14,7 @@ import BarcoForm from './BarcoForm'
 
 const BarcoList = () => {
   const { barcos, findBarco, deleteBarco, loading } = useContext(BarcoContext)
+  console.log(barcos)
   const [barco, setBarco] = useState(barcos)
   const [deleteBarcoDialog, setDeleteBarcoDialog] = useState(false)
   const [globalFilter, setGlobalFilter] = useState(null)

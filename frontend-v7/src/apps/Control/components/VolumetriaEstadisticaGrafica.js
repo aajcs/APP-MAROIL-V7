@@ -1,10 +1,11 @@
+/* eslint-disable react/prop-types */
 /* eslint-disable prefer-const */
 import { useContext, useEffect, useState } from 'react'
 import { Chart } from 'primereact/chart'
 import moment from 'moment'
 import { VolumetriaContext } from '../contexts/VolumetriaContext'
 
-const VolumetriaEstadisticaGrafica = () => {
+const VolumetriaEstadisticaGrafica = ({ anoVisual }) => {
   const { volumetrias } = useContext(VolumetriaContext)
 
   const [basicData, setBasicData] = useState({
@@ -39,7 +40,7 @@ const VolumetriaEstadisticaGrafica = () => {
   useEffect(() => {
     setBasicData({ ...setBasicData, labels: auxOtro3, datasets: auxOtro4 })
     volumetiraMeses()
-  }, [volumetrias])
+  }, [volumetrias, anoVisual])
   const getLightTheme = () => {
     const basicOptions = {
       maintainAspectRatio: false,
@@ -80,18 +81,18 @@ const VolumetriaEstadisticaGrafica = () => {
 
   // cabecera de la tabla
   const mesesDelAno = [
-    '2022-01-20',
-    '2022-02-20',
-    '2022-03-20',
-    '2022-04-20',
-    '2022-05-20',
-    '2022-06-20',
-    '2022-07-20',
-    '2022-08-20',
-    '2022-09-20',
-    '2022-10-20',
-    '2022-11-20',
-    '2022-12-20'
+    `${anoVisual}-01-20`,
+    `${anoVisual}-02-20`,
+    `${anoVisual}-03-20`,
+    `${anoVisual}-04-20`,
+    `${anoVisual}-05-20`,
+    `${anoVisual}-06-20`,
+    `${anoVisual}-07-20`,
+    `${anoVisual}-08-20`,
+    `${anoVisual}-09-20`,
+    `${anoVisual}-10-20`,
+    `${anoVisual}-11-20`,
+    `${anoVisual}-12-20`
   ]
   const mesesDelAnoNombre = [
     'enero',
@@ -117,10 +118,9 @@ const VolumetriaEstadisticaGrafica = () => {
   let tmTotalesCedenoMes = []
   const volumetiraMeses = () => {
     mesesDelAno.forEach((dataset, i) => {
-      let volumetria = volumetrias.filter(
-        (p) =>
-          p.estatusVolumetria !== 'VOLUMETRIA ESTIMADA' &&
-          moment(dataset).isSame(p.fechaBlFinalVolumetria, 'month')
+      let volumetria = volumetrias.filter((p) =>
+        // p.estatusVolumetria !== 'VOLUMETRIA ESTIMADA' &&
+        moment(dataset).isSame(p.fechaBlFinalVolumetria, 'month')
       )
       let volumetriaMaroilMes = volumetria.filter(
         (p) => p.terminalAuxId !== null && p.terminalAuxId === 'MAROIL TERMINAL'

@@ -7,6 +7,7 @@ import { IngresoGastoContext } from '../contexts/IngresoGastoContext'
 import moment from 'moment'
 import IngresoGastoEstadisticaGrafica from './IngresoGastoEstadisticaGrafica'
 import IngresoGastoEstadisticaCard from './IngresoGastoEstadisticaCard'
+import { Dropdown } from 'primereact/dropdown'
 
 const IngresoGastoEstadistica = () => {
   const initialIngresoGasto = {
@@ -24,9 +25,22 @@ const IngresoGastoEstadistica = () => {
     diciembre: 0
   }
   const { ingresoGastos } = useContext(IngresoGastoContext)
+  const [anoVisual, setAnoVisual] = useState(2022)
+  const [totalGastoTodo, setTotalGastoTodo] = useState(2022)
 
   const [ingresoGastoData, setIngresoGastoData] = useState(initialIngresoGasto)
-
+  const [selectedEstadoAno, setSelectedEstadoAno] = useState({
+    anoActual: '2022'
+  })
+  const estadoAno = [
+    { anoActual: '2021' },
+    { anoActual: '2022' },
+    { anoActual: '2023' }
+  ]
+  const onEstatusPresupuesto = (e) => {
+    setSelectedEstadoAno(e.value)
+    setAnoVisual(e.value.anoActual)
+  }
   const [basicData, setBasicData] = useState({
     labels: [
       'enero',
@@ -181,6 +195,10 @@ const IngresoGastoEstadistica = () => {
 
   let diasTotales = []
   const buquesToneladasDias = () => {
+    const gastoTodo = ingresoGastos
+      .map((gastoFinal) => gastoFinal.egresoIngresoGasto)
+      .reduce((a, b) => a + b, 0)
+    setTotalGastoTodo(gastoTodo)
     mesesDelAno.forEach((dataset, i) => {
       let ingresoGasto = ingresoGastos.filter((p) =>
         moment(dataset).isSame(p.fechaIngresoGasto, 'month')
@@ -211,11 +229,18 @@ const IngresoGastoEstadistica = () => {
 
   return (
     <>
+      <h1>Gastos Global {new Intl.NumberFormat().format(totalGastoTodo)}</h1>
+      <Dropdown
+        value={selectedEstadoAno}
+        options={estadoAno}
+        onChange={onEstatusPresupuesto}
+        optionLabel="anoActual"
+      />
       <div className="grid  ">
-        <IngresoGastoEstadisticaCard />
+        <IngresoGastoEstadisticaCard anoVisual={anoVisual} />
       </div>
 
-      <IngresoGastoEstadisticaGrafica />
+      <IngresoGastoEstadisticaGrafica anoVisual={anoVisual} />
     </>
   )
 }

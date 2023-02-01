@@ -7,7 +7,6 @@ export const VolumetriaPage = () => {
     <div className="grid crud-demo">
       <div className="col-12 ">
         <div className="card">
-          <h5>Volumetria CRUD</h5>
           <BarcoContextProvider>
             <VolumetriaContextProvider>
               <VolumetriaList />

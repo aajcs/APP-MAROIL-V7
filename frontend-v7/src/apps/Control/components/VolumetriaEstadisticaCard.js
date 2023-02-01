@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
 /* eslint-disable multiline-ternary */
 /* eslint-disable prefer-const */
@@ -7,7 +8,7 @@ import { VolumetriaContext } from '../contexts/VolumetriaContext'
 import VolumetriaEstadisticaCardRender from './VolumetriaEstadisticaCardRender'
 import HistoricoEstadisticaCardRender from './HistoricoEstadisticaCardRender'
 
-const VolumetriaEstadisticaCard = ({ date9, valor }) => {
+const VolumetriaEstadisticaCard = ({ date9, valor, anoVisual }) => {
   const validarFecha = moment(date9).isValid()
 
   const { volumetrias } = useContext(VolumetriaContext)
@@ -24,22 +25,22 @@ const VolumetriaEstadisticaCard = ({ date9, valor }) => {
     } else {
       setdata(auxOtro2)
     }
-  }, [volumetrias, date9])
+  }, [volumetrias, date9, anoVisual])
 
   // cabecera de la tabla
   const mesesDelAno = [
-    '2022-01-20',
-    '2022-02-20',
-    '2022-03-20',
-    '2022-04-20',
-    '2022-05-20',
-    '2022-06-20',
-    '2022-07-20',
-    '2022-08-20',
-    '2022-09-20',
-    '2022-10-20',
-    '2022-11-20',
-    '2022-12-20'
+    `${anoVisual}-01-20`,
+    `${anoVisual}-02-20`,
+    `${anoVisual}-03-20`,
+    `${anoVisual}-04-20`,
+    `${anoVisual}-05-20`,
+    `${anoVisual}-06-20`,
+    `${anoVisual}-07-20`,
+    `${anoVisual}-08-20`,
+    `${anoVisual}-09-20`,
+    `${anoVisual}-10-20`,
+    `${anoVisual}-11-20`,
+    `${anoVisual}-12-20`
   ]
   const mesesDelAnoNombre = [
     'enero',

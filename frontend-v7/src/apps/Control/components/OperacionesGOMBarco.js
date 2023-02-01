@@ -197,14 +197,14 @@ const OperacionesGOMBarco = () => {
         <Column body={actionBodyTemplate}></Column>
         <Column field="nombreBarco" header="Nombre Buque" sortable />
         <Column field="descripcion" header="Descripcion" />
-        <Column field="buqueCliente" header="Consignatario" />
-        <Column field="buqueClienteVenta" header="Cliente" />
-        <Column field="buquePaisDestino" header="Pais Destino" />
+        <Column field="buqueCliente" header="Consignatario" sortable />
+        <Column field="buqueClienteVenta" header="Cliente" sortable />
+        <Column field="buquePaisDestino" header="Pais Destino" sortable />
         <Column field="toneladasCapacidad" header="Toneladas Nominadas" />
         <Column field="toneladasNominadas" header="Toneladas Solicitadas" />
         <Column field="tiempoDemora" header="Tiempo Demora" />
         <Column field="costoDemora" header="Costo Demora" />
-        <Column field="blFinalBuque" header="BL Draft Final" />
+        <Column field="blFinalBuque" header="BL Draft Final" sortable />
         <Column field="cantidadBodegas" header="Cantidad Bodegas" />
         <Column field="cantidadGruas" header="Cantidad Gruas" />
 

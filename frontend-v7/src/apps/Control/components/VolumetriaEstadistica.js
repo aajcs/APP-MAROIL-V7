@@ -7,6 +7,7 @@ import moment from 'moment'
 import { VolumetriaContext } from '../contexts/VolumetriaContext'
 import VolumetriaEstadisticaGrafica from './VolumetriaEstadisticaGrafica'
 import VolumetriaEstadisticaCard from './VolumetriaEstadisticaCard'
+import { Dropdown } from 'primereact/dropdown'
 
 const VolumetriaEstadistica = () => {
   const initialIngresoGasto = {
@@ -24,9 +25,22 @@ const VolumetriaEstadistica = () => {
     diciembre: 0
   }
   const { volumetrias } = useContext(VolumetriaContext)
+  const [anoVisual, setAnoVisual] = useState(2023)
+  const [totalVolumenTodo, setTotalVolumenTodo] = useState(2023)
 
   const [ingresoGastoData, setIngresoGastoData] = useState(initialIngresoGasto)
-
+  const [selectedEstadoAno, setSelectedEstadoAno] = useState({
+    anoActual: '2023'
+  })
+  const estadoAno = [
+    { anoActual: '2021' },
+    { anoActual: '2022' },
+    { anoActual: '2023' }
+  ]
+  const onEstatusPresupuesto = (e) => {
+    setSelectedEstadoAno(e.value)
+    setAnoVisual(e.value.anoActual)
+  }
   const [basicData, setBasicData] = useState({
     labels: [
       'enero',
@@ -181,6 +195,22 @@ const VolumetriaEstadistica = () => {
 
   let diasTotales = []
   const volumetiraMeses = () => {
+    const volumetriaTodo = volumetrias
+      .map((blFinal) => blFinal.blFinalVolumetria)
+      .reduce((a, b) => a + b, 0)
+    setTotalVolumenTodo(volumetriaTodo)
+
+    // mesesDelAno.forEach((dataset, i) => {
+    //   let volumetria = volumetrias.filter((p) =>
+    //     moment(dataset).isSame(p.fechaBlFinalVolumetria, 'year')
+    //   )
+    //   console.log(volumetria)
+    //   const totalVolumetria = volumetria
+    //     .map((blFinal) => blFinal.blFinalVolumetria)
+    //     .reduce((a, b) => a + b, 0)
+    //   setTotalVolumenTodo(totalVolumetria)
+    // })
+
     mesesDelAno.forEach((dataset, i) => {
       let volumetria = volumetrias.filter((p) =>
         moment(dataset).isSame(p.fechaBlFinalVolumetria, 'month')
@@ -212,9 +242,20 @@ const VolumetriaEstadistica = () => {
   return (
     <>
       <div className="grid  ">
-        <VolumetriaEstadisticaCard />
+        <div className="field col-12 md:col-6">
+          <h1>
+            Volumetria Global {new Intl.NumberFormat().format(totalVolumenTodo)}
+          </h1>
+          <Dropdown
+            value={selectedEstadoAno}
+            options={estadoAno}
+            onChange={onEstatusPresupuesto}
+            optionLabel="anoActual"
+          />
+        </div>
+        <VolumetriaEstadisticaCard anoVisual={anoVisual} />
       </div>
-      <VolumetriaEstadisticaGrafica />
+      <VolumetriaEstadisticaGrafica anoVisual={anoVisual} />
     </>
   )
 }
