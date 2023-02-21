@@ -7,8 +7,9 @@ import appControlLiquidosRouter from '../apps/controlLiquidos/routes/AppControlL
 import { HomeAIT } from '../apps/ait/pages/HomeAIT'
 import ConfigProvider from '../apps/Control/contexts/ConfigProvider'
 import appProcuraRouter from '../apps/procura/routes/AppProcuraRouter'
-import appadministracionRouter from '../apps/administracion/routes/AppadministracionRouter'
 import appReporteGerenciaRouter from '../apps/reporteGerencia/routes/AppreporteGerenciaRouter'
+import appPlanificacionMaritimaRouter from '../apps/planificacionMaritima/routes/AppPlanificacionMaritimaRouter'
+import appadministracionRouter from '../apps/administracion/routes/AppadministracionRouter'
 
 export default function appRouter() {
   return (
@@ -29,6 +30,10 @@ export default function appRouter() {
           <PrivateRoute
             path="/apps/administracion"
             component={appadministracionRouter}
+          />
+          <PrivateRoute
+            path="/apps/planificacionMaritima"
+            component={appPlanificacionMaritimaRouter}
           />
         </ConfigProvider>
         <PrivateRoute exact path="/apps/AIT" component={HomeAIT} />

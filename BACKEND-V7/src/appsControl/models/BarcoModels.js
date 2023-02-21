@@ -7,7 +7,8 @@ const barcoSchema = new Schema(
     nombreBarco: {
       type: String,
       required: true,
-      unique: true
+      unique: true,
+      trim: true
     },
     descripcion: {
       type: String
