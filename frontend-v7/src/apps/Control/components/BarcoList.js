@@ -218,6 +218,8 @@ const BarcoList = () => {
         <Column field="toneladasNominadas" header="toneladas Solicitadas" />
         <Column field="toneladasActual" header="toneladas Actual" />
         <Column field="blFinalBuque" header="BL Draft Final" />
+        <Column field="tiempoDemora" header="tiempoDemora" />
+        <Column field="costoDemora" header="costoDemora" />
         <Column field="cantidadBodegas" header="cantidad Bodegas" />
         <Column field="cantidadGruas" header="cantidad Gruas" />
         <Column

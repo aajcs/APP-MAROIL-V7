@@ -23,9 +23,35 @@ import HistoricoBuqueGastosTM from './HistoricoBuqueGastosTM'
 import AuthUse from '../../../auth/AuthUse'
 const HistoricoBuquesList = () => {
   const auth = AuthUse()
-
   const { barcos, findBarco, deleteBarco, loading } = useContext(BarcoContext)
+  console.log(barcos)
+  const [barcoPdvsaDemoratotal, setBarcoPdvsaDemoratotal] = useState(0)
+  const [barcoMaroilDemoratotal, setBarcoMaroilDemoratotal] = useState(0)
 
+  const demorasTotales = () => {
+    let barcoPdvsa = barcos.filter((p) => p.buqueCliente === 'PDVSA')
+    let barcoMaroil = barcos.filter((p) => p.buqueCliente === 'MAROIL')
+    console.log(barcoPdvsa)
+    console.log(barcoMaroil)
+    let sumaBarcosMaroil = 0
+    barcoMaroil.map((p) => (sumaBarcosMaroil += p.tiempoDemora * p.costoDemora))
+    console.log(sumaBarcosMaroil)
+    let sumaBarcosPdvsa = 0
+    barcoPdvsa.map((p) => (sumaBarcosPdvsa += p.tiempoDemora * p.costoDemora))
+    console.log(sumaBarcosPdvsa)
+    setBarcoPdvsaDemoratotal(sumaBarcosPdvsa)
+    setBarcoMaroilDemoratotal(sumaBarcosMaroil)
+    //   .reduce((a, b) => a + b, 0)
+    // const totalVolumetriaMaroil = volumetriaMaroilMes
+    //   .map((blFinal) => blFinal.blFinalVolumetria)
+    //   .reduce((a, b) => a + b, 0)
+    // const totalVolumetriaSanFelix = volumetriaSanFelixMes
+    //   .map((blFinal) => blFinal.blFinalVolumetria)
+    //   .reduce((a, b) => a + b, 0)
+    // const totalVolumetriaCedeno = volumetriaCedenoMes
+    //   .map((blFinal) => blFinal.blFinalVolumetria)
+    //   .reduce((a, b) => a + b, 0)
+  }
   const { cargaBodegas } = useContext(CargaBodegaContext)
   const [layout, setLayout] = useState('grid')
   const [buquesHistorico, setBuquesHistorico] = useState(null)
@@ -59,6 +85,7 @@ const HistoricoBuquesList = () => {
       moment(p.fechaFinalCarga).isSame(moment(), 'month')
     )
     setBuquesHistorico(barcosMes)
+    demorasTotales()
   }, [barcos])
   const filtroMes = (event) => {
     const barcosMes = barcos.filter((p) =>
@@ -238,7 +265,7 @@ const HistoricoBuquesList = () => {
               <span className="text-sm text-400">
                 Total Demora.{' '}
                 {new Intl.NumberFormat().format(
-                  (data.tiempoDemora / 24) * data.costoDemora
+                  data.tiempoDemora * data.costoDemora
                 )}{' '}
                 {' $'}
               </span>
@@ -283,15 +310,6 @@ const HistoricoBuquesList = () => {
   const renderHeader = () => {
     return (
       <div className="grid grid-nogutter">
-        {/* <div className="col-4" style={{ textAlign: 'left' }}>
-          <Dropdown
-            options={sortOptions}
-            value={sortKey}
-            optionLabel="label"
-            placeholder="Sort By Price"
-            onChange={onSortChange}
-          />
-        </div> */}
         <div className="field col-12 md:col-4">
           {/* <label htmlFor="monthpicker">Month Picker</label> */}
           <Calendar
@@ -305,7 +323,7 @@ const HistoricoBuquesList = () => {
             dateFormat="mm/yy"
             inline
           />
-        </div>
+        </div>{' '}
         <div className="field col-12 md:col-7">
           {(auth.user.faidUser.roles[0] === 'ADMIN' ||
             auth.user.faidUser.user === 'QUILLONLAM' ||
@@ -326,6 +344,23 @@ const HistoricoBuquesList = () => {
   const header = renderHeader()
   return (
     <div className="dataview-demo">
+      {/* <div className="col-12 font-medium" style={{ textAlign: 'left' }}>
+        <h4>
+          {'Total Demoras PDVSA =>'}
+          {new Intl.NumberFormat().format(
+            barcoPdvsaDemoratotal.toFixed(2)
+          )}{' '}
+          {'$'}
+        </h4>
+        <h4>
+          {'Total Demoras Maroil =>'}
+          {new Intl.NumberFormat().format(
+            barcoMaroilDemoratotal.toFixed(2)
+          )}{' '}
+          {'$'}
+          {}
+        </h4>
+      </div> */}
       <div className="card">
         <DataView
           value={buquesHistorico}

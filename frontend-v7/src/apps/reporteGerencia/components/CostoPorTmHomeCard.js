@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 
-const CostoPorTmHomeCard = ({ dataDataCompleta }) => {
+const CostoPorTmHomeCard = ({ dataDataCompleta, anoVisual }) => {
   const getRandomInt = (max) => {
     return Math.floor(Math.random() * max)
   }

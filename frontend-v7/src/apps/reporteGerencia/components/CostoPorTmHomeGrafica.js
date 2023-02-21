@@ -3,7 +3,7 @@
 
 import { Chart } from 'primereact/chart'
 
-const CostoPorTmHomeGrafica = ({ dataGraficaCostoTmMuelle }) => {
+const CostoPorTmHomeGrafica = ({ dataGraficaCostoTmMuelle, anoVisual }) => {
   const getLightTheme = () => {
     const basicOptions = {
       maintainAspectRatio: false,

@@ -10,12 +10,14 @@ import CostoPorTmHomeCard from './CostoPorTmHomeCard'
 import CostoPorTmHomeGrafica from './CostoPorTmHomeGrafica'
 import IngresoGastoEstadisticaGrafica from '../../administracion/components/IngresoGastoEstadisticaGrafica'
 import VolumetriaEstadisticaGrafica from '../../Control/components/VolumetriaEstadisticaGrafica'
+import { Calendar } from 'primereact/calendar'
 
 const HomeInfo = () => {
   const { ingresoGastos } = useContext(IngresoGastoContext)
   const { volumetrias } = useContext(VolumetriaContext)
   const { costoTmMess } = useContext(CostoTmMesContext)
   const { mensualidadOpMess } = useContext(MensualidadOpMesContext)
+  const [date9, setDate9] = useState(moment())
 
   const [dataDataCompleta, setdataDataCompleta] = useState()
   const [dataGraficaCostoTmMuelle, setDataGraficaCostoTmMuelle] = useState({
@@ -51,6 +53,8 @@ const HomeInfo = () => {
       }
     ]
   })
+  const [anoVisual, setAnoVisual] = useState(2023)
+
   useEffect(() => {
     setDataGraficaCostoTmMuelle({
       ...setDataGraficaCostoTmMuelle,
@@ -59,27 +63,34 @@ const HomeInfo = () => {
     })
     dataMesCompleta()
     setdataDataCompleta(arrayDataCompleta)
-  }, [ingresoGastos, volumetrias, costoTmMess, mensualidadOpMess])
+  }, [
+    ingresoGastos,
+    volumetrias,
+    costoTmMess,
+    mensualidadOpMess,
+    anoVisual,
+    date9
+  ])
   // useEffect(() => {
   //
   //   setdataDataCompleta(arrayDataCompleta)
   // }, [volumetrias])
   let arrayDataCompleta = []
-
+  console.log(moment(date9).format('YYYY'))
   // cabecera de la tabla
   const mesesDelAno = [
-    '2022-01-20',
-    '2022-02-20',
-    '2022-03-20',
-    '2022-04-20',
-    '2022-05-20',
-    '2022-06-20',
-    '2022-07-20',
-    '2022-08-20',
-    '2022-09-20',
-    '2022-10-20',
-    '2022-11-20',
-    '2022-12-20'
+    `${anoVisual}-01-20`,
+    `${anoVisual}-02-20`,
+    `${anoVisual}-03-20`,
+    `${anoVisual}-04-20`,
+    `${anoVisual}-05-20`,
+    `${anoVisual}-06-20`,
+    `${anoVisual}-07-20`,
+    `${anoVisual}-08-20`,
+    `${anoVisual}-09-20`,
+    `${anoVisual}-10-20`,
+    `${anoVisual}-11-20`,
+    `${anoVisual}-12-20`
   ]
   const mesesDelAnoNombre = [
     'enero',
@@ -238,6 +249,19 @@ const HomeInfo = () => {
   return (
     <>
       <div className=" ">
+        <Calendar
+          id="monthpicker"
+          value={date9}
+          onChange={(e) => {
+            setDate9(e.value)
+            // filtroMes(e.target.value)
+            setAnoVisual(moment(date9).format('YYYY'))
+          }}
+          view="month"
+          dateFormat="mm/yy"
+          inline
+        />
+
         {ingresoGastos.length !== 0 &&
           volumetrias.length !== 0 &&
           costoTmMess.length !== 0 &&
@@ -246,7 +270,7 @@ const HomeInfo = () => {
           dataDataCompleta.map(
             (dataDataCompleta) =>
               moment(dataDataCompleta.fechaEfectiva).isSame(
-                moment().subtract(1, 'months'),
+                moment(date9),
                 'month'
               ) && (
                 <>
@@ -259,9 +283,10 @@ const HomeInfo = () => {
           )}
         <CostoPorTmHomeGrafica
           dataGraficaCostoTmMuelle={dataGraficaCostoTmMuelle}
+          anoVisual={anoVisual}
         />
-        <IngresoGastoEstadisticaGrafica />
-        <VolumetriaEstadisticaGrafica />
+        <IngresoGastoEstadisticaGrafica anoVisual={anoVisual} />
+        <VolumetriaEstadisticaGrafica anoVisual={anoVisual} />
       </div>
     </>
   )

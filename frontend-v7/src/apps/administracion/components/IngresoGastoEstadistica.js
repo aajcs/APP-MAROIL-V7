@@ -25,12 +25,12 @@ const IngresoGastoEstadistica = () => {
     diciembre: 0
   }
   const { ingresoGastos } = useContext(IngresoGastoContext)
-  const [anoVisual, setAnoVisual] = useState(2022)
-  const [totalGastoTodo, setTotalGastoTodo] = useState(2022)
+  const [anoVisual, setAnoVisual] = useState(2023)
+  const [totalGastoTodo, setTotalGastoTodo] = useState(2023)
 
   const [ingresoGastoData, setIngresoGastoData] = useState(initialIngresoGasto)
   const [selectedEstadoAno, setSelectedEstadoAno] = useState({
-    anoActual: '2022'
+    anoActual: '2023'
   })
   const estadoAno = [
     { anoActual: '2021' },
