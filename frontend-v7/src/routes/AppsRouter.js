@@ -10,6 +10,7 @@ import appProcuraRouter from '../apps/procura/routes/AppProcuraRouter'
 import appReporteGerenciaRouter from '../apps/reporteGerencia/routes/AppreporteGerenciaRouter'
 import appPlanificacionMaritimaRouter from '../apps/planificacionMaritima/routes/AppPlanificacionMaritimaRouter'
 import appadministracionRouter from '../apps/administracion/routes/AppadministracionRouter'
+import appAlmacenRouter from '../apps/almacen/routes/AppAlmacenRouter'
 
 export default function appRouter() {
   return (
@@ -35,6 +36,7 @@ export default function appRouter() {
             path="/apps/planificacionMaritima"
             component={appPlanificacionMaritimaRouter}
           />
+          <PrivateRoute path="/apps/almacen" component={appAlmacenRouter} />
         </ConfigProvider>
         <PrivateRoute exact path="/apps/AIT" component={HomeAIT} />
         <Route path="*">
