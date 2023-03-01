@@ -19,25 +19,31 @@ export class ActividadService {
       .then((res) => res.data)
   }
 
-  create(Actividad, token) {
+  create(actividad, token) {
     const config = {
       headers: {
-        authorization: token
+        authorization: token,
+        'Content-Type': 'multipart/form-data'
       }
     }
+    const form = new FormData()
+    for (const key in actividad) {
+      form.append(key, actividad[key])
+    }
+    console.log(form)
     return axios
-      .post(this.baseUrl + 'Actividad/', Actividad, config)
+      .post(this.baseUrl + 'Actividad/', form, config)
       .then((res) => res.data)
   }
 
-  update(Actividad, token) {
+  update(actividad, token) {
     const config = {
       headers: {
         authorization: token
       }
     }
     return axios
-      .put(this.baseUrl + 'Actividad/' + Actividad.id, Actividad, config)
+      .put(this.baseUrl + 'Actividad/' + actividad.id, actividad, config)
       .then((res) => res.data)
   }
 

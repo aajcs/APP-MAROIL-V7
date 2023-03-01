@@ -1,7 +1,8 @@
 const costoTmMesCtrl = {}
 
 const Actividad = require('../models/ActividadModels')
-
+const fs = require('fs-extra')
+const { uploadImage } = require('../../libs/cloudinary')
 costoTmMesCtrl.createActividad = async (req, res) => {
   const {
     codigoActividad,
@@ -9,8 +10,8 @@ costoTmMesCtrl.createActividad = async (req, res) => {
     procesoActividad,
     descripcionActividad,
     nivelPrioridadActividad,
-    imagenDefectoActividad,
-    imagenAvanceActividad,
+    // imagenDefectoActividad,
+    // imagenAvanceActividad,
     estatusActividad,
     responsableUsuarioId,
     presupuestoActididadId,
@@ -19,6 +20,29 @@ costoTmMesCtrl.createActividad = async (req, res) => {
     fechaFinActividad
   } = req.body
   try {
+    let imagenDefectoActividad = null
+    console.log(req.body)
+    if (req.files?.imagenDefectoActividad) {
+      const result = await uploadImage(
+        req.files.imagenDefectoActividad.tempFilePath
+      )
+      await fs.remove(req.files.imagenDefectoActividad.tempFilePath)
+      imagenDefectoActividad = {
+        url: result.secure_url,
+        public_id: result.public_id
+      }
+    }
+    let imagenAvanceActividad = null
+    if (req.files?.imagenAvanceActividad) {
+      const result = await uploadImage(
+        req.files.imagenAvanceActividad.tempFilePath
+      )
+      await fs.remove(req.files.imagenAvanceActividad.tempFilePath)
+      imagenAvanceActividad = {
+        url: result.secure_url,
+        public_id: result.public_id
+      }
+    }
     const newActividad = new Actividad({
       codigoActividad,
       embarcacionId,

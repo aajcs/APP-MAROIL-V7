@@ -24,6 +24,8 @@ const ActividadForm = (props) => {
     fechaFinalActividad: '',
     estatusActividad: '',
     embarcacionId: null,
+    imagenDefectoActividad: null,
+    imagenAvanceActividad: null,
     creadoActividad: moment(),
     modificadoActividad: moment()
   }
@@ -76,13 +78,16 @@ const ActividadForm = (props) => {
   const { createActividad, editActividad, updateActividad } =
     useContext(ActividadContext)
   const { embarcacions } = useContext(EmbarcacionContext)
-  console.log(embarcacions)
+
   const { isVisible, setIsVisible } = props
   const [selectedActividad, setSelectedActividad] = useState(null)
+  const [selectedNivelPrioridad, setSelectedNivelPrioridad] = useState(null)
+
   const [selectedEmbarcacion, setSelectedEmbarcacion] = useState(null)
   const [submitted, setSubmitted] = useState(false)
   const [actividadData, setActividadData] = useState(initialActividadForm)
   const [selectedProceso, setSelectedProceso] = useState(null)
+  console.log(actividadData)
   const procesosCascade = [
     {
       name: 'Requisicion',
@@ -126,11 +131,22 @@ const ActividadForm = (props) => {
   ]
   const estadoActividad = [
     { estatusActividad: 'OPERATIVO' },
-    { estatusActividad: 'CULMINADO' }
+    { estatusActividad: 'EN PROCESO' },
+    { estatusActividad: 'NEGADA' }
+  ]
+  const optionsNivelPrioridad = [
+    { nivelPrioridadActividad: 'MAXIMA' },
+    { nivelPrioridadActividad: 'ALTA' },
+    { nivelPrioridadActividad: 'MEDIA' },
+    { nivelPrioridadActividad: 'BAJA' }
   ]
   const onEstatusActividad = (e) => {
     setSelectedActividad(e.value)
     updateField(e.value.estatusActividad, 'estatusActividad')
+  }
+  const onNivelPrioridad = (e) => {
+    setSelectedNivelPrioridad(e.value)
+    updateField(e.value.nivelPrioridadActividad, 'nivelPrioridadActividad')
   }
   const onEmbarcacion = (e) => {
     if (e.value) {
@@ -154,6 +170,7 @@ const ActividadForm = (props) => {
   }, [editActividad])
 
   const updateField = (data, field) => {
+    console.log(data)
     setActividadData({
       ...actividadData,
       [field]: data
@@ -275,22 +292,23 @@ const ActividadForm = (props) => {
             </div>
             <div className="p-float-label col-12 lg:col-6 xl:col-4">
               <Dropdown
-                value={selectedActividad}
-                options={estadoActividad}
-                onChange={onEstatusActividad}
-                optionLabel="estatusActividad"
-                placeholder="Seleccione Estado"
-                valueTemplate={selectedestatusActividadTemplate}
-                itemTemplate={estatusActividadOptionTemplate}
+                value={selectedNivelPrioridad}
+                options={optionsNivelPrioridad}
+                onChange={onNivelPrioridad}
+                optionLabel="nivelPrioridadActividad"
                 className={classNames({
-                  'p-invalid': submitted && !actividadData.estatusActividad
+                  'p-invalid':
+                    submitted && !actividadData.nivelPrioridadActividad
                 })}
               />
-              {submitted && !actividadData.estatusActividad && (
-                <small className="p-invalid">Estatus es requerido.</small>
+              {submitted && !actividadData.nivelPrioridadActividad && (
+                <small className="p-invalid">
+                  Nivel de prioridad es requerido.
+                </small>
               )}
-            </div>{' '}
-            <div className="p-float-label col-12 lg:col-12 xl:col-12">
+              <label>Nivel de prioridad:</label>
+            </div>
+            <div className="p-float-label col-12 lg:col-12 xl:col-12 mt-4">
               <InputTextarea
                 id="description"
                 value={actividadData.descripcionActividad}
@@ -303,21 +321,6 @@ const ActividadForm = (props) => {
 
               <label>Descripcion:</label>
             </div>
-            <div className="p-float-label">
-              <InputText
-                value={actividadData.nombreActividad}
-                onChange={(e) => updateField(e.target.value, 'nombreActividad')}
-                className={classNames({
-                  'p-invalid': submitted && !actividadData.nombreActividad
-                })}
-              />
-              {submitted && !actividadData.nombreActividad && (
-                <small className="p-invalid">Nombre es requerido.</small>
-              )}
-              <label>Nombre del Actividad:*</label>
-            </div>
-            <br />
-            <br />
             <div className="p-float-label ">
               <Dropdown
                 value={selectedActividad}
@@ -334,6 +337,37 @@ const ActividadForm = (props) => {
               {submitted && !actividadData.estatusActividad && (
                 <small className="p-invalid">Estatus es requerido.</small>
               )}
+            </div>
+            <div className="card col-4">
+              Cargar imagen del defecto
+              <input
+                type="file"
+                onChange={(e) =>
+                  updateField(e.target.files[0], 'imagenDefectoActividad')
+                }
+              />
+            </div>{' '}
+            <div className="card col-4">
+              Cargar imagen del avance
+              <input
+                type="file"
+                onChange={(e) =>
+                  updateField(e.target.files[0], 'imagenAvanceActividad')
+                }
+              />
+            </div>
+            <div className="p-float-label">
+              <InputText
+                value={actividadData.nombreActividad}
+                onChange={(e) => updateField(e.target.value, 'nombreActividad')}
+                className={classNames({
+                  'p-invalid': submitted && !actividadData.nombreActividad
+                })}
+              />
+              {submitted && !actividadData.nombreActividad && (
+                <small className="p-invalid">Nombre es requerido.</small>
+              )}
+              <label>Nombre del Actividad:*</label>
             </div>
           </div>
         </div>
