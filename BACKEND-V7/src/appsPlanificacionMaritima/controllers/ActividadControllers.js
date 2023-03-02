@@ -1,9 +1,9 @@
-const costoTmMesCtrl = {}
+const actividadMesCtrl = {}
 
 const Actividad = require('../models/ActividadModels')
 const fs = require('fs-extra')
 const { uploadImage } = require('../../libs/cloudinary')
-costoTmMesCtrl.createActividad = async (req, res) => {
+actividadMesCtrl.createActividad = async (req, res) => {
   const {
     codigoActividad,
     embarcacionId,
@@ -71,10 +71,10 @@ costoTmMesCtrl.createActividad = async (req, res) => {
   }
 }
 
-costoTmMesCtrl.getActividads = async (req, res) => {
+actividadMesCtrl.getActividads = async (req, res) => {
   try {
-    const costoTmMes = await Actividad.find({})
-    res.status(200).json(costoTmMes)
+    const actividadMes = await Actividad.find({})
+    res.status(200).json(actividadMes)
   } catch (err) {
     console.log(err)
     res.status(400).json({
@@ -83,7 +83,7 @@ costoTmMesCtrl.getActividads = async (req, res) => {
   }
 }
 
-costoTmMesCtrl.getActividad = async (req, res) => {
+actividadMesCtrl.getActividad = async (req, res) => {
   const { id } = req.params
   if (!id) {
     return res.status(400).json({
@@ -91,9 +91,9 @@ costoTmMesCtrl.getActividad = async (req, res) => {
     })
   }
   try {
-    const costoTmMes = await Actividad.findById(id)
-    if (costoTmMes) {
-      res.status(200).json(costoTmMes)
+    const actividadMes = await Actividad.findById(id)
+    if (actividadMes) {
+      res.status(200).json(actividadMes)
     } else {
       res.status(404).end()
     }
@@ -104,7 +104,7 @@ costoTmMesCtrl.getActividad = async (req, res) => {
   }
 }
 
-costoTmMesCtrl.updateActividad = async (req, res) => {
+actividadMesCtrl.updateActividad = async (req, res) => {
   const { id } = req.params
   if (!id) {
     return res.status(400).json({
@@ -160,7 +160,7 @@ costoTmMesCtrl.updateActividad = async (req, res) => {
   }
 }
 
-costoTmMesCtrl.deleteActividad = async (req, res) => {
+actividadMesCtrl.deleteActividad = async (req, res) => {
   const { id } = req.params
   if (!id) {
     return res.status(400).json({
@@ -179,4 +179,4 @@ costoTmMesCtrl.deleteActividad = async (req, res) => {
   }
 }
 
-module.exports = costoTmMesCtrl
+module.exports = actividadMesCtrl

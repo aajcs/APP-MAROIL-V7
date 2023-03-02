@@ -178,6 +178,44 @@ const ActividadList = () => {
   const clearSelected = () => {
     setDeleteBarcoDialog(false)
   }
+  const imageBodyTemplate = (rowData) => {
+    return (
+      <img
+        src={
+          rowData.imagenDefectoActividad
+            ? rowData.imagenDefectoActividad.url
+            : 'https://res.cloudinary.com/dlt3eax5v/image/upload/v1675834230/saltarra/saltarrana_on_buzawp.png'
+        }
+        onError={(e) =>
+          (e.target.src =
+            'https://res.cloudinary.com/dlt3eax5v/image/upload/v1675834230/saltarra/saltarrana_on_buzawp.png')
+        }
+        alt={rowData.imagenDefectoActividad}
+        className="product-image"
+        height="100px"
+        width={'100px'}
+      />
+    )
+  }
+  const imagenAvanceActividadTemplate = (rowData) => {
+    return (
+      <img
+        src={
+          rowData.imagenAvanceActividad
+            ? rowData.imagenAvanceActividad.url
+            : 'https://res.cloudinary.com/dlt3eax5v/image/upload/v1675834230/saltarra/saltarrana_on_buzawp.png'
+        }
+        onError={(e) =>
+          (e.target.src =
+            'https://res.cloudinary.com/dlt3eax5v/image/upload/v1675834230/saltarra/saltarrana_on_buzawp.png')
+        }
+        alt={rowData.imagenAvanceActividad}
+        className="product-image"
+        height="100px"
+        width={'100px'}
+      />
+    )
+  }
   return (
     <>
       <Toast ref={toast} />
@@ -209,10 +247,28 @@ const ActividadList = () => {
         breakpoint="960px"
       >
         <Column body={actionBodyTemplate}></Column>
-        <Column field="nombreActividad" header="Nombre" />
-        <Column field="descripcionActividad" header="Descripción" />
-
+        <Column field="codigoActividad" header="codigoActividad" />
+        <Column field="embarcacionId" header="embarcacionId" />
+        <Column field="procesoActividad" header="procesoActividad" />
+        <Column
+          field="nivelPrioridadActividad"
+          header="nivelPrioridadActividad"
+        />
+        <Column field="descripcionActividad" header="descripcionActividad" />
         <Column field="estatusActividad" header="Estatus" />
+        <Column
+          field="imagenDefectoActividad"
+          header="imagenDefectoActividad"
+          body={imageBodyTemplate}
+        />
+        <Column
+          field="imagenAvanceActividad"
+          header="imagenAvanceActividad"
+          body={imagenAvanceActividadTemplate}
+        />
+        <Column field="responsableUsuarioId" header="responsableUsuarioId" />
+        <Column field="fechaInicioActividad" header="fechaInicioActividad" />
+        <Column field="fechaFinActividad" header="fechaFinActividad" />
         <Column
           field="creadoActividad"
           body={fechacreadoActividad}

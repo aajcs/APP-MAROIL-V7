@@ -9,8 +9,7 @@ const actividadSchema = new Schema(
     },
     embarcacionId: {
       type: Schema.Types.ObjectId,
-      ref: 'Embarcacion',
-      required: true
+      ref: 'Embarcacion'
     },
     procesoActividad: {
       type: String,

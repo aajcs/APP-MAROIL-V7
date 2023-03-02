@@ -1,4 +1,6 @@
 const express = require('express')
+const fileUpload = require('express-fileupload')
+
 const cors = require('cors')
 const morgan = require('morgan')
 const createAdmin = require('./libs/initialSetup')
@@ -18,6 +20,12 @@ app.use(morgan('dev'))
 app.use(cors())
 // recibe lo que viene en el boby de la request y lo parsea o transforma a formato json
 app.use(express.json())
+app.use(
+  fileUpload({
+    useTempFiles: true,
+    tempFileDir: './upload'
+  })
+)
 // el codigo se lee de arriba abajo y el use es lo q la api lee el next es para ir al siguiente patch
 app.use((req, res, next) => {
   console.log(req.method)

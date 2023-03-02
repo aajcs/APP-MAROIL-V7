@@ -3,7 +3,7 @@ import React, { useContext, useState, useEffect, useRef } from 'react'
 import { ActividadContext } from '../contexts/ActividadContext'
 import { Dialog } from 'primereact/dialog'
 import { Button } from 'primereact/button'
-import { InputText } from 'primereact/inputtext'
+// import { InputText } from 'primereact/inputtext'
 import { Toast } from 'primereact/toast'
 import { Dropdown } from 'primereact/dropdown'
 import { addLocale } from 'primereact/api'
@@ -11,23 +11,30 @@ import { InputTextarea } from 'primereact/inputtextarea'
 import moment from 'moment'
 import { classNames } from 'primereact/utils'
 import { EmbarcacionContext } from '../../controlLiquidos/contexts/EmbarcacionContext'
+import { Calendar } from 'primereact/calendar'
 import { CascadeSelect } from 'primereact/cascadeselect'
 
 const ActividadForm = (props) => {
   const initialActividadForm = {
     id: null,
-    nombreActividad: '',
-    descripcionActividad: '',
-    totalActividad: 0,
-    avanceActividad: 0,
-    fechaInicioActividad: '',
-    fechaFinalActividad: '',
-    estatusActividad: '',
+    codigoActividad: '',
     embarcacionId: null,
+    procesoActividad: '',
+    nivelPrioridadActividad: '',
+    descripcionActividad: '',
+    estatusActividad: '',
     imagenDefectoActividad: null,
     imagenAvanceActividad: null,
+    fechaInicioActividad: '',
+
     creadoActividad: moment(),
-    modificadoActividad: moment()
+    modificadoActividad: moment(),
+
+    responsableUsuarioId: null,
+    presupuestoActididadId: null,
+    proveedorId: null,
+
+    fechaFinActividad: ''
   }
 
   addLocale('es', {
@@ -81,13 +88,17 @@ const ActividadForm = (props) => {
 
   const { isVisible, setIsVisible } = props
   const [selectedActividad, setSelectedActividad] = useState(null)
+  const [selectedResponsableActividad, setSelectedResponsableActividad] =
+    useState(null)
   const [selectedNivelPrioridad, setSelectedNivelPrioridad] = useState(null)
 
   const [selectedEmbarcacion, setSelectedEmbarcacion] = useState(null)
   const [submitted, setSubmitted] = useState(false)
   const [actividadData, setActividadData] = useState(initialActividadForm)
   const [selectedProceso, setSelectedProceso] = useState(null)
-  console.log(actividadData)
+  const [dateInicio, setDateInicio] = useState(null)
+  const [dateFinal, setDateFinal] = useState(null)
+
   const procesosCascade = [
     {
       name: 'Requisicion',
@@ -134,6 +145,11 @@ const ActividadForm = (props) => {
     { estatusActividad: 'EN PROCESO' },
     { estatusActividad: 'NEGADA' }
   ]
+  const responsableActividad = [
+    { responsableUsuarioId: 'OPERATIVO' },
+    { responsableUsuarioId: 'EN PROCESO' },
+    { responsableUsuarioId: 'NEGADA' }
+  ]
   const optionsNivelPrioridad = [
     { nivelPrioridadActividad: 'MAXIMA' },
     { nivelPrioridadActividad: 'ALTA' },
@@ -143,6 +159,15 @@ const ActividadForm = (props) => {
   const onEstatusActividad = (e) => {
     setSelectedActividad(e.value)
     updateField(e.value.estatusActividad, 'estatusActividad')
+  }
+  const onResponsableActividad = (e) => {
+    setSelectedResponsableActividad(e.value)
+    updateField(e.value.responsableUsuarioId, 'responsableUsuarioId')
+  }
+  const onProcesoActividad = (e) => {
+    console.log(e.value)
+    setSelectedProceso(e.value)
+    updateField(e.value.nameViw, 'procesoActividad')
   }
   const onNivelPrioridad = (e) => {
     setSelectedNivelPrioridad(e.value)
@@ -179,12 +204,16 @@ const ActividadForm = (props) => {
 
   const saveActividad = () => {
     setSubmitted(true)
-    if (
-      actividadData.nombreActividad.trim() &&
-      actividadData.estatusActividad.trim()
-    ) {
+    if (actividadData.estatusActividad.trim()) {
       if (!editActividad) {
-        createActividad(actividadData)
+        const {
+          embarcacionId,
+          responsableUsuarioId,
+          presupuestoActididadId,
+          proveedorId,
+          ...actividadDataRest
+        } = actividadData
+        createActividad(actividadDataRest)
       } else {
         updateActividad({
           ...actividadData,
@@ -211,25 +240,12 @@ const ActividadForm = (props) => {
     setActividadData(initialActividadForm)
     setSelectedActividad('')
     setSubmitted(false)
-  }
-  const selectedestatusActividadTemplate = (option, props) => {
-    if (option) {
-      return (
-        <div className="country-item country-item-value">
-          <div>{option.estatusActividad}</div>
-        </div>
-      )
-    }
-
-    return <span>{props.placeholder}</span>
-  }
-
-  const estatusActividadOptionTemplate = (option) => {
-    return (
-      <div className="country-item">
-        <div>{option.estatusActividad}</div>
-      </div>
-    )
+    setSelectedNivelPrioridad(null)
+    setSelectedEmbarcacion(null)
+    setSelectedProceso(null)
+    setDateInicio(null)
+    setDateFinal(null)
+    setSelectedResponsableActividad(null)
   }
 
   return (
@@ -244,8 +260,8 @@ const ActividadForm = (props) => {
         onHide={() => clearSelected()}
       >
         <div className="p-grid p-fluid">
-          <div className="formgrid grid">
-            <div className="field  mb-4 col-12 lg:col-6 xl:col-4 ">
+          <div className="formgrid grid ">
+            <div className="field  col-12 lg:col-6 xl:col-4 mt-3 ">
               <span className="p-float-label">
                 <Dropdown
                   inputId="dropdown"
@@ -264,16 +280,16 @@ const ActividadForm = (props) => {
                   })}
                 />
                 {submitted && !actividadData.proyectoId && (
-                  <small className="p-invalid">Proyecto es requerido.</small>
+                  <small className="p-invalid">Embarcacion es requerido.</small>
                 )}
-                <label htmlFor="dropdown">Seleccione Proyecto*</label>
+                <label htmlFor="dropdown">Seleccione Embarcacion*</label>
               </span>
             </div>
-            <div className="field  mb-4 col-12 lg:col-6 xl:col-4">
+            <div className="field  col-12 lg:col-6 xl:col-4 mt-3">
               <span className="p-float-label">
                 <CascadeSelect
                   value={selectedProceso}
-                  onChange={(e) => setSelectedProceso(e.value)}
+                  onChange={onProcesoActividad}
                   options={procesosCascade}
                   optionLabel="nameViw"
                   optionGroupLabel="name"
@@ -290,55 +306,58 @@ const ActividadForm = (props) => {
                 <label htmlFor="dropdown">Seleccione Proceso*</label>
               </span>
             </div>
-            <div className="p-float-label col-12 lg:col-6 xl:col-4">
-              <Dropdown
-                value={selectedNivelPrioridad}
-                options={optionsNivelPrioridad}
-                onChange={onNivelPrioridad}
-                optionLabel="nivelPrioridadActividad"
-                className={classNames({
-                  'p-invalid':
-                    submitted && !actividadData.nivelPrioridadActividad
-                })}
-              />
-              {submitted && !actividadData.nivelPrioridadActividad && (
-                <small className="p-invalid">
-                  Nivel de prioridad es requerido.
-                </small>
-              )}
-              <label>Nivel de prioridad:</label>
+            <div className="field col-12 lg:col-6 xl:col-4 mt-3">
+              <span className="p-float-label">
+                <Dropdown
+                  value={selectedNivelPrioridad}
+                  options={optionsNivelPrioridad}
+                  onChange={onNivelPrioridad}
+                  optionLabel="nivelPrioridadActividad"
+                  className={classNames({
+                    'p-invalid':
+                      submitted && !actividadData.nivelPrioridadActividad
+                  })}
+                />
+                {submitted && !actividadData.nivelPrioridadActividad && (
+                  <small className="p-invalid">
+                    Nivel de prioridad es requerido.
+                  </small>
+                )}
+                <label>Nivel de prioridad:</label>{' '}
+              </span>
             </div>
-            <div className="p-float-label col-12 lg:col-12 xl:col-12 mt-4">
-              <InputTextarea
-                id="description"
-                value={actividadData.descripcionActividad}
-                onChange={(e) =>
-                  updateField(e.target.value, 'descripcionActividad')
-                }
-                rows={3}
-                cols={20}
-              />
-
-              <label>Descripcion:</label>
+            <div className="field col-12 lg:col-12 xl:col-12 mt-3 ">
+              <span className="p-float-label">
+                <InputTextarea
+                  id="description"
+                  value={actividadData.descripcionActividad}
+                  onChange={(e) =>
+                    updateField(e.target.value, 'descripcionActividad')
+                  }
+                  rows={3}
+                  cols={20}
+                />
+                <label>Descripcion:</label>{' '}
+              </span>
             </div>
-            <div className="p-float-label ">
-              <Dropdown
-                value={selectedActividad}
-                options={estadoActividad}
-                onChange={onEstatusActividad}
-                optionLabel="estatusActividad"
-                placeholder="Seleccione Estado"
-                valueTemplate={selectedestatusActividadTemplate}
-                itemTemplate={estatusActividadOptionTemplate}
-                className={classNames({
-                  'p-invalid': submitted && !actividadData.estatusActividad
-                })}
-              />
-              {submitted && !actividadData.estatusActividad && (
-                <small className="p-invalid">Estatus es requerido.</small>
-              )}
+            <div className="field col-6 lg:col-6 xl:col-4 mt-3">
+              <span className="p-float-label">
+                <Dropdown
+                  value={selectedActividad}
+                  options={estadoActividad}
+                  onChange={onEstatusActividad}
+                  optionLabel="estatusActividad"
+                  className={classNames({
+                    'p-invalid': submitted && !actividadData.estatusActividad
+                  })}
+                />
+                {submitted && !actividadData.estatusActividad && (
+                  <small className="p-invalid">Estatus es requerido.</small>
+                )}
+                <label>Estatus:</label>{' '}
+              </span>
             </div>
-            <div className="card col-4">
+            <div className="card col-6 lg:col-6 xl:col-4">
               Cargar imagen del defecto
               <input
                 type="file"
@@ -347,7 +366,7 @@ const ActividadForm = (props) => {
                 }
               />
             </div>{' '}
-            <div className="card col-4">
+            <div className="card col-6 lg:col-6 xl:col-4">
               Cargar imagen del avance
               <input
                 type="file"
@@ -356,7 +375,7 @@ const ActividadForm = (props) => {
                 }
               />
             </div>
-            <div className="p-float-label">
+            {/* <div className="p-float-label">
               <InputText
                 value={actividadData.nombreActividad}
                 onChange={(e) => updateField(e.target.value, 'nombreActividad')}
@@ -368,6 +387,79 @@ const ActividadForm = (props) => {
                 <small className="p-invalid">Nombre es requerido.</small>
               )}
               <label>Nombre del Actividad:*</label>
+            </div> */}
+            <div className="field col-6 lg:col-6 xl:col-4 mt-3">
+              <span className="p-float-label">
+                <Dropdown
+                  value={selectedResponsableActividad}
+                  options={responsableActividad}
+                  onChange={onResponsableActividad}
+                  optionLabel="responsableUsuarioId"
+                  className={classNames({
+                    'p-invalid':
+                      submitted && !actividadData.ResponsableActividad
+                  })}
+                />
+                {submitted && !actividadData.estatusActividad && (
+                  <small className="p-invalid">Estatus es requerido.</small>
+                )}
+                <label>Responsable:</label>{' '}
+              </span>
+            </div>
+            <div className="field col-12 md:col-6 xl:col-4 mt-3">
+              <span className="p-float-label ">
+                <Calendar
+                  // className="p-datepicker-today"
+                  id="time24"
+                  value={dateInicio !== null && dateInicio}
+                  onChange={(e) => {
+                    setDateInicio(e.value)
+                    updateField(e.target.value, 'fechaInicioActividad')
+                  }}
+                  showTime
+                  locale="es"
+                  // hourFormat="12"
+                  showButtonBar
+                  className={classNames(
+                    {
+                      'p-invalid':
+                        submitted && !actividadData.fechaInicioActividad
+                    },
+                    'p-datepicker-today'
+                  )}
+                />{' '}
+                {submitted && !actividadData.fechaInicioActividad && (
+                  <small className="p-invalid">Fecha es requerido.</small>
+                )}
+                <label>Fecha Inicio </label>
+              </span>
+            </div>
+            <div className="field col-12 md:col-6 xl:col-4 mt-3">
+              <span className="p-float-label ">
+                <Calendar
+                  // className="p-datepicker-today"
+                  id="time24"
+                  value={dateFinal !== null && dateFinal}
+                  onChange={(e) => {
+                    setDateFinal(e.value)
+                    updateField(e.target.value, 'fechaFinActividad')
+                  }}
+                  showTime
+                  locale="es"
+                  // hourFormat="12"
+                  showButtonBar
+                  className={classNames(
+                    {
+                      'p-invalid': submitted && !actividadData.fechaFinActividad
+                    },
+                    'p-datepicker-today'
+                  )}
+                />{' '}
+                {submitted && !actividadData.fechaFinActividad && (
+                  <small className="p-invalid">Fecha es requerido.</small>
+                )}
+                <label>Fecha Final</label>
+              </span>
             </div>
           </div>
         </div>
