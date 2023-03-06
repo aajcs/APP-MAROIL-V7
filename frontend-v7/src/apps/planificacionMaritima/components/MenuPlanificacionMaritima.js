@@ -45,6 +45,12 @@ export const MenuPlanificacionMaritima = () => {
           icon: 'pi pi-fw pi-database',
           to: '/apps/PlanificacionMaritima/actividad',
           permi: 'SUPERADMIN'
+        },
+        {
+          label: 'PRESUPUESTO',
+          icon: 'pi pi-fw pi-database',
+          to: '/apps/PlanificacionMaritima/presupuestopm',
+          permi: 'SUPERADMIN'
         }
       ]
     }

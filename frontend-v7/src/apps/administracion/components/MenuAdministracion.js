@@ -105,6 +105,12 @@ export const MenuAdministracion = () => {
           icon: 'pi pi-fw pi-database',
           to: '/apps/administracion/CostoTmMes',
           permi: 'SUPERADMIN'
+        },
+        {
+          label: 'CAJA CHICA',
+          icon: 'pi pi-fw pi-database',
+          to: '/apps/administracion/CajaChica',
+          permi: 'SUPERADMIN'
         }
       ]
     }

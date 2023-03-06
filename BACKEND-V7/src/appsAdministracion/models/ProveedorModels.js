@@ -34,10 +34,7 @@ const proveedorSchema = new Schema(
     estatusProveedor: {
       type: String
     },
-    inventarioId: {
-      type: Schema.Types.ObjectId,
-      ref: 'Inventario'
-    },
+
     userCreatorId: {
       type: Schema.Types.ObjectId,
       ref: 'User'

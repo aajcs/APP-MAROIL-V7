@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 import React, { useContext, useState, useRef } from 'react'
 import { DataTable } from 'primereact/datatable'
 import { Column } from 'primereact/column'
@@ -10,7 +9,7 @@ import { Toast } from 'primereact/toast'
 import { ProveedorContext } from '../contexts/ProveedorContext'
 import moment from 'moment'
 
-// import ProveedorForm from './ProveedorForm'
+import ProveedorForm from './ProveedorForm'
 
 const ProveedorList = () => {
   const { proveedors, findProveedor, deleteProveedor, loading } =
@@ -20,7 +19,6 @@ const ProveedorList = () => {
   const [globalFilter, setGlobalFilter] = useState(null)
   const [isVisible, setIsVisible] = useState(false)
 
-  const [selectedProducts, setSelectedProducts] = useState(null)
   const dt = useRef(null)
   const toast = useRef(null)
   const saveBarco = (id) => {
@@ -64,24 +62,6 @@ const ProveedorList = () => {
   const exportCSV = () => {
     dt.current.exportCSV()
   }
-  const fechaAtracoTemplate = (rowData) => {
-    const validarFecha = moment(rowData.fechaAtraco).isValid()
-    if (!validarFecha) return
-    const fecha = moment(rowData.fechaAtraco)
-    return fecha.format('dddDD/MM/YY HH:mm')
-  }
-  const fechaInicioCargaTemplate = (rowData) => {
-    const validarFecha = moment(rowData.fechaInicioCarga).isValid()
-    if (!validarFecha) return
-    const fecha = moment(rowData.fechaInicioCarga)
-    return fecha.format('dddDD/MM/YY HH:mm')
-  }
-  const fechaFinalCargaTemplate = (rowData) => {
-    const validarFecha = moment(rowData.fechaFinalCarga).isValid()
-    if (!validarFecha) return
-    const fecha = moment(rowData.fechaFinalCarga)
-    return fecha.format('dddDD/MM/YY HH:mm')
-  }
 
   const fechaProveedorCreado = (rowData) => {
     const fecha = moment(rowData.proveedorCreado)
@@ -120,8 +100,8 @@ const ProveedorList = () => {
     </>
   )
 
-  const confirmDeleteBarco = (barcos) => {
-    setProveedor(barcos)
+  const confirmDeleteBarco = (proveedor) => {
+    setProveedor(proveedor)
     setDeleteBarcoDialog(true)
   }
 
@@ -141,25 +121,6 @@ const ProveedorList = () => {
         />
       </div>
     )
-  }
-  const diasTotalesCarga = (rowData) => {
-    function secondsToString(diff) {
-      const numdays = Math.floor(diff / 86400)
-      const numhours = Math.floor((diff % 86400) / 3600)
-      const numminutes = Math.floor(((diff % 86400) % 3600) / 60)
-      // const numseconds = ((diff % 86400) % 3600) % 60
-
-      return (
-        numdays + ' dias ' + numhours + ' horas ' + numminutes + ' minutos '
-      )
-    }
-    const fecha1 = moment(rowData.fechaInicioCarga)
-    const fecha2 = moment(
-      rowData.fechaFinalCarga ? rowData.fechaFinalCarga : moment()
-    ) //
-    const diff = fecha2.diff(fecha1, 'seconds') // Diff in days
-
-    return <div className="actions">{secondsToString(diff)}</div>
   }
 
   const header = (
@@ -190,7 +151,6 @@ const ProveedorList = () => {
       <DataTable
         ref={dt}
         value={proveedors}
-        onSelectionChange={(e) => setSelectedProducts(e.value_id)}
         dataKey="id"
         paginator
         rows={10}
@@ -198,9 +158,9 @@ const ProveedorList = () => {
         className="datatable-responsive"
         selectionMode="single"
         paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
-        currentPageReportTemplate="Muestra {first} a {last} de {totalRecords} Barcos"
+        currentPageReportTemplate="Muestra {first} a {last} de {totalRecords} Proveedor"
         globalFilter={globalFilter}
-        emptyMessage="No hay barcos."
+        emptyMessage="No hay datos."
         header={header}
         sortField="barcoCreado"
         sortOrder={-1}
@@ -213,13 +173,8 @@ const ProveedorList = () => {
         <Column field="nombreProveedor" header="nombreProveedor" />
         <Column field="rifProveedor" header="rifProveedor" />
         <Column field="direccionProveedor" header="direccionProveedor" />
-        <Column field="contactoProveedor" header="contactoProveedor" />
-        <Column field="montoDeudaProveedor" header="montoDeudaProveedor" />
-        <Column field="montoPagadoProveedor" header="montoPagadoProveedor" />
-        <Column field="saldoTotalProveedor" header="saldoTotalProveedor" />
+
         <Column field="estatusProveedor" header="estatusProveedor" />
-        <Column field="inventarioId" header="inventarioId" />
-        <Column field="userCreatorId" header="userCreatorId" />
 
         <Column
           field="proveedorCreado"
@@ -235,7 +190,7 @@ const ProveedorList = () => {
         />
       </DataTable>
 
-      {/* <ProveedorForm isVisible={isVisible} setIsVisible={setIsVisible} /> */}
+      <ProveedorForm isVisible={isVisible} setIsVisible={setIsVisible} />
 
       <Dialog
         visible={deleteBarcoDialog}
@@ -252,7 +207,7 @@ const ProveedorList = () => {
           />
           {proveedor && (
             <span>
-              Esta seguro que quiere eliminar la barco{' '}
+              Esta seguro que quiere eliminar el proveedor{' '}
               <b>{proveedor.nombreProyecto}</b>?
             </span>
           )}

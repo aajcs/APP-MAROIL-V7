@@ -25,6 +25,7 @@ import { HomeAdministracionPage } from '../pages/HomeAdministracionPage'
 import { CargaInformacionPage } from '../pages/CargaInformacionPage'
 import { MensualidadOpMesPage } from '../pages/MensualidadOpMesPage'
 import { CostoTmMesPage } from '../pages/CostoTmMesPage'
+import { CajaChicaPage } from '../pages/CajaChicaPage'
 
 export default function appadministracionRouter() {
   const { staticMenuInactive, onToggleMenuClick } = useContext(ConfigContext)
@@ -119,6 +120,11 @@ export default function appadministracionRouter() {
               exact
               path="/apps/administracion/presupuesto"
               component={PresupuestoPage}
+            />
+            <PrivateRoute
+              exact
+              path="/apps/administracion/CajaChica"
+              component={CajaChicaPage}
             />
 
             <Route path="*">

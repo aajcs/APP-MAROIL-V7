@@ -101,6 +101,10 @@ app.use(
   require('./appsAdministracion/routes/IngresoGastoRoutes')
 )
 app.use(
+  '/api/CajaChica',
+  require('./appsAdministracion/routes/CajaChicaRoutes')
+)
+app.use(
   '/api/Remolcador',
   require('./appsControlLiquidos/routes/RemolcadorRoutes')
 )
@@ -128,6 +132,10 @@ app.use('/api/ViajeAux', require('./appsControlLiquidos/routes/ViajeAuxRoutes'))
 app.use(
   '/api/Actividad',
   require('./appsPlanificacionMaritima/routes/ActividadRoutes')
+)
+app.use(
+  '/api/PresupuestoPM',
+  require('./appsPlanificacionMaritima/routes/PresupuestoPMRoutes')
 )
 // Static Files
 // app.use(express.static(path.join(__dirname, '../public')));;

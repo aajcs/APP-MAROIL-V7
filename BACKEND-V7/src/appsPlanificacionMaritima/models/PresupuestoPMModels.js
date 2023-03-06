@@ -19,6 +19,9 @@ const presupuestoPMSchema = new Schema(
       type: Date,
       default: moment()
     },
+    archivoSoportePresupuestoPM: {
+      type: String
+    },
 
     creadoPresupuestoPM: {
       type: Date,
