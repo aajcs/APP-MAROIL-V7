@@ -1,3 +1,4 @@
+/* eslint-disable indent */
 /* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
 import React, { useContext, useState, useEffect, useRef } from 'react'
@@ -10,10 +11,8 @@ import { Toast } from 'primereact/toast'
 import { Dropdown } from 'primereact/dropdown'
 import { Calendar } from 'primereact/calendar'
 import { addLocale } from 'primereact/api'
-
+import emailjs from '@emailjs/browser'
 import moment from 'moment'
-import { CargaBodegaContext } from '../contexts/CargaBodegaContext'
-import flagplaceholder from '../assetsControl/flagplaceholder.png'
 
 const ProgramacionVentanaForm = (props) => {
   const initialProgramacionVentanaForm = {
@@ -78,16 +77,14 @@ const ProgramacionVentanaForm = (props) => {
   const {
     createProgramacionVentana,
     editProgramacionVentana,
-    updateProgramacionVentana,
-    createBodegaProgramacionVentana1
+    updateProgramacionVentana
   } = useContext(ProgramacionVentanaContext)
   const { isVisible, setIsVisible } = props
-  const [selectedProgramacionVentana, setSelectedProgramacionVentana] =
-    useState(null)
+
   const [selectedBuqueCliente, setSelectedBuqueCliente] = useState(null)
   const [selectedBuqueClienteVenta, setSelectedBuqueClienteVenta] =
     useState(null)
-  const [selectedCountry, setSelectedCountry] = useState(null)
+
   const [selectedTerminalBuque, setSelectTerminalBuque] = useState(null)
   const TerminalBuque = [
     { name: 'Puesto de Espera (Oeste)' },
@@ -104,18 +101,8 @@ const ProgramacionVentanaForm = (props) => {
   const [programacionVentanaData, setProgramacionVentanaData] = useState(
     initialProgramacionVentanaForm
   )
-
-  const estadoProgramacionVentana = [
-    { estatusProgramacionVentana: 'OPERATIVO' },
-    { estatusProgramacionVentana: 'CULMINADO' }
-  ]
-  const onEstatusProgramacionVentana = (e) => {
-    setSelectedProgramacionVentana(e.value)
-    updateField(
-      e.value.estatusProgramacionVentana,
-      'estatusProgramacionVentana'
-    )
-  }
+  console.log(editProgramacionVentana)
+  console.log(programacionVentanaData)
   const buqueCliente = [
     { buqueCliente: 'MAROIL' },
     { buqueCliente: 'MAROIL PRIORIDAD' },
@@ -138,25 +125,7 @@ const ProgramacionVentanaForm = (props) => {
     setSelectedBuqueClienteVenta(e.value)
     updateField(e.value.buqueClienteVenta, 'buqueClienteVenta')
   }
-  const countries = [
-    { name: 'Turkey', code: 'TR' },
-    { name: 'Iran', code: 'IR' },
-    { name: 'Cuba', code: 'CU' },
-    { name: 'China', code: 'CN' },
-    { name: 'India', code: 'IN' },
-    { name: 'Brazil', code: 'BR' },
-    { name: 'Australia', code: 'AU' },
-    { name: 'Egypt', code: 'EG' },
-    { name: 'France', code: 'FR' },
-    { name: 'Germany', code: 'DE' },
-    { name: 'Japan', code: 'JP' },
-    { name: 'Spain', code: 'ES' },
-    { name: 'United States', code: 'US' }
-  ]
-  const onCountryChange = (e) => {
-    setSelectedCountry(e.value)
-    updateField(e.value.code, 'buquePaisDestino')
-  }
+
   const [dateInicioVentana, setDateInicioVentana] = useState(null)
   const [dateFinVentana, setDateFinVentana] = useState(null)
 
@@ -165,10 +134,7 @@ const ProgramacionVentanaForm = (props) => {
   useEffect(() => {
     if (editProgramacionVentana) {
       setProgramacionVentanaData(editProgramacionVentana)
-      setSelectedProgramacionVentana({
-        estatusProgramacionVentana:
-          editProgramacionVentana.estatusProgramacionVentana
-      })
+
       setSelectedBuqueCliente({
         buqueCliente: editProgramacionVentana.buqueCliente
       })
@@ -188,20 +154,6 @@ const ProgramacionVentanaForm = (props) => {
       )
     }
   }, [editProgramacionVentana])
-  useEffect(() => {
-    if (createBodegaProgramacionVentana1) {
-      createBodegaProgramacionVentana(createBodegaProgramacionVentana1)
-    }
-  }, [createBodegaProgramacionVentana1])
-  const createBodegaProgramacionVentana = (saveProgramacionVentana) => {
-    const cargaBodega = {
-      programacionVentanaID: saveProgramacionVentana.id,
-      nombreBodega: '',
-      estatusBodega: 'CARGANDO',
-      toneladasCargadasBodega: 0,
-      toneladasCapacidadBodega: 0
-    }
-  }
 
   const updateField = (data, field) => {
     setProgramacionVentanaData({
@@ -209,11 +161,121 @@ const ProgramacionVentanaForm = (props) => {
       [field]: data
     })
   }
+  const enviarCorreoModificacion = () => {
+    const templateParams = {
+      name: 'James',
+      notes: 'Check this out!',
+      from_name: 'App Maroil Trading',
+      to_name: 'Alejandro Perez',
+      message: 'aqui va el cuerpo del correo a ver q tal se ve',
+      fechaModificacion: moment().format('DD/MM/YY'),
+
+      buqueCliente:
+        editProgramacionVentana.buqueCliente ===
+        programacionVentanaData.buqueCliente
+          ? 'No hay cambios'
+          : programacionVentanaData.buqueCliente,
+      buqueClienteVenta:
+        editProgramacionVentana.buqueClienteVenta ===
+        programacionVentanaData.buqueClienteVenta
+          ? 'No hay cambios'
+          : programacionVentanaData.buqueClienteVenta,
+
+      fechaFinVentana:
+        editProgramacionVentana.fechaFinVentana ===
+        programacionVentanaData.fechaFinVentana
+          ? 'No hay cambios'
+          : moment(programacionVentanaData.fechaFinVentana).format('DD/MM/YY'),
+      fechaInicioVentana:
+        editProgramacionVentana.fechaInicioVentana ===
+        programacionVentanaData.fechaInicioVentana
+          ? 'No hay cambios'
+          : moment(programacionVentanaData.fechaInicioVentana).format(
+              'DD/MM/YY'
+            ),
+
+      nombreBuque:
+        editProgramacionVentana.nombreBuque ===
+        programacionVentanaData.nombreBuque
+          ? 'No hay cambios'
+          : programacionVentanaData.nombreBuque,
+
+      terminalBuque:
+        editProgramacionVentana.terminalBuque ===
+        programacionVentanaData.terminalBuque
+          ? 'No hay cambios'
+          : programacionVentanaData.terminalBuque,
+      toneladasNominadas:
+        editProgramacionVentana.toneladasNominadas ===
+        programacionVentanaData.toneladasNominadas
+          ? 'No hay cambios'
+          : programacionVentanaData.toneladasNominadas
+    }
+    console.log(templateParams)
+    emailjs
+      .send(
+        'service_abdz5oz',
+        'template_xlk6gns',
+        templateParams,
+        '0sIlMgGjb4iAHCyGd'
+      )
+      .then(
+        (response) => {
+          console.log('SUCCESS!', response.status, response.text)
+        },
+        (err) => {
+          console.log('FAILED...', err)
+        }
+      )
+  }
+  const enviarCorreoCreado = () => {
+    const templateParams = {
+      name: 'James',
+      notes: 'Check this out!',
+      from_name: 'App Maroil Trading',
+      to_name: 'Alejandro Perez',
+      message: 'aqui va el cuerpo del correo a ver q tal se ve',
+      fechaCreado: moment().format('DD/MM/YY'),
+
+      buqueCliente: programacionVentanaData.buqueCliente,
+      buqueClienteVenta: programacionVentanaData.buqueClienteVenta,
+
+      fechaFinVentana: moment(programacionVentanaData.fechaFinVentana).format(
+        'DD/MM/YY'
+      ),
+      fechaInicioVentana: moment(
+        programacionVentanaData.fechaInicioVentana
+      ).format('DD/MM/YY'),
+
+      nombreBuque: programacionVentanaData.nombreBuque,
+
+      terminalBuque: programacionVentanaData.terminalBuque,
+      toneladasNominadas: programacionVentanaData.toneladasNominadas
+    }
+    console.log(templateParams)
+    emailjs
+      .send(
+        'service_abdz5oz',
+        'template_6hhhyec',
+        templateParams,
+        '0sIlMgGjb4iAHCyGd'
+      )
+      .then(
+        (response) => {
+          console.log('SUCCESS!', response.status, response.text)
+        },
+        (err) => {
+          console.log('FAILED...', err)
+        }
+      )
+  }
 
   const saveProgramacionVentana = () => {
     if (!editProgramacionVentana) {
+      enviarCorreoCreado()
       createProgramacionVentana(programacionVentanaData)
     } else {
+      enviarCorreoModificacion()
       updateProgramacionVentana({
         ...programacionVentanaData,
         programacionVentanaModificado: moment()
@@ -221,7 +283,6 @@ const ProgramacionVentanaForm = (props) => {
     }
     setProgramacionVentanaData(initialProgramacionVentanaForm)
     setIsVisible(false)
-    setSelectedProgramacionVentana('')
     setDateInicioVentana(null)
     setDateFinVentana(null)
     setSelectTerminalBuque(null)
@@ -246,31 +307,12 @@ const ProgramacionVentanaForm = (props) => {
   const clearSelected = () => {
     setIsVisible(false)
     setProgramacionVentanaData(initialProgramacionVentanaForm)
-    setSelectedProgramacionVentana('')
     setDateInicioVentana(null)
     setDateFinVentana(null)
     setSelectTerminalBuque(null)
     setSelectedBuqueCliente(null)
   }
-  const selectedestatusProgramacionVentanaTemplate = (option, props) => {
-    if (option) {
-      return (
-        <div className="country-item country-item-value">
-          <div>{option.estatusProgramacionVentana}</div>
-        </div>
-      )
-    }
 
-    return <span>{props.placeholder}</span>
-  }
-
-  const estatusProgramacionVentanaOptionTemplate = (option) => {
-    return (
-      <div className="country-item">
-        <div>{option.estatusProgramacionVentana}</div>
-      </div>
-    )
-  }
   const selectedBuqueClienteTemplate = (option, props) => {
     if (option) {
       return (
@@ -309,55 +351,7 @@ const ProgramacionVentanaForm = (props) => {
       </div>
     )
   }
-  const selectedCountryTemplate = (option, props) => {
-    if (option) {
-      return (
-        <div className="country-item country-item-value">
-          <img
-            alt={option.name}
-            src={flagplaceholder}
-            onError={(e) =>
-              (e.target.src =
-                'https://www.primefaces.org/wp-content/uploads/2020/05/placeholder.png')
-            }
-            className={`flag flag-${option.code.toLowerCase()}`}
-          />
-          <span
-            style={{ marginLeft: '.5em', verticalAlign: 'middle' }}
-            className="image-text"
-          >
-            {option.name}
-          </span>
-          {/* <div>{option.name}</div> */}
-        </div>
-      )
-    }
 
-    return <span>{props.placeholder}</span>
-  }
-
-  const countryOptionTemplate = (option) => {
-    return (
-      <div className="country-item">
-        <img
-          alt={option.name}
-          src={flagplaceholder}
-          onError={(e) =>
-            (e.target.src =
-              'https://www.primefaces.org/wp-content/uploads/2020/05/placeholder.png')
-          }
-          className={`flag flag-${option.code.toLowerCase()}`}
-        />
-        <span
-          style={{ marginLeft: '.5em', verticalAlign: 'middle' }}
-          className="image-text"
-        >
-          {option.name}
-        </span>
-        {/* <div>{option.name}</div> */}
-      </div>
-    )
-  }
   const selectedTerminalBuqueTemplate = (option, props) => {
     if (option) {
       return (

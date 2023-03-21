@@ -10,14 +10,15 @@ import { CajaChicaContext } from '../contexts/CajaChicaContext'
 import moment from 'moment'
 import AuthUse from '../../../auth/AuthUse'
 import CajaChicaForm from './CajaChicaForm'
-
+import { PDFViewer } from '@react-pdf/renderer'
+import ReciboCajaChicaPDF from './ReciboCajaChicaPdf'
 const CajaChicaList = () => {
   const auth = AuthUse()
   const { cajaChicas, findCajaChica, deleteCajaChica, loading } =
     useContext(CajaChicaContext)
-  console.log(cajaChicas)
   const [cajaChica, setCajaChica] = useState(cajaChicas)
   const [deleteCajaChicaDialog, setDeleteCajaChicaDialog] = useState(false)
+  const [reciboCajaChicaDialog, setReciboCajaChicaDialog] = useState(false)
   const [globalFilter, setGlobalFilter] = useState(null)
   const [isVisible, setIsVisible] = useState(false)
   const [ingresoEgresoVisible, setIngresoEgresoVisible] = useState(false)
@@ -28,10 +29,10 @@ const CajaChicaList = () => {
     findCajaChica(id)
     setIsVisible(true)
   }
-  // const totalEgreso = cajaChicas
-  //   .map((egreso) => egreso.egresoCajaChica)
-  //   .reduce((a, b) => a + b, 0)
-
+  const codigoUltimoActual = cajaChicas
+    .map((p) => p.codigoCajaChica)
+    .reduce((a, b) => Math.max(a, b), 0)
+  console.log(codigoUltimoActual)
   // cabecera de la tabla
   const leftToolbarTemplate = () => {
     return (
@@ -113,19 +114,45 @@ const CajaChicaList = () => {
       />
     </>
   )
+  const reciboCajaChicaDialogFooter = (
+    <>
+      <Button
+        label="No"
+        icon="pi pi-times"
+        className="p-button-text"
+        onClick={() => setReciboCajaChicaDialog(false)}
+      />
+    </>
+  )
 
   const confirmDeleteCajaChica = (CajaChica) => {
     setCajaChica(CajaChica)
     setDeleteCajaChicaDialog(true)
   }
-
+  const imprimirRecibo = (rowData) => {
+    setCajaChica(rowData)
+    setReciboCajaChicaDialog(true)
+  }
   const actionBodyTemplate = (rowData) => {
     return (
       <div className="actions">
         <Button
           icon="pi pi-pencil"
           className="p-button-rounded p-button-success mr-2 mb-2"
-          onClick={() => saveCajaChica(rowData.id)}
+          onClick={() => {
+            if (rowData.ingresoMontoCajaChica !== 0) {
+              setIngresoEgresoVisible(true)
+            } else {
+              setIngresoEgresoVisible(false)
+            }
+
+            saveCajaChica(rowData.id)
+          }}
+        />{' '}
+        <Button
+          icon="pi pi-trash"
+          className="p-button-rounded  p-button-danger"
+          onClick={() => imprimirRecibo(rowData)}
         />
         {auth.user.faidUser.roles[0] === 'SUPERADMIN' && (
           <Button
@@ -153,6 +180,7 @@ const CajaChicaList = () => {
   )
   const clearSelected = () => {
     setDeleteCajaChicaDialog(false)
+    setReciboCajaChicaDialog(false)
   }
   const formatCurrency = (value) => {
     return value.toLocaleString('en-US', { style: 'currency', currency: 'USD' })
@@ -284,6 +312,7 @@ const CajaChicaList = () => {
         ingresoEgresoVisible={ingresoEgresoVisible}
         setIsVisible={setIsVisible}
         setIngresoEgresoVisible={setIngresoEgresoVisible}
+        codigoUltimoActual={codigoUltimoActual}
       />
 
       <Dialog
@@ -306,6 +335,18 @@ const CajaChicaList = () => {
             </span>
           )}
         </div>
+      </Dialog>
+      <Dialog
+        visible={reciboCajaChicaDialog}
+        style={{ width: '100%', height: '90vh' }}
+        header="Confirm"
+        modal
+        footer={reciboCajaChicaDialogFooter}
+        onHide={() => clearSelected()}
+      >
+        <PDFViewer style={{ width: '100%', height: '90vh' }}>
+          <ReciboCajaChicaPDF cajaChica={cajaChica} />
+        </PDFViewer>
       </Dialog>
     </>
   )

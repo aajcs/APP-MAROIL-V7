@@ -89,7 +89,8 @@ const CajaChicaForm = (props) => {
     isVisible,
     setIsVisible,
     ingresoEgresoVisible,
-    setIngresoEgresoVisible
+    setIngresoEgresoVisible,
+    codigoUltimoActual
   } = props
   const [selectedCajaChica, setSelectedCajaChica] = useState(null)
   const [selectedEstatusVueltoCajaChica, setSelectedEstatusCajaCajaChica] =
@@ -98,7 +99,6 @@ const CajaChicaForm = (props) => {
   const [selectedProveedorId, setSelectedProveedorId] = useState(null)
   const [selectedCentroDeCostoAuxId, setSelectedCentroDeCostoAuxId] =
     useState(null)
-  console.log(ingresoEgresoVisible)
   const [cajaChicaData, setCajaChicaData] = useState(initialCajaChicaForm)
   const [submitted, setSubmitted] = useState(false)
 
@@ -161,6 +161,9 @@ const CajaChicaForm = (props) => {
       setSelectedCajaChica({
         estatusCajaChica: editCajaChica.estatusCajaChica
       })
+      setSelectedEstatusCajaCajaChica({
+        estatusVueltoCajaChica: editCajaChica.estatusVueltoCajaChica
+      })
       const conceptoAuxSelecEdit =
         editCajaChica.conceptoAuxId &&
         conceptoAuxs.find((p) => p.id === editCajaChica.conceptoAuxId.id)
@@ -179,6 +182,10 @@ const CajaChicaForm = (props) => {
       setSelectedProveedorId(proveedorSelecEdit)
       setDatefechaCajaChica(
         editCajaChica.fechaCajaChica && moment(editCajaChica.fechaCajaChica)._d
+      )
+      setDatefechaCajaChica(
+        editCajaChica.fechaEfectivaCajaChica &&
+          moment(editCajaChica.fechaEfectivaCajaChica)._d
       )
     }
   }, [editCajaChica])
@@ -274,7 +281,10 @@ const CajaChicaForm = (props) => {
             <div className="label col-12 md:col-6 mt-3">
               <span className="p-float-label">
                 <InputText
-                  value={cajaChicaData.codigoCajaChica}
+                  // disabled
+                  value={
+                    cajaChicaData.codigoCajaChica || codigoUltimoActual + 1
+                  }
                   onChange={(e) =>
                     updateField(e.target.value, 'codigoCajaChica')
                   }

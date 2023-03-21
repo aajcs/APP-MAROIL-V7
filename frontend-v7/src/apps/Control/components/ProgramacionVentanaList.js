@@ -270,7 +270,7 @@ const ProgramacionVentanaList = () => {
           />
           {programacionVentana && (
             <span>
-              Esta seguro que quiere eliminar la programacionVentana{' '}
+              Esta seguro que quiere eliminar la programacionVentana2{' '}
               <b>{programacionVentana.nombreProgramacionVentana}</b>?
             </span>
           )}

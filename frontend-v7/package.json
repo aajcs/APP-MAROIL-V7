@@ -3,6 +3,8 @@
   "version": "1.1.0",
   "private": true,
   "dependencies": {
+    "@emailjs/browser": "3.10.0",
+    "@react-pdf/renderer": "^3.1.8",
     "@react-three/drei": "8.13.1",
     "@react-three/fiber": "7.0.26",
     "@testing-library/jest-dom": "5.16.2",

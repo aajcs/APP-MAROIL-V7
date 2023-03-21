@@ -9,7 +9,7 @@ import { InputText } from 'primereact/inputtext'
 import { Toast } from 'primereact/toast'
 import { ProgramacionVentanaContext } from '../contexts/ProgramacionVentanaContext'
 import moment from 'moment'
-
+import emailjs from '@emailjs/browser'
 import ProgramacionVentanaForm from './ProgramacionVentanaForm'
 
 const OperacionesGOMVentana = () => {
@@ -92,7 +92,33 @@ const OperacionesGOMVentana = () => {
     const fecha = moment(rowData.programacionVentanaModificado)
     return fecha.format('dddDD/MM/YY HH:mm')
   }
-
+  const enviarCorreoEliminado = () => {
+    const templateParams = {
+      name: 'James',
+      notes: 'Check this out!',
+      from_name: 'App Maroil Trading',
+      to_name: 'Alejandro Perez',
+      message: 'aqui va el cuerpo del correo a ver q tal se ve',
+      fechaEliminado: moment().format('DD/MM/YY'),
+      nombreBuque: programacionVentana.nombreBuque
+    }
+    console.log(templateParams)
+    emailjs
+      .send(
+        'service_abdz5oz',
+        'template_p18xw5u',
+        templateParams,
+        '0sIlMgGjb4iAHCyGd'
+      )
+      .then(
+        (response) => {
+          console.log('SUCCESS!', response.status, response.text)
+        },
+        (err) => {
+          console.log('FAILED...', err)
+        }
+      )
+  }
   const eliminarProgramacionVentana = () => {
     deleteProgramacionVentana(programacionVentana.id)
     setDeleteProgramacionVentanaDialog(false)
@@ -102,6 +128,7 @@ const OperacionesGOMVentana = () => {
       detail: 'ProgramacionVentana Eliminado',
       life: 3000
     })
+    enviarCorreoEliminado()
   }
 
   const deleteProgramacionVentanaDialogFooter = (
@@ -257,7 +284,7 @@ const OperacionesGOMVentana = () => {
           />
           {programacionVentana && (
             <span>
-              Esta seguro que quiere eliminar la programacionVentana{' '}
+              Esta seguro que quiere eliminar la programacionVentana3{' '}
               <b>{programacionVentana.nombreProgramacionVentana}</b>?
             </span>
           )}

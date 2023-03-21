@@ -9,7 +9,7 @@ import moment from 'moment'
 import CajaChicaForm from './CajaChicaForm'
 
 const HomeCajaChicaVueltoList = () => {
-  const { cajaChicas, deleteCajaChica, loading } = useContext(CajaChicaContext)
+  const { cajaChicas, updateCajaChica, loading } = useContext(CajaChicaContext)
   console.log(cajaChicas)
   const [cajaChica, setCajaChica] = useState(cajaChicas)
   const [aceptarCajaChica, setAceptarCajaChica] = useState(cajaChicas)
@@ -35,12 +35,15 @@ const HomeCajaChicaVueltoList = () => {
   }
 
   const eliminarCajaChica = () => {
-    deleteCajaChica(cajaChica.id)
+    updateCajaChica({
+      id: aceptarCajaChica.id,
+      estatusVueltoCajaChica: 'PROCESADO'
+    })
     setDeleteCajaChicaDialog(false)
     toast.current.show({
-      severity: 'error',
-      summary: 'Eliminar',
-      detail: 'CajaChica Eliminado',
+      severity: 'success',
+      summary: 'Procesado',
+      detail: 'Cambio pendiente procesado`',
       life: 3000
     })
   }
@@ -146,7 +149,7 @@ const HomeCajaChicaVueltoList = () => {
           />
           {aceptarCajaChica && (
             <span>
-              Esta seguro que quiere eliminar la CajaChica{' '}
+              ¿Esta seguro que desea procesar el cambio pendiente del codigo:{' '}
               <b>{aceptarCajaChica.codigoCajaChica}</b>?
             </span>
           )}

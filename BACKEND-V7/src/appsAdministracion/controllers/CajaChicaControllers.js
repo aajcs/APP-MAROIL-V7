@@ -43,10 +43,12 @@ cajaChicarCtrl.createCajaChica = async (req, res) => {
 
     const saveCajaChica = await CajaChica.findById(saveCajaChica1.id)
       .populate('proveedorId', {
-        nombreProveedor: 1
+        nombreProveedor: 1,
+        rifProveedor: 1
       })
       .populate('centroDeCostoAuxId', {
-        nombreCentroDeCosto: 1
+        nombreCentroDeCosto: 1,
+        descripcionCentroDeCosto: 1
       })
       .populate('conceptoAuxId', {
         nombreConceptoAux: 1
@@ -67,10 +69,12 @@ cajaChicarCtrl.getCajaChicas = async (req, res) => {
   try {
     const cajaChicar = await CajaChica.find({})
       .populate('proveedorId', {
-        nombreProveedor: 1
+        nombreProveedor: 1,
+        rifProveedor: 1
       })
       .populate('centroDeCostoAuxId', {
-        nombreCentroDeCosto: 1
+        nombreCentroDeCosto: 1,
+        descripcionCentroDeCosto: 1
       })
       .populate('conceptoAuxId', {
         nombreConceptoAux: 1
@@ -153,10 +157,12 @@ cajaChicarCtrl.updateCajaChica = async (req, res) => {
       { new: true }
     )
       .populate('proveedorId', {
-        nombreProveedor: 1
+        nombreProveedor: 1,
+        rifProveedor: 1
       })
       .populate('centroDeCostoAuxId', {
-        nombreCentroDeCosto: 1
+        nombreCentroDeCosto: 1,
+        descripcionCentroDeCosto: 1
       })
       .populate('conceptoAuxId', {
         nombreConceptoAux: 1
