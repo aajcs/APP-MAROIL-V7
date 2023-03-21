@@ -11,7 +11,8 @@ import moment from 'moment'
 import AuthUse from '../../../auth/AuthUse'
 import CajaChicaForm from './CajaChicaForm'
 import { PDFViewer } from '@react-pdf/renderer'
-import ReciboCajaChicaPDF from './ReciboCajaChicaPdf'
+// import ReciboCajaChicaPDF from './ReciboCajaChicaPdf'
+import CajaChicaRecibo from './CajaChicaRecibo'
 const CajaChicaList = () => {
   const auth = AuthUse()
   const { cajaChicas, findCajaChica, deleteCajaChica, loading } =
@@ -150,8 +151,8 @@ const CajaChicaList = () => {
           }}
         />{' '}
         <Button
-          icon="pi pi-trash"
-          className="p-button-rounded  p-button-danger"
+          icon="pi pi-print"
+          className="p-button-rounded p-button-raised p-button-text p-button-plain"
           onClick={() => imprimirRecibo(rowData)}
         />
         {auth.user.faidUser.roles[0] === 'SUPERADMIN' && (
@@ -345,7 +346,8 @@ const CajaChicaList = () => {
         onHide={() => clearSelected()}
       >
         <PDFViewer style={{ width: '100%', height: '90vh' }}>
-          <ReciboCajaChicaPDF cajaChica={cajaChica} />
+          {/* <ReciboCajaChicaPDF cajaChica={cajaChica} /> */}
+          <CajaChicaRecibo cajaChica={cajaChica} auth={auth} />
         </PDFViewer>
       </Dialog>
     </>
