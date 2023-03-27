@@ -189,12 +189,32 @@ const CajaChicaForm = (props) => {
       )
     }
   }, [editCajaChica])
+  useEffect(() => {
+    setCajaChicaData({
+      ...cajaChicaData,
+      codigoCajaChica: codigoUltimoActual + 1
+    })
+  }, [codigoUltimoActual, isVisible])
 
   const updateField = (data, field) => {
     setCajaChicaData({
       ...cajaChicaData,
       [field]: data
     })
+  }
+  const vueltoAutomatico = (data, field) => {
+    const vuelto = data - cajaChicaData.egresoMontoCajaChica
+    if (vuelto > 0) {
+      setCajaChicaData({
+        ...cajaChicaData,
+        montoVueltoCajaChica: vuelto
+      })
+    } else {
+      setCajaChicaData({
+        ...cajaChicaData,
+        montoVueltoCajaChica: 0
+      })
+    }
   }
   // id: null,
   // codigoCajaChica: 0,
@@ -281,7 +301,7 @@ const CajaChicaForm = (props) => {
             <div className="label col-12 md:col-6 mt-3">
               <span className="p-float-label">
                 <InputText
-                  // disabled
+                  disabled
                   value={
                     cajaChicaData.codigoCajaChica || codigoUltimoActual + 1
                   }
@@ -435,9 +455,10 @@ const CajaChicaForm = (props) => {
                     <InputNumber
                       inputId="montoEntregadoCajaChica"
                       value={cajaChicaData.montoEntregadoCajaChica}
-                      onValueChange={(e) =>
+                      onValueChange={(e) => {
                         updateField(e.target.value, 'montoEntregadoCajaChica')
-                      }
+                        vueltoAutomatico(e.target.value)
+                      }}
                       mode="currency"
                       currency="USD"
                       locale="en-US"
@@ -458,6 +479,7 @@ const CajaChicaForm = (props) => {
                       mode="currency"
                       currency="USD"
                       locale="en-US"
+                      disabled
                     />
                     <label htmlFor="montoVueltoCajaChica">
                       Cambio Pendiente

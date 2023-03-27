@@ -1,4 +1,6 @@
-import React, { useContext, useState, useRef } from 'react'
+/* eslint-disable array-callback-return */
+/* eslint-disable dot-notation */
+import React, { useContext, useState, useRef, useEffect } from 'react'
 import { DataTable } from 'primereact/datatable'
 import { Column } from 'primereact/column'
 import { Button } from 'primereact/button'
@@ -11,18 +13,141 @@ import moment from 'moment'
 import AuthUse from '../../../auth/AuthUse'
 import CajaChicaForm from './CajaChicaForm'
 import { PDFViewer } from '@react-pdf/renderer'
+import { FilterMatchMode } from 'primereact/api'
+import { ProveedorContext } from '../contexts/ProveedorContext'
+
 // import ReciboCajaChicaPDF from './ReciboCajaChicaPdf'
 import CajaChicaRecibo from './CajaChicaRecibo'
+import { Dropdown } from 'primereact/dropdown'
+import { Tag } from 'primereact/tag'
+import { MultiSelect } from 'primereact/multiselect'
+import { CentroDeCostoAuxContext } from '../contexts/CentroDeCostoAuxContext'
+import { ConceptoAuxContext } from '../contexts/ConceptoAuxContext'
+// import CajaTablaEjm from './CajaTablaEjm'
 const CajaChicaList = () => {
   const auth = AuthUse()
   const { cajaChicas, findCajaChica, deleteCajaChica, loading } =
     useContext(CajaChicaContext)
+  const { proveedors } = useContext(ProveedorContext)
+  const { centroDeCostoAuxs } = useContext(CentroDeCostoAuxContext)
+  const { conceptoAuxs } = useContext(ConceptoAuxContext)
   const [cajaChica, setCajaChica] = useState(cajaChicas)
+  const [proveedor, setProveedor] = useState(proveedors)
+  const [centroDeCostoAux, setCentroDeCostoAux] = useState(centroDeCostoAuxs)
+  const [conceptoAux, setConceptoAux] = useState(conceptoAuxs)
+
   const [deleteCajaChicaDialog, setDeleteCajaChicaDialog] = useState(false)
   const [reciboCajaChicaDialog, setReciboCajaChicaDialog] = useState(false)
   const [globalFilter, setGlobalFilter] = useState(null)
   const [isVisible, setIsVisible] = useState(false)
   const [ingresoEgresoVisible, setIngresoEgresoVisible] = useState(false)
+  const [filters, setFilters] = useState({
+    global: { value: null, matchMode: FilterMatchMode.CONTAINS },
+    centroDeCostoAuxId: {
+      value: null,
+      matchMode: FilterMatchMode.IN
+    },
+    conceptoAuxId: {
+      value: null,
+      matchMode: FilterMatchMode.IN
+    },
+    codigoCajaChica: { value: null, matchMode: FilterMatchMode.STARTS_WITH },
+    fechaEfectivaCajaChica: {
+      value: null,
+      matchMode: FilterMatchMode.CONTAINS
+    },
+    proveedorId: {
+      value: null,
+      matchMode: FilterMatchMode.IN
+    },
+    status: { value: null, matchMode: FilterMatchMode.EQUALS },
+    estatusCajaChica: { value: null, matchMode: FilterMatchMode.EQUALS }
+  })
+  const [globalFilterValue, setGlobalFilterValue] = useState('')
+  useEffect(
+    () => {
+      const proveedorFiltro = proveedors.map((p) => {
+        const {
+          updatedAt,
+          proveedorModificado,
+          proveedorCreado,
+          estatusProveedor,
+          direccionProveedor,
+          createdAt,
+          codigoProveedor,
+          ...ProveedorDataRest
+        } = p
+
+        return ProveedorDataRest
+      })
+      setProveedor(proveedorFiltro)
+      const centroDeCostoFiltro = centroDeCostoAuxs.map((p) => {
+        const {
+          codigoCentroDeCosto,
+          centroDeCostoAuxModificado,
+          centroDeCostoAuxCreado,
+          estatusCentroDeCosto,
+          updatedAt,
+          createdAt,
+          ...centroDeCostoDataRest
+        } = p
+
+        return centroDeCostoDataRest
+      })
+      setCentroDeCostoAux(centroDeCostoFiltro)
+      // const proveedorFiltro = proveedors.filter((p) => p === 'id')
+    },
+
+    // setDataPresupuesto(dataPresupuestos)
+    [proveedors]
+  )
+  useEffect(
+    () => {
+      const centroDeCostoFiltro = centroDeCostoAuxs.map((p) => {
+        const {
+          codigoCentroDeCosto,
+          centroDeCostoAuxModificado,
+          centroDeCostoAuxCreado,
+          estatusCentroDeCosto,
+          updatedAt,
+          ...centroDeCostoDataRest
+        } = p
+
+        return centroDeCostoDataRest
+      })
+      setCentroDeCostoAux(centroDeCostoFiltro)
+      // const proveedorFiltro = proveedors.filter((p) => p === 'id')
+    },
+
+    // setDataPresupuesto(dataPresupuestos)
+    [centroDeCostoAuxs]
+  )
+  useEffect(
+    () => {
+      const conceptoFiltro = conceptoAuxs.map((p) => {
+        const {
+          codigoConceptoAux,
+          conceptoCreado,
+          conceptoModificado,
+          createdAt,
+          descripcionConceptoAux,
+          estatusConceptoAux,
+          // id,
+          // nombreConceptoAux,
+          updatedAt,
+          ...conceptoDataRest
+        } = p
+
+        return conceptoDataRest
+      })
+      setConceptoAux(conceptoFiltro)
+      // const proveedorFiltro = proveedors.filter((p) => p === 'id')
+    },
+
+    // setDataPresupuesto(dataPresupuestos)
+    [conceptoAuxs]
+  )
+  const [statuses] = useState(['PROCESADO', 'PENDIENTE', 'ANULADO'])
 
   const dt = useRef(null)
   const toast = useRef(null)
@@ -33,8 +158,16 @@ const CajaChicaList = () => {
   const codigoUltimoActual = cajaChicas
     .map((p) => p.codigoCajaChica)
     .reduce((a, b) => Math.max(a, b), 0)
-  console.log(codigoUltimoActual)
   // cabecera de la tabla
+  const onGlobalFilterChange = (e) => {
+    const value = e.target.value
+    const _filters = { ...filters }
+
+    _filters['global'].value = value
+
+    setFilters(_filters)
+    setGlobalFilterValue(value)
+  }
   const leftToolbarTemplate = () => {
     return (
       <React.Fragment>
@@ -80,8 +213,8 @@ const CajaChicaList = () => {
     return fecha.format('dddDD/MM/YY HH:mm')
   }
   const datefechaCajaChica = (rowData) => {
-    const fecha = moment(rowData.fechaCajaChica)
-    return fecha.format('MMMM YYYY ')
+    const fecha = moment(rowData.fechaEfectivaCajaChica)
+    return fecha.format('YYYY-MM-DD ')
   }
   const fechaCajaChicaModificado = (rowData) => {
     const fecha = moment(rowData.modificadoCajaChica)
@@ -173,7 +306,9 @@ const CajaChicaList = () => {
         <i className="pi pi-search" />
         <InputText
           type="search"
+          value={globalFilterValue}
           onInput={(e) => setGlobalFilter(e.target.value)}
+          onChange={onGlobalFilterChange}
           placeholder="Buscar..."
         />
       </span>
@@ -199,6 +334,119 @@ const CajaChicaList = () => {
       </span>
     )
   }
+  const getSeverity = (status) => {
+    switch (status) {
+      case 'ANULADO':
+        return 'danger'
+
+      case 'PROCESADO':
+        return 'success'
+
+      case 'new':
+        return 'info'
+
+      case 'PENDIENTE':
+        return 'warning'
+
+      case 'renewal':
+        return null
+    }
+  }
+  const statusItemTemplate = (option) => {
+    return <Tag value={option} severity={getSeverity(option)} />
+  }
+  const representativeBodyTemplate = (rowData) => {
+    const proveedorId = rowData.proveedorId
+
+    return (
+      <div className="flex align-items-center gap-2">
+        <span>{proveedorId.nombreProveedor}</span>
+      </div>
+    )
+  }
+  const conceptoBodyTemplate = (rowData) => {
+    const conceptoAuxId = rowData.conceptoAuxId
+
+    return (
+      <div className="flex align-items-center gap-2">
+        <span>{conceptoAuxId.nombreConceptoAux}</span>
+      </div>
+    )
+  }
+  const centroDeCostoBodyTemplate = (rowData) => {
+    const centroDeCostoAuxId = rowData.centroDeCostoAuxId
+
+    return (
+      <div className="flex align-items-center gap-2">
+        <span>{centroDeCostoAuxId.nombreCentroDeCosto}</span>
+      </div>
+    )
+  }
+  const statusRowFilterTemplate = (options) => {
+    return (
+      <Dropdown
+        value={options.value}
+        options={statuses}
+        onChange={(e) => options.filterApplyCallback(e.value)}
+        itemTemplate={statusItemTemplate}
+        placeholder="Select One"
+        className="p-column-filter"
+        showClear
+        style={{ minWidth: '12rem' }}
+      />
+    )
+  }
+  const conceptoRowFilterTemplate = (options) => {
+    return (
+      <MultiSelect
+        value={options.value}
+        options={conceptoAux}
+        // itemTemplate={representativesItemTemplate}
+        onChange={(e) => {
+          options.filterApplyCallback(e.value)
+        }}
+        optionLabel="nombreConceptoAux"
+        placeholder="Any"
+        className="p-column-filter"
+        maxSelectedLabels={1}
+        style={{ minWidth: '14rem' }}
+      />
+    )
+  }
+  const centroDeCostoRowFilterTemplate = (options) => {
+    return (
+      <MultiSelect
+        value={options.value}
+        options={centroDeCostoAux}
+        // itemTemplate={representativesItemTemplate}
+        onChange={(e) => {
+          options.filterApplyCallback(e.value)
+        }}
+        optionLabel="nombreCentroDeCosto"
+        placeholder="Any"
+        className="p-column-filter"
+        maxSelectedLabels={1}
+        style={{ minWidth: '14rem' }}
+      />
+    )
+  }
+  const representativeRowFilterTemplate = (options) => {
+    return (
+      <MultiSelect
+        value={options.value}
+        options={proveedor}
+        // itemTemplate={representativesItemTemplate}
+        onChange={(e) => {
+          options.filterApplyCallback(e.value)
+        }}
+        optionLabel="nombreProveedor"
+        placeholder="Any"
+        className="p-column-filter"
+        maxSelectedLabels={1}
+        style={{ minWidth: '14rem' }}
+      />
+    )
+  }
   return (
     <>
       <Toast ref={toast} />
@@ -207,7 +455,7 @@ const CajaChicaList = () => {
         left={leftToolbarTemplate}
         right={rightToolbarTemplate}
       ></Toolbar>
-
+      {/* <CajaTablaEjm cajaChicas={cajaChicas} /> */}
       <DataTable
         ref={dt}
         value={cajaChicas}
@@ -228,22 +476,46 @@ const CajaChicaList = () => {
         loading={loading}
         responsiveLayout="scroll"
         breakpoint="960px"
+        filters={filters}
+        filterDisplay="row"
+        // globalFilterFields={[
+        //   'conceptoAuxId.nombreConceptoAux',
+        //   'country.name',
+        //   'representative.name',
+        //   'status'
+        // ]}
       >
         <Column body={actionBodyTemplate}></Column>
         <Column
-          field="fechaCajaChica"
+          field="fechaEfectivaCajaChica"
           header="Fecha"
           body={datefechaCajaChica}
-          dataType="date"
+          // dataType="date"
           sortable
+          filter
+          filterPlaceholder="Fecha"
+          style={{ minWidth: '12rem' }}
         />
 
         <Column
           field="conceptoAuxId.nombreConceptoAux"
           header="Concepto"
           sortable
+          filter
+          style={{ minWidth: '12rem' }}
+          showFilterMenu={false}
+          body={conceptoBodyTemplate}
+          filterElement={conceptoRowFilterTemplate}
+          filterField="conceptoAuxId"
         />
-        <Column field="codigoCajaChica" header="Codigo" sortable />
+        <Column
+          field="codigoCajaChica"
+          header="Codigo"
+          sortable
+          filter
+          filterPlaceholder="Codigo de recibo"
+          style={{ minWidth: '12rem' }}
+        />
         <Column
           field="montoEntregadoCajaChica"
           header="Monto Entregado"
@@ -272,20 +544,33 @@ const CajaChicaList = () => {
         />
 
         <Column
-          field="proveedorId.nombreProveedor"
+          // field="proveedorId.nombreProveedor"
           header="Proveedor"
           sortable
+          showFilterMenu={false}
+          body={representativeBodyTemplate}
+          filter
+          filterElement={representativeRowFilterTemplate}
+          filterField="proveedorId"
         />
         <Column
-          field="centroDeCostoAuxId.nombreCentroDeCosto"
+          // field="centroDeCostoAuxId.nombreCentroDeCosto"
           header="Centro De Costo"
           sortable
+          showFilterMenu={false}
+          body={centroDeCostoBodyTemplate}
+          filter
+          filterElement={centroDeCostoRowFilterTemplate}
+          filterField="centroDeCostoAuxId"
         />
         <Column
           field="estatusCajaChica"
           header="Estatus"
           sortable
           body={estatusTemplate}
+          filter
+          filterElement={statusRowFilterTemplate}
+          showFilterMenu={false}
         />
 
         {auth.user.faidUser.roles[0] === 'SUPERADMIN' && (

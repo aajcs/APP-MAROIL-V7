@@ -408,6 +408,15 @@ const HomeDisponibilidadCajaChicaList = () => {
           data={chartData2}
           options={chartOptions}
           plugins={[alwaysShowTooltip]}
+          style={{
+            height: '150px',
+            width: '100%'
+            // position: 'absolute',
+            // overflow: 'hidden',
+            // bottom: '30%',
+            // 'margin-left': '-6%',
+            // 'padding-left': '14%'
+          }}
         />{' '}
         <Chart
           type="bar"

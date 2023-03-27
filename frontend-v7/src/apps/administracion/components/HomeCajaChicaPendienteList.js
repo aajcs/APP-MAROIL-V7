@@ -8,7 +8,7 @@ import { CajaChicaContext } from '../contexts/CajaChicaContext'
 import moment from 'moment'
 import CajaChicaForm from './CajaChicaForm'
 
-const HomeCajaChicaVueltoList = () => {
+const HomeCajaChicaPendienteList = () => {
   const { cajaChicas, updateCajaChica, loading } = useContext(CajaChicaContext)
   const [cajaChica, setCajaChica] = useState(cajaChicas)
   const [aceptarCajaChica, setAceptarCajaChica] = useState(cajaChicas)
@@ -21,7 +21,7 @@ const HomeCajaChicaVueltoList = () => {
   useEffect(
     () => {
       const cajaChicasFilter = cajaChicas.filter(
-        (p) => p.estatusVueltoCajaChica === 'PENDIENTE'
+        (p) => p.estatusCajaChica === 'PENDIENTE'
       )
       setCajaChica(cajaChicasFilter)
     },
@@ -36,7 +36,7 @@ const HomeCajaChicaVueltoList = () => {
   const eliminarCajaChica = () => {
     updateCajaChica({
       id: aceptarCajaChica.id,
-      estatusVueltoCajaChica: 'PROCESADO'
+      estatusCajaChica: 'PROCESADO'
     })
     setDeleteCajaChicaDialog(false)
     toast.current.show({
@@ -84,7 +84,13 @@ const HomeCajaChicaVueltoList = () => {
   const clearSelected = () => {
     setDeleteCajaChicaDialog(false)
   }
-
+  const estatusTemplate = (rowData) => {
+    return (
+      <span className={`  status-${rowData.estatusCajaChica}`}>
+        {rowData.estatusCajaChica}
+      </span>
+    )
+  }
   return (
     <>
       <Toast ref={toast} />
@@ -122,16 +128,13 @@ const HomeCajaChicaVueltoList = () => {
           header="Proveedor"
           sortable
         />
+
         <Column
-          field="montoVueltoCajaChica"
-          header="Cambio Pendiente"
+          field="estatusCajaChica"
+          header="Estatus"
           sortable
+          body={estatusTemplate}
         />
-        {/* <Column
-          field="estatusVueltoCajaChica"
-          header="Estatus Vuelto"
-          sortable
-        /> */}
         <Column body={actionBodyTemplate}></Column>
       </DataTable>
 
@@ -152,7 +155,7 @@ const HomeCajaChicaVueltoList = () => {
           />
           {aceptarCajaChica && (
             <span>
-              ¿Esta seguro que desea procesar el cambio pendiente del codigo:{' '}
+              ¿Esta seguro que desea procesar el recibo del codigo:{' '}
               <b>{aceptarCajaChica.codigoCajaChica}</b>?
             </span>
           )}
@@ -162,4 +165,4 @@ const HomeCajaChicaVueltoList = () => {
   )
 }
 
-export default HomeCajaChicaVueltoList
+export default HomeCajaChicaPendienteList
