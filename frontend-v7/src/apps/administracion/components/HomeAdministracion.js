@@ -2,7 +2,7 @@
 import { useContext } from 'react'
 import { Skeleton } from 'primereact/skeleton'
 
-// import HomeCajaChica from './HomeCajaChica'
+import HomeCajaChica from './HomeCajaChica'
 // import IngresoGastoEstadistica from './IngresoGastoEstadistica'
 import { IngresoGastoContext } from '../contexts/IngresoGastoContext'
 import HomeDashboard from './HomeDashboard'
@@ -10,7 +10,17 @@ import { CentroDeCostoAuxContext } from '../contexts/CentroDeCostoAuxContext'
 function HomeAdministracion() {
   const { ingresoGastos } = useContext(IngresoGastoContext)
   const { centroDeCostoAuxs } = useContext(CentroDeCostoAuxContext)
-  // console.table(proyectos)
+  console.log(centroDeCostoAuxs)
+  centroDeCostoAuxs.sort((o1, o2) => {
+    if (o1.centroDeCostoAuxCreado > o2.centroDeCostoAuxCreado) {
+      return -1
+    } else if (o1.centroDeCostoAuxCreado < o2.centroDeCostoAuxCreado) {
+      return 1
+    } else {
+      return 0
+    }
+  })
+  console.log(centroDeCostoAuxs)
   return (
     <>
       {ingresoGastos.length === 0 ? (
@@ -55,10 +65,10 @@ function HomeAdministracion() {
               centroDeCostoAuxs={centroDeCostoAuxs}
             />
           </div>
-          {/* <div className="animate__animated animate__backInUp animate__slower">
+          <div className="animate__animated animate__backInUp animate__slower">
             <HomeCajaChica />
           </div>
-
+          {/*
           <IngresoGastoEstadistica /> */}
         </>
       )}

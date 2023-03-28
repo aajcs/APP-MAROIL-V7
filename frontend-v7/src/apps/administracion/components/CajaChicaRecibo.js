@@ -75,7 +75,7 @@ const styles = StyleSheet.create({
 
 const CajaChicaRecibo = ({ cajaChica, auth }) => {
   const formatCurrency = (value) => {
-    return value.toLocaleString('en-US', { style: 'currency', currency: 'USD' })
+    return value.toLocaleString('de-DE', { style: 'currency', currency: 'USD' })
   }
   return (
     <Document>

@@ -207,7 +207,7 @@ const MensualidadOpMesForm = (props) => {
               }
               mode="currency"
               currency="USD"
-              locale="en-US"
+              locale="de-DE"
             />
             <label>costoMensualidadOpMes:</label>
           </div>

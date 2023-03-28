@@ -92,7 +92,7 @@ const HomeDashboardTotalCdcoGrafica = ({ centroDeCosto }) => {
   }, [])
   return (
     <div className=" ">
-      <div className="card">
+      <div className="">
         <Chart
           type="line"
           data={chartData}

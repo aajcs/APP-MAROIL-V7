@@ -13,7 +13,7 @@ const IngresoGastoEstadisticaCardRender = ({ data }) => {
     'animate__animated animate__rotateIn animate__slower'
   ]
   const formatCurrency = (value) => {
-    return value.toLocaleString('en-US', { style: 'currency', currency: 'USD' })
+    return value.toLocaleString('de-DE', { style: 'currency', currency: 'USD' })
   }
   return (
     <div

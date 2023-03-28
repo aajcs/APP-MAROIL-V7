@@ -193,7 +193,7 @@ const CostoTmMesForm = (props) => {
               }
               mode="currency"
               currency="USD"
-              locale="en-US"
+              locale="de-DE"
             />
             <label>costoCostoTmMes:</label>
           </div>

@@ -407,7 +407,7 @@ const CajaChicaForm = (props) => {
                     }
                     mode="currency"
                     currency="USD"
-                    locale="en-US"
+                    locale="de-DE"
                     className={classNames({
                       'p-invalid':
                         submitted && !cajaChicaData.egresoMontoCajaChica
@@ -433,7 +433,7 @@ const CajaChicaForm = (props) => {
                     }
                     mode="currency"
                     currency="USD"
-                    locale="en-US"
+                    locale="de-DE"
                     className={classNames({
                       'p-invalid':
                         submitted && !cajaChicaData.ingresoMontoCajaChica
@@ -461,7 +461,7 @@ const CajaChicaForm = (props) => {
                       }}
                       mode="currency"
                       currency="USD"
-                      locale="en-US"
+                      locale="de-DE"
                     />{' '}
                     <label htmlFor="montoEntregadoCajaChica">
                       Monto Entregado
@@ -478,7 +478,7 @@ const CajaChicaForm = (props) => {
                       }
                       mode="currency"
                       currency="USD"
-                      locale="en-US"
+                      locale="de-DE"
                       disabled
                     />
                     <label htmlFor="montoVueltoCajaChica">

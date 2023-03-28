@@ -372,7 +372,7 @@ const IngresoGastoForm = (props) => {
                 }
                 mode="currency"
                 currency="USD"
-                locale="en-US"
+                locale="de-DE"
               />
             </div>
             <div className="field col-12 md:col-6">
@@ -385,7 +385,7 @@ const IngresoGastoForm = (props) => {
                 }
                 mode="currency"
                 currency="USD"
-                locale="en-US"
+                locale="de-DE"
               />
             </div>
             <div className="field col-12 md:col-6">

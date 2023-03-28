@@ -3,8 +3,9 @@
 import moment from 'moment'
 
 const HomeDashboardConceptosCdco = ({ conceptoAuxs, ingresoGastosPorCdco }) => {
-  console.log(conceptoAuxs)
-  console.log(ingresoGastosPorCdco)
+  const formatCurrency = (value) => {
+    return value.toLocaleString('de-DE', { style: 'currency', currency: 'USD' })
+  }
   const ingresoGastoMesActual = ingresoGastosPorCdco.filter((p) =>
     moment('2023-02-20').isSame(p.fechaIngresoGasto, 'month')
   )
@@ -14,14 +15,14 @@ const HomeDashboardConceptosCdco = ({ conceptoAuxs, ingresoGastosPorCdco }) => {
   const totalGastosCdcoTotal = ingresoGastoMesActual
     .map((p) => p.egresoIngresoGasto)
     .reduce((a, b) => a + b, 0)
-  console.log(totalGastosCdcoTotal)
   return (
     <>
       {totalGastosCdcoConcepto !== 0 && (
         <div
-          className="field card col-12 lg:col-12 xl:col-4 "
+          className="field card col-12 lg:col-12 xl:col-4  m-0"
           style={{
-            'font-size': '11px'
+            'font-size': '11px',
+            background: 'transparent'
           }}
         >
           <span>{conceptoAuxs.nombreConceptoAux.substring(0, 13)}</span>
@@ -34,7 +35,7 @@ const HomeDashboardConceptosCdco = ({ conceptoAuxs, ingresoGastosPorCdco }) => {
             </strong>
           </span>
           <span className="mt-2">
-            <strong>{totalGastosCdcoConcepto}</strong>
+            <strong>{formatCurrency(totalGastosCdcoConcepto)}</strong>
           </span>
         </div>
       )}
