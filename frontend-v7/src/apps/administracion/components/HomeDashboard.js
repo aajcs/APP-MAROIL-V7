@@ -20,7 +20,6 @@ const HomeDashboard = ({ ingresoGastos, centroDeCostoAuxs }) => {
     'Petro San Felix': '#70ad47'
   }
   const ubicacionBuqueTag = (value) => {
-    console.log(ubicacionBuqueTags[value])
     return ubicacionBuqueTags[value]
   }
   // const ubicacionBuqueTag = ubicacionBuqueTags[events.terminalBuque]

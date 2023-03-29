@@ -64,7 +64,6 @@ const HomeDisponibilidadCajaChicaList = () => {
       }
     ]
   })
-  console.log(chartData2)
 
   const toast = useRef(null)
 

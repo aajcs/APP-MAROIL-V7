@@ -10,7 +10,6 @@ import { CentroDeCostoAuxContext } from '../contexts/CentroDeCostoAuxContext'
 function HomeAdministracion() {
   const { ingresoGastos } = useContext(IngresoGastoContext)
   const { centroDeCostoAuxs } = useContext(CentroDeCostoAuxContext)
-  console.log(centroDeCostoAuxs)
   centroDeCostoAuxs.sort((o1, o2) => {
     if (o1.centroDeCostoAuxCreado > o2.centroDeCostoAuxCreado) {
       return -1
@@ -20,7 +19,6 @@ function HomeAdministracion() {
       return 0
     }
   })
-  console.log(centroDeCostoAuxs)
   return (
     <>
       {ingresoGastos.length === 0 ? (

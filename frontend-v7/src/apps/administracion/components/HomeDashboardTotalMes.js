@@ -15,9 +15,7 @@ const HomeDashboardTotalMes = ({
   dateDashboard
 }) => {
   const { conceptoAuxs } = useContext(ConceptoAuxContext)
-  console.log(conceptoAuxs)
   const { volumetrias } = useContext(VolumetriaContext)
-  console.log(volumetrias)
   const formatCurrency = (value) => {
     return value.toLocaleString('de-DE', { style: 'currency', currency: 'USD' })
   }
@@ -50,6 +48,11 @@ const HomeDashboardTotalMes = ({
   const volumetriaMesActual = volumetrias.filter((p) =>
     moment(dateDashboard).isSame(p.fechaBlFinalVolumetria, 'month')
   )
+  const volumetriaMesMesAnterior = volumetrias.filter((p) =>
+    moment(dateDashboard)
+      .subtract(5, 'M')
+      .isSame(p.fechaBlFinalVolumetria, 'month')
+  )
   const volumetriaMesActual6Mecs = volumetrias.filter((p) =>
     moment(dateDashboard)
       .subtract(5, 'M')
@@ -63,6 +66,15 @@ const HomeDashboardTotalMes = ({
     .map((p) => p.terminalAuxId === 'PETRO CEDENO' && p.blFinalVolumetria)
     .reduce((a, b) => a + b, 0)
   const totalVolumetriaMesPsf = volumetriaMesActual
+    .map((p) => p.terminalAuxId === 'PETRO SAN FELIX' && p.blFinalVolumetria)
+    .reduce((a, b) => a + b, 0)
+  const totalVolumetriaMesAnteriorMaroil = volumetriaMesMesAnterior
+    .map((p) => p.terminalAuxId === 'MAROIL TERMINAL' && p.blFinalVolumetria)
+    .reduce((a, b) => a + b, 0)
+  const totalVolumetriaMesAnteriorPc = volumetriaMesMesAnterior
+    .map((p) => p.terminalAuxId === 'PETRO CEDENO' && p.blFinalVolumetria)
+    .reduce((a, b) => a + b, 0)
+  const totalVolumetriaMesAnteriorPsf = volumetriaMesMesAnterior
     .map((p) => p.terminalAuxId === 'PETRO SAN FELIX' && p.blFinalVolumetria)
     .reduce((a, b) => a + b, 0)
   const totalVolumetriaMesMaroil6Mecs = volumetriaMesActual6Mecs
@@ -279,6 +291,18 @@ const HomeDashboardTotalMes = ({
                           ingresoGastosPorCdco={ingresoGastosPorCdco}
                           centroDeCosto={centroDeCosto}
                           dateDashboard={dateDashboard}
+                          totalVolumetriaMesMaroil={totalVolumetriaMesMaroil}
+                          totalVolumetriaMesPc={totalVolumetriaMesPc}
+                          totalVolumetriaMesPsf={totalVolumetriaMesPsf}
+                          totalVolumetriaMesAnteriorMaroil={
+                            totalVolumetriaMesAnteriorMaroil
+                          }
+                          totalVolumetriaMesAnteriorPc={
+                            totalVolumetriaMesAnteriorPc
+                          }
+                          totalVolumetriaMesAnteriorPsf={
+                            totalVolumetriaMesAnteriorPsf
+                          }
                         />
                       )
                   )}
