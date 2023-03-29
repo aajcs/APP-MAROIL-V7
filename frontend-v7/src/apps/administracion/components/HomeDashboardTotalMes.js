@@ -7,6 +7,7 @@ import HomeDashboardTotalCdcoGrafica from './HomeDashboardTotalCdcoGrafica'
 import { ScrollPanel } from 'primereact/scrollpanel'
 import moment from 'moment'
 import { VolumetriaContext } from '../../Control/contexts/VolumetriaContext'
+import { Tag } from 'primereact/tag'
 
 const HomeDashboardTotalMes = ({
   centroDeCosto,
@@ -14,6 +15,7 @@ const HomeDashboardTotalMes = ({
   dateDashboard
 }) => {
   const { conceptoAuxs } = useContext(ConceptoAuxContext)
+  console.log(conceptoAuxs)
   const { volumetrias } = useContext(VolumetriaContext)
   console.log(volumetrias)
   const formatCurrency = (value) => {
@@ -140,15 +142,22 @@ const HomeDashboardTotalMes = ({
         >
           <div
             className=" card col-12 lg:col-12 xl:col-6 mb-0"
-            style={{
-              background: ubicacionBuqueTag(
-                centroDeCosto.descripcionCentroDeCosto
-              )
-            }}
+            // style={{
+            //   'border-color': ubicacionBuqueTag(
+            //     centroDeCosto.descripcionCentroDeCosto
+            //   )
+            // }}
           >
             <span className="text-center">Carga</span>
             <div className="formgrid grid  ">
-              <div className="field card col-12 lg:col-12 xl:col-6 mb-0 text-center d-flex justify-content-center align-items-center">
+              <div
+                className="field card col-12 lg:col-12 xl:col-6 mb-0 text-center d-flex justify-content-center align-items-center"
+                style={{
+                  'border-color': ubicacionBuqueTag(
+                    centroDeCosto.descripcionCentroDeCosto
+                  )
+                }}
+              >
                 Total Historico{' '}
                 {centroDeCosto.id === '63504235a9d055063b6447f0' &&
                   volumetriaTodoMaroil.toLocaleString('de-DE', {
@@ -164,12 +173,18 @@ const HomeDashboardTotalMes = ({
                   })}
               </div>
               <div
-                className="field card col-12 lg:col-12 xl:col-6 mb-0 border-0 text-center d-flex align-items-center"
+                // className="field card  border-top-0 border-end-0 border-2 animate__animated animate__zoomInLeft animate__slower animate__delay-2s"
                 style={{
-                  background: ubicacionBuqueTag(
+                  'border-color': ubicacionBuqueTag(
                     centroDeCosto.descripcionCentroDeCosto
                   )
                 }}
+                className="field card col-12 lg:col-12 xl:col-6 mb-0  text-center d-flex align-items-center"
+                // style={{
+                //   background: ubicacionBuqueTag(
+                //     centroDeCosto.descripcionCentroDeCosto
+                //   )
+                // }}
               >
                 Tasa Prom.
                 <br />
@@ -193,22 +208,29 @@ const HomeDashboardTotalMes = ({
           </div>
           <div
             className="field card col-12 lg:col-12 xl:col-6 mb-0"
-            style={{
-              background: ubicacionBuqueTag(
-                centroDeCosto.descripcionCentroDeCosto
-              )
-            }}
+            // style={{
+            //   'border-color': ubicacionBuqueTag(
+            //     centroDeCosto.descripcionCentroDeCosto
+            //   )
+            // }}
           >
             <span className="text-center"> Gastos Totales</span>
             <div className="formgrid grid  ">
-              <div className="field card col-12 lg:col-12 xl:col-6 mb-0 text-center d-flex justify-content-center align-items-center">
+              <div
+                className="field card col-12 lg:col-12 xl:col-6 mb-0 text-center d-flex justify-content-center align-items-center"
+                style={{
+                  'border-color': ubicacionBuqueTag(
+                    centroDeCosto.descripcionCentroDeCosto
+                  )
+                }}
+              >
                 Total Historico <br />
                 {formatCurrency(totalGastosCdco)}
               </div>
               <div
-                className="field card col-12 lg:col-12 xl:col-6 mb-0 border-0 text-center"
+                className="field card col-12 lg:col-12 xl:col-6 mb-0  text-center"
                 style={{
-                  background: ubicacionBuqueTag(
+                  'border-color': ubicacionBuqueTag(
                     centroDeCosto.descripcionCentroDeCosto
                   )
                 }}
@@ -236,11 +258,11 @@ const HomeDashboardTotalMes = ({
         <div className="formgrid grid d-flex  ">
           <div
             className="field card col-12 lg:col-12 xl:col-9 mb-0"
-            style={{
-              background: ubicacionBuqueTag(
-                centroDeCosto.descripcionCentroDeCosto
-              )
-            }}
+            // style={{
+            //   'border-color': ubicacionBuqueTag(
+            //     centroDeCosto.descripcionCentroDeCosto
+            //   )
+            // }}
           >
             <ScrollPanel
               style={{ width: '100%', height: '180px' }}
@@ -255,6 +277,8 @@ const HomeDashboardTotalMes = ({
                           key={p.id}
                           conceptoAuxs={p}
                           ingresoGastosPorCdco={ingresoGastosPorCdco}
+                          centroDeCosto={centroDeCosto}
+                          dateDashboard={dateDashboard}
                         />
                       )
                   )}
@@ -265,12 +289,32 @@ const HomeDashboardTotalMes = ({
           <div className="field card col-12 lg:col-12 xl:col-3">
             <div className="formgrid grid d-flex  ">
               <div className="field card col-12 lg:col-12 xl:col-12">
-                Contribución
+                <Tag
+                  style={{
+                    background: ubicacionBuqueTag(
+                      centroDeCosto.descripcionCentroDeCosto
+                    )
+                  }}
+                >
+                  <div className="flex align-items-center gap-2">
+                    <span className="h6 mb-0">Contribución</span>
+                  </div>
+                </Tag>
                 <br />
                 {((totalGastosCdcoMesActual / totalGastos) * 100).toFixed(1)} %
               </div>
               <div className="field card col-12 lg:col-12 xl:col-12">
-                Gasto Total
+                <Tag
+                  style={{
+                    background: ubicacionBuqueTag(
+                      centroDeCosto.descripcionCentroDeCosto
+                    )
+                  }}
+                >
+                  <div className="flex align-items-center gap-2">
+                    <span className="h6 mb-0">Gasto Total</span>
+                  </div>
+                </Tag>
                 <br />
                 {formatCurrency(totalGastosCdcoMesActual)}
               </div>
