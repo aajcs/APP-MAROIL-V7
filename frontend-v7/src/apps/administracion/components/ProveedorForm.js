@@ -102,7 +102,7 @@ const ProveedorForm = (props) => {
   }, [editProveedor])
 
   const updateField = (data, field) => {
-    console.log(data)
+    // console.log(data)
     setProveedorData({
       ...actividadData,
       [field]: data

@@ -275,7 +275,10 @@ const HomeDashboardTotalMes = ({
             </div>
           </div>
           <div className="field card col-12 lg:col-12 xl:col-12 mb-0">
-            <HomeDashboardTotalCdcoGrafica />
+            <HomeDashboardTotalCdcoGrafica
+              dateDashboard={dateDashboard}
+              centroDeCosto={centroDeCosto}
+            />
           </div>
         </div>
       </div>

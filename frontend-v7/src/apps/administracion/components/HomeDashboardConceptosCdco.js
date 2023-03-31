@@ -54,12 +54,12 @@ const HomeDashboardConceptosCdco = ({
   const ubicacionBuqueTag = (value) => {
     return ubicacionBuqueTags[value]
   }
-  console.log(
-    totalGastosCdcoConcepto /
-      totalVolumetriaMesMaroil /
-      (totalGastosCdcoConceptoMesAnterior / totalVolumetriaMesAnteriorMaroil) -
-      1 * 1
-  )
+  // console.log(
+  //   totalGastosCdcoConcepto /
+  //     totalVolumetriaMesMaroil /
+  //     (totalGastosCdcoConceptoMesAnterior / totalVolumetriaMesAnteriorMaroil) -
+  //     1 * 1
+  // )
   return (
     <>
       {totalGastosCdcoConcepto !== 0 && (

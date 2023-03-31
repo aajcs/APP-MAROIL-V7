@@ -4,7 +4,7 @@ import firmamaroilsinletra from '../../../assets/firmamaroilsinletra.png'
 
 const ReciboCajaChicaPDF = ({ cajaChica }) => {
   //   const lorem = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.'
-  console.log(cajaChica)
+  // console.log(cajaChica)
   return (
     <Document>
       <Page
