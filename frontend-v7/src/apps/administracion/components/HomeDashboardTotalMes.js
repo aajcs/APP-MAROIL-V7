@@ -93,12 +93,25 @@ const HomeDashboardTotalMes = ({
   const ingresoGastoMesActual6Mecs = ingresoGastos.filter((p) =>
     moment(dateDashboard).subtract(5, 'M').isSame(p.fechaIngresoGasto, 'month')
   )
+  const ingresoGastoMesAnterior = ingresoGastos.filter((p) =>
+    moment(dateDashboard).subtract(1, 'M').isSame(p.fechaIngresoGasto, 'month')
+  )
   const totalGastosCdcoMesActual = ingresoGastoMesActual
     .map(
       (p) =>
         p.centroDeCostoAuxId.id === centroDeCosto.id && p.egresoIngresoGasto
     )
     .reduce((a, b) => a + b, 0)
+  const totalGastosCdcoMesAnterior = ingresoGastoMesAnterior
+    .map(
+      (p) =>
+        p.centroDeCostoAuxId.id === centroDeCosto.id && p.egresoIngresoGasto
+    )
+    .reduce((a, b) => a + b, 0)
+  const totalGastosMesAnterior = ingresoGastoMesAnterior
+    .map((p) => p.egresoIngresoGasto)
+    .reduce((a, b) => a + b, 0)
+
   const totalGastosCdcoMesActual6Mecs = ingresoGastoMesActual6Mecs
     .map(
       (p) =>
@@ -326,6 +339,10 @@ const HomeDashboardTotalMes = ({
                 </Tag>
                 <br />
                 {((totalGastosCdcoMesActual / totalGastos) * 100).toFixed(1)} %
+                <br />
+                {/* {(totalGastosCdcoMesActual / totalGastos).toFixed(2)} */}
+                {totalGastosCdcoMesAnterior.toFixed(2)}
+                {totalGastosMesAnterior.toFixed(2)}
               </div>
               <div className="field card col-12 lg:col-12 xl:col-12">
                 <Tag
