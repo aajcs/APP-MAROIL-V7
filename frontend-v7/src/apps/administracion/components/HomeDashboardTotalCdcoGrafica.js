@@ -4,9 +4,13 @@ import { Chart } from 'primereact/chart'
 import { VolumetriaContext } from '../../Control/contexts/VolumetriaContext'
 import moment from 'moment'
 
-const HomeDashboardTotalCdcoGrafica = ({ dateDashboard, centroDeCosto }) => {
+const HomeDashboardTotalCdcoGrafica = ({
+  dateDashboard,
+  centroDeCosto,
+  ingresoGastosPorCdco
+}) => {
   const { volumetrias } = useContext(VolumetriaContext)
-  console.log(volumetrias)
+  console.log(ingresoGastosPorCdco)
   const [chartData, setChartData] = useState({})
   const [chartOptions, setChartOptions] = useState({})
   const auxOtro1 = []
@@ -14,12 +18,25 @@ const HomeDashboardTotalCdcoGrafica = ({ dateDashboard, centroDeCosto }) => {
   let volumetriaMaroilMes = []
   let volumetriaSanFelixMes = []
   let volumetriaCedenolMes = []
+  let costoTMMaroilMes = []
+  let costoTMSanFelixMes = []
+  let costoTMCedenolMes = []
   let mesesNombre = []
 
   const buquesToneladasDias = () => {
     const documentStyle = getComputedStyle(document.documentElement)
     for (let i = 12; i >= 0; i--) {
-      console.log(moment(dateDashboard).subtract(i, 'M').format('DD/MM/YY '))
+      // console.log(moment(dateDashboard).subtract(i, 'M').format('DD/MM/YY '))
+      const ingresoGastoMesActual = ingresoGastosPorCdco.filter((p) =>
+        moment(dateDashboard)
+          .subtract(i, 'M')
+          .isSame(p.fechaIngresoGasto, 'month')
+      )
+
+      const totalGastosCdcoTotal = ingresoGastoMesActual
+        .map((p) => p.egresoIngresoGasto)
+        .reduce((a, b) => a + b, 0)
+      console.log(totalGastosCdcoTotal)
       const volumetriaMesActual = volumetrias.filter((p) =>
         moment(dateDashboard)
           .subtract(i, 'M')
@@ -38,9 +55,9 @@ const HomeDashboardTotalCdcoGrafica = ({ dateDashboard, centroDeCosto }) => {
           (p) => p.terminalAuxId === 'PETRO SAN FELIX' && p.blFinalVolumetria
         )
         .reduce((a, b) => a + b, 0)
-      console.log(totalVolumetriaMesMaroil)
-      console.log(totalVolumetriaMesPc)
-      console.log(totalVolumetriaMesPsf)
+      // console.log(totalVolumetriaMesMaroil)
+      // console.log(totalVolumetriaMesPc)
+      // console.log(totalVolumetriaMesPsf)
       volumetriaMaroilMes = volumetriaMaroilMes.concat(totalVolumetriaMesMaroil)
       volumetriaCedenolMes = volumetriaCedenolMes.concat(totalVolumetriaMesPc)
       volumetriaSanFelixMes = volumetriaSanFelixMes.concat(
@@ -49,17 +66,27 @@ const HomeDashboardTotalCdcoGrafica = ({ dateDashboard, centroDeCosto }) => {
       mesesNombre = mesesNombre.concat(
         moment(dateDashboard).subtract(i, 'M').format('MMM ')
       )
+      costoTMMaroilMes = costoTMMaroilMes.concat(
+        totalGastosCdcoTotal / totalVolumetriaMesMaroil
+      )
+      costoTMCedenolMes = costoTMCedenolMes.concat(
+        totalGastosCdcoTotal / totalVolumetriaMesPc
+      )
+      costoTMSanFelixMes = costoTMSanFelixMes.concat(
+        totalGastosCdcoTotal / totalVolumetriaMesPsf
+      )
     }
     if (centroDeCosto.id === '63504235a9d055063b6447f0') {
       auxOtro1.push(
-        // {
-        //   label: 'First Dataset',
-        //   data: [65, 59, 80, 81, 56, 55, 40, 65, 59, 80, 81, 56, 55, 40],
-        //   fill: false,
-        //   tension: 0.4,
-        //   borderColor: documentStyle.getPropertyValue('--blue-500'),
-        //   yAxisID: 'y'
-        // },
+        {
+          label: 'Costo TM',
+          data: [...costoTMMaroilMes],
+          fill: false,
+          tension: 0.4,
+          borderColor: documentStyle.getPropertyValue('--blue-500'),
+          yAxisID: 'y',
+          type: 'bubble'
+        },
         // {
         //   label: 'Second Dataset',
         //   data: [28, 48, 40, 19, 86, 27, 90, 28, 48, 40, 19, 86, 27, 90],
@@ -70,7 +97,7 @@ const HomeDashboardTotalCdcoGrafica = ({ dateDashboard, centroDeCosto }) => {
         //   yAxisID: 'y'
         // },
         {
-          label: 'Third Dataset',
+          label: 'Tm Mes',
           data: [...volumetriaMaroilMes],
           fill: true,
           borderColor: documentStyle.getPropertyValue('--gray-600'),
@@ -82,14 +109,15 @@ const HomeDashboardTotalCdcoGrafica = ({ dateDashboard, centroDeCosto }) => {
     }
     if (centroDeCosto.id === '6350424ca9d055063b6447f3') {
       auxOtro1.push(
-        // {
-        //   label: 'First Dataset',
-        //   data: [65, 59, 80, 81, 56, 55, 40, 65, 59, 80, 81, 56, 55, 40],
-        //   fill: false,
-        //   tension: 0.4,
-        //   borderColor: documentStyle.getPropertyValue('--blue-500'),
-        //   yAxisID: 'y'
-        // },
+        {
+          label: 'Costo TM',
+          data: [...costoTMCedenolMes],
+          fill: false,
+          tension: 0.4,
+          borderColor: documentStyle.getPropertyValue('--blue-500'),
+          yAxisID: 'y',
+          type: 'bubble'
+        },
         // {
         //   label: 'Second Dataset',
         //   data: [28, 48, 40, 19, 86, 27, 90, 28, 48, 40, 19, 86, 27, 90],
@@ -100,7 +128,7 @@ const HomeDashboardTotalCdcoGrafica = ({ dateDashboard, centroDeCosto }) => {
         //   yAxisID: 'y'
         // },
         {
-          label: 'Third Dataset',
+          label: 'Tm Mes',
           data: [...volumetriaCedenolMes],
           fill: true,
           borderColor: documentStyle.getPropertyValue('--gray-600'),
@@ -112,14 +140,15 @@ const HomeDashboardTotalCdcoGrafica = ({ dateDashboard, centroDeCosto }) => {
     }
     if (centroDeCosto.id === '62de20b986f66dbfa7f25dde') {
       auxOtro1.push(
-        // {
-        //   label: 'First Dataset',
-        //   data: [65, 59, 80, 81, 56, 55, 40, 65, 59, 80, 81, 56, 55, 40],
-        //   fill: false,
-        //   tension: 0.4,
-        //   borderColor: documentStyle.getPropertyValue('--blue-500'),
-        //   yAxisID: 'y'
-        // },
+        {
+          label: 'Costo TM',
+          data: [...costoTMSanFelixMes],
+          fill: false,
+          tension: 0.4,
+          borderColor: documentStyle.getPropertyValue('--blue-500'),
+          yAxisID: 'y',
+          type: 'bubble'
+        },
         // {
         //   label: 'Second Dataset',
         //   data: [28, 48, 40, 19, 86, 27, 90, 28, 48, 40, 19, 86, 27, 90],
@@ -130,7 +159,7 @@ const HomeDashboardTotalCdcoGrafica = ({ dateDashboard, centroDeCosto }) => {
         //   yAxisID: 'y'
         // },
         {
-          label: 'Third Dataset',
+          label: 'Tm Mes',
           data: [...volumetriaSanFelixMes],
           fill: true,
           borderColor: documentStyle.getPropertyValue('--gray-600'),
@@ -152,6 +181,7 @@ const HomeDashboardTotalCdcoGrafica = ({ dateDashboard, centroDeCosto }) => {
     const textColorSecondary = documentStyle.getPropertyValue(
       '--text-color-secondary'
     )
+
     const surfaceBorder = documentStyle.getPropertyValue('--surface-border')
     const data = {
       labels: [
@@ -172,8 +202,8 @@ const HomeDashboardTotalCdcoGrafica = ({ dateDashboard, centroDeCosto }) => {
       ],
       datasets: [
         {
-          label: 'First Dataset',
-          data: [65, 59, 80, 81, 56, 55, 40, 65, 59, 80, 81, 56, 55, 40],
+          label: 'Costo TM',
+          data: [28, 48, 40, 19, 86, 27, 90, 28, 48, 40, 19, 86, 27, 90],
           fill: false,
           tension: 0.4,
           borderColor: documentStyle.getPropertyValue('--blue-500')
@@ -187,7 +217,7 @@ const HomeDashboardTotalCdcoGrafica = ({ dateDashboard, centroDeCosto }) => {
           borderColor: documentStyle.getPropertyValue('--teal-500')
         },
         {
-          label: 'Third Dataset',
+          label: 'Tm Mes',
           data: [12, 51, 62, 33, 21, 62, 45, 12, 51, 62, 33, 21, 62, 45],
           fill: true,
           borderColor: documentStyle.getPropertyValue('--gray-600'),
@@ -199,6 +229,10 @@ const HomeDashboardTotalCdcoGrafica = ({ dateDashboard, centroDeCosto }) => {
     const options = {
       maintainAspectRatio: false,
       aspectRatio: 0.6,
+      interaction: {
+        intersect: false,
+        mode: 'index'
+      },
       plugins: {
         legend: {
           display: false,
@@ -206,6 +240,11 @@ const HomeDashboardTotalCdcoGrafica = ({ dateDashboard, centroDeCosto }) => {
             color: textColor
           }
         }
+        // tooltip: {
+        //   callbacks: {
+        //     footer: footer
+        //   }
+        // }
       },
       scales: {
         x: {

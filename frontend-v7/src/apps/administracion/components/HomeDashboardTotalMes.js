@@ -96,6 +96,7 @@ const HomeDashboardTotalMes = ({
   const ingresoGastoMesAnterior = ingresoGastos.filter((p) =>
     moment(dateDashboard).subtract(1, 'M').isSame(p.fechaIngresoGasto, 'month')
   )
+
   const totalGastosCdcoMesActual = ingresoGastoMesActual
     .map(
       (p) =>
@@ -278,6 +279,7 @@ const HomeDashboardTotalMes = ({
             <HomeDashboardTotalCdcoGrafica
               dateDashboard={dateDashboard}
               centroDeCosto={centroDeCosto}
+              ingresoGastosPorCdco={ingresoGastosPorCdco}
             />
           </div>
         </div>
@@ -344,8 +346,21 @@ const HomeDashboardTotalMes = ({
                 {((totalGastosCdcoMesActual / totalGastos) * 100).toFixed(1)} %
                 <br />
                 {/* {(totalGastosCdcoMesActual / totalGastos).toFixed(2)} */}
-                {totalGastosCdcoMesAnterior.toFixed(2)}
-                {totalGastosMesAnterior.toFixed(2)}
+                {(totalGastosCdcoMesActual /
+                  totalGastos /
+                  (totalGastosCdcoMesAnterior / totalGastosMesAnterior) -
+                  1 * 1) *
+                  100 !==
+                  Infinity &&
+                  (
+                    (totalGastosCdcoMesActual /
+                      totalGastos /
+                      (totalGastosCdcoMesAnterior / totalGastosMesAnterior) -
+                      1 * 1) *
+                    100
+                  ).toFixed(2)}
+                {/* {totalGastosCdcoMesAnterior.toFixed(2)}s
+                {totalGastosMesAnterior.toFixed(2)}s */}
               </div>
               <div className="field card col-12 lg:col-12 xl:col-12">
                 <Tag

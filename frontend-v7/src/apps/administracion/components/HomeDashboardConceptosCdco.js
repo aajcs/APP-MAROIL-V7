@@ -181,11 +181,13 @@ const HomeDashboardConceptosCdco = ({
                         totalVolumetriaMesAnteriorPc) -
                       1 * 1 !==
                       Infinity &&
-                    totalGastosCdcoConcepto /
-                      totalVolumetriaMesPc /
-                      (totalGastosCdcoConceptoMesAnterior /
-                        totalVolumetriaMesAnteriorPc) -
-                      1 * 1}
+                    (
+                      totalGastosCdcoConcepto /
+                        totalVolumetriaMesPc /
+                        (totalGastosCdcoConceptoMesAnterior /
+                          totalVolumetriaMesAnteriorPc) -
+                      1 * 1
+                    ).toFixed(2)}
                   {centroDeCosto.id === '62de20b986f66dbfa7f25dde' &&
                     totalGastosCdcoConcepto /
                       totalVolumetriaMesPsf /
@@ -193,11 +195,13 @@ const HomeDashboardConceptosCdco = ({
                         totalVolumetriaMesAnteriorPsf) -
                       1 * 1 !==
                       Infinity &&
-                    totalGastosCdcoConcepto /
-                      totalVolumetriaMesPsf /
-                      (totalGastosCdcoConceptoMesAnterior /
-                        totalVolumetriaMesAnteriorPsf) -
-                      1 * 1}
+                    (
+                      totalGastosCdcoConcepto /
+                        totalVolumetriaMesPsf /
+                        (totalGastosCdcoConceptoMesAnterior /
+                          totalVolumetriaMesAnteriorPsf) -
+                      1 * 1
+                    ).toFixed(2)}
                 </strong>{' '}
               </span>
             </div>
