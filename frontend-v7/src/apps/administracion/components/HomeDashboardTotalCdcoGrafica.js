@@ -97,7 +97,7 @@ const HomeDashboardTotalCdcoGrafica = ({
         //   yAxisID: 'y'
         // },
         {
-          label: 'Tm Mes',
+          label: 'Third Dataset',
           data: [...volumetriaMaroilMes],
           fill: true,
           borderColor: documentStyle.getPropertyValue('--gray-600'),
@@ -128,7 +128,7 @@ const HomeDashboardTotalCdcoGrafica = ({
         //   yAxisID: 'y'
         // },
         {
-          label: 'Tm Mes',
+          label: 'Third Dataset',
           data: [...volumetriaCedenolMes],
           fill: true,
           borderColor: documentStyle.getPropertyValue('--gray-600'),
@@ -159,7 +159,7 @@ const HomeDashboardTotalCdcoGrafica = ({
         //   yAxisID: 'y'
         // },
         {
-          label: 'Tm Mes',
+          label: 'Third Dataset',
           data: [...volumetriaSanFelixMes],
           fill: true,
           borderColor: documentStyle.getPropertyValue('--gray-600'),
@@ -217,7 +217,7 @@ const HomeDashboardTotalCdcoGrafica = ({
           borderColor: documentStyle.getPropertyValue('--teal-500')
         },
         {
-          label: 'Tm Mes',
+          label: 'Third Dataset',
           data: [12, 51, 62, 33, 21, 62, 45, 12, 51, 62, 33, 21, 62, 45],
           fill: true,
           borderColor: documentStyle.getPropertyValue('--gray-600'),
