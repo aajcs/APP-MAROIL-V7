@@ -74,6 +74,25 @@ app.use(
   '/api/ConceptoAux',
   require('./appsAdministracion/routes/ConceptoAuxRoutes')
 )
+app.use('/api/Dominio', require('./appsAdministracion/routes/DominioRoutes'))
+app.use('/api/Division', require('./appsAdministracion/routes/DivisionRoutes'))
+app.use(
+  '/api/Dependencia',
+  require('./appsAdministracion/routes/DependenciaRoutes')
+)
+app.use(
+  '/api/SubDependencia',
+  require('./appsAdministracion/routes/SubDependenciaRoutes')
+)
+app.use(
+  '/api/ActividadAsociada',
+  require('./appsAdministracion/routes/ActividadAsociadaRoutes')
+)
+app.use(
+  '/api/ClasificacionServicio',
+  require('./appsAdministracion/routes/ClasificacionServicioRoutes')
+)
+app.use('/api/Proforma', require('./appsAdministracion/routes/ProformaRoutes'))
 app.use(
   '/api/MensualidadOpMes',
   require('./appsAdministracion/routes/MensualidadOpMesRoutes')

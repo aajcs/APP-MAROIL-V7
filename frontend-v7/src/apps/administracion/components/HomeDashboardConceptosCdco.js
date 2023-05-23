@@ -42,13 +42,13 @@ const HomeDashboardConceptosCdco = ({
     .map((p) => p.egresoIngresoGasto)
     .reduce((a, b) => a + b, 0)
   const ubicacionBuqueTags = {
-    'Rail Veyor': '#f3de66',
+    'Rail Veyor': '#1473e9b8',
     'MAROIL TERMINAL 2': '#094db1',
     'MAROIL TERMINAL 3': '#094db1',
     'Puesto de Espera (Oeste)': '#094db1',
     'Puesto de Carga (Centro)': '#094db1',
     'Puesto de Carga S.T.S. (Este)': '#094db1',
-    'Petro Cedeño': '#83c1ed',
+    'Petro Cedeño': '#b8202e',
     'Petro San Felix': '#b2ef88'
   }
   const ubicacionBuqueTag = (value) => {
@@ -85,12 +85,13 @@ const HomeDashboardConceptosCdco = ({
                     100 >
                 0 ? (
                   <i
-                    className="pi pi-arrow-up"
-                    style={{ color: 'green', fontSize: '0.8rem' }}
+                    className="pi pi-angle-double-up"
+                    style={{ color: '#13f000', fontSize: '0.8rem' }}
                   ></i>
                 ) : (
                   <i
-                    className="pi pi-arrow-down"
+                    className="pi pi-angle-double-down
+                    "
                     style={{ color: 'red', fontSize: '0.8rem' }}
                   ></i>
                 )}
@@ -131,7 +132,7 @@ const HomeDashboardConceptosCdco = ({
               </span>
             </div>
           </div>
-          <div className="d-flex justify-content-between">
+          <div className="d-flex justify-content-between ">
             <div>
               <span
                 className="mt-2"

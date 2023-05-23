@@ -8,6 +8,7 @@ import { ScrollPanel } from 'primereact/scrollpanel'
 import moment from 'moment'
 import { VolumetriaContext } from '../../Control/contexts/VolumetriaContext'
 import { Tag } from 'primereact/tag'
+// import HomeDashboardTotalGrafica from './HomeDashboardTotalGrafica'
 
 const HomeDashboardTotalMes = ({
   centroDeCosto,
@@ -20,13 +21,13 @@ const HomeDashboardTotalMes = ({
     return value.toLocaleString('de-DE', { style: 'currency', currency: 'USD' })
   }
   const ubicacionBuqueTags = {
-    'Rail Veyor': '#d9a406',
+    'Rail Veyor': '#1473e9b8',
     'MAROIL TERMINAL 2': '#094db1',
     'MAROIL TERMINAL 3': '#094db1',
     'Puesto de Espera (Oeste)': '#094db1',
     'Puesto de Carga (Centro)': '#094db1',
     'Puesto de Carga S.T.S. (Este)': '#094db1',
-    'Petro Cedeño': '#0070c0',
+    'Petro Cedeño': '#b8202e',
     'Petro San Felix': '#70ad47'
   }
   const ubicacionBuqueTag = (value) => {
@@ -342,25 +343,51 @@ const HomeDashboardTotalMes = ({
                     <span className="h6 mb-0">Contribución</span>
                   </div>
                 </Tag>
-                <br />
-                {((totalGastosCdcoMesActual / totalGastos) * 100).toFixed(1)} %
-                <br />
-                {/* {(totalGastosCdcoMesActual / totalGastos).toFixed(2)} */}
-                {(totalGastosCdcoMesActual /
-                  totalGastos /
-                  (totalGastosCdcoMesAnterior / totalGastosMesAnterior) -
-                  1 * 1) *
-                  100 !==
-                  Infinity &&
-                  (
-                    (totalGastosCdcoMesActual /
+
+                <div className="d-flex justify-content-between mt-3">
+                  <div>
+                    {((totalGastosCdcoMesActual / totalGastos) * 100).toFixed(
+                      1
+                    )}{' '}
+                    %
+                  </div>
+                  <div>
+                    <span
+                      style={{
+                        'font-size': '8px',
+                        position: 'absolute',
+                        top: '27px',
+                        right: '5px'
+                      }}
+                    >
+                      {'V(%)C/Tm'}
+                    </span>
+                    {/* {(totalGastosCdcoMesActual / totalGastos).toFixed(2)} */}
+                    {(totalGastosCdcoMesActual /
                       totalGastos /
                       (totalGastosCdcoMesAnterior / totalGastosMesAnterior) -
                       1 * 1) *
-                    100
-                  ).toFixed(2)}
-                {/* {totalGastosCdcoMesAnterior.toFixed(2)}s
+                      100 !==
+                      Infinity &&
+                      (
+                        (totalGastosCdcoMesActual /
+                          totalGastos /
+                          (totalGastosCdcoMesAnterior /
+                            totalGastosMesAnterior) -
+                          1 * 1) *
+                        100
+                      ).toFixed(2)}
+                    {/* {totalGastosCdcoMesAnterior.toFixed(2)}s
                 {totalGastosMesAnterior.toFixed(2)}s */}
+                  </div>
+                </div>
+                <div className="field  col-12 lg:col-12 xl:col-12 mb-0">
+                  {/* <HomeDashboardTotalGrafica
+                    dateDashboard={dateDashboard}
+                    centroDeCosto={centroDeCosto}
+                    ingresoGastosPorCdco={ingresoGastosPorCdco}
+                  /> */}
+                </div>
               </div>
               <div className="field card col-12 lg:col-12 xl:col-12">
                 <Tag
@@ -374,8 +401,56 @@ const HomeDashboardTotalMes = ({
                     <span className="h6 mb-0">Gasto Total</span>
                   </div>
                 </Tag>
-                <br />
+
                 {formatCurrency(totalGastosCdcoMesActual)}
+                <div className="field  col-12 lg:col-12 xl:col-12 mb-0">
+                  {/* <HomeDashboardTotalGrafica
+                    dateDashboard={dateDashboard}
+                    centroDeCosto={centroDeCosto}
+                    ingresoGastosPorCdco={ingresoGastosPorCdco}
+                  /> */}
+                </div>
+              </div>
+              <div className="field card col-12 lg:col-12 xl:col-12">
+                <Tag
+                  style={{
+                    background: ubicacionBuqueTag(
+                      centroDeCosto.descripcionCentroDeCosto
+                    )
+                  }}
+                >
+                  <div className="flex align-items-center gap-2">
+                    <span
+                      className="h6 mb-0"
+                      style={{
+                        'font-size': '12px'
+                      }}
+                    >
+                      TM Totales
+                    </span>
+                  </div>
+                </Tag>
+                {centroDeCosto.id === '63504235a9d055063b6447f0' &&
+                  totalVolumetriaMesMaroil.toLocaleString('de-DE', {
+                    maximumFractionDigits: 3
+                  })}
+                {centroDeCosto.id === '6350424ca9d055063b6447f3' &&
+                  totalVolumetriaMesPc.toLocaleString('de-DE', {
+                    maximumFractionDigits: 3
+                  })}
+                {centroDeCosto.id === '62de20b986f66dbfa7f25dde' &&
+                  totalVolumetriaMesPsf.toLocaleString('de-DE', {
+                    maximumFractionDigits: 3
+                  })}{' '}
+                Tm
+                {/* {formatCurrency(totalGastosCdcoMesActual)} */}
+                <div className="field  col-12 lg:col-12 xl:col-12 mb-0">
+                  {/* <HomeDashboardTotalGrafica
+                    dateDashboard={dateDashboard}
+                    centroDeCosto={centroDeCosto}
+                    ingresoGastosPorCdco={ingresoGastosPorCdco}
+                  /> */}
+                </div>
               </div>
             </div>
           </div>

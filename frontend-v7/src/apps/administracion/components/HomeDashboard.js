@@ -10,13 +10,13 @@ const HomeDashboard = ({ ingresoGastos, centroDeCostoAuxs }) => {
   const [dateDashboard, setDateDashboard] = useState(moment()._d)
 
   const ubicacionBuqueTags = {
-    'Rail Veyor': '#d9a406',
+    'Rail Veyor': '#1473e9b8',
     'MAROIL TERMINAL 2': '#094db1',
     'MAROIL TERMINAL 3': '#094db1',
     'Puesto de Espera (Oeste)': '#094db1',
     'Puesto de Carga (Centro)': '#094db1',
     'Puesto de Carga S.T.S. (Este)': '#094db1',
-    'Petro Cedeño': '#0070c0',
+    'Petro Cedeño': '#b8202e',
     'Petro San Felix': '#70ad47'
   }
   const ubicacionBuqueTag = (value) => {

@@ -4,7 +4,7 @@ import { Chart } from 'primereact/chart'
 import { VolumetriaContext } from '../../Control/contexts/VolumetriaContext'
 import moment from 'moment'
 
-const HomeDashboardTotalCdcoGrafica = ({
+const HomeDashboardTotalGrafica = ({
   dateDashboard,
   centroDeCosto,
   ingresoGastosPorCdco
@@ -15,17 +15,16 @@ const HomeDashboardTotalCdcoGrafica = ({
   const [chartOptions, setChartOptions] = useState({})
   const auxOtro1 = []
   const auxOtro2 = []
-  const auxOtro3 = []
   let volumetriaMaroilMes = []
   let volumetriaSanFelixMes = []
   let volumetriaCedenolMes = []
   let costoTMMaroilMes = []
   let costoTMSanFelixMes = []
   let costoTMCedenolMes = []
-  let mesesNombre = []
   let gastoCdcoMaroilMes = []
   let gastoCdcoCedenolMes = []
   let gastoCdcoSanFelixMes = []
+  let mesesNombre = []
 
   const buquesToneladasDias = () => {
     const documentStyle = getComputedStyle(document.documentElement)
@@ -84,7 +83,7 @@ const HomeDashboardTotalCdcoGrafica = ({
       gastoCdcoSanFelixMes = gastoCdcoSanFelixMes.concat(totalGastosCdcoTotal)
     }
     if (centroDeCosto.id === '63504235a9d055063b6447f0') {
-      auxOtro3.push({
+      auxOtro1.push({
         label: '',
         data: [...gastoCdcoMaroilMes],
         // fill: true,
@@ -93,47 +92,9 @@ const HomeDashboardTotalCdcoGrafica = ({
         backgroundColor: 'rgba(108,117,125,0.2)',
         yAxisID: 'y2'
       })
-      auxOtro1.push(
-        {
-          label: 'Costo TM',
-          data: [...costoTMMaroilMes],
-          fill: false,
-          tension: 0.4,
-          borderColor: documentStyle.getPropertyValue('--blue-500'),
-          yAxisID: 'y',
-          type: 'bubble'
-        },
-        // {
-        //   label: 'Second Dataset',
-        //   data: [28, 48, 40, 19, 86, 27, 90, 28, 48, 40, 19, 86, 27, 90],
-        //   fill: false,
-        //   borderDash: [5, 5],
-        //   tension: 0.4,
-        //   borderColor: documentStyle.getPropertyValue('--teal-500'),
-        //   yAxisID: 'y'
-        // },
-        {
-          label: 'Tm',
-          data: [...volumetriaMaroilMes],
-          fill: true,
-          borderColor: documentStyle.getPropertyValue('--gray-600'),
-          tension: 0.4,
-          backgroundColor: 'rgba(108,117,125,0.2)',
-          yAxisID: 'y2'
-        },
-        {
-          label: 'Gastos',
-          data: [...gastoCdcoCedenolMes],
-          fill: true,
-          borderColor: '#d9a406',
-          tension: 0.4,
-          backgroundColor: 'rgba(195,155,31,0.2)',
-          yAxisID: 'y3'
-        }
-      )
     }
     if (centroDeCosto.id === '6350424ca9d055063b6447f3') {
-      auxOtro3.push({
+      auxOtro1.push({
         label: '',
         data: [...gastoCdcoCedenolMes],
         // fill: true,
@@ -142,93 +103,17 @@ const HomeDashboardTotalCdcoGrafica = ({
         backgroundColor: 'rgba(108,117,125,0.2)',
         yAxisID: 'y2'
       })
-      auxOtro1.push(
-        {
-          label: 'Costo TM',
-          data: [...costoTMCedenolMes],
-          fill: false,
-          tension: 0.4,
-          borderColor: documentStyle.getPropertyValue('--blue-500'),
-          yAxisID: 'y',
-          type: 'bubble'
-        },
-        // {
-        //   label: 'Second Dataset',
-        //   data: [28, 48, 40, 19, 86, 27, 90, 28, 48, 40, 19, 86, 27, 90],
-        //   fill: false,
-        //   borderDash: [5, 5],
-        //   tension: 0.4,
-        //   borderColor: documentStyle.getPropertyValue('--teal-500'),
-        //   yAxisID: 'y'
-        // },
-        {
-          label: 'Tm',
-          data: [...volumetriaCedenolMes],
-          fill: true,
-          borderColor: documentStyle.getPropertyValue('--gray-600'),
-          tension: 0.4,
-          backgroundColor: 'rgba(108,117,125,0.2)',
-          yAxisID: 'y2'
-        },
-        {
-          label: '',
-          data: [...gastoCdcoCedenolMes],
-          fill: true,
-          borderColor: '#d9a406',
-          tension: 0.4,
-          backgroundColor: 'rgba(195,155,31,0.2)',
-          yAxisID: 'y3'
-        }
-      )
     }
     if (centroDeCosto.id === '62de20b986f66dbfa7f25dde') {
-      auxOtro3.push({
-        label: 'Gastos',
+      auxOtro1.push({
+        label: '',
         data: [...gastoCdcoSanFelixMes],
         // fill: true,
         borderColor: documentStyle.getPropertyValue('--gray-600'),
         tension: 0.4,
         backgroundColor: 'rgba(108,117,125,0.2)',
-        yAxisID: 'y'
+        yAxisID: 'y2'
       })
-      auxOtro1.push(
-        {
-          label: 'Costo TM',
-          data: [...costoTMSanFelixMes],
-          fill: false,
-          tension: 0.4,
-          borderColor: documentStyle.getPropertyValue('--blue-500'),
-          yAxisID: 'y',
-          type: 'bubble'
-        },
-        // {
-        //   label: 'Second Dataset',
-        //   data: [28, 48, 40, 19, 86, 27, 90, 28, 48, 40, 19, 86, 27, 90],
-        //   fill: false,
-        //   borderDash: [5, 5],
-        //   tension: 0.4,
-        //   borderColor: documentStyle.getPropertyValue('--teal-500'),
-        //   yAxisID: 'y'
-        // },
-        {
-          label: 'Tm',
-          data: [...volumetriaSanFelixMes],
-          fill: true,
-          borderColor: documentStyle.getPropertyValue('--gray-600'),
-          tension: 0.4,
-          backgroundColor: 'rgba(108,117,125,0.2)',
-          yAxisID: 'y2'
-        },
-        {
-          label: 'Gastos',
-          data: [...gastoCdcoSanFelixMes],
-          fill: true,
-          borderColor: '#d9a406',
-          tension: 0.4,
-          backgroundColor: 'rgba(195,155,31,0.2)',
-          yAxisID: 'y3'
-        }
-      )
     }
 
     auxOtro2.push(...mesesNombre)
@@ -278,7 +163,7 @@ const HomeDashboardTotalCdcoGrafica = ({
           borderColor: documentStyle.getPropertyValue('--teal-500')
         },
         {
-          label: 'Tm',
+          label: 'Third Dataset',
           data: [12, 51, 62, 33, 21, 62, 45, 12, 51, 62, 33, 21, 62, 45],
           fill: true,
           borderColor: documentStyle.getPropertyValue('--gray-600'),
@@ -309,6 +194,7 @@ const HomeDashboardTotalCdcoGrafica = ({
       },
       scales: {
         x: {
+          display: false,
           ticks: {
             color: textColorSecondary
           },
@@ -370,18 +256,6 @@ const HomeDashboardTotalCdcoGrafica = ({
           grid: {
             drawOnChartArea: false // only want the grid lines for one axis to show up
           }
-        },
-        y3: {
-          display: false,
-          type: 'linear', // only linear but allow scale type registration. This allows extensions to exist solely for log scale for instance
-          position: 'right',
-          // reverse: true,
-          ticks: {
-            color: textColorSecondary
-          },
-          grid: {
-            drawOnChartArea: false // only want the grid lines for one axis to show up
-          }
         }
       }
     }
@@ -400,7 +274,7 @@ const HomeDashboardTotalCdcoGrafica = ({
           data={chartData}
           options={chartOptions}
           style={{
-            height: '120px',
+            height: '50px',
             width: '100%'
             // position: 'absolute',
             // overflow: 'hidden',
@@ -414,4 +288,4 @@ const HomeDashboardTotalCdcoGrafica = ({
   )
 }
 
-export default HomeDashboardTotalCdcoGrafica
+export default HomeDashboardTotalGrafica

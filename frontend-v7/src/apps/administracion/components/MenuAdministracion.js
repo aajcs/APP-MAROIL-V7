@@ -111,6 +111,48 @@ export const MenuAdministracion = () => {
           icon: 'pi pi-fw pi-database',
           to: '/apps/administracion/CajaChica',
           permi: 'SUPERADMIN'
+        },
+        {
+          label: 'DOMINIO',
+          icon: 'pi pi-fw pi-database',
+          to: '/apps/administracion/Dominio',
+          permi: 'SUPERADMIN'
+        },
+        {
+          label: 'DIVISION',
+          icon: 'pi pi-fw pi-database',
+          to: '/apps/administracion/Division',
+          permi: 'SUPERADMIN'
+        },
+        {
+          label: 'DEPENDENCIA',
+          icon: 'pi pi-fw pi-database',
+          to: '/apps/administracion/Dependencia',
+          permi: 'SUPERADMIN'
+        },
+        {
+          label: 'SUBDEPENDENCIA',
+          icon: 'pi pi-fw pi-database',
+          to: '/apps/administracion/SubDependencia',
+          permi: 'SUPERADMIN'
+        },
+        {
+          label: 'ACTIVIDADAASOCIADA',
+          icon: 'pi pi-fw pi-database',
+          to: '/apps/administracion/ActividadAsociada',
+          permi: 'SUPERADMIN'
+        },
+        {
+          label: 'CLASIFICACIONSERVICIO',
+          icon: 'pi pi-fw pi-database',
+          to: '/apps/administracion/ClasificacionServicio',
+          permi: 'SUPERADMIN'
+        },
+        {
+          label: 'PROFORMA',
+          icon: 'pi pi-fw pi-database',
+          to: '/apps/administracion/Proforma',
+          permi: 'SUPERADMIN'
         }
       ]
     }

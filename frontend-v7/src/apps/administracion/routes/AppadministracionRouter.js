@@ -26,6 +26,13 @@ import { CargaInformacionPage } from '../pages/CargaInformacionPage'
 import { MensualidadOpMesPage } from '../pages/MensualidadOpMesPage'
 import { CostoTmMesPage } from '../pages/CostoTmMesPage'
 import { CajaChicaPage } from '../pages/CajaChicaPage'
+import { DominioPage } from '../pages/DominioPage'
+import { DivisionPage } from '../pages/DivisionPage'
+import { DependenciaPage } from '../pages/DependenciaPage'
+import { SubDependenciaPage } from '../pages/SubDependenciaPage'
+import { ActividadAsociadaPage } from '../pages/ActividadAsociadaPage'
+import { ClasificacionServicioPage } from '../pages/ClasificacionServicioPage'
+import { ProformaPage } from '../pages/ProformaPage'
 
 export default function appadministracionRouter() {
   const { staticMenuInactive, onToggleMenuClick } = useContext(ConfigContext)
@@ -85,6 +92,41 @@ export default function appadministracionRouter() {
               exact
               path="/apps/administracion/ConceptoAux"
               component={ConceptoAuxPage}
+            />
+            <PrivateRoute
+              exact
+              path="/apps/administracion/Dominio"
+              component={DominioPage}
+            />
+            <PrivateRoute
+              exact
+              path="/apps/administracion/Division"
+              component={DivisionPage}
+            />
+            <PrivateRoute
+              exact
+              path="/apps/administracion/Dependencia"
+              component={DependenciaPage}
+            />
+            <PrivateRoute
+              exact
+              path="/apps/administracion/SubDependencia"
+              component={SubDependenciaPage}
+            />
+            <PrivateRoute
+              exact
+              path="/apps/administracion/ActividadAsociada"
+              component={ActividadAsociadaPage}
+            />
+            <PrivateRoute
+              exact
+              path="/apps/administracion/ClasificacionServicio"
+              component={ClasificacionServicioPage}
+            />
+            <PrivateRoute
+              exact
+              path="/apps/administracion/Proforma"
+              component={ProformaPage}
             />
             <PrivateRoute
               exact
