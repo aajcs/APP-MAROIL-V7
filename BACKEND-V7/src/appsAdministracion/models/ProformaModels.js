@@ -15,7 +15,7 @@ const proformaSchema = new Schema(
       ref: 'Proveedor'
     },
     numeroControlProforma: {
-      type: Number
+      type: String
     },
     fechaControlProforma: {
       type: Date,
@@ -49,6 +49,9 @@ const proformaSchema = new Schema(
       type: Number
     },
     egresoProforma: {
+      type: Number
+    },
+    totalProforma: {
       type: Number
     },
     descripcionProforma: {

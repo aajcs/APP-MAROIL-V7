@@ -10,31 +10,37 @@ import { Toast } from 'primereact/toast'
 import { Dropdown } from 'primereact/dropdown'
 import { addLocale } from 'primereact/api'
 import { classNames } from 'primereact/utils'
-// import { InputNumber } from 'primereact/inputnumber'
+import { InputNumber } from 'primereact/inputnumber'
 // import { InputTextarea } from 'primereact/inputtextarea'
-// import { Calendar } from 'primereact/calendar'
+import { Calendar } from 'primereact/calendar'
 import moment from 'moment'
 import { DominioContext } from '../contexts/DominioContext'
 import { DivisionContext } from '../contexts/DivisionContext'
+import { DependenciaContext } from '../contexts/DependenciaContext'
+import { SubDependenciaContext } from '../contexts/SubDependenciaContext'
+import { ProveedorContext } from '../contexts/ProveedorContext'
+import { ActividadAsociadaContext } from '../contexts/ActividadAsociadaContext'
+import { ClasificacionServicioContext } from '../contexts/ClasificacionServicioContext'
 const ProformaForm = (props) => {
   const initialProformaForm = {
     id: null,
 
     codigoProforma: '',
-    proveedorId: '',
+    proveedorId: null,
     numeroControlProforma: '',
     fechaControlProforma: '',
-    dominioId: '',
-    divisionId: '',
-    dependenciaId: '',
-    subDependenciaId: '',
-    actividadAsociadaId: '',
-    clasificacionServicioId: '',
-    ingresoProforma: '',
-    egresoProforma: '',
+    dominioId: null,
+    divisionId: null,
+    dependenciaId: null,
+    subDependenciaId: null,
+    actividadAsociadaId: null,
+    clasificacionServicioId: null,
+    ingresoProforma: 0,
+    egresoProforma: 0,
+    totalProforma: 0,
     descripcionProforma: '',
     estatusProforma: '',
-    userCreatorId: '',
+    userCreatorId: null,
     creadoProforma: moment(),
     modificadoProforma: moment()
   }
@@ -87,13 +93,26 @@ const ProformaForm = (props) => {
     useContext(ProformaContext)
   const { dominios } = useContext(DominioContext)
   const { divisions } = useContext(DivisionContext)
+  const { dependencias } = useContext(DependenciaContext)
+  const { subDependencias } = useContext(SubDependenciaContext)
+  const { proveedors } = useContext(ProveedorContext)
+  const { actividadAsociadas } = useContext(ActividadAsociadaContext)
+  const { clasificacionServicios } = useContext(ClasificacionServicioContext)
 
   const { isVisible, setIsVisible } = props
   const [selectedProforma, setSelectedProforma] = useState(null)
   const [proformaData, setProformaData] = useState(initialProformaForm)
   const [selectedDominio, setSelectedDominio] = useState(null)
   const [selectedDivision, setSelectedDivision] = useState(null)
+  const [selectedDependencia, setSelectedDependencia] = useState(null)
+  const [selectedSubDependencia, setSelectedSubDependencia] = useState(null)
+  const [selectedProveedor, setSelectedProveedor] = useState(null)
+  const [selectedActividadAsociada, setSelectedActividadAsociada] =
+    useState(null)
+  const [selectedClasificacionServicio, setSelectedClasificacionServicio] =
+    useState(null)
   const [submitted, setSubmitted] = useState(false)
+  const [dateInicio, setDateInicio] = useState()
   const estadoProforma = [
     { estatusProforma: 'OPERATIVO' },
     { estatusProforma: 'INOPERATIVO' }
@@ -147,6 +166,97 @@ const ProformaForm = (props) => {
     //   setSelectedPresupuesto(null)
     // }
   }
+  const onDependencia = (e) => {
+    e.value
+      ? (setSelectedDependencia(e.value),
+        updateField(e.value.id, 'dependenciaId'))
+      : (setSelectedDependencia(null), updateField(null, 'dependenciaId'))
+    // if (e.value) {
+    //   const subProyectoFilter = subProyectos.filter(
+    //     (p) => p.proyectoId?.id === e.value.id
+    //   )
+    //   setSelectedProyecto(e.value)
+    //   setSubProyecto(subProyectoFilter)
+    // } else {
+    //   setSelectedProyecto(null)
+    //   setSubProyecto(null)
+    //   setSelectedSubProyecto(null)
+    //   setSelectedPresupuesto(null)
+    // }
+  }
+  const onSubDependencia = (e) => {
+    e.value
+      ? (setSelectedSubDependencia(e.value),
+        updateField(e.value.id, 'subDependenciaId'))
+      : (setSelectedSubDependencia(null), updateField(null, 'subDependenciaId'))
+    // if (e.value) {
+    //   const subProyectoFilter = subProyectos.filter(
+    //     (p) => p.proyectoId?.id === e.value.id
+    //   )
+    //   setSelectedProyecto(e.value)
+    //   setSubProyecto(subProyectoFilter)
+    // } else {
+    //   setSelectedProyecto(null)
+    //   setSubProyecto(null)
+    //   setSelectedSubProyecto(null)
+    //   setSelectedPresupuesto(null)
+    // }
+  }
+  const onProveedor = (e) => {
+    e.value
+      ? (setSelectedProveedor(e.value), updateField(e.value.id, 'proveedorId'))
+      : (setSelectedProveedor(null), updateField(null, 'proveedorId'))
+    // if (e.value) {
+    //   const subProyectoFilter = subProyectos.filter(
+    //     (p) => p.proyectoId?.id === e.value.id
+    //   )
+    //   setSelectedProyecto(e.value)
+    //   setSubProyecto(subProyectoFilter)
+    // } else {
+    //   setSelectedProyecto(null)
+    //   setSubProyecto(null)
+    //   setSelectedSubProyecto(null)
+    //   setSelectedPresupuesto(null)
+    // }
+  }
+  const onActividadAsociada = (e) => {
+    e.value
+      ? (setSelectedActividadAsociada(e.value),
+        updateField(e.value.id, 'actividadAsociadaId'))
+      : (setSelectedActividadAsociada(null),
+        updateField(null, 'actividadAsociadaId'))
+    // if (e.value) {
+    //   const subProyectoFilter = subProyectos.filter(
+    //     (p) => p.proyectoId?.id === e.value.id
+    //   )
+    //   setSelectedProyecto(e.value)
+    //   setSubProyecto(subProyectoFilter)
+    // } else {
+    //   setSelectedProyecto(null)
+    //   setSubProyecto(null)
+    //   setSelectedSubProyecto(null)
+    //   setSelectedPresupuesto(null)
+    // }
+  }
+  const onClasificacionServicio = (e) => {
+    e.value
+      ? (setSelectedClasificacionServicio(e.value),
+        updateField(e.value.id, 'clasificacionServicioId'))
+      : (setSelectedClasificacionServicio(null),
+        updateField(null, 'clasificacionServicioId'))
+    // if (e.value) {
+    //   const subProyectoFilter = subProyectos.filter(
+    //     (p) => p.proyectoId?.id === e.value.id
+    //   )
+    //   setSelectedProyecto(e.value)
+    //   setSubProyecto(subProyectoFilter)
+    // } else {
+    //   setSelectedProyecto(null)
+    //   setSubProyecto(null)
+    //   setSelectedSubProyecto(null)
+    //   setSelectedPresupuesto(null)
+    // }
+  }
   const updateField = (data, field) => {
     setProformaData({
       ...proformaData,
@@ -157,6 +267,7 @@ const ProformaForm = (props) => {
   const saveProforma = () => {
     setSubmitted(true)
     if (!editProforma) {
+      console.log(proformaData)
       createProforma(proformaData)
     } else {
       updateProforma({
@@ -260,218 +371,174 @@ const ProformaForm = (props) => {
                 <label htmlFor="dropdown">Seleccione Division*</label>
               </span>
             </div>
-            <div className="field col-12 md:col-6  mt-3 ">
-              {/* <span className="p-float-label ">
+            <div className="field col-12 md:col-6  mt-3">
+              <span className="p-float-label">
                 <Dropdown
-                  value={selectedSubProyecto}
-                  options={subProyecto}
-                  onChange={onSubProyecto}
-                  optionLabel="nombreSubProyecto"
+                  inputId="dropdown"
+                  value={selectedDependencia}
+                  options={dependencias}
+                  onChange={onDependencia}
+                  optionLabel="nombreDependencia"
                   showClear
                   filter
-                  filterBy="nombrePresupuesto"
-                  disabled={!selectedProyecto}
+                  filterBy="nombreDependencia"
                   className={classNames({
-                    'p-invalid': submitted && !DataPresupuestoData.subProyectoId
+                    'p-invalid': submitted && !selectedDependencia
                   })}
                 />
-                {submitted && !DataPresupuestoData.subProyectoId && (
+                {submitted && !selectedDependencia && (
+                  <small className="p-invalid">Dependencia es requerido.</small>
+                )}
+                <label htmlFor="dropdown">Seleccione Dependencia*</label>
+              </span>
+            </div>
+            <div className="field col-12 md:col-6  mt-3">
+              <span className="p-float-label">
+                <Dropdown
+                  inputId="dropdown"
+                  value={selectedSubDependencia}
+                  options={subDependencias}
+                  onChange={onSubDependencia}
+                  optionLabel="nombreSubDependencia"
+                  showClear
+                  filter
+                  filterBy="nombreSubDependencia"
+                  className={classNames({
+                    'p-invalid': submitted && !selectedSubDependencia
+                  })}
+                />
+                {submitted && !selectedSubDependencia && (
                   <small className="p-invalid">
-                    Sub Proyecto es requerido.
+                    SubDependencia es requerido.
                   </small>
                 )}
-                <label htmlFor="dropdown">Seleccione Sub Proyecto*</label>
-              </span> */}
+                <label htmlFor="dropdown">Seleccione SubDependencia*</label>
+              </span>
             </div>
-            <div className="field col-12 md:col-6 mt-3 ">
-              {/* <span className="p-float-label ">
+            <div className="field col-12 md:col-6  mt-3">
+              <span className="p-float-label">
                 <Dropdown
-                  value={selectedPresupuesto}
-                  options={presupuesto}
-                  onChange={onPresupuesto}
-                  optionLabel="nombrePresupuesto"
+                  inputId="dropdown"
+                  value={selectedProveedor}
+                  options={proveedors}
+                  onChange={onProveedor}
+                  optionLabel="nombreProveedor"
                   showClear
                   filter
-                  filterBy="nombrePresupuesto"
-                  disabled={!selectedSubProyecto}
+                  filterBy="nombreProveedor"
                   className={classNames({
-                    'p-invalid': submitted && !DataPresupuestoData.subProyectoId
+                    'p-invalid': submitted && !selectedProveedor
                   })}
                 />
-                <label htmlFor="dropdown">Seleccione Presupuesto*</label>
-              </span> */}
+                {submitted && !selectedProveedor && (
+                  <small className="p-invalid">Proveedor es requerido.</small>
+                )}
+                <label htmlFor="dropdown">Seleccione Proveedor*</label>
+              </span>
+            </div>
+            <div className="field col-12 md:col-6  mt-3">
+              <span className="p-float-label">
+                <Dropdown
+                  inputId="dropdown"
+                  value={selectedActividadAsociada}
+                  options={actividadAsociadas}
+                  onChange={onActividadAsociada}
+                  optionLabel="nombreActividadAsociada"
+                  showClear
+                  filter
+                  filterBy="nombreActividadAsociada"
+                  className={classNames({
+                    'p-invalid': submitted && !selectedActividadAsociada
+                  })}
+                />
+                {submitted && !selectedActividadAsociada && (
+                  <small className="p-invalid">
+                    ActividadAsociada es requerido.
+                  </small>
+                )}
+                <label htmlFor="dropdown">Seleccione ActividadAsociada*</label>
+              </span>
+            </div>
+            <div className="field col-12 md:col-6  mt-3">
+              <span className="p-float-label">
+                <Dropdown
+                  inputId="dropdown"
+                  value={selectedClasificacionServicio}
+                  options={clasificacionServicios}
+                  onChange={onClasificacionServicio}
+                  optionLabel="nombreClasificacionServicio"
+                  showClear
+                  filter
+                  filterBy="nombreClasificacionServicio"
+                  className={classNames({
+                    'p-invalid': submitted && !selectedClasificacionServicio
+                  })}
+                />
+                {submitted && !selectedClasificacionServicio && (
+                  <small className="p-invalid">
+                    ClasificacionServicio es requerido.
+                  </small>
+                )}
+                <label htmlFor="dropdown">
+                  Seleccione ClasificacionServicio*
+                </label>
+              </span>
             </div>
 
-            <div className="p-float-label col-12 md:col-6 mt-3 ">
-              {/* <InputText
-                value={DataPresupuestoData.nombreDataPresupuesto}
-                onChange={(e) =>
-                  updateField(e.target.value, 'nombreDataPresupuesto')
-                }
-                className={classNames({
-                  'p-invalid':
-                    submitted && !DataPresupuestoData.nombreDataPresupuesto
-                })}
-              />
-              {submitted && !DataPresupuestoData.nombreDataPresupuesto && (
-                <small className="p-invalid">Nombre es requerido.</small>
-              )}
-              <label>Nombre:*</label> */}
-            </div>
+            <div className="field col-6 p-col-2 mt-3">
+              <span className="p-float-label ">
+                <InputText
+                  value={proformaData.numeroControlProforma}
+                  onChange={(e) =>
+                    updateField(e.target.value, 'numeroControlProforma')
+                  }
+                  className={classNames({
+                    'p-invalid':
+                      submitted && !proformaData.numeroControlProforma
+                  })}
+                />
 
-            <div className="p-float-label col-12 md:col-12 mt-3 ">
-              {/* <InputTextarea
-                id="description"
-                value={DataPresupuestoData.descripcionDataPresupuesto}
-                onChange={(e) =>
-                  updateField(e.target.value, 'descripcionDataPresupuesto')
-                }
-                rows={3}
-                cols={20}
-              />
-
-              <label>Descripción:</label> */}
+                {submitted && !proformaData.numeroControlProforma && (
+                  <small className="p-invalid">
+                    Numero Control es requerido.
+                  </small>
+                )}
+                <label htmlFor="numeroControlProforma">Numero Control</label>
+              </span>
             </div>
-            <br />
-            <div className="field col-6 p-col-2 mt-4">
-              {/* <span className="p-float-label ">
+            <div className="field col-6 p-col-2 mt-3">
+              <span className="p-float-label ">
                 <InputNumber
                   inputId="cantidadDataPresupuesto"
-                  value={DataPresupuestoData.cantidadDataPresupuesto}
+                  value={proformaData.totalProforma}
                   onValueChange={(e) =>
-                    updateField(e.target.value, 'cantidadDataPresupuesto')
+                    updateField(e.target.value, 'totalProforma')
                   }
                   minFractionDigits={2}
                   maxFractionDigits={5}
                   className={classNames({
-                    'p-invalid':
-                      submitted && !DataPresupuestoData.cantidadDataPresupuesto
+                    'p-invalid': submitted && !proformaData.totalProforma
                   })}
                 />
 
-                {submitted && !DataPresupuestoData.cantidadDataPresupuesto && (
-                  <small className="p-invalid">Cantidad es requerido.</small>
+                {submitted && !proformaData.totalProforma && (
+                  <small className="p-invalid">
+                    Total Proforma es requerido.
+                  </small>
                 )}
-                <label htmlFor="cantidadDataPresupuesto">Cantidad</label>
-              </span> */}
-            </div>
-            <div className="field col-12 md:col-6 mt-4">
-              {/* <span className="p-float-label ">
-                <Dropdown
-                  value={selectedUnidadDataPresupuesto}
-                  options={unidadDataPresupuesto}
-                  onChange={onUnidadDataPresupuesto}
-                  optionLabel="unidadDataPresupuesto"
-                  // placeholder="Seleccione unidad"
-                  className={classNames({
-                    'p-invalid':
-                      submitted && !DataPresupuestoData.unidadDataPresupuesto
-                  })}
-                />
-                {submitted && !DataPresupuestoData.unidadDataPresupuesto && (
-                  <small className="p-invalid">Unidad es requerido.</small>
-                )}
-                <label>Unidad</label>{' '}
-              </span> */}
-            </div>
-            <div className="field col-6 mt-4">
-              {/* <span className="p-float-label ">
-                <InputNumber
-                  inputId="valuacionCantidadDataPresupuesto"
-                  value={DataPresupuestoData.valuacionCantidadDataPresupuesto}
-                  onValueChange={(e) =>
-                    updateField(
-                      e.target.value,
-                      'valuacionCantidadDataPresupuesto'
-                    )
-                  }
-                  minFractionDigits={2}
-                  maxFractionDigits={5}
-                />
-
-                <label htmlFor="valuacionCantidadDataPresupuesto">
-                  Valuación Cantidad
-                </label>
-              </span> */}
-            </div>
-            <div className="field col-6 mt-4">
-              {/* <span className="p-float-label ">
-                <InputNumber
-                  inputId="precioUnitarioDataPresupuesto"
-                  value={DataPresupuestoData.precioUnitarioDataPresupuesto}
-                  onValueChange={(e) =>
-                    updateField(e.target.value, 'precioUnitarioDataPresupuesto')
-                  }
-                  mode="currency"
-                  currency="USD"
-                  locale="en-US"
-                  className={classNames({
-                    'p-invalid':
-                      submitted &&
-                      !DataPresupuestoData.precioUnitarioDataPresupuesto
-                  })}
-                />
-                {submitted &&
-                  !DataPresupuestoData.precioUnitarioDataPresupuesto && (
-                    <small className="p-invalid">Precio es requerido.</small>
-                  )}
-                <label htmlFor="precioUnitarioDataPresupuesto">
-                  Precio Unitario
-                </label>
-              </span> */}
-            </div>
-            <div className="field col-6 mt-4">
-              {/* <span className="p-float-label ">
-                <InputNumber
-                  inputId="valuacionPrecioUnitarioDataPresupuesto"
-                  value={
-                    DataPresupuestoData.valuacionPrecioUnitarioDataPresupuesto
-                  }
-                  onValueChange={(e) =>
-                    updateField(
-                      e.target.value,
-                      'valuacionPrecioUnitarioDataPresupuesto'
-                    )
-                  }
-                  mode="currency"
-                  currency="USD"
-                  locale="en-US"
-                />
-
-                <label htmlFor="valuacionPrecioUnitarioDataPresupuesto">
-                  Valuacion Precio Unitario
-                </label>
-              </span> */}
+                <label htmlFor="totalProforma">Total Proforma</label>
+              </span>
             </div>
 
             <div className="field col-12 md:col-6 mt-3">
-              {/* <span className="p-float-label ">
-                <Dropdown
-                  value={selectedDataPresupuesto}
-                  options={estadoDataPresupuesto}
-                  onChange={onEstatusDataPresupuesto}
-                  optionLabel="estatusDataPresupuesto"
-                  className={classNames({
-                    'p-invalid':
-                      submitted && !DataPresupuestoData.estatusDataPresupuesto
-                  })}
-                />
-                {submitted && !DataPresupuestoData.estatusDataPresupuesto && (
-                  <small className="p-invalid">Unidad es requerido.</small>
-                )}
-                <label>Selecione Estado</label>
-              </span> */}
-            </div>
-
-            <div className="field col-12 md:col-6 mt-3">
-              {/* <span className="p-float-label ">
+              <span className="p-float-label ">
                 <Calendar
                   // className="p-datepicker-today"
                   id="time24"
                   value={dateInicio !== null && dateInicio}
                   onChange={(e) => {
                     setDateInicio(e.value)
-                    updateField(e.target.value, 'fechaInicioDataPresupuesto')
+                    updateField(e.target.value, 'fechaControlProforma')
                   }}
                   showTime
                   locale="es"
@@ -480,48 +547,16 @@ const ProformaForm = (props) => {
                   className={classNames(
                     {
                       'p-invalid':
-                        submitted &&
-                        !DataPresupuestoData.fechaInicioDataPresupuesto
+                        submitted && !proformaData.fechaControlProforma
                     },
                     'p-datepicker-today'
                   )}
                 />{' '}
-                {submitted &&
-                  !DataPresupuestoData.fechaInicioDataPresupuesto && (
-                    <small className="p-invalid">Fecha es requerido.</small>
-                  )}
-                <label>Fecha Inicio </label>
-              </span> */}
-            </div>
-            <div className="field col-12 md:col-6 mt-3">
-              {/* <span className="p-float-label ">
-                <Calendar
-                  // className="p-datepicker-today"
-                  id="time24"
-                  value={dateFinal !== null && dateFinal}
-                  onChange={(e) => {
-                    setDateFinal(e.value)
-                    updateField(e.target.value, 'fechaFinalDataPresupuesto')
-                  }}
-                  showTime
-                  locale="es"
-                  // hourFormat="12"
-                  showButtonBar
-                  className={classNames(
-                    {
-                      'p-invalid':
-                        submitted &&
-                        !DataPresupuestoData.fechaFinalDataPresupuesto
-                    },
-                    'p-datepicker-today'
-                  )}
-                />{' '}
-                {submitted &&
-                  !DataPresupuestoData.fechaFinalDataPresupuesto && (
-                    <small className="p-invalid">Fecha es requerido.</small>
-                  )}
-                <label>Fecha Final</label>
-              </span> */}
+                {submitted && !proformaData.fechaControlProforma && (
+                  <small className="p-invalid">Fecha es requerido.</small>
+                )}
+                <label>Fecha Control </label>
+              </span>
             </div>
           </div>
         </div>

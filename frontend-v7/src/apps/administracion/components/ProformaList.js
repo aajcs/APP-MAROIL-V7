@@ -174,23 +174,24 @@ const ProformaList = () => {
         <Column body={actionBodyTemplate}></Column>
 
         <Column field="codigoProforma" header="codigoProforma" />
-        <Column field="proveedorId" header="proveedorId" />
+        <Column field="proveedorId.id" header="proveedorId" />
         <Column field="numeroControlProforma" header="numeroControlProforma" />
         <Column field="fechaControlProforma" header="fechaControlProforma" />
-        <Column field="dominioId" header="dominioId" />
-        <Column field="divisionId" header="divisionId" />
-        <Column field="dependenciaId" header="dependenciaId" />
-        <Column field="subDependenciaId" header="subDependenciaId" />
-        <Column field="actividadAsociadaId" header="actividadAsociadaId" />
+        <Column field="dominioId.id" header="dominioId" />
+        <Column field="divisionId.id" header="divisionId" />
+        <Column field="dependenciaId.id" header="dependenciaId" />
+        <Column field="subDependenciaId.id" header="subDependenciaId" />
+        <Column field="actividadAsociadaId.id" header="actividadAsociadaId" />
         <Column
-          field="clasificacionServicioId"
+          field="clasificacionServicioId.id"
           header="clasificacionServicioId"
         />
         <Column field="ingresoProforma" header="ingresoProforma" />
         <Column field="egresoProforma" header="egresoProforma" />
+        <Column field="totalProforma" header="totalProforma" />
         <Column field="descripcionProforma" header="descripcionProforma" />
         <Column field="estatusProforma" header="estatusProforma" />
-        <Column field="userCreatorId" header="userCreatorId" />
+        <Column field="userCreatorId.id" header="userCreatorId" />
 
         <Column
           field="creadoProforma"
