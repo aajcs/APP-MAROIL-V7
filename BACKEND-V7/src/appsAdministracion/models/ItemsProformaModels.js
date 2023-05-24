@@ -3,6 +3,41 @@ const { Schema, model } = require('mongoose')
 
 const itemsProformaSchema = new Schema(
   {
+    codigoItemsProforma: {
+      type: String
+    },
+    descripcionItemsProforma: {
+      type: String
+    },
+    usoFondoItemsProforma: {
+      type: String
+    },
+    fechaInicioItemsProforma: {
+      type: Date,
+      default: moment()
+    },
+    fechaFinItemsProforma: {
+      type: Date,
+      default: moment()
+    },
+    unidadItemsProforma: {
+      type: String
+    },
+    cantidadItemsProforma: {
+      type: Number
+    },
+    precioUnitarioItemsProforma: {
+      type: Number
+    },
+    precioTotalItemsProforma: {
+      type: Number
+    },
+    estatus1ItemsProforma: {
+      type: String
+    },
+    estatus2ItemsProforma: {
+      type: String
+    },
     creadoItemsProforma: {
       type: Date,
       default: moment()

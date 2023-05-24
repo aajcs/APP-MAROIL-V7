@@ -126,10 +126,55 @@ const ProformaForm = (props) => {
 
   useEffect(() => {
     if (editProforma) {
-      setProformaData(editProforma)
+      setProformaData({
+        ...editProforma,
+        dominioId: editProforma.dominioId?.id,
+        divisionId: editProforma.divisionId?.id,
+        dependenciaId: editProforma.dependenciaId?.id,
+        subDependenciaId: editProforma.subDependenciaId?.id,
+        proveedorId: editProforma.proveedorId?.id,
+        actividadAsociadaId: editProforma.actividadAsociadaId?.id,
+        clasificacionServicioId: editProforma.clasificacionServicioId?.id
+      })
       setSelectedProforma({
         estatusProforma: editProforma.estatusProforma
       })
+      const dominioSelecEdit =
+        editProforma.dominioId &&
+        dominios.find((p) => p.id === editProforma.dominioId.id)
+      setSelectedDominio(dominioSelecEdit)
+      const divisionSelecEdit =
+        editProforma.divisionId &&
+        divisions.find((p) => p.id === editProforma.divisionId.id)
+      setSelectedDivision(divisionSelecEdit)
+      const dependenciaSelecEdit =
+        editProforma.dependenciaId &&
+        dependencias.find((p) => p.id === editProforma.dependenciaId.id)
+      setSelectedDependencia(dependenciaSelecEdit)
+      const subDependenciaSelecEdit =
+        editProforma.subDependenciaId &&
+        subDependencias.find((p) => p.id === editProforma.subDependenciaId.id)
+      setSelectedSubDependencia(subDependenciaSelecEdit)
+      const proveedorSelecEdit =
+        editProforma.proveedorId &&
+        proveedors.find((p) => p.id === editProforma.proveedorId.id)
+      setSelectedProveedor(proveedorSelecEdit)
+      const actividadAsociadaSelecEdit =
+        editProforma.actividadAsociadaId &&
+        actividadAsociadas.find(
+          (p) => p.id === editProforma.actividadAsociadaId.id
+        )
+      setSelectedActividadAsociada(actividadAsociadaSelecEdit)
+      const clasificacionServicioSelecEdit =
+        editProforma.clasificacionServicioId &&
+        clasificacionServicios.find(
+          (p) => p.id === editProforma.clasificacionServicioId.id
+        )
+      setSelectedClasificacionServicio(clasificacionServicioSelecEdit)
+      setDateInicio(
+        editProforma.fechaControlProforma &&
+          moment(editProforma.fechaControlProforma)._d
+      )
     }
   }, [editProforma])
   const onDominio = (e) => {
@@ -278,6 +323,7 @@ const ProformaForm = (props) => {
     setProformaData(initialProformaForm)
     setIsVisible(false)
     setSelectedProforma('')
+    clearSelected()
   }
 
   const dialogFooter = (
@@ -294,7 +340,18 @@ const ProformaForm = (props) => {
   const clearSelected = () => {
     setIsVisible(false)
     setProformaData(initialProformaForm)
-    setSelectedProforma('')
+
+    setSelectedProforma(null)
+
+    setSelectedDominio(null)
+    setSelectedDivision(null)
+    setSelectedDependencia(null)
+    setSelectedSubDependencia(null)
+    setSelectedProveedor(null)
+    setSelectedActividadAsociada(null)
+    setSelectedClasificacionServicio(null)
+
+    setDateInicio(null)
   }
   const selectedestatusProformaTemplate = (option, props) => {
     if (option) {

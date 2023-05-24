@@ -153,6 +153,12 @@ export const MenuAdministracion = () => {
           icon: 'pi pi-fw pi-database',
           to: '/apps/administracion/Proforma',
           permi: 'SUPERADMIN'
+        },
+        {
+          label: 'ITEMSPROFORMA',
+          icon: 'pi pi-fw pi-database',
+          to: '/apps/administracion/ItemsProforma',
+          permi: 'SUPERADMIN'
         }
       ]
     }

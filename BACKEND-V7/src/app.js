@@ -94,6 +94,10 @@ app.use(
 )
 app.use('/api/Proforma', require('./appsAdministracion/routes/ProformaRoutes'))
 app.use(
+  '/api/ItemsProforma',
+  require('./appsAdministracion/routes/ItemsProformaRoutes')
+)
+app.use(
   '/api/MensualidadOpMes',
   require('./appsAdministracion/routes/MensualidadOpMesRoutes')
 )

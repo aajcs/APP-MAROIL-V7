@@ -33,6 +33,7 @@ import { SubDependenciaPage } from '../pages/SubDependenciaPage'
 import { ActividadAsociadaPage } from '../pages/ActividadAsociadaPage'
 import { ClasificacionServicioPage } from '../pages/ClasificacionServicioPage'
 import { ProformaPage } from '../pages/ProformaPage'
+import { ItemsProformaPage } from '../pages/ItemsProformaPage'
 
 export default function appadministracionRouter() {
   const { staticMenuInactive, onToggleMenuClick } = useContext(ConfigContext)
@@ -127,6 +128,11 @@ export default function appadministracionRouter() {
               exact
               path="/apps/administracion/Proforma"
               component={ProformaPage}
+            />
+            <PrivateRoute
+              exact
+              path="/apps/administracion/ItemsProforma"
+              component={ItemsProformaPage}
             />
             <PrivateRoute
               exact
