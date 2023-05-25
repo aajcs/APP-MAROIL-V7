@@ -45,6 +45,9 @@ const proformaSchema = new Schema(
       type: Schema.Types.ObjectId,
       ref: 'ClasificacionServicio'
     },
+    usoFondoProforma: {
+      type: String
+    },
     ingresoProforma: {
       type: Number
     },

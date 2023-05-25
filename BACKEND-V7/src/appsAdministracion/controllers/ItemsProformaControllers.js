@@ -6,7 +6,7 @@ itemsProformaCtrl.createItemsProforma = async (req, res) => {
   const {
     codigoItemsProforma,
     descripcionItemsProforma,
-    usoFondoItemsProforma,
+
     fechaInicioItemsProforma,
     fechaFinItemsProforma,
     unidadItemsProforma,
@@ -23,7 +23,7 @@ itemsProformaCtrl.createItemsProforma = async (req, res) => {
     const newItemsProforma = new ItemsProforma({
       codigoItemsProforma,
       descripcionItemsProforma,
-      usoFondoItemsProforma,
+
       fechaInicioItemsProforma,
       fechaFinItemsProforma,
       unidadItemsProforma,
@@ -111,7 +111,7 @@ itemsProformaCtrl.updateItemsProforma = async (req, res) => {
   const {
     codigoItemsProforma,
     descripcionItemsProforma,
-    usoFondoItemsProforma,
+
     fechaInicioItemsProforma,
     fechaFinItemsProforma,
     unidadItemsProforma,
@@ -131,7 +131,7 @@ itemsProformaCtrl.updateItemsProforma = async (req, res) => {
       {
         codigoItemsProforma,
         descripcionItemsProforma,
-        usoFondoItemsProforma,
+
         fechaInicioItemsProforma,
         fechaFinItemsProforma,
         unidadItemsProforma,

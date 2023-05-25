@@ -13,6 +13,7 @@ import { Dropdown } from 'primereact/dropdown'
 import { Calendar } from 'primereact/calendar'
 import { addLocale } from 'primereact/api'
 import { RadioButton } from 'primereact/radiobutton'
+import { WhatsappContext } from '../contexts/WhatsappContext'
 
 import moment from 'moment'
 import { BarcoContext } from '../contexts/BarcoContext'
@@ -88,6 +89,7 @@ const ReporteCargaGOMForm = (props) => {
     editReporteCargaGOM,
     updateReporteCargaGOM
   } = useContext(ReporteCargaGOMContext)
+  const { createWhatsappSolicitudFondo } = useContext(WhatsappContext)
   const { barcos } = useContext(BarcoContext)
   const { isVisible, setIsVisible } = props
   const [selecteBarcoIDGOM, setSelectedBarcoIDGOM] = useState(null)
@@ -99,6 +101,7 @@ const ReporteCargaGOMForm = (props) => {
   const [reporteCargaGOMData, setReporteCargaGOMData] = useState(
     initialReporteCargaGOMForm
   )
+  console.log(reporteCargaGOMData)
   const [isPuestoTerminalVisible, setPuestoTerminalIsVisible] = useState(false)
   const [selectedPuestoTerminal, setSelectedPuestoTerminal] = useState(null)
 
@@ -121,6 +124,29 @@ const ReporteCargaGOMForm = (props) => {
     reporteCargaGOMs.map((p) =>
       e.value.id === p.barcoID.id ? reporteNuevoUltimo(p) : ''
     )
+  }
+  const enviarWhatssapSolicitudFondo = async () => {
+    const {
+      barcoID,
+      tasaDeCargaGOM,
+      toneladasCargadasGOM,
+      ubicacionBuque,
+      comentariosGOM
+    } = reporteCargaGOMData
+
+    const text = `Buque ${
+      barcoID.nombreBarco
+    } terminal ${ubicacionBuque}, Toneladas Cargadas ${new Intl.NumberFormat().format(
+      toneladasCargadasGOM
+    )} Tm, Tasa De Carga ${new Intl.NumberFormat().format(
+      tasaDeCargaGOM
+    )} TM/hr, observacion ${comentariosGOM}`
+    const toValor = '584242422547'
+    const nameValor = 'embarcacion'
+    const textValor = 'Alejandro Perez'
+    const textbody = text
+    createWhatsappSolicitudFondo(toValor, nameValor, textValor, textbody)
+    console.log(textbody)
   }
   const reporteNuevoUltimo = (p) => {
     setSelectedubicacionBuqueReporteCargaGOM({
@@ -205,6 +231,7 @@ const ReporteCargaGOMForm = (props) => {
     setSelectedubicacionBuqueReporteCargaGOM(null)
     setIsVisible(false)
     setPuestoTerminalIsVisible(false)
+    enviarWhatssapSolicitudFondo()
   }
 
   const dialogFooter = (

@@ -35,6 +35,7 @@ const ProformaForm = (props) => {
     subDependenciaId: null,
     actividadAsociadaId: null,
     clasificacionServicioId: null,
+    usoFondoProforma: null,
     ingresoProforma: 0,
     egresoProforma: 0,
     totalProforma: 0,
@@ -111,15 +112,24 @@ const ProformaForm = (props) => {
     useState(null)
   const [selectedClasificacionServicio, setSelectedClasificacionServicio] =
     useState(null)
+  const [selectedusoFondoProforma, setSelectedusoFondoProforma] = useState(null)
   const [submitted, setSubmitted] = useState(false)
   const [dateInicio, setDateInicio] = useState()
   const estadoProforma = [
     { estatusProforma: 'OPERATIVO' },
     { estatusProforma: 'INOPERATIVO' }
   ]
+  const usoFondoProforma = [
+    { usoFondoProforma: 'CONTINUIDAD OPERATIVA' },
+    { usoFondoProforma: 'INVERSION' }
+  ]
   const onEstatusProforma = (e) => {
     setSelectedProforma(e.value)
     updateField(e.value.estatusProforma, 'estatusProforma')
+  }
+  const onUsoFondoProforma = (e) => {
+    setSelectedusoFondoProforma(e.value)
+    updateField(e.value.itemsUsoFondoProforma, 'usoFondoProforma')
   }
 
   const toast = useRef(null)
@@ -307,6 +317,7 @@ const ProformaForm = (props) => {
       ...proformaData,
       [field]: data
     })
+    console.log(proformaData)
   }
 
   const saveProforma = () => {
@@ -541,7 +552,29 @@ const ProformaForm = (props) => {
                 </label>
               </span>
             </div>
-
+            <div className="field col-12 md:col-6  mt-3">
+              <span className="p-float-label">
+                <Dropdown
+                  inputId="dropdown"
+                  value={selectedusoFondoProforma}
+                  options={usoFondoProforma}
+                  onChange={onUsoFondoProforma}
+                  optionLabel="usoFondoProforma"
+                  showClear
+                  filter
+                  filterBy="usoFondoProforma"
+                  className={classNames({
+                    'p-invalid': submitted && !selectedusoFondoProforma
+                  })}
+                />
+                {submitted && !selectedusoFondoProforma && (
+                  <small className="p-invalid">
+                    Uso de fondo es requerido.
+                  </small>
+                )}
+                <label htmlFor="dropdown">Seleccione Uso de fondo*</label>
+              </span>
+            </div>
             <div className="field col-6 p-col-2 mt-3">
               <span className="p-float-label ">
                 <InputText

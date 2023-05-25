@@ -196,7 +196,7 @@ const ItemsProformaList = () => {
           header="precioTotalItemsProforma"
         />
         <Column field="estatus2ItemsProforma" header="estatus2ItemsProforma" />
-        <Column field="proformaId" header="proformaId" />
+        <Column field="proformaId.id" header="proformaId" />
 
         <Column
           field="itemsProformaCreado"

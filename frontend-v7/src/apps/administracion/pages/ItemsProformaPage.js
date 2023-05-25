@@ -1,5 +1,6 @@
 import ItemsProformaList from '../components/ItemsProformaList'
 import ItemsProformaContextProvider from '../contexts/ItemsProformaContext'
+import ProformaContextProvider from '../contexts/ProformaContext'
 
 export const ItemsProformaPage = () => {
   return (
@@ -8,7 +9,9 @@ export const ItemsProformaPage = () => {
         <div className="card">
           <h5>ItemsProforma CRUD</h5>
           <ItemsProformaContextProvider>
-            <ItemsProformaList />
+            <ProformaContextProvider>
+              <ItemsProformaList />
+            </ProformaContextProvider>
           </ItemsProformaContextProvider>
         </div>
       </div>

@@ -9,9 +9,7 @@ const itemsProformaSchema = new Schema(
     descripcionItemsProforma: {
       type: String
     },
-    usoFondoItemsProforma: {
-      type: String
-    },
+
     fechaInicioItemsProforma: {
       type: Date,
       default: moment()
