@@ -21,7 +21,8 @@ import { SubDependenciaContext } from '../contexts/SubDependenciaContext'
 import { ProveedorContext } from '../contexts/ProveedorContext'
 import { ActividadAsociadaContext } from '../contexts/ActividadAsociadaContext'
 import { ClasificacionServicioContext } from '../contexts/ClasificacionServicioContext'
-const ProformaForm = (props) => {
+import CargaItemsProformaList from './CargaItemsProformaList'
+const CargaProformaForm = (props) => {
   const initialProformaForm = {
     id: null,
 
@@ -397,7 +398,7 @@ const ProformaForm = (props) => {
       >
         <div className="p-grid p-fluid">
           <div className="formgrid grid">
-            <div className="field col-12 md:col-6  mt-3">
+            <div className="field col-12 md:col-3  mt-3">
               <span className="p-float-label">
                 <Dropdown
                   inputId="dropdown"
@@ -418,7 +419,7 @@ const ProformaForm = (props) => {
                 <label htmlFor="dropdown">Seleccione Dominio*</label>
               </span>
             </div>
-            <div className="field col-12 md:col-6  mt-3">
+            <div className="field col-12 md:col-3  mt-3">
               <span className="p-float-label">
                 <Dropdown
                   inputId="dropdown"
@@ -439,7 +440,7 @@ const ProformaForm = (props) => {
                 <label htmlFor="dropdown">Seleccione Division*</label>
               </span>
             </div>
-            <div className="field col-12 md:col-6  mt-3">
+            <div className="field col-12 md:col-3  mt-3">
               <span className="p-float-label">
                 <Dropdown
                   inputId="dropdown"
@@ -460,7 +461,7 @@ const ProformaForm = (props) => {
                 <label htmlFor="dropdown">Seleccione Dependencia*</label>
               </span>
             </div>
-            <div className="field col-12 md:col-6  mt-3">
+            <div className="field col-12 md:col-3  mt-3">
               <span className="p-float-label">
                 <Dropdown
                   inputId="dropdown"
@@ -483,7 +484,7 @@ const ProformaForm = (props) => {
                 <label htmlFor="dropdown">Seleccione SubDependencia*</label>
               </span>
             </div>
-            <div className="field col-12 md:col-6  mt-3">
+            <div className="field col-12 md:col-3  mt-3">
               <span className="p-float-label">
                 <Dropdown
                   inputId="dropdown"
@@ -504,7 +505,7 @@ const ProformaForm = (props) => {
                 <label htmlFor="dropdown">Seleccione Proveedor*</label>
               </span>
             </div>
-            <div className="field col-12 md:col-6  mt-3">
+            <div className="field col-12 md:col-3  mt-3">
               <span className="p-float-label">
                 <Dropdown
                   inputId="dropdown"
@@ -527,7 +528,7 @@ const ProformaForm = (props) => {
                 <label htmlFor="dropdown">Seleccione ActividadAsociada*</label>
               </span>
             </div>
-            <div className="field col-12 md:col-6  mt-3">
+            <div className="field col-12 md:col-3  mt-3">
               <span className="p-float-label">
                 <Dropdown
                   inputId="dropdown"
@@ -552,7 +553,7 @@ const ProformaForm = (props) => {
                 </label>
               </span>
             </div>
-            <div className="field col-12 md:col-6  mt-3">
+            <div className="field col-12 md:col-3  mt-3">
               <span className="p-float-label">
                 <Dropdown
                   inputId="dropdown"
@@ -575,7 +576,7 @@ const ProformaForm = (props) => {
                 <label htmlFor="dropdown">Seleccione Uso de fondo*</label>
               </span>
             </div>
-            <div className="field col-6 p-col-2 mt-3">
+            <div className="field col-3 p-col-2 mt-3">
               <span className="p-float-label ">
                 <InputText
                   value={proformaData.numeroControlProforma}
@@ -596,31 +597,7 @@ const ProformaForm = (props) => {
                 <label htmlFor="numeroControlProforma">Numero Control</label>
               </span>
             </div>
-            <div className="field col-6 p-col-2 mt-3">
-              <span className="p-float-label ">
-                <InputNumber
-                  inputId="cantidadDataPresupuesto"
-                  value={proformaData.totalProforma}
-                  onValueChange={(e) =>
-                    updateField(e.target.value, 'totalProforma')
-                  }
-                  minFractionDigits={2}
-                  maxFractionDigits={5}
-                  className={classNames({
-                    'p-invalid': submitted && !proformaData.totalProforma
-                  })}
-                />
-
-                {submitted && !proformaData.totalProforma && (
-                  <small className="p-invalid">
-                    Total Proforma es requerido.
-                  </small>
-                )}
-                <label htmlFor="totalProforma">Total Proforma</label>
-              </span>
-            </div>
-
-            <div className="field col-12 md:col-6 mt-3">
+            <div className="field col-12 md:col-3 mt-3">
               <span className="p-float-label ">
                 <Calendar
                   // className="p-datepicker-today"
@@ -647,27 +624,59 @@ const ProformaForm = (props) => {
                 )}
                 <label>Fecha Control </label>
               </span>
+            </div>{' '}
+            <div className="field col-3 p-col-2 mt-3">
+              <span className="p-float-label ">
+                <InputText
+                  value={proformaData.codigoProforma}
+                  onChange={(e) =>
+                    updateField(e.target.value, 'codigoProforma')
+                  }
+                  className={classNames({
+                    'p-invalid': submitted && !proformaData.codigoProforma
+                  })}
+                />
+
+                {submitted && !proformaData.codigoProforma && (
+                  <small className="p-invalid">
+                    Codigo Proforma es requerido.
+                  </small>
+                )}
+                <label htmlFor="codigoProforma">Codigo Proforma Control</label>
+              </span>
+            </div>
+            <div className="field col-12 p-col-2 mt-3">
+              <CargaItemsProformaList />
+            </div>
+            <div className="field col-3 p-col-2 mt-3">
+              <span className="p-float-label ">
+                <InputNumber
+                  inputId="cantidadDataPresupuesto"
+                  value={proformaData.totalProforma}
+                  onValueChange={(e) =>
+                    updateField(e.target.value, 'totalProforma')
+                  }
+                  minFractionDigits={2}
+                  maxFractionDigits={5}
+                  className={classNames({
+                    'p-invalid': submitted && !proformaData.totalProforma
+                  })}
+                />
+
+                {submitted && !proformaData.totalProforma && (
+                  <small className="p-invalid">
+                    Total Proforma es requerido.
+                  </small>
+                )}
+                <label htmlFor="totalProforma">Total Proforma</label>
+              </span>
             </div>
           </div>
         </div>
+
         <div className="p-grid p-fluid">
           <br />
-          <div className="p-float-label">
-            <InputText
-              value={proformaData.codigoProforma}
-              onChange={(e) => updateField(e.target.value, 'codigoProforma')}
-            />
-            <label>codigoProforma:</label>
-          </div>
-          <br />
-          <div className="p-float-label">
-            <InputText
-              value={proformaData.nombreProforma}
-              onChange={(e) => updateField(e.target.value, 'nombreProforma')}
-            />
-            <label>Nombre del Proforma:</label>
-          </div>
-          <br />
+
           <div className="p-float-label">
             <InputText
               value={proformaData.descripcionProforma}
@@ -699,4 +708,4 @@ const ProformaForm = (props) => {
   )
 }
 
-export default ProformaForm
+export default CargaProformaForm

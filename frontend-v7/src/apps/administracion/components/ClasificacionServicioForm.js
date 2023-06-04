@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-expressions */
 /* eslint-disable react/prop-types */
 import React, { useContext, useState, useEffect, useRef } from 'react'
 import { ClasificacionServicioContext } from '../contexts/ClasificacionServicioContext'
@@ -7,7 +8,10 @@ import { InputText } from 'primereact/inputtext'
 import { Toast } from 'primereact/toast'
 import { Dropdown } from 'primereact/dropdown'
 import { addLocale } from 'primereact/api'
+import { classNames } from 'primereact/utils'
+
 import moment from 'moment'
+import { ActividadAsociadaContext } from '../contexts/ActividadAsociadaContext'
 
 const ClasificacionServicioForm = (props) => {
   const initialClasificacionServicioForm = {
@@ -70,6 +74,7 @@ const ClasificacionServicioForm = (props) => {
     editClasificacionServicio,
     updateClasificacionServicio
   } = useContext(ClasificacionServicioContext)
+  const { actividadAsociadas } = useContext(ActividadAsociadaContext)
 
   const { isVisible, setIsVisible } = props
   const [selectedClasificacionServicio, setSelectedClasificacionServicio] =
@@ -77,6 +82,10 @@ const ClasificacionServicioForm = (props) => {
   const [clasificacionServicioData, setClasificacionServicioData] = useState(
     initialClasificacionServicioForm
   )
+  const [selectedActividadAsociada, setSelectedActividadAsociada] =
+    useState(null)
+  const [submitted, setSubmitted] = useState(false)
+
   const estadoClasificacionServicio = [
     { estatusClasificacionServicio: 'OPERATIVO' },
     { estatusClasificacionServicio: 'INOPERATIVO' }
@@ -93,14 +102,41 @@ const ClasificacionServicioForm = (props) => {
 
   useEffect(() => {
     if (editClasificacionServicio) {
-      setClasificacionServicioData(editClasificacionServicio)
+      setClasificacionServicioData({
+        ...editClasificacionServicio,
+        actividadAsociadaId: editClasificacionServicio.actividadAsociadaId?.id
+      })
       setSelectedClasificacionServicio({
         estatusClasificacionServicio:
           editClasificacionServicio.estatusClasificacionServicio
       })
+      const actividadAsociadaSelecEdit =
+        editClasificacionServicio.actividadAsociadaId &&
+        actividadAsociadas.find(
+          (p) => p.id === editClasificacionServicio.actividadAsociadaId.id
+        )
+      setSelectedActividadAsociada(actividadAsociadaSelecEdit)
     }
   }, [editClasificacionServicio])
-
+  const onActividadAsociada = (e) => {
+    e.value
+      ? (setSelectedActividadAsociada(e.value),
+        updateField(e.value.id, 'actividadAsociadaId'))
+      : (setSelectedActividadAsociada(null),
+        updateField(null, 'actividadAsociadaId'))
+    // if (e.value) {
+    //   const subProyectoFilter = subProyectos.filter(
+    //     (p) => p.proyectoId?.id === e.value.id
+    //   )
+    //   setSelectedProyecto(e.value)
+    //   setSubProyecto(subProyectoFilter)
+    // } else {
+    //   setSelectedProyecto(null)
+    //   setSubProyecto(null)
+    //   setSelectedSubProyecto(null)
+    //   setSelectedPresupuesto(null)
+    // }
+  }
   const updateField = (data, field) => {
     setClasificacionServicioData({
       ...clasificacionServicioData,
@@ -109,6 +145,7 @@ const ClasificacionServicioForm = (props) => {
   }
 
   const saveClasificacionServicio = () => {
+    setSubmitted(true)
     if (!editClasificacionServicio) {
       createClasificacionServicio(clasificacionServicioData)
     } else {
@@ -174,6 +211,29 @@ const ClasificacionServicioForm = (props) => {
         onHide={() => clearSelected()}
       >
         <div className="p-grid p-fluid">
+          <div className="field col-12 md:col-6  mt-3">
+            <span className="p-float-label">
+              <Dropdown
+                inputId="dropdown"
+                value={selectedActividadAsociada}
+                options={actividadAsociadas}
+                onChange={onActividadAsociada}
+                optionLabel="nombreActividadAsociada"
+                showClear
+                filter
+                filterBy="nombreActividadAsociada"
+                className={classNames({
+                  'p-invalid': submitted && !selectedActividadAsociada
+                })}
+              />
+              {submitted && !selectedActividadAsociada && (
+                <small className="p-invalid">
+                  ActividadAsociada es requerido.
+                </small>
+              )}
+              <label htmlFor="dropdown">Seleccione ActividadAsociada*</label>
+            </span>
+          </div>
           <br />
           <div className="p-float-label">
             <InputText

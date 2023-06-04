@@ -172,7 +172,10 @@ const DependenciaList = () => {
         breakpoint="960px"
       >
         <Column body={actionBodyTemplate}></Column>
+        <Column field="divisionId.nombreDivision" header="divisionId" />
+        <Column field="id" header="id" />
         <Column field="codigoDependencia" header="codigoDependencia" />
+
         <Column field="nombreDependencia" header="nombreDependencia" />
         <Column
           field="descripcionDependencia"

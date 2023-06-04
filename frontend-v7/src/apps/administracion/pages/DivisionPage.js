@@ -1,5 +1,6 @@
 import DivisionList from '../components/DivisionList'
 import DivisionContextProvider from '../contexts/DivisionContext'
+import DominioContextProvider from '../contexts/DominioContext'
 
 export const DivisionPage = () => {
   return (
@@ -7,9 +8,11 @@ export const DivisionPage = () => {
       <div className="col-12 ">
         <div className="card">
           <h5>Division CRUD</h5>
-          <DivisionContextProvider>
-            <DivisionList />
-          </DivisionContextProvider>
+          <DominioContextProvider>
+            <DivisionContextProvider>
+              <DivisionList />
+            </DivisionContextProvider>
+          </DominioContextProvider>
         </div>
       </div>
     </div>

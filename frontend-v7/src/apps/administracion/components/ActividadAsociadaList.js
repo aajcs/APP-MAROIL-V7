@@ -177,6 +177,8 @@ const ActividadAsociadaList = () => {
         breakpoint="960px"
       >
         <Column body={actionBodyTemplate}></Column>
+        <Column field="id" header="id" />
+
         <Column
           field="codigoActividadAsociada"
           header="codigoActividadAsociada"

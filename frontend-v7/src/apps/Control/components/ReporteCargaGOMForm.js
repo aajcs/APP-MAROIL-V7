@@ -105,6 +105,15 @@ const ReporteCargaGOMForm = (props) => {
   const [isPuestoTerminalVisible, setPuestoTerminalIsVisible] = useState(false)
   const [selectedPuestoTerminal, setSelectedPuestoTerminal] = useState(null)
 
+  function secondsToString(diff) {
+    const numdays = Math.floor(diff / 86400)
+    const numhours = Math.floor((diff % 86400) / 3600)
+    const numminutes = Math.floor(((diff % 86400) % 3600) / 60)
+    // const numseconds = ((diff % 86400) % 3600) % 60
+
+    return numdays + ' dias ' + numhours + ' horas ' + numminutes + ' minutos '
+  }
+
   const onPuestoTerminal = (e) => {
     setSelectedPuestoTerminal(e.value)
     updateField(e.value.name, 'puestoTerminal')
@@ -133,20 +142,65 @@ const ReporteCargaGOMForm = (props) => {
       ubicacionBuque,
       comentariosGOM
     } = reporteCargaGOMData
+    const fecha1 = moment(barcoID.fechaInicioCarga)
+    const fecha2 = moment(
+      barcoID.fechaFinalCarga ? barcoID.fechaFinalCarga : moment()
+    )
+    // const fecha3 = moment(fecha1 - fecha2).format('HH:mm')
 
+    // Diff in hours
+    const diff = fecha2.diff(fecha1, 'seconds')
     const text = `Buque ${
       barcoID.nombreBarco
-    } terminal ${ubicacionBuque}, Toneladas Cargadas ${new Intl.NumberFormat().format(
+    } terminal ${ubicacionBuque}, Toneladas Nominadas ${new Intl.NumberFormat().format(
+      barcoID.toneladasNominadas
+    )} tm, Toneladas Cargadas ${new Intl.NumberFormat().format(
       toneladasCargadasGOM
-    )} Tm, Tasa De Carga ${new Intl.NumberFormat().format(
-      tasaDeCargaGOM
-    )} TM/hr, observacion ${comentariosGOM}`
+    )} Tm, Toneladas por cargar ${new Intl.NumberFormat().format(
+      barcoID.toneladasNominadas - toneladasCargadasGOM
+    )} TM/hr, observacion ${comentariosGOM},  Tiempo de Carga ${secondsToString(
+      diff
+    )}`
     const toValor = '584242422547'
     const nameValor = 'embarcacion'
     const textValor = 'Alejandro Perez'
     const textbody = text
     createWhatsappSolicitudFondo(toValor, nameValor, textValor, textbody)
-    console.log(textbody)
+    console.log('Alejandro Perez')
+  }
+  const enviarWhatssapSolicitudFondoMarcano = async () => {
+    const {
+      barcoID,
+      tasaDeCargaGOM,
+      toneladasCargadasGOM,
+      ubicacionBuque,
+      comentariosGOM
+    } = reporteCargaGOMData
+    const fecha1 = moment(barcoID.fechaInicioCarga)
+    const fecha2 = moment(
+      barcoID.fechaFinalCarga ? barcoID.fechaFinalCarga : moment()
+    )
+    // const fecha3 = moment(fecha1 - fecha2).format('HH:mm')
+
+    // Diff in hours
+    const diff = fecha2.diff(fecha1, 'seconds')
+    const text = `Buque ${
+      barcoID.nombreBarco
+    } terminal ${ubicacionBuque}, Toneladas Nominadas ${new Intl.NumberFormat().format(
+      barcoID.toneladasNominadas
+    )} tm, Toneladas Cargadas ${new Intl.NumberFormat().format(
+      toneladasCargadasGOM
+    )} Tm, Toneladas por cargar ${new Intl.NumberFormat().format(
+      barcoID.toneladasNominadas - toneladasCargadasGOM
+    )} TM/hr, observacion ${comentariosGOM},  Tiempo de Carga ${secondsToString(
+      diff
+    )}`
+    const toValor = '584126362918'
+    const nameValor = 'embarcacion'
+    const textValor = 'Jose Marcano'
+    const textbody = text
+    createWhatsappSolicitudFondo(toValor, nameValor, textValor, textbody)
+    console.log('Jose Marcano')
   }
   const reporteNuevoUltimo = (p) => {
     setSelectedubicacionBuqueReporteCargaGOM({
@@ -232,6 +286,7 @@ const ReporteCargaGOMForm = (props) => {
     setIsVisible(false)
     setPuestoTerminalIsVisible(false)
     enviarWhatssapSolicitudFondo()
+    enviarWhatssapSolicitudFondoMarcano()
   }
 
   const dialogFooter = (

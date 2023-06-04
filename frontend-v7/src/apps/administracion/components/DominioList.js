@@ -172,6 +172,7 @@ const DominioList = () => {
         breakpoint="960px"
       >
         <Column body={actionBodyTemplate}></Column>
+        <Column field="id" header="id" />
         <Column field="codigoDominio" header="codigoDominio" />
         <Column field="nombreDominio" header="nombreDominio" />
         <Column field="descripcionDominio" header="descripcionDominio" />

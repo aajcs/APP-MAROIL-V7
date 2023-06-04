@@ -9,7 +9,8 @@ divisionCtrl.createDivision = async (req, res) => {
     descripcionDivision,
     estatusDivision,
     creadoDivision,
-    modificadoDivision
+    modificadoDivision,
+    dominioId
   } = req.body
   try {
     const newDivision = new Division({
@@ -18,7 +19,8 @@ divisionCtrl.createDivision = async (req, res) => {
       descripcionDivision,
       estatusDivision,
       creadoDivision,
-      modificadoDivision
+      modificadoDivision,
+      dominioId
     })
     const saveDivision1 = await newDivision.save()
 
@@ -99,7 +101,8 @@ divisionCtrl.updateDivision = async (req, res) => {
     descripcionDivision,
     estatusDivision,
     creadoDivision,
-    modificadoDivision
+    modificadoDivision,
+    dominioId
   } = req.body
 
   try {
@@ -111,7 +114,8 @@ divisionCtrl.updateDivision = async (req, res) => {
         descripcionDivision,
         estatusDivision,
         creadoDivision,
-        modificadoDivision
+        modificadoDivision,
+        dominioId
       },
       { new: true }
     ).populate('dominioId', {

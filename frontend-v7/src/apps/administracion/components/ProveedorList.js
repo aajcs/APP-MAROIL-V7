@@ -169,6 +169,7 @@ const ProveedorList = () => {
         breakpoint="960px"
       >
         <Column body={actionBodyTemplate}></Column>
+        <Column field="id" header="id" />
         <Column field="codigoProveedor" header="codigoProveedor" />
         <Column field="nombreProveedor" header="nombreProveedor" />
         <Column field="rifProveedor" header="rifProveedor" />

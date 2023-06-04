@@ -173,6 +173,7 @@ const ProformaList = () => {
       >
         <Column body={actionBodyTemplate}></Column>
 
+        <Column field="id" header="id" />
         <Column field="codigoProforma" header="codigoProforma" />
         <Column field="proveedorId.nombreProveedor" header="proveedorId" />
         <Column field="numeroControlProforma" header="numeroControlProforma" />

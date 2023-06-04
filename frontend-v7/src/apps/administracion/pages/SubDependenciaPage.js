@@ -1,4 +1,5 @@
 import SubDependenciaList from '../components/SubDependenciaList'
+import DependenciaContextProvider from '../contexts/DependenciaContext'
 import SubDependenciaContextProvider from '../contexts/SubDependenciaContext'
 
 export const SubDependenciaPage = () => {
@@ -7,9 +8,11 @@ export const SubDependenciaPage = () => {
       <div className="col-12 ">
         <div className="card">
           <h5>SubDependencia CRUD</h5>
-          <SubDependenciaContextProvider>
-            <SubDependenciaList />
-          </SubDependenciaContextProvider>
+          <DependenciaContextProvider>
+            <SubDependenciaContextProvider>
+              <SubDependenciaList />
+            </SubDependenciaContextProvider>
+          </DependenciaContextProvider>
         </div>
       </div>
     </div>

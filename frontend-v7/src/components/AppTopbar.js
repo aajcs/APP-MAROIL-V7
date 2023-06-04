@@ -8,7 +8,7 @@ import AuthUse from '../auth/AuthUse'
 import { ConfigContext } from '../contexts/ConfigContext'
 import { Sidebar } from 'primereact/sidebar'
 import { Button } from 'primereact/button'
-import firmamaroilsinletra from '../assets/firmamaroilsinletra.png'
+import logo2023Plateado from '../assets/logo2023Plateado.png'
 
 export const AppTopbar = (props) => {
   const [visibleRight, setVisibleRight] = useState(false)
@@ -73,7 +73,7 @@ export const AppTopbar = (props) => {
   return (
     <div className="layout-topbar">
       <Link to="/" className="layout-topbar-logo">
-        <img src={firmamaroilsinletra} alt="logo" />
+        <img src={logo2023Plateado} alt="logo" />
 
         <span>Maroil Trading System</span>
       </Link>

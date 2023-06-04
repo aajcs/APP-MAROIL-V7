@@ -10,14 +10,6 @@ const itemsProformaSchema = new Schema(
       type: String
     },
 
-    fechaInicioItemsProforma: {
-      type: Date,
-      default: moment()
-    },
-    fechaFinItemsProforma: {
-      type: Date,
-      default: moment()
-    },
     unidadItemsProforma: {
       type: String
     },
@@ -30,12 +22,7 @@ const itemsProformaSchema = new Schema(
     precioTotalItemsProforma: {
       type: Number
     },
-    estatus1ItemsProforma: {
-      type: String
-    },
-    estatus2ItemsProforma: {
-      type: String
-    },
+
     creadoItemsProforma: {
       type: Date,
       default: moment()

@@ -11,11 +11,12 @@ import moment from 'moment'
 
 import DivisionForm from './DivisionForm'
 import AuthUse from '../../../auth/AuthUse'
+
 const DivisionList = () => {
   const auth = AuthUse()
   const { divisions, findDivision, deleteDivision, loading } =
     useContext(DivisionContext)
-
+  console.log(divisions)
   const [division, setDivision] = useState(divisions)
   const [deleteDivisionDialog, setDeleteDivisionDialog] = useState(false)
   const [globalFilter, setGlobalFilter] = useState(null)
@@ -172,6 +173,9 @@ const DivisionList = () => {
         breakpoint="960px"
       >
         <Column body={actionBodyTemplate}></Column>
+        <Column field="dominioId.nombreDominio" header="dominioId" />
+        <Column field="id" header="id" />
+
         <Column field="codigoDivision" header="codigoDivision" />
         <Column field="nombreDivision" header="nombreDivision" />
         <Column field="descripcionDivision" header="descripcionDivision" />

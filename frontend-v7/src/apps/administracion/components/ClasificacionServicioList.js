@@ -182,6 +182,12 @@ const ClasificacionServicioList = () => {
       >
         <Column body={actionBodyTemplate}></Column>
         <Column
+          field="actividadAsociadaId.nombreActividadAsociada"
+          header="actividadAsociadaId"
+        />
+        <Column field="id" header="id" />
+
+        <Column
           field="codigoClasificacionServicio"
           header="codigoClasificacionServicio"
         />

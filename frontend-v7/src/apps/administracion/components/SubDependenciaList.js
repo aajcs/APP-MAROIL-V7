@@ -173,7 +173,12 @@ const SubDependenciaList = () => {
         breakpoint="960px"
       >
         <Column body={actionBodyTemplate}></Column>
-        <Column field="codigoSubDependencia" header="codigoSubDependencia" />
+        <Column
+          field="dependenciaId.nombreDependencia"
+          header="dependenciaId"
+        />
+
+        <Column field="id" header="id" />
         <Column field="nombreSubDependencia" header="nombreSubDependencia" />
         <Column
           field="descripcionSubDependencia"

@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-expressions */
 /* eslint-disable react/prop-types */
 import React, { useContext, useState, useEffect, useRef } from 'react'
 import { DependenciaContext } from '../contexts/DependenciaContext'
@@ -7,7 +8,10 @@ import { InputText } from 'primereact/inputtext'
 import { Toast } from 'primereact/toast'
 import { Dropdown } from 'primereact/dropdown'
 import { addLocale } from 'primereact/api'
+import { classNames } from 'primereact/utils'
+
 import moment from 'moment'
+import { DivisionContext } from '../contexts/DivisionContext'
 
 const DependenciaForm = (props) => {
   const initialDependenciaForm = {
@@ -67,10 +71,14 @@ const DependenciaForm = (props) => {
   })
   const { createDependencia, editDependencia, updateDependencia } =
     useContext(DependenciaContext)
+  const { divisions } = useContext(DivisionContext)
 
   const { isVisible, setIsVisible } = props
   const [selectedDependencia, setSelectedDependencia] = useState(null)
+  const [selectedDivision, setSelectedDivision] = useState(null)
   const [dependenciaData, setDependenciaData] = useState(initialDependenciaForm)
+  const [submitted, setSubmitted] = useState(false)
+
   const estadoDependencia = [
     { estatusDependencia: 'OPERATIVO' },
     { estatusDependencia: 'INOPERATIVO' }
@@ -79,15 +87,38 @@ const DependenciaForm = (props) => {
     setSelectedDependencia(e.value)
     updateField(e.value.estatusDependencia, 'estatusDependencia')
   }
-
+  const onDivision = (e) => {
+    e.value
+      ? (setSelectedDivision(e.value), updateField(e.value.id, 'divisionId'))
+      : (setSelectedDivision(null), updateField(null, 'divisionId'))
+    // if (e.value) {
+    //   const subProyectoFilter = subProyectos.filter(
+    //     (p) => p.proyectoId?.id === e.value.id
+    //   )
+    //   setSelectedProyecto(e.value)
+    //   setSubProyecto(subProyectoFilter)
+    // } else {
+    //   setSelectedProyecto(null)
+    //   setSubProyecto(null)
+    //   setSelectedSubProyecto(null)
+    //   setSelectedPresupuesto(null)
+    // }
+  }
   const toast = useRef(null)
 
   useEffect(() => {
     if (editDependencia) {
-      setDependenciaData(editDependencia)
+      setDependenciaData({
+        ...editDependencia,
+        divisionId: editDependencia.divisionId?.id
+      })
       setSelectedDependencia({
         estatusDependencia: editDependencia.estatusDependencia
       })
+      const divisionSelecEdit =
+        editDependencia.divisionId &&
+        divisions.find((p) => p.id === editDependencia.divisionId.id)
+      setSelectedDivision(divisionSelecEdit)
     }
   }, [editDependencia])
 
@@ -99,6 +130,7 @@ const DependenciaForm = (props) => {
   }
 
   const saveDependencia = () => {
+    setSubmitted(true)
     if (!editDependencia) {
       createDependencia(dependenciaData)
     } else {
@@ -107,9 +139,7 @@ const DependenciaForm = (props) => {
         DependenciaModificado: moment()
       })
     }
-    setDependenciaData(initialDependenciaForm)
-    setIsVisible(false)
-    setSelectedDependencia('')
+    clearSelected()
   }
 
   const dialogFooter = (
@@ -127,6 +157,7 @@ const DependenciaForm = (props) => {
     setIsVisible(false)
     setDependenciaData(initialDependenciaForm)
     setSelectedDependencia('')
+    setSelectedDivision(null)
   }
   const selectedestatusDependenciaTemplate = (option, props) => {
     if (option) {
@@ -147,6 +178,25 @@ const DependenciaForm = (props) => {
       </div>
     )
   }
+  const selectedDivisionTemplate = (option, props) => {
+    if (option) {
+      return (
+        <div className="country-item country-item-value">
+          {option.codigoDivision}-{option.nombreDivision}
+        </div>
+      )
+    }
+
+    return <span>{props.placeholder}</span>
+  }
+
+  const divisionOptionTemplate = (option) => {
+    return (
+      <div className="country-item">
+        {option.codigoDivision}-{option.nombreDivision}
+      </div>
+    )
+  }
 
   return (
     <div className="dialog-demo">
@@ -161,6 +211,29 @@ const DependenciaForm = (props) => {
       >
         <div className="p-grid p-fluid">
           <br />
+          <div className="field col-12 md:col-12  mt-3">
+            <span className="p-float-label">
+              <Dropdown
+                inputId="dropdown"
+                value={selectedDivision}
+                options={divisions}
+                onChange={onDivision}
+                optionLabel="nombreDivision"
+                showClear
+                filter
+                filterBy="nombreDivision"
+                valueTemplate={selectedDivisionTemplate}
+                itemTemplate={divisionOptionTemplate}
+                className={classNames({
+                  'p-invalid': submitted && !selectedDivision
+                })}
+              />
+              {submitted && !selectedDivision && (
+                <small className="p-invalid">Division es requerido.</small>
+              )}
+              <label htmlFor="dropdown">Seleccione Division*</label>
+            </span>
+          </div>
           <div className="p-float-label">
             <InputText
               value={dependenciaData.codigoDependencia}

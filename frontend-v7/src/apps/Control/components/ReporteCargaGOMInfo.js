@@ -1,12 +1,16 @@
+/* eslint-disable indent */
 /* eslint-disable multiline-ternary */
 import { useContext } from 'react'
 import { BarcoContext } from '../contexts/BarcoContext'
 import ReporteCargaGOMInfoCard from './ReporteCargaGOMInfoCard'
 import { Skeleton } from 'primereact/skeleton'
-
+import logo2023Plateado from '../../../assets/logo2023Plateado.png'
 function ReporteCargaGOMInfo() {
   const { barcos } = useContext(BarcoContext)
-  // console.table(barcos)
+  const barcoFill = barcos.filter(
+    (barcos) => barcos.estatusBarco === 'OPERATIVO'
+  )
+  console.log(barcoFill)
   return (
     <>
       {barcos.length === 0 ? (
@@ -51,6 +55,13 @@ function ReporteCargaGOMInfo() {
               <ReporteCargaGOMInfoCard key={barcos.id} barcos={barcos} />
             )
         )
+      )}
+      {barcoFill.length === 0 && (
+        <div className="container min-vh-100 d-flex justify-content-center align-items-center">
+          <div className="animate__animated animate__bounceInLeft animate__slow animate__flip animate__repeat-3">
+            <img src={logo2023Plateado} height="300px" alt="logo" />
+          </div>
+        </div>
       )}
     </>
   )

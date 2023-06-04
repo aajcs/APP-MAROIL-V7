@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-expressions */
 /* eslint-disable react/prop-types */
 import React, { useContext, useState, useEffect, useRef } from 'react'
 import { DivisionContext } from '../contexts/DivisionContext'
@@ -8,6 +9,8 @@ import { Toast } from 'primereact/toast'
 import { Dropdown } from 'primereact/dropdown'
 import { addLocale } from 'primereact/api'
 import moment from 'moment'
+import { DominioContext } from '../contexts/DominioContext'
+import { classNames } from 'primereact/utils'
 
 const DivisionForm = (props) => {
   const initialDivisionForm = {
@@ -67,10 +70,14 @@ const DivisionForm = (props) => {
   })
   const { createDivision, editDivision, updateDivision } =
     useContext(DivisionContext)
+  const { dominios } = useContext(DominioContext)
 
   const { isVisible, setIsVisible } = props
   const [selectedDivision, setSelectedDivision] = useState(null)
+  const [selectedDominio, setSelectedDominio] = useState(null)
   const [divisionData, setDivisionData] = useState(initialDivisionForm)
+  const [submitted, setSubmitted] = useState(false)
+
   const estadoDivision = [
     { estatusDivision: 'OPERATIVO' },
     { estatusDivision: 'INOPERATIVO' }
@@ -79,15 +86,38 @@ const DivisionForm = (props) => {
     setSelectedDivision(e.value)
     updateField(e.value.estatusDivision, 'estatusDivision')
   }
-
+  const onDominio = (e) => {
+    e.value
+      ? (setSelectedDominio(e.value), updateField(e.value.id, 'dominioId'))
+      : (setSelectedDominio(null), updateField(null, 'dominioId'))
+    // if (e.value) {
+    //   const subProyectoFilter = subProyectos.filter(
+    //     (p) => p.proyectoId?.id === e.value.id
+    //   )
+    //   setSelectedProyecto(e.value)
+    //   setSubProyecto(subProyectoFilter)
+    // } else {
+    //   setSelectedProyecto(null)
+    //   setSubProyecto(null)
+    //   setSelectedSubProyecto(null)
+    //   setSelectedPresupuesto(null)
+    // }
+  }
   const toast = useRef(null)
 
   useEffect(() => {
     if (editDivision) {
-      setDivisionData(editDivision)
+      setDivisionData({
+        ...editDivision,
+        dominioId: editDivision.dominioId?.id
+      })
       setSelectedDivision({
         estatusDivision: editDivision.estatusDivision
       })
+      const dominioSelecEdit =
+        editDivision.dominioId &&
+        dominios.find((p) => p.id === editDivision.dominioId.id)
+      setSelectedDominio(dominioSelecEdit)
     }
   }, [editDivision])
 
@@ -99,6 +129,7 @@ const DivisionForm = (props) => {
   }
 
   const saveDivision = () => {
+    setSubmitted(true)
     if (!editDivision) {
       createDivision(divisionData)
     } else {
@@ -107,9 +138,7 @@ const DivisionForm = (props) => {
         DivisionModificado: moment()
       })
     }
-    setDivisionData(initialDivisionForm)
-    setIsVisible(false)
-    setSelectedDivision('')
+    clearSelected()
   }
 
   const dialogFooter = (
@@ -127,6 +156,7 @@ const DivisionForm = (props) => {
     setIsVisible(false)
     setDivisionData(initialDivisionForm)
     setSelectedDivision('')
+    setSelectedDominio(null)
   }
   const selectedestatusDivisionTemplate = (option, props) => {
     if (option) {
@@ -161,6 +191,27 @@ const DivisionForm = (props) => {
       >
         <div className="p-grid p-fluid">
           <br />
+          <div className="field col-12 md:col-6  mt-3">
+            <span className="p-float-label">
+              <Dropdown
+                inputId="dropdown"
+                value={selectedDominio}
+                options={dominios}
+                onChange={onDominio}
+                optionLabel="nombreDominio"
+                showClear
+                filter
+                filterBy="nombreDominio"
+                className={classNames({
+                  'p-invalid': submitted && !selectedDominio
+                })}
+              />
+              {submitted && !selectedDominio && (
+                <small className="p-invalid">Dominio es requerido.</small>
+              )}
+              <label htmlFor="dropdown">Seleccione Dominio*</label>
+            </span>
+          </div>
           <div className="p-float-label">
             <InputText
               value={divisionData.codigoDivision}

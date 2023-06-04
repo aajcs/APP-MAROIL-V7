@@ -9,7 +9,8 @@ clasificacionServicioCtrl.createClasificacionServicio = async (req, res) => {
     descripcionClasificacionServicio,
     estatusClasificacionServicio,
     creadoClasificacionServicio,
-    modificadoClasificacionServicio
+    modificadoClasificacionServicio,
+    actividadAsociadaId
   } = req.body
   try {
     const newClasificacionServicio = new ClasificacionServicio({
@@ -18,7 +19,8 @@ clasificacionServicioCtrl.createClasificacionServicio = async (req, res) => {
       descripcionClasificacionServicio,
       estatusClasificacionServicio,
       creadoClasificacionServicio,
-      modificadoClasificacionServicio
+      modificadoClasificacionServicio,
+      actividadAsociadaId
     })
     const saveClasificacionServicio1 = await newClasificacionServicio.save()
 
@@ -101,7 +103,8 @@ clasificacionServicioCtrl.updateClasificacionServicio = async (req, res) => {
     descripcionClasificacionServicio,
     estatusClasificacionServicio,
     creadoClasificacionServicio,
-    modificadoClasificacionServicio
+    modificadoClasificacionServicio,
+    actividadAsociadaId
   } = req.body
 
   try {
@@ -114,7 +117,8 @@ clasificacionServicioCtrl.updateClasificacionServicio = async (req, res) => {
           descripcionClasificacionServicio,
           estatusClasificacionServicio,
           creadoClasificacionServicio,
-          modificadoClasificacionServicio
+          modificadoClasificacionServicio,
+          actividadAsociadaId
         },
         { new: true }
       ).populate('actividadAsociadaId', {

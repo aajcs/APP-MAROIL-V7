@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-expressions */
 /* eslint-disable react/prop-types */
 import React, { useContext, useState, useEffect, useRef } from 'react'
 import { SubDependenciaContext } from '../contexts/SubDependenciaContext'
@@ -7,7 +8,10 @@ import { InputText } from 'primereact/inputtext'
 import { Toast } from 'primereact/toast'
 import { Dropdown } from 'primereact/dropdown'
 import { addLocale } from 'primereact/api'
+import { classNames } from 'primereact/utils'
+
 import moment from 'moment'
+import { DependenciaContext } from '../contexts/DependenciaContext'
 
 const SubDependenciaForm = (props) => {
   const initialSubDependenciaForm = {
@@ -67,12 +71,16 @@ const SubDependenciaForm = (props) => {
   })
   const { createSubDependencia, editSubDependencia, updateSubDependencia } =
     useContext(SubDependenciaContext)
+  const { dependencias } = useContext(DependenciaContext)
 
   const { isVisible, setIsVisible } = props
   const [selectedSubDependencia, setSelectedSubDependencia] = useState(null)
   const [subDependenciaData, setSubDependenciaData] = useState(
     initialSubDependenciaForm
   )
+  const [selectedDependencia, setSelectedDependencia] = useState(null)
+  const [submitted, setSubmitted] = useState(false)
+
   const estadoSubDependencia = [
     { estatusSubDependencia: 'OPERATIVO' },
     { estatusSubDependencia: 'INOPERATIVO' }
@@ -86,10 +94,17 @@ const SubDependenciaForm = (props) => {
 
   useEffect(() => {
     if (editSubDependencia) {
-      setSubDependenciaData(editSubDependencia)
+      setSubDependenciaData({
+        ...editSubDependencia,
+        dependenciaId: editSubDependencia.dependenciaId?.id
+      })
       setSelectedSubDependencia({
         estatusSubDependencia: editSubDependencia.estatusSubDependencia
       })
+      const dependenciaSelecEdit =
+        editSubDependencia.dependenciaId &&
+        dependencias.find((p) => p.id === editSubDependencia.dependenciaId.id)
+      setSelectedDependencia(dependenciaSelecEdit)
     }
   }, [editSubDependencia])
 
@@ -99,8 +114,26 @@ const SubDependenciaForm = (props) => {
       [field]: data
     })
   }
-
+  const onDependencia = (e) => {
+    e.value
+      ? (setSelectedDependencia(e.value),
+        updateField(e.value.id, 'dependenciaId'))
+      : (setSelectedDependencia(null), updateField(null, 'dependenciaId'))
+    // if (e.value) {
+    //   const subProyectoFilter = subProyectos.filter(
+    //     (p) => p.proyectoId?.id === e.value.id
+    //   )
+    //   setSelectedProyecto(e.value)
+    //   setSubProyecto(subProyectoFilter)
+    // } else {
+    //   setSelectedProyecto(null)
+    //   setSubProyecto(null)
+    //   setSelectedSubProyecto(null)
+    //   setSelectedPresupuesto(null)
+    // }
+  }
   const saveSubDependencia = () => {
+    setSubmitted(true)
     if (!editSubDependencia) {
       createSubDependencia(subDependenciaData)
     } else {
@@ -162,6 +195,27 @@ const SubDependenciaForm = (props) => {
         onHide={() => clearSelected()}
       >
         <div className="p-grid p-fluid">
+          <div className="field col-12 md:col-6  mt-3">
+            <span className="p-float-label">
+              <Dropdown
+                inputId="dropdown"
+                value={selectedDependencia}
+                options={dependencias}
+                onChange={onDependencia}
+                optionLabel="nombreDependencia"
+                showClear
+                filter
+                filterBy="nombreDependencia"
+                className={classNames({
+                  'p-invalid': submitted && !selectedDependencia
+                })}
+              />
+              {submitted && !selectedDependencia && (
+                <small className="p-invalid">Dependencia es requerido.</small>
+              )}
+              <label htmlFor="dropdown">Seleccione Dependencia*</label>
+            </span>
+          </div>
           <br />
           <div className="p-float-label">
             <InputText

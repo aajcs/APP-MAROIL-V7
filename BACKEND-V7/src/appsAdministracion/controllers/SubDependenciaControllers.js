@@ -9,7 +9,8 @@ subDependenciaCtrl.createSubDependencia = async (req, res) => {
     descripcionSubDependencia,
     estatusSubDependencia,
     creadoSubDependencia,
-    modificadoSubDependencia
+    modificadoSubDependencia,
+    dependenciaId
   } = req.body
   try {
     const newSubDependencia = new SubDependencia({
@@ -18,7 +19,8 @@ subDependenciaCtrl.createSubDependencia = async (req, res) => {
       descripcionSubDependencia,
       estatusSubDependencia,
       creadoSubDependencia,
-      modificadoSubDependencia
+      modificadoSubDependencia,
+      dependenciaId
     })
     const saveSubDependencia1 = await newSubDependencia.save()
 
@@ -101,7 +103,8 @@ subDependenciaCtrl.updateSubDependencia = async (req, res) => {
     descripcionSubDependencia,
     estatusSubDependencia,
     creadoSubDependencia,
-    modificadoSubDependencia
+    modificadoSubDependencia,
+    dependenciaId
   } = req.body
 
   try {
@@ -113,7 +116,8 @@ subDependenciaCtrl.updateSubDependencia = async (req, res) => {
         descripcionSubDependencia,
         estatusSubDependencia,
         creadoSubDependencia,
-        modificadoSubDependencia
+        modificadoSubDependencia,
+        dependenciaId
       },
       { new: true }
     ).populate('dependenciaId', {

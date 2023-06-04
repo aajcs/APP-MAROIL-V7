@@ -31,6 +31,13 @@ export const MenuAdministracion = () => {
             to: '/apps/administracion/cargaInformacion',
             permi: 'ADMIN',
             permi2: 'OPERADOR'
+          },
+          {
+            label: 'CARGA DE PROFORMA',
+            icon: 'pi pi-fw pi-server',
+            to: '/apps/administracion/cargaProforma',
+            permi: 'ADMIN',
+            permi2: 'OPERADOR'
           }
         ]
       },
