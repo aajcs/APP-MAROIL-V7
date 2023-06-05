@@ -142,9 +142,7 @@ const SubDependenciaForm = (props) => {
         SubDependenciaModificado: moment()
       })
     }
-    setSubDependenciaData(initialSubDependenciaForm)
-    setIsVisible(false)
-    setSelectedSubDependencia('')
+    clearSelected()
   }
 
   const dialogFooter = (
@@ -162,6 +160,7 @@ const SubDependenciaForm = (props) => {
     setIsVisible(false)
     setSubDependenciaData(initialSubDependenciaForm)
     setSelectedSubDependencia('')
+    setSelectedDependencia(null)
   }
   const selectedestatusSubDependenciaTemplate = (option, props) => {
     if (option) {
@@ -182,6 +181,25 @@ const SubDependenciaForm = (props) => {
       </div>
     )
   }
+  const selectedDependenciaTemplate = (option, props) => {
+    if (option) {
+      return (
+        <div className="country-item country-item-value">
+          {option.codigoDependencia}-{option.nombreDependencia}
+        </div>
+      )
+    }
+
+    return <span>{props.placeholder}</span>
+  }
+
+  const dependenciaOptionTemplate = (option) => {
+    return (
+      <div className="country-item">
+        {option.codigoDependencia}-{option.nombreDependencia}
+      </div>
+    )
+  }
 
   return (
     <div className="dialog-demo">
@@ -195,7 +213,7 @@ const SubDependenciaForm = (props) => {
         onHide={() => clearSelected()}
       >
         <div className="p-grid p-fluid">
-          <div className="field col-12 md:col-6  mt-3">
+          <div className="field col-12 md:col-12  mt-3">
             <span className="p-float-label">
               <Dropdown
                 inputId="dropdown"
@@ -206,6 +224,8 @@ const SubDependenciaForm = (props) => {
                 showClear
                 filter
                 filterBy="nombreDependencia"
+                valueTemplate={selectedDependenciaTemplate}
+                itemTemplate={dependenciaOptionTemplate}
                 className={classNames({
                   'p-invalid': submitted && !selectedDependencia
                 })}

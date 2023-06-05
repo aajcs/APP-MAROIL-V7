@@ -63,7 +63,37 @@ const proformaSchema = new Schema(
     estatusProforma: {
       type: String
     },
-
+    items: [
+      {
+        itemId: {
+          type: String
+        },
+        itemClasificacionServicio: {
+          type: String
+        },
+        itemClasificacion3erNivel: {
+          type: String
+        },
+        itemClasificacion4toNivel: {
+          type: String
+        },
+        itemDescripcion: {
+          type: String
+        },
+        itemUnidad: {
+          type: String
+        },
+        itemCantidad: {
+          type: Number
+        },
+        itemPrecioUnitario: {
+          type: Number
+        },
+        itemPrecioTotal: {
+          type: Number
+        }
+      }
+    ],
     userCreatorId: {
       type: Schema.Types.ObjectId,
       ref: 'User'

@@ -156,6 +156,18 @@ export const MenuAdministracion = () => {
           permi: 'SUPERADMIN'
         },
         {
+          label: 'CLASIFICACION3ERNIVEL',
+          icon: 'pi pi-fw pi-database',
+          to: '/apps/administracion/Clasificacion3erNivel',
+          permi: 'SUPERADMIN'
+        },
+        {
+          label: 'CLASIFICACION4TONIVEL',
+          icon: 'pi pi-fw pi-database',
+          to: '/apps/administracion/Clasificacion4toNivel',
+          permi: 'SUPERADMIN'
+        },
+        {
           label: 'PROFORMA',
           icon: 'pi pi-fw pi-database',
           to: '/apps/administracion/Proforma',

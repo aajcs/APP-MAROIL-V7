@@ -154,9 +154,7 @@ const ClasificacionServicioForm = (props) => {
         ClasificacionServicioModificado: moment()
       })
     }
-    setClasificacionServicioData(initialClasificacionServicioForm)
-    setIsVisible(false)
-    setSelectedClasificacionServicio('')
+    clearSelected()
   }
 
   const dialogFooter = (
@@ -178,6 +176,7 @@ const ClasificacionServicioForm = (props) => {
     setIsVisible(false)
     setClasificacionServicioData(initialClasificacionServicioForm)
     setSelectedClasificacionServicio('')
+    setSelectedActividadAsociada(null)
   }
   const selectedestatusClasificacionServicioTemplate = (option, props) => {
     if (option) {
@@ -211,7 +210,7 @@ const ClasificacionServicioForm = (props) => {
         onHide={() => clearSelected()}
       >
         <div className="p-grid p-fluid">
-          <div className="field col-12 md:col-6  mt-3">
+          <div className="field col-12 md:col-12  mt-3">
             <span className="p-float-label">
               <Dropdown
                 inputId="dropdown"

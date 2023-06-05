@@ -92,6 +92,14 @@ app.use(
   '/api/ClasificacionServicio',
   require('./appsAdministracion/routes/ClasificacionServicioRoutes')
 )
+app.use(
+  '/api/Clasificacion3erNivel',
+  require('./appsAdministracion/routes/Clasificacion3erNivelRoutes')
+)
+app.use(
+  '/api/Clasificacion4toNivel',
+  require('./appsAdministracion/routes/Clasificacion4toNivelRoutes')
+)
 app.use('/api/Proforma', require('./appsAdministracion/routes/ProformaRoutes'))
 app.use(
   '/api/ItemsProforma',

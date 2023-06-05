@@ -116,6 +116,19 @@ const CargaProformaForm = (props) => {
   const [selectedusoFondoProforma, setSelectedusoFondoProforma] = useState(null)
   const [submitted, setSubmitted] = useState(false)
   const [dateInicio, setDateInicio] = useState()
+  const [items, setItems] = useState([
+    {
+      itemId: '1',
+      itemClasificacionServicio: '2',
+      itemClasificacion3erNivel: '3',
+      itemClasificacion4toNivel: '4',
+      itemDescripcion: '5',
+      itemUnidad: '6',
+      itemCantidad: 7,
+      itemPrecioUnitario: 8,
+      itemPrecioTotal: 9
+    }
+  ])
   const estadoProforma = [
     { estatusProforma: 'OPERATIVO' },
     { estatusProforma: 'INOPERATIVO' }
@@ -325,7 +338,7 @@ const CargaProformaForm = (props) => {
     setSubmitted(true)
     if (!editProforma) {
       console.log(proformaData)
-      createProforma(proformaData)
+      createProforma({ ...proformaData, items: items })
     } else {
       updateProforma({
         ...proformaData,
@@ -398,6 +411,132 @@ const CargaProformaForm = (props) => {
       >
         <div className="p-grid p-fluid">
           <div className="formgrid grid">
+            <div className="field col-12 md:col-3  mt-3">
+              <span className="p-float-label">
+                <Dropdown
+                  inputId="dropdown"
+                  value={selectedProveedor}
+                  options={proveedors}
+                  onChange={onProveedor}
+                  optionLabel="nombreProveedor"
+                  showClear
+                  filter
+                  filterBy="nombreProveedor"
+                  className={classNames({
+                    'p-invalid': submitted && !selectedProveedor
+                  })}
+                />
+                {submitted && !selectedProveedor && (
+                  <small className="p-invalid">Proveedor es requerido.</small>
+                )}
+                <label htmlFor="dropdown">Seleccione Proveedor*</label>
+              </span>
+            </div>
+            <div className="field col-2 p-col-2 mt-3">
+              <span className="p-float-label ">
+                <InputText
+                  value={proformaData.numeroControlProforma}
+                  onChange={(e) =>
+                    updateField(e.target.value, 'numeroControlProforma')
+                  }
+                  className={classNames({
+                    'p-invalid':
+                      submitted && !proformaData.numeroControlProforma
+                  })}
+                />
+
+                {submitted && !proformaData.numeroControlProforma && (
+                  <small className="p-invalid">
+                    Numero Control es requerido.
+                  </small>
+                )}
+                <label htmlFor="numeroControlProforma">Numero Control</label>
+              </span>
+            </div>
+            <div className="field col-12 md:col-2 mt-3">
+              <span className="p-float-label ">
+                <Calendar
+                  // className="p-datepicker-today"
+                  id="time24"
+                  value={dateInicio !== null && dateInicio}
+                  onChange={(e) => {
+                    setDateInicio(e.value)
+                    updateField(e.target.value, 'fechaControlProforma')
+                  }}
+                  showTime
+                  locale="es"
+                  // hourFormat="12"
+                  showButtonBar
+                  className={classNames(
+                    {
+                      'p-invalid':
+                        submitted && !proformaData.fechaControlProforma
+                    },
+                    'p-datepicker-today'
+                  )}
+                />{' '}
+                {submitted && !proformaData.fechaControlProforma && (
+                  <small className="p-invalid">Fecha es requerido.</small>
+                )}
+                <label>Fecha Control </label>
+              </span>
+            </div>
+            <div className="field col-12 md:col-2 mt-3">
+              <span className="p-float-label ">
+                <Calendar
+                  // className="p-datepicker-today"
+                  id="time24"
+                  value={dateInicio !== null && dateInicio}
+                  onChange={(e) => {
+                    setDateInicio(e.value)
+                    updateField(e.target.value, 'fechaControlProforma')
+                  }}
+                  showTime
+                  locale="es"
+                  // hourFormat="12"
+                  showButtonBar
+                  className={classNames(
+                    {
+                      'p-invalid':
+                        submitted && !proformaData.fechaControlProforma
+                    },
+                    'p-datepicker-today'
+                  )}
+                />{' '}
+                {submitted && !proformaData.fechaControlProforma && (
+                  <small className="p-invalid">Fecha es requerido.</small>
+                )}
+                <label>Fecha Control </label>
+              </span>
+            </div>
+            <div className="field col-12 md:col-2 mt-3">
+              <span className="p-float-label ">
+                <Calendar
+                  // className="p-datepicker-today"
+                  id="time24"
+                  value={dateInicio !== null && dateInicio}
+                  onChange={(e) => {
+                    setDateInicio(e.value)
+                    updateField(e.target.value, 'fechaControlProforma')
+                  }}
+                  showTime
+                  locale="es"
+                  // hourFormat="12"
+                  showButtonBar
+                  className={classNames(
+                    {
+                      'p-invalid':
+                        submitted && !proformaData.fechaControlProforma
+                    },
+                    'p-datepicker-today'
+                  )}
+                />{' '}
+                {submitted && !proformaData.fechaControlProforma && (
+                  <small className="p-invalid">Fecha es requerido.</small>
+                )}
+                <label>Fecha Control </label>
+              </span>
+            </div>
             <div className="field col-12 md:col-3  mt-3">
               <span className="p-float-label">
                 <Dropdown
@@ -488,27 +627,6 @@ const CargaProformaForm = (props) => {
               <span className="p-float-label">
                 <Dropdown
                   inputId="dropdown"
-                  value={selectedProveedor}
-                  options={proveedors}
-                  onChange={onProveedor}
-                  optionLabel="nombreProveedor"
-                  showClear
-                  filter
-                  filterBy="nombreProveedor"
-                  className={classNames({
-                    'p-invalid': submitted && !selectedProveedor
-                  })}
-                />
-                {submitted && !selectedProveedor && (
-                  <small className="p-invalid">Proveedor es requerido.</small>
-                )}
-                <label htmlFor="dropdown">Seleccione Proveedor*</label>
-              </span>
-            </div>
-            <div className="field col-12 md:col-3  mt-3">
-              <span className="p-float-label">
-                <Dropdown
-                  inputId="dropdown"
                   value={selectedActividadAsociada}
                   options={actividadAsociadas}
                   onChange={onActividadAsociada}
@@ -576,55 +694,7 @@ const CargaProformaForm = (props) => {
                 <label htmlFor="dropdown">Seleccione Uso de fondo*</label>
               </span>
             </div>
-            <div className="field col-3 p-col-2 mt-3">
-              <span className="p-float-label ">
-                <InputText
-                  value={proformaData.numeroControlProforma}
-                  onChange={(e) =>
-                    updateField(e.target.value, 'numeroControlProforma')
-                  }
-                  className={classNames({
-                    'p-invalid':
-                      submitted && !proformaData.numeroControlProforma
-                  })}
-                />
 
-                {submitted && !proformaData.numeroControlProforma && (
-                  <small className="p-invalid">
-                    Numero Control es requerido.
-                  </small>
-                )}
-                <label htmlFor="numeroControlProforma">Numero Control</label>
-              </span>
-            </div>
-            <div className="field col-12 md:col-3 mt-3">
-              <span className="p-float-label ">
-                <Calendar
-                  // className="p-datepicker-today"
-                  id="time24"
-                  value={dateInicio !== null && dateInicio}
-                  onChange={(e) => {
-                    setDateInicio(e.value)
-                    updateField(e.target.value, 'fechaControlProforma')
-                  }}
-                  showTime
-                  locale="es"
-                  // hourFormat="12"
-                  showButtonBar
-                  className={classNames(
-                    {
-                      'p-invalid':
-                        submitted && !proformaData.fechaControlProforma
-                    },
-                    'p-datepicker-today'
-                  )}
-                />{' '}
-                {submitted && !proformaData.fechaControlProforma && (
-                  <small className="p-invalid">Fecha es requerido.</small>
-                )}
-                <label>Fecha Control </label>
-              </span>
-            </div>{' '}
             <div className="field col-3 p-col-2 mt-3">
               <span className="p-float-label ">
                 <InputText
@@ -646,7 +716,7 @@ const CargaProformaForm = (props) => {
               </span>
             </div>
             <div className="field col-12 p-col-2 mt-3">
-              <CargaItemsProformaList />
+              <CargaItemsProformaList items={items} setItems={setItems} />
             </div>
             <div className="field col-3 p-col-2 mt-3">
               <span className="p-float-label ">

@@ -20,6 +20,7 @@ proformaCtrl.createProforma = async (req, res) => {
     totalProforma,
     descripcionProforma,
     estatusProforma,
+    items,
     userCreatorId,
     creadoProforma,
     modificadoProforma
@@ -42,6 +43,7 @@ proformaCtrl.createProforma = async (req, res) => {
       totalProforma,
       descripcionProforma,
       estatusProforma,
+      items,
       userCreatorId,
       creadoProforma,
       modificadoProforma
@@ -169,6 +171,7 @@ proformaCtrl.updateProforma = async (req, res) => {
     totalProforma,
     descripcionProforma,
     estatusProforma,
+    items,
     userCreatorId,
     creadoProforma,
     modificadoProforma
@@ -194,6 +197,7 @@ proformaCtrl.updateProforma = async (req, res) => {
         totalProforma,
         descripcionProforma,
         estatusProforma,
+        items,
         userCreatorId,
         creadoProforma,
         modificadoProforma

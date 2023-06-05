@@ -35,6 +35,8 @@ import { ClasificacionServicioPage } from '../pages/ClasificacionServicioPage'
 import { ProformaPage } from '../pages/ProformaPage'
 import { ItemsProformaPage } from '../pages/ItemsProformaPage'
 import { CargaProformaPage } from '../pages/CargaProformaPage'
+import { Clasificacion3erNivelPage } from '../pages/Clasificacion3erNivelPage'
+import { Clasificacion4toNivelPage } from '../pages/Clasificacion4toNivelPage'
 
 export default function appadministracionRouter() {
   const { staticMenuInactive, onToggleMenuClick } = useContext(ConfigContext)
@@ -124,6 +126,16 @@ export default function appadministracionRouter() {
               exact
               path="/apps/administracion/ClasificacionServicio"
               component={ClasificacionServicioPage}
+            />
+            <PrivateRoute
+              exact
+              path="/apps/administracion/Clasificacion3erNivel"
+              component={Clasificacion3erNivelPage}
+            />
+            <PrivateRoute
+              exact
+              path="/apps/administracion/Clasificacion4toNivel"
+              component={Clasificacion4toNivelPage}
             />
             <PrivateRoute
               exact

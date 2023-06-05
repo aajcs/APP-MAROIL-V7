@@ -18,6 +18,7 @@ const CargaProformaList = () => {
   const auth = AuthUse()
   const { proformas, findProforma, deleteProforma, loading } =
     useContext(ProformaContext)
+  console.log(proformas)
   const { itemsProformas, findItemsProforma, deleteItemsProforma } =
     useContext(ItemsProformaContext)
   const [proforma, setProforma] = useState(proformas)

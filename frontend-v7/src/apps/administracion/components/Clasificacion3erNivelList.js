@@ -6,26 +6,34 @@ import { Toolbar } from 'primereact/toolbar'
 import { Dialog } from 'primereact/dialog'
 import { InputText } from 'primereact/inputtext'
 import { Toast } from 'primereact/toast'
-import { SubDependenciaContext } from '../contexts/SubDependenciaContext'
+import { Clasificacion3erNivelContext } from '../contexts/Clasificacion3erNivelContext'
 import moment from 'moment'
 
-import SubDependenciaForm from './SubDependenciaForm'
+import Clasificacion3erNivelForm from './Clasificacion3erNivelForm'
 import AuthUse from '../../../auth/AuthUse'
-const SubDependenciaList = () => {
+const Clasificacion3erNivelList = () => {
   const auth = AuthUse()
-  const { subDependencias, findSubDependencia, deleteSubDependencia, loading } =
-    useContext(SubDependenciaContext)
-
-  const [subDependencia, setSubDependencia] = useState(subDependencias)
-  const [deleteSubDependenciaDialog, setDeleteSubDependenciaDialog] =
-    useState(false)
+  const {
+    clasificacion3erNivels,
+    findClasificacion3erNivel,
+    deleteClasificacion3erNivel,
+    loading
+  } = useContext(Clasificacion3erNivelContext)
+  console.log(clasificacion3erNivels)
+  const [clasificacion3erNivel, setClasificacion3erNivel] = useState(
+    clasificacion3erNivels
+  )
+  const [
+    deleteClasificacion3erNivelDialog,
+    setDeleteClasificacion3erNivelDialog
+  ] = useState(false)
   const [globalFilter, setGlobalFilter] = useState(null)
   const [isVisible, setIsVisible] = useState(false)
 
   const dt = useRef(null)
   const toast = useRef(null)
-  const saveSubDependencia = (id) => {
-    findSubDependencia(id)
+  const saveClasificacion3erNivel = (id) => {
+    findClasificacion3erNivel(id)
     setIsVisible(true)
   }
 
@@ -66,46 +74,46 @@ const SubDependenciaList = () => {
     dt.current.exportCSV()
   }
 
-  const fechaSubDependenciaCreado = (rowData) => {
-    const fecha = moment(rowData.SubDependenciaCreado)
+  const fechaClasificacion3erNivelCreado = (rowData) => {
+    const fecha = moment(rowData.Clasificacion3erNivelCreado)
     return fecha.format('dddDD/MM/YY HH:mm')
   }
-  const fechaSubDependenciaModificado = (rowData) => {
-    const fecha = moment(rowData.subDependenciaModificado)
+  const fechaClasificacion3erNivelModificado = (rowData) => {
+    const fecha = moment(rowData.clasificacion3erNivelModificado)
     return fecha.format('dddDD/MM/YY HH:mm')
   }
 
-  const eliminarSubDependencia = () => {
-    deleteSubDependencia(subDependencia.id)
-    setDeleteSubDependenciaDialog(false)
+  const eliminarClasificacion3erNivel = () => {
+    deleteClasificacion3erNivel(clasificacion3erNivel.id)
+    setDeleteClasificacion3erNivelDialog(false)
     toast.current.show({
       severity: 'error',
       summary: 'Eliminar',
-      detail: 'SubDependencia Eliminado',
+      detail: 'Clasificacion3erNivel Eliminado',
       life: 3000
     })
   }
 
-  const deleteSubDependenciaDialogFooter = (
+  const deleteClasificacion3erNivelDialogFooter = (
     <>
       <Button
         label="No"
         icon="pi pi-times"
         className="p-button-text"
-        onClick={() => setDeleteSubDependenciaDialog(false)}
+        onClick={() => setDeleteClasificacion3erNivelDialog(false)}
       />
       <Button
         label="Si"
         icon="pi pi-check"
         className="p-button-text"
-        onClick={() => eliminarSubDependencia()}
+        onClick={() => eliminarClasificacion3erNivel()}
       />
     </>
   )
 
-  const confirmDeleteSubDependencia = (subDependencias) => {
-    setSubDependencia(subDependencias)
-    setDeleteSubDependenciaDialog(true)
+  const confirmDeleteClasificacion3erNivel = (clasificacion3erNivels) => {
+    setClasificacion3erNivel(clasificacion3erNivels)
+    setDeleteClasificacion3erNivelDialog(true)
   }
 
   const actionBodyTemplate = (rowData) => {
@@ -114,13 +122,13 @@ const SubDependenciaList = () => {
         <Button
           icon="pi pi-pencil"
           className="p-button-rounded p-button-success mr-2 mb-2"
-          onClick={() => saveSubDependencia(rowData.id)}
+          onClick={() => saveClasificacion3erNivel(rowData.id)}
         />
         {auth.user.faidUser.roles[0] === 'SUPERADMIN' && (
           <Button
             icon="pi pi-trash"
             className="p-button-rounded  p-button-danger"
-            onClick={() => confirmDeleteSubDependencia(rowData)}
+            onClick={() => confirmDeleteClasificacion3erNivel(rowData)}
           />
         )}
       </div>
@@ -129,7 +137,7 @@ const SubDependenciaList = () => {
 
   const header = (
     <div className="flex flex-column md:flex-row md:justify-content-between md:align-items-center">
-      <h5 className="m-0">SubDependencia</h5>
+      <h5 className="m-0">Clasificacion3erNivel</h5>
       <span className="block mt-2 md:mt-0 p-input-icon-left">
         <i className="pi pi-search" />
         <InputText
@@ -141,7 +149,7 @@ const SubDependenciaList = () => {
     </div>
   )
   const clearSelected = () => {
-    setDeleteSubDependenciaDialog(false)
+    setDeleteClasificacion3erNivelDialog(false)
   }
   return (
     <>
@@ -154,7 +162,7 @@ const SubDependenciaList = () => {
 
       <DataTable
         ref={dt}
-        value={subDependencias}
+        value={clasificacion3erNivels}
         dataKey="id"
         paginator
         rows={10}
@@ -162,11 +170,11 @@ const SubDependenciaList = () => {
         className="datatable-responsive"
         selectionMode="single"
         paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
-        currentPageReportTemplate="Muestra {first} a {last} de {totalRecords} SubDependencias"
+        currentPageReportTemplate="Muestra {first} a {last} de {totalRecords} Clasificacion3erNivels"
         globalFilter={globalFilter}
-        emptyMessage="No hay SubDependencia."
+        emptyMessage="No hay Clasificacion3erNivel."
         header={header}
-        sortField="SubDependenciaCreado"
+        sortField="Clasificacion3erNivelCreado"
         sortOrder={-1}
         loading={loading}
         responsiveLayout="scroll"
@@ -174,40 +182,52 @@ const SubDependenciaList = () => {
       >
         <Column body={actionBodyTemplate}></Column>
         <Column
-          field="dependenciaId.nombreDependencia"
-          header="dependenciaId"
+          field="clasificacionServicioId.nombreClasificacionServicio"
+          header="clasificacionServicioId"
         />
-
         <Column field="id" header="id" />
-        <Column field="codigoSubDependencia" header="codigoSubDependencia" />
-        <Column field="nombreSubDependencia" header="nombreSubDependencia" />
+
         <Column
-          field="descripcionSubDependencia"
-          header="descripcionSubDependencia"
+          field="codigoClasificacion3erNivel"
+          header="codigoClasificacion3erNivel"
         />
-        <Column field="estatusSubDependencia" header="estatusSubDependencia" />
         <Column
-          field="subDependenciaCreado"
-          body={fechaSubDependenciaCreado}
-          header="subDependenciaCreado"
+          field="nombreClasificacion3erNivel"
+          header="nombreClasificacion3erNivel"
+        />
+        <Column
+          field="descripcionClasificacion3erNivel"
+          header="descripcionClasificacion3erNivel"
+        />
+        <Column
+          field="estatusClasificacion3erNivel"
+          header="estatusClasificacion3erNivel"
+        />
+        <Column
+          field="clasificacion3erNivelCreado"
+          body={fechaClasificacion3erNivelCreado}
+          header="clasificacion3erNivelCreado"
           dataType="date"
         />
         <Column
-          field="subDependenciaModificado"
-          body={fechaSubDependenciaModificado}
-          header="subDependenciaModificado"
+          field="clasificacion3erNivelModificado"
+          body={fechaClasificacion3erNivelModificado}
+          header="clasificacion3erNivelModificado"
           dataType="date"
         />
       </DataTable>
 
-      <SubDependenciaForm isVisible={isVisible} setIsVisible={setIsVisible} />
+      <Clasificacion3erNivelForm
+        isVisible={isVisible}
+        setIsVisible={setIsVisible}
+      />
 
       <Dialog
-        visible={deleteSubDependenciaDialog}
+        visible={deleteClasificacion3erNivelDialog}
         style={{ width: '450px' }}
         header="Confirm"
         modal
-        footer={deleteSubDependenciaDialogFooter}
+        footer={deleteClasificacion3erNivelDialogFooter}
         onHide={() => clearSelected()}
       >
         <div className="flex align-items-center justify-content-center">
@@ -215,10 +235,10 @@ const SubDependenciaList = () => {
             className="pi pi-exclamation-triangle mr-3"
             style={{ fontSize: '2rem' }}
           />
-          {subDependencia && (
+          {clasificacion3erNivel && (
             <span>
-              Esta seguro que quiere eliminar la SubDependencia{' '}
-              <b>{subDependencia.nombreSubDependencia}</b>?
+              Esta seguro que quiere eliminar la Clasificacion3erNivel{' '}
+              <b>{clasificacion3erNivel.nombreClasificacion3erNivel}</b>?
             </span>
           )}
         </div>
@@ -227,4 +247,4 @@ const SubDependenciaList = () => {
   )
 }
 
-export default SubDependenciaList
+export default Clasificacion3erNivelList
