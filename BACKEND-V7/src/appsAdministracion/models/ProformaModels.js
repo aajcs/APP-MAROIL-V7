@@ -21,6 +21,14 @@ const proformaSchema = new Schema(
       type: Date,
       default: moment()
     },
+    fechaInicio: {
+      type: Date,
+      default: moment()
+    },
+    fechaFin: {
+      type: Date,
+      default: moment()
+    },
     dominioId: {
       type: Schema.Types.ObjectId,
       ref: 'Dominio'

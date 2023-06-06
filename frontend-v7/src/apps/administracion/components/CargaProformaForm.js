@@ -29,7 +29,9 @@ const CargaProformaForm = (props) => {
     codigoProforma: '',
     proveedorId: null,
     numeroControlProforma: '',
-    fechaControlProforma: '',
+    fechaControlProforma: null,
+    fechaInicioProforma: null,
+    fechaFinProforma: null,
     dominioId: null,
     divisionId: null,
     dependenciaId: null,
@@ -46,17 +48,17 @@ const CargaProformaForm = (props) => {
     creadoProforma: moment(),
     modificadoProforma: moment()
   }
-  const emptyItem = {
-    itemId: null,
-    itemClasificacionServicio: null,
-    itemClasificacion3erNivel: null,
-    itemClasificacion4toNivel: null,
-    itemDescripcion: '',
-    itemUnidad: null,
-    itemCantidad: 0,
-    itemPrecioUnitario: 0,
-    itemPrecioTotal: 0
-  }
+  // const emptyItem = {
+  //   itemId: null,
+  //   itemClasificacionServicio: null,
+  //   itemClasificacion3erNivel: null,
+  //   itemClasificacion4toNivel: null,
+  //   itemDescripcion: '',
+  //   itemUnidad: null,
+  //   itemCantidad: 0,
+  //   itemPrecioUnitario: 0,
+  //   itemPrecioTotal: 0
+  // }
 
   addLocale('es', {
     firstDayOfWeek: 1,
@@ -126,8 +128,10 @@ const CargaProformaForm = (props) => {
     useState(null)
   const [selectedusoFondoProforma, setSelectedusoFondoProforma] = useState(null)
   const [submitted, setSubmitted] = useState(false)
+  const [dateControl, setDateControl] = useState()
   const [dateInicio, setDateInicio] = useState()
-  const [items, setItems] = useState([emptyItem])
+  const [dateFinal, setDateFinal] = useState()
+  const [items, setItems] = useState([])
   const estadoProforma = [
     { estatusProforma: 'OPERATIVO' },
     { estatusProforma: 'INOPERATIVO' }
@@ -194,12 +198,39 @@ const CargaProformaForm = (props) => {
           (p) => p.id === editProforma.clasificacionServicioId.id
         )
       setSelectedClasificacionServicio(clasificacionServicioSelecEdit)
-      setDateInicio(
+      setDateControl(
         editProforma.fechaControlProforma &&
           moment(editProforma.fechaControlProforma)._d
       )
+      setDateInicio(
+        editProforma.fechaInicioProforma &&
+          moment(editProforma.fechaInicioProforma)._d
+      )
+      setDateFinal(
+        editProforma.fechaFinProforma &&
+          moment(editProforma.fechaFinProforma)._d
+      )
     }
   }, [editProforma])
+  useEffect(() => {
+    console.log(totalDataPresupuestoSuma())
+    updateField(totalDataPresupuestoSuma(), 'totalProforma')
+  }, [items])
+  const totalDataPresupuestoSuma = () => {
+    // let cantidad = 0
+    // let precioUnitario = 0
+    let total = 0
+    for (const unitario of items) {
+      // precioUnitario += unitario.precioUnitarioDataPresupuesto
+      // cantidad += unitario.cantidadDataPresupuesto
+      total += unitario.itemCantidad * unitario.itemPrecioUnitario
+    }
+
+    return total
+  }
+  // const formatCurrency = (value) => {
+  //   return value.toLocaleString('en-US', { style: 'currency', currency: 'USD' })
+  // }
   const onDominio = (e) => {
     e.value
       ? (setSelectedDominio(e.value), updateField(e.value.id, 'dominioId'))
@@ -366,7 +397,8 @@ const CargaProformaForm = (props) => {
     setProformaData(initialProformaForm)
 
     setSelectedProforma(null)
-
+    setDateControl(null)
+    setDateFinal(null)
     setSelectedDominio(null)
     setSelectedDivision(null)
     setSelectedDependencia(null)
@@ -457,12 +489,11 @@ const CargaProformaForm = (props) => {
                 <Calendar
                   // className="p-datepicker-today"
                   id="time24"
-                  value={dateInicio !== null && dateInicio}
+                  value={dateControl !== null && dateControl}
                   onChange={(e) => {
-                    setDateInicio(e.value)
+                    setDateControl(e.value)
                     updateField(e.target.value, 'fechaControlProforma')
                   }}
-                  showTime
                   locale="es"
                   // hourFormat="12"
                   showButtonBar
@@ -488,24 +519,24 @@ const CargaProformaForm = (props) => {
                   value={dateInicio !== null && dateInicio}
                   onChange={(e) => {
                     setDateInicio(e.value)
-                    updateField(e.target.value, 'fechaControlProforma')
+                    updateField(e.target.value, 'fechaInicio')
                   }}
-                  showTime
                   locale="es"
                   // hourFormat="12"
                   showButtonBar
                   className={classNames(
                     {
-                      'p-invalid':
-                        submitted && !proformaData.fechaControlProforma
+                      'p-invalid': submitted && !proformaData.fechaInicio
                     },
                     'p-datepicker-today'
                   )}
                 />{' '}
-                {submitted && !proformaData.fechaControlProforma && (
-                  <small className="p-invalid">Fecha es requerido.</small>
+                {submitted && !proformaData.fechaInicio && (
+                  <small className="p-invalid">
+                    Fecha Inicio es requerido.
+                  </small>
                 )}
-                <label>Fecha Control </label>
+                <label>Fecha Inicio </label>
               </span>
             </div>
             <div className="field col-12 md:col-2 mt-3">
@@ -513,27 +544,25 @@ const CargaProformaForm = (props) => {
                 <Calendar
                   // className="p-datepicker-today"
                   id="time24"
-                  value={dateInicio !== null && dateInicio}
+                  value={dateFinal !== null && dateFinal}
                   onChange={(e) => {
-                    setDateInicio(e.value)
-                    updateField(e.target.value, 'fechaControlProforma')
+                    setDateFinal(e.value)
+                    updateField(e.target.value, 'fechaFin')
                   }}
-                  showTime
                   locale="es"
                   // hourFormat="12"
                   showButtonBar
                   className={classNames(
                     {
-                      'p-invalid':
-                        submitted && !proformaData.fechaControlProforma
+                      'p-invalid': submitted && !proformaData.fechaFin
                     },
                     'p-datepicker-today'
                   )}
                 />{' '}
-                {submitted && !proformaData.fechaControlProforma && (
-                  <small className="p-invalid">Fecha es requerido.</small>
+                {submitted && !proformaData.fechaFin && (
+                  <small className="p-invalid">Fecha Fin es requerido.</small>
                 )}
-                <label>Fecha Control </label>
+                <label>Fecha Final </label>
               </span>
             </div>
             <div className="field col-12 md:col-3  mt-3">
@@ -730,6 +759,9 @@ const CargaProformaForm = (props) => {
                   className={classNames({
                     'p-invalid': submitted && !proformaData.totalProforma
                   })}
+                  mode="currency"
+                  currency="USD"
+                  locale="en-US"
                 />
 
                 {submitted && !proformaData.totalProforma && (

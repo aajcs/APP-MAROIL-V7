@@ -73,7 +73,7 @@ const CargaItemsProformaList = ({ items, setItems }) => {
     return formatCurrency(rowData.itemPrecioUnitario)
   }
   const itemPrecioTotalBodyTemplate = (rowData) => {
-    return formatCurrency(rowData.itemPrecioTotal)
+    return formatCurrency(rowData.itemCantidad * rowData.itemPrecioUnitario)
   }
 
   const actionBodyTemplate = (rowData) => {
@@ -81,16 +81,13 @@ const CargaItemsProformaList = ({ items, setItems }) => {
       <React.Fragment>
         <Button
           icon="pi pi-pencil"
-          rounded
-          outlined
-          className="mr-2"
+          className="p-button-rounded p-button-raised p-button-info  p-button-text "
           onClick={() => editItem(rowData)}
         />
+
         <Button
           icon="pi pi-trash"
-          rounded
-          outlined
-          severity="danger"
+          className="p-button-rounded p-button-raised p-button-danger p-button-text"
           onClick={() => confirmDeleteItem(rowData)}
         />
       </React.Fragment>
@@ -100,10 +97,11 @@ const CargaItemsProformaList = ({ items, setItems }) => {
   const header = (
     <div className="flex flex-wrap gap-2 align-items-center justify-content-between">
       <Button
-        label="New"
         icon="pi pi-plus"
-        severity="success"
+        className="p-button-rounded p-button-raised p-button-success  p-button-text "
         onClick={openNew}
+        tooltip="Agregar Item"
+        tooltipOptions={{ position: 'top' }}
       />
     </div>
   )
@@ -135,46 +133,67 @@ const CargaItemsProformaList = ({ items, setItems }) => {
           selection={selectedItems}
           onSelectionChange={(e) => setSelectedItems(e.value)}
           dataKey="id"
-          header={header}
           responsiveLayout="scroll"
+          className="datatable-responsive"
+          emptyMessage="Agregue un Item."
         >
-          <Column body={actionBodyTemplate} exportable={false}></Column>
-          <Column field="itemId" header="itemId" sortable></Column>
+          <Column
+            body={actionBodyTemplate}
+            header={header}
+            exportable={false}
+            className=" p-0"
+            style={{ minWidth: '6rem' }}
+          ></Column>
+          <Column
+            field="itemId"
+            header="itemId"
+            className=" pt-0 pb-0"
+            hidden={true}
+          ></Column>
 
           <Column
             field="itemClasificacionServicio"
-            header="itemClasificacionServicio"
-            sortable
+            header="Clasificacion Servicio"
+            className=" pt-0 pb-0"
           ></Column>
           <Column
             field="itemClasificacion3erNivel"
             header="itemClasificacion3erNivel"
-            sortable
+            className=" pt-0 pb-0"
+            hidden={true}
           ></Column>
           <Column
             field="itemClasificacion4toNivel"
-            header="itemClasificacion4toNivel"
-            sortable
+            header="Codigo"
+            className=" pt-0 pb-0"
           ></Column>
           <Column
             field="itemDescripcion"
-            header="itemDescripcion"
-            sortable
+            header="Descripcion"
+            className=" pt-0 pb-0"
           ></Column>
-          <Column field="itemUnidad" header="itemUnidad" sortable></Column>
-          <Column field="itemCantidad" header="itemCantidad" sortable></Column>
+          <Column
+            field="itemUnidad"
+            header="Unidad"
+            className=" pt-0 pb-0"
+          ></Column>
+          <Column
+            field="itemCantidad"
+            header="Cantidad"
+            className=" pt-0 pb-0"
+          ></Column>
 
           <Column
             field="itemPrecioUnitario"
-            header="itemPrecioUnitario"
+            header="Precio Unitario"
             body={itemPrecioUnitarioBodyTemplate}
-            sortable
+            className=" pt-0 pb-0"
           ></Column>
           <Column
             field="itemPrecioTotal"
-            header="itemPrecioTotal"
+            header="Precio Total"
             body={itemPrecioTotalBodyTemplate}
-            sortable
+            className=" pt-0 pb-0"
           ></Column>
         </DataTable>
       </div>
