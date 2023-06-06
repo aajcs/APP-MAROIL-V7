@@ -46,6 +46,17 @@ const CargaProformaForm = (props) => {
     creadoProforma: moment(),
     modificadoProforma: moment()
   }
+  const emptyItem = {
+    itemId: null,
+    itemClasificacionServicio: null,
+    itemClasificacion3erNivel: null,
+    itemClasificacion4toNivel: null,
+    itemDescripcion: '',
+    itemUnidad: null,
+    itemCantidad: 0,
+    itemPrecioUnitario: 0,
+    itemPrecioTotal: 0
+  }
 
   addLocale('es', {
     firstDayOfWeek: 1,
@@ -116,19 +127,7 @@ const CargaProformaForm = (props) => {
   const [selectedusoFondoProforma, setSelectedusoFondoProforma] = useState(null)
   const [submitted, setSubmitted] = useState(false)
   const [dateInicio, setDateInicio] = useState()
-  const [items, setItems] = useState([
-    {
-      itemId: '1',
-      itemClasificacionServicio: '2',
-      itemClasificacion3erNivel: '3',
-      itemClasificacion4toNivel: '4',
-      itemDescripcion: '5',
-      itemUnidad: '6',
-      itemCantidad: 7,
-      itemPrecioUnitario: 8,
-      itemPrecioTotal: 9
-    }
-  ])
+  const [items, setItems] = useState([emptyItem])
   const estadoProforma = [
     { estatusProforma: 'OPERATIVO' },
     { estatusProforma: 'INOPERATIVO' }

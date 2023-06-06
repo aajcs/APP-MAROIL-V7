@@ -1,6 +1,7 @@
 import CargaProformaList from '../components/CargaProformaList'
 
 import ActividadAsociadaContextProvider from '../contexts/ActividadAsociadaContext'
+import Clasificacion3erNivelContextProvider from '../contexts/Clasificacion3erNivelContext'
 import ClasificacionServicioContextProvider from '../contexts/ClasificacionServicioContext'
 import DependenciaContextProvider from '../contexts/DependenciaContext'
 import DivisionContextProvider from '../contexts/DivisionContext'
@@ -23,11 +24,13 @@ export const CargaProformaPage = () => {
                   <ProveedorContextProvider>
                     <ActividadAsociadaContextProvider>
                       <ClasificacionServicioContextProvider>
-                        <ProformaContextProvider>
-                          <ItemsProformaContextProvider>
-                            <CargaProformaList />
-                          </ItemsProformaContextProvider>
-                        </ProformaContextProvider>
+                        <Clasificacion3erNivelContextProvider>
+                          <ProformaContextProvider>
+                            <ItemsProformaContextProvider>
+                              <CargaProformaList />
+                            </ItemsProformaContextProvider>
+                          </ProformaContextProvider>
+                        </Clasificacion3erNivelContextProvider>
                       </ClasificacionServicioContextProvider>
                     </ActividadAsociadaContextProvider>
                   </ProveedorContextProvider>
