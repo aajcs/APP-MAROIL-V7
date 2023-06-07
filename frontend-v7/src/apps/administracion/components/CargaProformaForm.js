@@ -132,6 +132,9 @@ const CargaProformaForm = (props) => {
   const [dateInicio, setDateInicio] = useState()
   const [dateFinal, setDateFinal] = useState()
   const [items, setItems] = useState([])
+  const [division, setDivision] = useState([])
+  const [dependencia, setDependencia] = useState([])
+  const [subDependencia, setSubDependencia] = useState([])
   const estadoProforma = [
     { estatusProforma: 'OPERATIVO' },
     { estatusProforma: 'INOPERATIVO' }
@@ -232,56 +235,63 @@ const CargaProformaForm = (props) => {
   //   return value.toLocaleString('en-US', { style: 'currency', currency: 'USD' })
   // }
   const onDominio = (e) => {
-    e.value
-      ? (setSelectedDominio(e.value), updateField(e.value.id, 'dominioId'))
-      : (setSelectedDominio(null), updateField(null, 'dominioId'))
-    // if (e.value) {
-    //   const subProyectoFilter = subProyectos.filter(
-    //     (p) => p.proyectoId?.id === e.value.id
-    //   )
-    //   setSelectedProyecto(e.value)
-    //   setSubProyecto(subProyectoFilter)
-    // } else {
-    //   setSelectedProyecto(null)
-    //   setSubProyecto(null)
-    //   setSelectedSubProyecto(null)
-    //   setSelectedPresupuesto(null)
-    // }
+    // e.value
+    //   ? (setSelectedDominio(e.value), updateField(e.value.id, 'dominioId'))
+    //   : (setSelectedDominio(null), updateField(null, 'dominioId'))
+    if (e.value) {
+      const divisionsFilter = divisions.filter(
+        (p) => p.dominioId?.id === e.value.id
+      )
+      setSelectedDominio(e.value)
+      updateField(e.value.id, 'dominioId')
+
+      setDivision(divisionsFilter)
+    } else {
+      setSelectedDominio(null)
+      updateField(null, 'dominioId')
+      setDependencia(null)
+      setSubDependencia(null)
+      setDivision(null)
+    }
   }
   const onDivision = (e) => {
-    e.value
-      ? (setSelectedDivision(e.value), updateField(e.value.id, 'divisionId'))
-      : (setSelectedDivision(null), updateField(null, 'divisionId'))
-    // if (e.value) {
-    //   const subProyectoFilter = subProyectos.filter(
-    //     (p) => p.proyectoId?.id === e.value.id
-    //   )
-    //   setSelectedProyecto(e.value)
-    //   setSubProyecto(subProyectoFilter)
-    // } else {
-    //   setSelectedProyecto(null)
-    //   setSubProyecto(null)
-    //   setSelectedSubProyecto(null)
-    //   setSelectedPresupuesto(null)
-    // }
+    // e.value
+    //   ? (setSelectedDivision(e.value), updateField(e.value.id, 'divisionId'))
+    //   : (setSelectedDivision(null), updateField(null, 'divisionId'))
+    if (e.value) {
+      const dependenciasFilter = dependencias.filter(
+        (p) => p.divisionId?.id === e.value.id
+      )
+      setSelectedDivision(e.value)
+      updateField(e.value.id, 'divisionId')
+
+      setDependencia(dependenciasFilter)
+    } else {
+      setSelectedDivision(null)
+      updateField(null, 'divisionId')
+      setDependencia(null)
+      setSubDependencia(null)
+    }
   }
   const onDependencia = (e) => {
-    e.value
-      ? (setSelectedDependencia(e.value),
-        updateField(e.value.id, 'dependenciaId'))
-      : (setSelectedDependencia(null), updateField(null, 'dependenciaId'))
-    // if (e.value) {
-    //   const subProyectoFilter = subProyectos.filter(
-    //     (p) => p.proyectoId?.id === e.value.id
-    //   )
-    //   setSelectedProyecto(e.value)
-    //   setSubProyecto(subProyectoFilter)
-    // } else {
-    //   setSelectedProyecto(null)
-    //   setSubProyecto(null)
-    //   setSelectedSubProyecto(null)
-    //   setSelectedPresupuesto(null)
-    // }
+    // e.value
+    //   ? (setSelectedDependencia(e.value),
+    //     updateField(e.value.id, 'dependenciaId'))
+    //   : (setSelectedDependencia(null), updateField(null, 'dependenciaId'))
+    if (e.value) {
+      const subDependenciasFilter = subDependencias.filter(
+        (p) => p.dependenciaId?.id === e.value.id
+      )
+      setSelectedDependencia(e.value)
+      updateField(e.value.id, 'dependenciaId')
+
+      setSubDependencia(subDependenciasFilter)
+    } else {
+      setSelectedDependencia(null)
+      updateField(null, 'dependenciaId')
+      setDependencia(null)
+      setSubDependencia(null)
+    }
   }
   const onSubDependencia = (e) => {
     e.value
@@ -428,7 +438,98 @@ const CargaProformaForm = (props) => {
       </div>
     )
   }
+  const selectedDominiosTemplate = (option, props) => {
+    if (option) {
+      return (
+        <div className="country-item country-item-value">
+          <div>
+            {option.codigoDominio}-{option.nombreDominio}
+          </div>
+        </div>
+      )
+    }
 
+    return <span>{props.placeholder}</span>
+  }
+
+  const dominiosOptionTemplate = (option) => {
+    return (
+      <div className="country-item">
+        <div>
+          {option.codigoDominio}-{option.nombreDominio}
+        </div>
+      </div>
+    )
+  }
+  const selectedDivisionTemplate = (option, props) => {
+    if (option) {
+      return (
+        <div className="country-item country-item-value">
+          <div>
+            {option.codigoDivision}-{option.nombreDivision}
+          </div>
+        </div>
+      )
+    }
+
+    return <span>{props.placeholder}</span>
+  }
+
+  const divisionOptionTemplate = (option) => {
+    return (
+      <div className="country-item">
+        <div>
+          {option.codigoDivision}-{option.nombreDivision}
+        </div>
+      </div>
+    )
+  }
+  const selectedDependenciaTemplate = (option, props) => {
+    if (option) {
+      return (
+        <div className="country-item country-item-value">
+          <div>
+            {option.codigoDependencia}-{option.nombreDependencia}
+          </div>
+        </div>
+      )
+    }
+
+    return <span>{props.placeholder}</span>
+  }
+
+  const dependenciaOptionTemplate = (option) => {
+    return (
+      <div className="country-item">
+        <div>
+          {option.codigoDependencia}-{option.nombreDependencia}
+        </div>
+      </div>
+    )
+  }
+  const selectedSubDependenciaTemplate = (option, props) => {
+    if (option) {
+      return (
+        <div className="country-item country-item-value">
+          <div>
+            {option.codigoSubDependencia}-{option.nombreSubDependencia}
+          </div>
+        </div>
+      )
+    }
+
+    return <span>{props.placeholder}</span>
+  }
+
+  const subDependenciaOptionTemplate = (option) => {
+    return (
+      <div className="country-item">
+        <div>
+          {option.codigoSubDependencia}-{option.nombreSubDependencia}
+        </div>
+      </div>
+    )
+  }
   return (
     <div className="dialog-demo">
       <Toast ref={toast} />
@@ -575,7 +676,10 @@ const CargaProformaForm = (props) => {
                   optionLabel="nombreDominio"
                   showClear
                   filter
+                  style={{ 'min-height': '2.5rem' }}
                   filterBy="nombreDominio"
+                  valueTemplate={selectedDominiosTemplate}
+                  itemTemplate={dominiosOptionTemplate}
                   className={classNames({
                     'p-invalid': submitted && !selectedDominio
                   })}
@@ -591,14 +695,19 @@ const CargaProformaForm = (props) => {
                 <Dropdown
                   inputId="dropdown"
                   value={selectedDivision}
-                  options={divisions}
+                  options={division}
                   onChange={onDivision}
                   optionLabel="nombreDivision"
                   showClear
                   filter
+                  style={{ 'min-height': '2.5rem' }}
+                  disabled={division === null}
                   filterBy="nombreDivision"
+                  valueTemplate={selectedDivisionTemplate}
+                  itemTemplate={divisionOptionTemplate}
                   className={classNames({
-                    'p-invalid': submitted && !selectedDivision
+                    'p-invalid':
+                      (submitted && !selectedDivision) || division === null
                   })}
                 />
                 {submitted && !selectedDivision && (
@@ -612,14 +721,20 @@ const CargaProformaForm = (props) => {
                 <Dropdown
                   inputId="dropdown"
                   value={selectedDependencia}
-                  options={dependencias}
+                  options={dependencia}
                   onChange={onDependencia}
                   optionLabel="nombreDependencia"
                   showClear
                   filter
+                  style={{ 'min-height': '2.5rem' }}
+                  disabled={dependencia === null}
                   filterBy="nombreDependencia"
+                  valueTemplate={selectedDependenciaTemplate}
+                  itemTemplate={dependenciaOptionTemplate}
                   className={classNames({
-                    'p-invalid': submitted && !selectedDependencia
+                    'p-invalid':
+                      (submitted && !selectedDependencia) ||
+                      dependencia === null
                   })}
                 />
                 {submitted && !selectedDependencia && (
@@ -633,14 +748,20 @@ const CargaProformaForm = (props) => {
                 <Dropdown
                   inputId="dropdown"
                   value={selectedSubDependencia}
-                  options={subDependencias}
+                  options={subDependencia}
                   onChange={onSubDependencia}
                   optionLabel="nombreSubDependencia"
                   showClear
                   filter
+                  style={{ 'min-height': '2.5rem' }}
+                  disabled={subDependencia === null}
                   filterBy="nombreSubDependencia"
+                  valueTemplate={selectedSubDependenciaTemplate}
+                  itemTemplate={subDependenciaOptionTemplate}
                   className={classNames({
-                    'p-invalid': submitted && !selectedSubDependencia
+                    'p-invalid':
+                      (submitted && !selectedSubDependencia) ||
+                      subDependencia === null
                   })}
                 />
                 {submitted && !selectedSubDependencia && (
