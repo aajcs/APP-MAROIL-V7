@@ -10,7 +10,7 @@ import { Toast } from 'primereact/toast'
 import { Dropdown } from 'primereact/dropdown'
 import { addLocale } from 'primereact/api'
 import { classNames } from 'primereact/utils'
-import { InputNumber } from 'primereact/inputnumber'
+// import { InputNumber } from 'primereact/inputnumber'
 // import { InputTextarea } from 'primereact/inputtextarea'
 import { Calendar } from 'primereact/calendar'
 import moment from 'moment'
@@ -43,7 +43,8 @@ const CargaProformaForm = (props) => {
     egresoProforma: 0,
     totalProforma: 0,
     descripcionProforma: '',
-    estatusProforma: '',
+    estatusProforma: null,
+    estatus2Proforma: null,
     userCreatorId: null,
     creadoProforma: moment(),
     modificadoProforma: moment()
@@ -116,6 +117,7 @@ const CargaProformaForm = (props) => {
 
   const { isVisible, setIsVisible } = props
   const [selectedProforma, setSelectedProforma] = useState(null)
+  const [selectedEstatus2Proforma, setSelectedEstatus2Proforma] = useState(null)
   const [proformaData, setProformaData] = useState(initialProformaForm)
   const [selectedDominio, setSelectedDominio] = useState(null)
   const [selectedDivision, setSelectedDivision] = useState(null)
@@ -132,24 +134,38 @@ const CargaProformaForm = (props) => {
   const [dateInicio, setDateInicio] = useState()
   const [dateFinal, setDateFinal] = useState()
   const [items, setItems] = useState([])
-  const [division, setDivision] = useState([])
-  const [dependencia, setDependencia] = useState([])
-  const [subDependencia, setSubDependencia] = useState([])
+  const [division, setDivision] = useState(divisions)
+  const [dependencia, setDependencia] = useState(dependencias)
+  const [subDependencia, setSubDependencia] = useState(subDependencias)
   const estadoProforma = [
-    { estatusProforma: 'OPERATIVO' },
-    { estatusProforma: 'INOPERATIVO' }
+    { estatusProforma: 'ESTIMADA (PROVISIÓN)' },
+    { estatusProforma: 'POR CONFIRMAR' },
+    { estatusProforma: 'CONFIRMADA' }
+  ]
+  const estadoEstatus2Proforma = [
+    { estatus2Proforma: 'PAGADA' },
+    { estatus2Proforma: 'NO PAGADA' },
+    { estatus2Proforma: 'PAGADA PARCIAL' }
   ]
   const usoFondoProforma = [
     { usoFondoProforma: 'CONTINUIDAD OPERATIVA' },
-    { usoFondoProforma: 'INVERSION' }
+    { usoFondoProforma: 'INVERSIÓN' },
+    { usoFondoProforma: 'GASTO OPERATIVO' }
   ]
   const onEstatusProforma = (e) => {
     setSelectedProforma(e.value)
     updateField(e.value.estatusProforma, 'estatusProforma')
   }
+  const onEstatus2Proforma = (e) => {
+    setSelectedEstatus2Proforma(e.value)
+    updateField(e.value.estatus2Proforma, 'estatus2Proforma')
+  }
   const onUsoFondoProforma = (e) => {
-    setSelectedusoFondoProforma(e.value)
-    updateField(e.value.usoFondoProforma, 'usoFondoProforma')
+    e.value
+      ? (setSelectedusoFondoProforma(e.value),
+        updateField(e.value.usoFondoProforma, 'usoFondoProforma'))
+      : (setSelectedusoFondoProforma(null),
+        updateField(null, 'usoFondoProforma'))
   }
 
   const toast = useRef(null)
@@ -176,7 +192,9 @@ const CargaProformaForm = (props) => {
       const divisionSelecEdit =
         editProforma.divisionId &&
         divisions.find((p) => p.id === editProforma.divisionId.id)
+      console.log(divisionSelecEdit)
       setSelectedDivision(divisionSelecEdit)
+
       const dependenciaSelecEdit =
         editProforma.dependenciaId &&
         dependencias.find((p) => p.id === editProforma.dependenciaId.id)
@@ -213,10 +231,13 @@ const CargaProformaForm = (props) => {
         editProforma.fechaFinProforma &&
           moment(editProforma.fechaFinProforma)._d
       )
+      setItems(editProforma?.items && editProforma.items)
+      setSelectedusoFondoProforma({
+        usoFondoProforma: editProforma.usoFondoProforma
+      })
     }
   }, [editProforma])
   useEffect(() => {
-    console.log(totalDataPresupuestoSuma())
     updateField(totalDataPresupuestoSuma(), 'totalProforma')
   }, [items])
   const totalDataPresupuestoSuma = () => {
@@ -371,24 +392,43 @@ const CargaProformaForm = (props) => {
       ...proformaData,
       [field]: data
     })
-    console.log(proformaData)
   }
 
   const saveProforma = () => {
     setSubmitted(true)
-    if (!editProforma) {
-      console.log(proformaData)
-      createProforma({ ...proformaData, items: items })
+    if (
+      proformaData.proveedorId !== null &&
+      proformaData.numeroControlProforma.trim() &&
+      proformaData.fechaControlProforma !== null &&
+      proformaData.dominioId !== null &&
+      proformaData.divisionId !== null &&
+      proformaData.dependenciaId !== null &&
+      proformaData.subDependenciaId !== null &&
+      proformaData.actividadAsociadaId !== null &&
+      proformaData.clasificacionServicioId !== null &&
+      proformaData.usoFondoProforma !== null &&
+      proformaData.totalProforma !== null &&
+      proformaData.estatusProforma !== null &&
+      proformaData.estatus2Proforma !== null &&
+      items.length !== 0
+    ) {
+      if (!editProforma) {
+        createProforma({ ...proformaData, items: items })
+      } else {
+        updateProforma({
+          ...proformaData,
+          ProformaModificado: moment(),
+          items: items
+        })
+      }
+      setProformaData(initialProformaForm)
+      setIsVisible(false)
+      setSelectedProforma('')
+      clearSelected()
     } else {
-      updateProforma({
-        ...proformaData,
-        ProformaModificado: moment()
-      })
+      console.log(proformaData)
+      console.log(items)
     }
-    setProformaData(initialProformaForm)
-    setIsVisible(false)
-    setSelectedProforma('')
-    clearSelected()
   }
 
   const dialogFooter = (
@@ -407,6 +447,7 @@ const CargaProformaForm = (props) => {
     setProformaData(initialProformaForm)
 
     setSelectedProforma(null)
+    setSelectedEstatus2Proforma(null)
     setDateControl(null)
     setDateFinal(null)
     setSelectedDominio(null)
@@ -416,28 +457,15 @@ const CargaProformaForm = (props) => {
     setSelectedProveedor(null)
     setSelectedActividadAsociada(null)
     setSelectedClasificacionServicio(null)
-
+    setSubmitted(false)
     setDateInicio(null)
-  }
-  const selectedestatusProformaTemplate = (option, props) => {
-    if (option) {
-      return (
-        <div className="country-item country-item-value">
-          <div>{option.estatusProforma}</div>
-        </div>
-      )
-    }
-
-    return <span>{props.placeholder}</span>
+    setItems([])
+    setSelectedusoFondoProforma(null)
+    setDivision(divisions)
+    setDependencia(dependencias)
+    setSubDependencia(subDependencias)
   }
 
-  const estatusProformaOptionTemplate = (option) => {
-    return (
-      <div className="country-item">
-        <div>{option.estatusProforma}</div>
-      </div>
-    )
-  }
   const selectedDominiosTemplate = (option, props) => {
     if (option) {
       return (
@@ -564,7 +592,7 @@ const CargaProformaForm = (props) => {
                 <label htmlFor="dropdown">Seleccione Proveedor*</label>
               </span>
             </div>
-            <div className="field col-2 p-col-2 mt-3">
+            <div className="field col-12 md:col-2 p-col-2 mt-3">
               <span className="p-float-label ">
                 <InputText
                   value={proformaData.numeroControlProforma}
@@ -626,17 +654,17 @@ const CargaProformaForm = (props) => {
                   // hourFormat="12"
                   showButtonBar
                   className={classNames(
-                    {
-                      'p-invalid': submitted && !proformaData.fechaInicio
-                    },
+                    // {
+                    //   'p-invalid': submitted && !proformaData.fechaInicio
+                    // },
                     'p-datepicker-today'
                   )}
                 />{' '}
-                {submitted && !proformaData.fechaInicio && (
+                {/* {submitted && !proformaData.fechaInicio && (
                   <small className="p-invalid">
                     Fecha Inicio es requerido.
                   </small>
-                )}
+                )} */}
                 <label>Fecha Inicio </label>
               </span>
             </div>
@@ -654,15 +682,15 @@ const CargaProformaForm = (props) => {
                   // hourFormat="12"
                   showButtonBar
                   className={classNames(
-                    {
-                      'p-invalid': submitted && !proformaData.fechaFin
-                    },
+                    // {
+                    //   'p-invalid': submitted && !proformaData.fechaFin
+                    // },
                     'p-datepicker-today'
                   )}
                 />{' '}
-                {submitted && !proformaData.fechaFin && (
+                {/* {submitted && !proformaData.fechaFin && (
                   <small className="p-invalid">Fecha Fin es requerido.</small>
-                )}
+                )} */}
                 <label>Fecha Final </label>
               </span>
             </div>
@@ -844,7 +872,7 @@ const CargaProformaForm = (props) => {
               </span>
             </div>
 
-            <div className="field col-3 p-col-2 mt-3">
+            <div className="field col-12 md:col-3 p-col-2 mt-3">
               <span className="p-float-label ">
                 <InputText
                   value={proformaData.codigoProforma}
@@ -865,9 +893,18 @@ const CargaProformaForm = (props) => {
               </span>
             </div>
             <div className="field col-12 p-col-2 mt-3">
-              <CargaItemsProformaList items={items} setItems={setItems} />
+              {submitted && items.length === 0 && (
+                <small className="p-invalid" style={{ color: '#f19ea6' }}>
+                  Items Proforma es requerido.
+                </small>
+              )}
+              <CargaItemsProformaList
+                className="p-invalid"
+                items={items}
+                setItems={setItems}
+              />
             </div>
-            <div className="field col-3 p-col-2 mt-3">
+            {/* <div className="field col-3 p-col-2 mt-3">
               <span className="p-float-label ">
                 <InputNumber
                   inputId="cantidadDataPresupuesto"
@@ -892,35 +929,64 @@ const CargaProformaForm = (props) => {
                 )}
                 <label htmlFor="totalProforma">Total Proforma</label>
               </span>
+            </div> */}
+            <div className="field col-12  md:col-8 p-col-2 ">
+              <span className="p-float-label ">
+                <InputText
+                  value={proformaData.descripcionProforma}
+                  onChange={(e) =>
+                    updateField(e.target.value, 'descripcionProforma')
+                  }
+                  // className={classNames({
+                  //   'p-invalid': submitted && !proformaData.descripcionProforma
+                  // })}
+                />
+
+                {/* {submitted && !proformaData.descripcionProforma && (
+                  <small className="p-invalid">
+                    Descripcion Proforma es requerido.
+                  </small>
+                )} */}
+                <label htmlFor="descripcionProforma">
+                  Descripcion Proforma Control
+                </label>
+              </span>
             </div>
-          </div>
-        </div>
-
-        <div className="p-grid p-fluid">
-          <br />
-
-          <div className="p-float-label">
-            <InputText
-              value={proformaData.descripcionProforma}
-              onChange={(e) =>
-                updateField(e.target.value, 'descripcionProforma')
-              }
-            />
-            <label>Descripcion:</label>
-          </div>
-
-          <div className="formgrid grid">
-            <div className="field col-12 md:col-6">
-              <label>Estado</label>
-              <Dropdown
-                value={selectedProforma}
-                options={estadoProforma}
-                onChange={onEstatusProforma}
-                optionLabel="estatusProforma"
-                placeholder="Seleccione Estado"
-                valueTemplate={selectedestatusProformaTemplate}
-                itemTemplate={estatusProformaOptionTemplate}
-              />
+            <div className="field col-12 md:col-2 ">
+              <span className="p-float-label">
+                <Dropdown
+                  inputId="dropdown"
+                  value={selectedProforma}
+                  options={estadoProforma}
+                  onChange={onEstatusProforma}
+                  optionLabel="estatusProforma"
+                  className={classNames({
+                    'p-invalid': submitted && !selectedProforma
+                  })}
+                />
+                {submitted && !selectedProforma && (
+                  <small className="p-invalid">Estatus es requerido.</small>
+                )}
+                <label htmlFor="dropdown">Estatus proforma*</label>
+              </span>
+            </div>
+            <div className="field col-12 md:col-2 ">
+              <span className="p-float-label">
+                <Dropdown
+                  inputId="dropdown"
+                  value={selectedEstatus2Proforma}
+                  options={estadoEstatus2Proforma}
+                  onChange={onEstatus2Proforma}
+                  optionLabel="estatus2Proforma"
+                  className={classNames({
+                    'p-invalid': submitted && !selectedEstatus2Proforma
+                  })}
+                />
+                {submitted && !selectedEstatus2Proforma && (
+                  <small className="p-invalid">Estatus2 es requerido.</small>
+                )}
+                <label htmlFor="dropdown">Estatus2 proforma*</label>
+              </span>
             </div>
           </div>
         </div>

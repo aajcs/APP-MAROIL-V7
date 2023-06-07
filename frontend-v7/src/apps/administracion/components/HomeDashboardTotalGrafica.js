@@ -10,7 +10,6 @@ const HomeDashboardTotalGrafica = ({
   ingresoGastosPorCdco
 }) => {
   const { volumetrias } = useContext(VolumetriaContext)
-  console.log(ingresoGastosPorCdco)
   const [chartData, setChartData] = useState({})
   const [chartOptions, setChartOptions] = useState({})
   const auxOtro1 = []
@@ -117,8 +116,7 @@ const HomeDashboardTotalGrafica = ({
     }
 
     auxOtro2.push(...mesesNombre)
-    console.log(auxOtro1)
-    console.log(auxOtro2)
+
     setChartData({ ...chartData, labels: auxOtro2, datasets: auxOtro1 })
   }
   useEffect(() => {

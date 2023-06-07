@@ -2,7 +2,7 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable prefer-const */
 /* eslint-disable dot-notation */
-import React, { useState, useRef, useContext } from 'react'
+import React, { useState, useRef, useContext, useEffect } from 'react'
 import { classNames } from 'primereact/utils'
 
 import { Toast } from 'primereact/toast'
@@ -35,7 +35,6 @@ const CargaItemsProformaFrom = ({
     itemPrecioUnitario: 0,
     itemPrecioTotal: 0
   }
-  console.log(item)
   const { clasificacionServicios } = useContext(ClasificacionServicioContext)
   const { clasificacion3erNivels } = useContext(Clasificacion3erNivelContext)
   const { clasificacion4toNivels } = useContext(Clasificacion4toNivelContext)
@@ -69,7 +68,11 @@ const CargaItemsProformaFrom = ({
     { itemUnidad: 'ML' },
     { itemUnidad: 'Sg' }
   ]
-
+  useEffect(() => {
+    if (item.itemId) {
+      setSelectedUnidadItemsProforma({ itemUnidad: item.itemUnidad })
+    }
+  }, [item])
   const updateField = (data, field) => {
     setItem({
       ...item,
@@ -111,7 +114,6 @@ const CargaItemsProformaFrom = ({
     }
   }
   const onClasificacion3erNivel = (e) => {
-    console.log(e.value)
     // e.value
     //   ? (setSelectedClasificacion3erNivel(e.value),
     //     updateField(
@@ -137,7 +139,6 @@ const CargaItemsProformaFrom = ({
     }
   }
   const onClasificacion4toNivel = (e) => {
-    console.log(e.value)
     e.value
       ? (setSelectedClasificacion4toNivel(e.value),
         updateField2(
@@ -168,14 +169,20 @@ const CargaItemsProformaFrom = ({
   const saveItem = () => {
     setSubmitted(true)
 
-    if (item.itemDescripcion.trim()) {
-      console.log('aqui')
+    if (
+      item.itemClasificacionServicio !== null &&
+      item.itemClasificacion3erNivel !== null &&
+      item.itemClasificacion4toNivel !== null &&
+      item.itemDescripcion.trim() &&
+      item.itemUnidad !== null &&
+      item.itemCantidad !== 0 &&
+      item.itemPrecioUnitario !== 0
+    ) {
       let _items = [...items]
       let _item = { ...item }
 
       if (item.itemId) {
         const index = findIndexById(item.itemId)
-        console.log(index)
         _items[index] = _item
         toast.current.show({
           severity: 'success',

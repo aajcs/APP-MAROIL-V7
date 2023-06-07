@@ -16,7 +16,6 @@ const DivisionList = () => {
   const auth = AuthUse()
   const { divisions, findDivision, deleteDivision, loading } =
     useContext(DivisionContext)
-  console.log(divisions)
   const [division, setDivision] = useState(divisions)
   const [deleteDivisionDialog, setDeleteDivisionDialog] = useState(false)
   const [globalFilter, setGlobalFilter] = useState(null)

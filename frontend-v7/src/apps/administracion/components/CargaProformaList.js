@@ -11,20 +11,15 @@ import moment from 'moment'
 
 import CargaProformaForm from './CargaProformaForm'
 import AuthUse from '../../../auth/AuthUse'
-import { ItemsProformaContext } from '../contexts/ItemsProformaContext'
 
 import ItemsProformaForm from './ItemsProformaForm'
 const CargaProformaList = () => {
   const auth = AuthUse()
   const { proformas, findProforma, deleteProforma, loading } =
     useContext(ProformaContext)
-  console.log(proformas)
-  const { itemsProformas, findItemsProforma, deleteItemsProforma } =
-    useContext(ItemsProformaContext)
+
   const [proforma, setProforma] = useState(proformas)
-  const [itemsProforma, setItemsProforma] = useState(itemsProformas)
   const [deleteProformaDialog, setDeleteProformaDialog] = useState(false)
-  const [deleteProformaDialog2, setDeleteProformaDialog2] = useState(false)
   const [globalFilter, setGlobalFilter] = useState(null)
   const [isVisible, setIsVisible] = useState(false)
   const [isVisible2, setIsVisible2] = useState(false)
@@ -34,10 +29,6 @@ const CargaProformaList = () => {
   const saveProforma = (id) => {
     findProforma(id)
     setIsVisible(true)
-  }
-  const saveProforma2 = (id) => {
-    findItemsProforma(id)
-    setIsVisible2(true)
   }
 
   // cabecera de la tabla
@@ -50,11 +41,6 @@ const CargaProformaList = () => {
             icon="pi pi-plus"
             className="p-button-success mr-2"
             onClick={() => setIsVisible(true)}
-          />
-          <Button
-            label="Delete"
-            icon="pi pi-trash"
-            className="p-button-danger"
           />
         </div>
       </React.Fragment>
@@ -77,14 +63,14 @@ const CargaProformaList = () => {
     dt.current.exportCSV()
   }
 
-  const fechaProformaCreado = (rowData) => {
-    const fecha = moment(rowData.ProformaCreado)
-    return fecha.format('dddDD/MM/YY HH:mm')
+  const fechaControlProformaBody = (rowData) => {
+    const fecha = moment(rowData.fechaControlProforma)
+    return fecha.format('DD/MM/YY')
   }
-  const fechaProformaModificado = (rowData) => {
-    const fecha = moment(rowData.proformaModificado)
-    return fecha.format('dddDD/MM/YY HH:mm')
-  }
+  // const fechaProformaModificado = (rowData) => {
+  //   const fecha = moment(rowData.proformaModificado)
+  //   return fecha.format('dddDD/MM/YY')
+  // }
 
   const eliminarProforma = () => {
     deleteProforma(proforma.id)
@@ -93,16 +79,6 @@ const CargaProformaList = () => {
       severity: 'error',
       summary: 'Eliminar',
       detail: 'Proforma Eliminado',
-      life: 3000
-    })
-  }
-  const eliminarProforma2 = () => {
-    deleteItemsProforma(itemsProforma.id)
-    setDeleteProformaDialog2(false)
-    toast.current.show({
-      severity: 'error',
-      summary: 'Eliminar',
-      detail: 'ItemsProforma Eliminado',
       life: 3000
     })
   }
@@ -123,30 +99,10 @@ const CargaProformaList = () => {
       />
     </>
   )
-  const deleteProformaDialogFooter2 = (
-    <>
-      <Button
-        label="No"
-        icon="pi pi-times"
-        className="p-button-text"
-        onClick={() => setDeleteProformaDialog2(false)}
-      />
-      <Button
-        label="Si"
-        icon="pi pi-check"
-        className="p-button-text"
-        onClick={() => eliminarProforma2()}
-      />
-    </>
-  )
 
   const confirmDeleteProforma = (proformas) => {
     setProforma(proformas)
     setDeleteProformaDialog(true)
-  }
-  const confirmDeleteProforma2 = (proformas) => {
-    setItemsProforma(proformas)
-    setDeleteProformaDialog2(true)
   }
 
   const actionBodyTemplate = (rowData) => {
@@ -154,7 +110,7 @@ const CargaProformaList = () => {
       <div className="actions">
         <Button
           icon="pi pi-pencil"
-          className="p-button-rounded p-button-success mr-2 mb-2"
+          className="p-button-rounded p-button-success mr-1"
           onClick={() => saveProforma(rowData.id)}
         />
         {auth.user.faidUser.roles[0] === 'SUPERADMIN' && (
@@ -162,24 +118,6 @@ const CargaProformaList = () => {
             icon="pi pi-trash"
             className="p-button-rounded  p-button-danger"
             onClick={() => confirmDeleteProforma(rowData)}
-          />
-        )}
-      </div>
-    )
-  }
-  const actionBodyTemplate2 = (rowData) => {
-    return (
-      <div className="actions">
-        <Button
-          icon="pi pi-pencil"
-          className="p-button-rounded p-button-success mr-2 mb-2"
-          onClick={() => saveProforma2(rowData.id)}
-        />
-        {auth.user.faidUser.roles[0] === 'SUPERADMIN' && (
-          <Button
-            icon="pi pi-trash"
-            className="p-button-rounded  p-button-danger"
-            onClick={() => confirmDeleteProforma2(rowData)}
           />
         )}
       </div>
@@ -219,71 +157,76 @@ const CargaProformaList = () => {
       life: 3000
     })
   }
+  const formatCurrency = (value) => {
+    return value.toLocaleString('en-US', { style: 'currency', currency: 'USD' })
+  }
+
+  const itemPrecioUnitarioBodyTemplate = (rowData) => {
+    return formatCurrency(rowData.itemPrecioUnitario)
+  }
+  const itemPrecioTotalBodyTemplate = (rowData) => {
+    return formatCurrency(rowData.itemCantidad * rowData.itemPrecioUnitario)
+  }
   const rowExpansionTemplate = (data) => {
-    const itemsProformasFill = itemsProformas.filter(
-      (p) => p.proformaId && p.proformaId.id === data.id && p
-    )
-    console.log(data)
-    console.log(itemsProformas)
     return (
       <div className="orders-subtable">
-        <h5>Items Proforma {data.nombreBarco}</h5>
         <DataTable
-          value={itemsProformasFill}
-          responsiveLayout="scroll"
+          value={data.items}
+          // responsiveLayout="scroll"
           sortField="data.reporteCargaGOMModificado"
           sortOrder={-1}
         >
-          {(auth.user.faidUser.roles[0] === 'ADMIN' ||
-            auth.user.faidUser.roles[0] === 'OPERADOR' ||
-            auth.user.faidUser.roles[0] === 'SUPERADMIN') && (
-            <Column body={actionBodyTemplate2}></Column>
-          )}
-
-          <Column field="codigoItemsProforma" header="codigoItemsProforma" />
           <Column
-            field="descripcionItemsProforma"
-            header="descripcionItemsProforma"
-          />
+            field="itemId"
+            header="itemId"
+            className=" pt-0 pb-0"
+            hidden={true}
+          ></Column>
 
           <Column
-            field="fechaInicioItemsProforma"
-            header="fechaInicioItemsProforma"
-          />
+            field="itemClasificacionServicio"
+            header="Clasificacion Servicio"
+            className=" pt-0 pb-0"
+          ></Column>
           <Column
-            field="fechaFinItemsProforma"
-            header="fechaFinItemsProforma"
-          />
-          <Column field="unidadItemsProforma" header="unidadItemsProforma" />
+            field="itemClasificacion3erNivel"
+            header="itemClasificacion3erNivel"
+            className=" pt-0 pb-0"
+            hidden={true}
+          ></Column>
           <Column
-            field="cantidadItemsProforma"
-            header="cantidadItemsProforma"
-          />
+            field="itemClasificacion4toNivel"
+            header="Codigo"
+            className=" pt-0 pb-0"
+          ></Column>
           <Column
-            field="precioUnitarioItemsProforma"
-            header="precioUnitarioItemsProforma"
-          />
+            field="itemDescripcion"
+            header="Descripcion"
+            className=" pt-0 pb-0"
+          ></Column>
           <Column
-            field="precioTotalItemsProforma"
-            header="precioTotalItemsProforma"
-          />
+            field="itemUnidad"
+            header="Unidad"
+            className=" pt-0 pb-0"
+          ></Column>
           <Column
-            field="estatus1ItemsProforma"
-            header="estatus1ItemsProforma"
-          />
-          <Column
-            field="estatus2ItemsProforma"
-            header="estatus2ItemsProforma"
-          />
-          <Column field="proformaId.id" header="proformaId" />
+            field="itemCantidad"
+            header="Cantidad"
+            className=" pt-0 pb-0"
+          ></Column>
 
-          {/* <Column
-            field="reporteCargaGOMModificado"
-            body={reporteCargaGOMModificadoTemplate}
-            header="Carga GOM Modificado"
-            dataType="date"
-            sortable
-          /> */}
+          <Column
+            field="itemPrecioUnitario"
+            header="Precio Unitario"
+            body={itemPrecioUnitarioBodyTemplate}
+            className=" pt-0 pb-0"
+          ></Column>
+          <Column
+            field="itemPrecioTotal"
+            header="Precio Total"
+            body={itemPrecioTotalBodyTemplate}
+            className=" pt-0 pb-0"
+          ></Column>
         </DataTable>
       </div>
     )
@@ -328,6 +271,7 @@ const CargaProformaList = () => {
       ></Toolbar>
 
       <DataTable
+        ref={dt}
         value={proformas}
         expandedRows={expandedRows2}
         onRowToggle={(e) => setExpandedRows2(e.data)}
@@ -343,61 +287,58 @@ const CargaProformaList = () => {
         loading={loading}
       >
         <Column expander style={{ width: '3em' }} />
-        <Column body={actionBodyTemplate}></Column>
+        <Column
+          body={actionBodyTemplate}
+          className=" p-0"
+          style={{ minWidth: '6rem' }}
+        ></Column>
 
-        <Column field="codigoProforma" header="codigoProforma" sortable />
+        <Column field="codigoProforma" header="codigo Proforma" sortable />
         <Column
           field="proveedorId.nombreProveedor"
-          header="proveedorId"
+          header="Proveedor"
           sortable
         />
         <Column
           field="numeroControlProforma"
-          header="numeroControlProforma"
+          header="Numero Proforma"
           sortable
         />
         <Column
           field="fechaControlProforma"
-          header="fechaControlProforma"
+          header="Fecha Proforma"
           sortable
+          body={fechaControlProformaBody}
         />
-        <Column field="dominioId.nombreDominio" header="dominioId" sortable />
-        <Column
-          field="divisionId.nombreDivision"
-          header="divisionId"
-          sortable
-        />
+        <Column field="dominioId.nombreDominio" header="Dominio" sortable />
+        <Column field="divisionId.nombreDivision" header="Division" sortable />
         <Column
           field="dependenciaId.nombreDependencia"
-          header="dependenciaId"
+          header="Dependencia"
           sortable
         />
         <Column
           field="subDependenciaId.nombreSubDependencia"
-          header="subDependenciaId"
+          header="Sub Dependencia"
           sortable
         />
-        <Column field="usoFondoProforma" header="usoFondoProforma" />
+        <Column field="usoFondoProforma" header="Uso Fondo Proforma" />
         <Column
           field="actividadAsociadaId.nombreActividadAsociada"
-          header="actividadAsociadaId"
+          header="Actividad Asociada"
           sortable
         />
         <Column
           field="clasificacionServicioId.nombreClasificacionServicio"
-          header="clasificacionServicioId"
+          header="Clasificacion Servicio"
           sortable
         />
-        <Column field="ingresoProforma" header="ingresoProforma" sortable />
-        <Column field="egresoProforma" header="egresoProforma" sortable />
+
         <Column field="totalProforma" header="totalProforma" sortable />
-        <Column
-          field="descripcionProforma"
-          header="descripcionProforma"
-          sortable
-        />
-        <Column field="estatusProforma" header="estatusProforma" sortable />
-        <Column field="userCreatorId.id" header="userCreatorId" sortable />
+        <Column field="descripcionProforma" header="Descripcion" sortable />
+        <Column field="estatusProforma" header="Estatus Proforma" sortable />
+        <Column field="estatus2Proforma" header="Estatus2 Proforma" sortable />
+        {/* <Column field="userCreatorId.id" header="userCreatorId" sortable />
 
         <Column
           field="creadoProforma"
@@ -412,73 +353,8 @@ const CargaProformaList = () => {
           header="modificadoProforma"
           dataType="date"
           sortable
-        />
+        /> */}
       </DataTable>
-
-      {/* <DataTable
-        ref={dt}
-        value={proformas}
-        dataKey="id"
-        paginator
-        rows={10}
-        rowsPerPageOptions={[5, 10, 25]}
-        className="datatable-responsive"
-        selectionMode="single"
-        paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
-        currentPageReportTemplate="Muestra {first} a {last} de {totalRecords} Proformas"
-        globalFilter={globalFilter}
-        emptyMessage="No hay Proforma."
-        header={header}
-        sortField="ProformaCreado"
-        sortOrder={-1}
-        loading={loading}
-        responsiveLayout="scroll"
-        breakpoint="960px"
-      >
-        <Column body={actionBodyTemplate}></Column>
-
-        <Column field="codigoProforma" header="codigoProforma" />
-        <Column field="proveedorId.nombreProveedor" header="proveedorId" />
-        <Column field="numeroControlProforma" header="numeroControlProforma" />
-        <Column field="fechaControlProforma" header="fechaControlProforma" />
-        <Column field="dominioId.nombreDominio" header="dominioId" />
-        <Column field="divisionId.nombreDivision" header="divisionId" />
-        <Column
-          field="dependenciaId.nombreDependencia"
-          header="dependenciaId"
-        />
-        <Column
-          field="subDependenciaId.nombreSubDependencia"
-          header="subDependenciaId"
-        />
-        <Column
-          field="actividadAsociadaId.nombreActividadAsociada"
-          header="actividadAsociadaId"
-        />
-        <Column
-          field="clasificacionServicioId.nombreClasificacionServicio"
-          header="clasificacionServicioId"
-        />
-        <Column field="ingresoProforma" header="ingresoProforma" />
-        <Column field="egresoProforma" header="egresoProforma" />
-        <Column field="totalProforma" header="totalProforma" />
-        <Column field="descripcionProforma" header="descripcionProforma" />
-        <Column field="estatusProforma" header="estatusProforma" />
-        <Column field="userCreatorId.id" header="userCreatorId" />
-
-        <Column
-          field="creadoProforma"
-          body={fechaProformaCreado}
-          header="creadoProforma"
-          dataType="date"
-        />
-        <Column
-          field="modificadoProforma"
-          body={fechaProformaModificado}
-          header="modificadoProforma"
-          dataType="date"
-        />
-      </DataTable> */}
 
       <CargaProformaForm isVisible={isVisible} setIsVisible={setIsVisible} />
       <ItemsProformaForm isVisible={isVisible2} setIsVisible={setIsVisible2} />
@@ -500,27 +376,6 @@ const CargaProformaList = () => {
             <span>
               Esta seguro que quiere eliminar la Proforma{' '}
               <b>{proforma.nombreProforma}</b>?
-            </span>
-          )}
-        </div>
-      </Dialog>
-      <Dialog
-        visible={deleteProformaDialog2}
-        style={{ width: '450px' }}
-        header="Confirm"
-        modal
-        footer={deleteProformaDialogFooter2}
-        onHide={() => clearSelected()}
-      >
-        <div className="flex align-items-center justify-content-center">
-          <i
-            className="pi pi-exclamation-triangle mr-3"
-            style={{ fontSize: '2rem' }}
-          />
-          {itemsProforma && (
-            <span>
-              Esta seguro que quiere eliminar la ItemsProforma{' '}
-              <b>{itemsProforma.codigoItemsProforma}</b>?
             </span>
           )}
         </div>

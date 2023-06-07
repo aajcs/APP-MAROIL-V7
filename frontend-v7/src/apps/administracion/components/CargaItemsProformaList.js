@@ -4,7 +4,8 @@
 import React, { useState, useRef } from 'react'
 import { DataTable } from 'primereact/datatable'
 import { Column } from 'primereact/column'
-
+import { ColumnGroup } from 'primereact/columngroup'
+import { Row } from 'primereact/row'
 import { Toast } from 'primereact/toast'
 import { Button } from 'primereact/button'
 
@@ -122,11 +123,36 @@ const CargaItemsProformaList = ({ items, setItems }) => {
       />
     </React.Fragment>
   )
+  const totalDataPresupuestoSuma = () => {
+    // let cantidad = 0
+    // let precioUnitario = 0
+    let total = 0
+    for (const unitario of items) {
+      // precioUnitario += unitario.precioUnitarioDataPresupuesto
+      // cantidad += unitario.cantidadDataPresupuesto
+      total += unitario.itemCantidad * unitario.itemPrecioUnitario
+    }
+
+    return formatCurrency(total)
+  }
+  const footerGroup = (
+    <ColumnGroup>
+      <Row>
+        <Column
+          className=" pt-0 pb-0"
+          footer="Total:"
+          colSpan={7}
+          footerStyle={{ textAlign: 'right' }}
+        />
+        <Column className=" pt-0 pb-0" footer={totalDataPresupuestoSuma} />
+      </Row>
+    </ColumnGroup>
+  )
 
   return (
     <div>
       <Toast ref={toast} />
-      <div className="card">
+      <div className="card ">
         <DataTable
           ref={dt}
           value={items}
@@ -136,6 +162,7 @@ const CargaItemsProformaList = ({ items, setItems }) => {
           responsiveLayout="scroll"
           className="datatable-responsive"
           emptyMessage="Agregue un Item."
+          footerColumnGroup={footerGroup}
         >
           <Column
             body={actionBodyTemplate}

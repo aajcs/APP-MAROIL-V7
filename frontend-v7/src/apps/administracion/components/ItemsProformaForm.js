@@ -226,7 +226,6 @@ const ItemsProformaForm = (props) => {
     setItemsProformaData(initialItemsProformaForm)
   }
   const selectedCountryTemplate = (option, props) => {
-    console.log(option)
     if (option) {
       return (
         <div className="flex align-items-center">
@@ -240,7 +239,6 @@ const ItemsProformaForm = (props) => {
   }
 
   const countryOptionTemplate = (option) => {
-    console.log(option)
     return (
       <div className="flex align-items-center">
         <div className="mr-3">{option.codigoProforma}</div>{' '}

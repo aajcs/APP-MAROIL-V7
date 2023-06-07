@@ -71,6 +71,9 @@ const proformaSchema = new Schema(
     estatusProforma: {
       type: String
     },
+    estatus2Proforma: {
+      type: String
+    },
     items: [
       {
         itemId: {
