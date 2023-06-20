@@ -103,6 +103,7 @@ const ProformaContextProvider = (props) => {
         updateProforma,
         deleteProforma,
         editProforma,
+        setEditProforma,
         proformacargando,
         proformas,
         loading,

@@ -34,7 +34,8 @@
     "react-transition-group": "4.4.2",
     "sass": "1.49.8",
     "three": "0.138.3",
-    "web-vitals": "2.1.4"
+    "web-vitals": "2.1.4",
+    "xlsx": "^0.18.5"
   },
   "homepage": "https://app.maroil.com.ve/",
   "scripts": {

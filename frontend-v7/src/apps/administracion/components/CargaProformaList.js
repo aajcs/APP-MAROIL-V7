@@ -8,11 +8,13 @@ import { InputText } from 'primereact/inputtext'
 import { Toast } from 'primereact/toast'
 import { ProformaContext } from '../contexts/ProformaContext'
 import moment from 'moment'
-
+import { writeFile, utils } from 'xlsx'
+import { PDFViewer } from '@react-pdf/renderer'
 import CargaProformaForm from './CargaProformaForm'
 import AuthUse from '../../../auth/AuthUse'
 
 import ItemsProformaForm from './ItemsProformaForm'
+import CargaProformaRecibo from './CargaProformaRecibo'
 const CargaProformaList = () => {
   const auth = AuthUse()
   const { proformas, findProforma, deleteProforma, loading } =
@@ -24,6 +26,8 @@ const CargaProformaList = () => {
   const [isVisible, setIsVisible] = useState(false)
   const [isVisible2, setIsVisible2] = useState(false)
   const [expandedRows2, setExpandedRows2] = useState(null)
+  const [reciboCajaChicaDialog, setReciboCajaChicaDialog] = useState(false)
+
   const dt = useRef(null)
   const toast = useRef(null)
   const saveProforma = (id) => {
@@ -56,12 +60,195 @@ const CargaProformaList = () => {
           className="p-button-help"
           onClick={exportCSV}
         />
+        <Button
+          label="Export2"
+          icon="pi pi-upload"
+          className="p-button-help"
+          onClick={handleClick}
+        />
       </React.Fragment>
     )
   }
   const exportCSV = () => {
     dt.current.exportCSV()
   }
+  function exportToExcel(data) {
+    // Define las columnas de la hoja de cálculo
+    const columns = [
+      { header: 'Número de factura', key: 'invoiceNumber', width: 20 },
+      { header: 'Fecha', key: 'date', width: 15 },
+      { header: 'Cliente', key: 'client', width: 30 },
+      { header: 'Total', key: 'total', width: 15 },
+      { header: 'Item', key: 'item', width: 50 },
+      { header: 'Cantidad', key: 'quantity', width: 10 },
+      { header: 'Precio unitario', key: 'price', width: 15 },
+      { header: 'Subtotal', key: 'subtotal', width: 15 },
+
+      { header: 'codigo Proforma', key: 'codigoProforma', width: 15 },
+      // { header: 'Proveedor', key: 'proveedorId.nombreProveedor', width: 15 },
+      { header: 'Numero Proforma', key: 'numeroControlProforma', width: 15 },
+      { header: 'Fecha Proforma', key: 'fechaControlProforma', width: 15 },
+      { header: 'Dominio', key: 'dominioId.nombreDominio', width: 15 },
+      { header: 'Division', key: 'divisionId.nombreDivision', width: 15 },
+      {
+        header: 'Dependencia',
+        key: 'dependenciaId.nombreDependencia',
+        width: 15
+      },
+      {
+        header: 'Sub Dependencia',
+        key: 'subDependenciaId.nombreSubDependencia',
+        width: 15
+      },
+      { header: 'Uso Fondo Proforma', key: 'usoFondoProforma', width: 15 },
+      {
+        header: 'Actividad Asociada',
+        key: 'actividadAsociadaId.nombreActividadAsociada',
+        width: 15
+      },
+      {
+        header: 'Clasificacion Servicio',
+        key: 'clasificacionServicioId.nombreClasificacionServicio',
+        width: 15
+      },
+      { header: 'totalProforma', key: 'totalProforma', width: 15 },
+      { header: 'Descripcion', key: 'descripcionProforma', width: 15 },
+      { header: 'Estatus Proforma', key: 'estatusProforma', width: 15 },
+      { header: 'Estatus2 Proforma', key: 'estatus2Proforma', width: 15 }
+    ]
+
+    // Crea una hoja de cálculo y agrega los datos
+    const worksheet = utils.json_to_sheet(data)
+
+    // Agrega las columnas a la hoja de cálculo
+    worksheet['!cols'] = columns
+
+    // Crea un libro de Excel y agrega la hoja de cálculo
+    const workbook = utils.book_new()
+    utils.book_append_sheet(workbook, worksheet, 'Factura')
+
+    // Crea un archivo y descárgalo
+    writeFile(workbook, 'factura.xlsx')
+  }
+  function handleClick() {
+    const array = dt.current.props.value
+    const valor = dt.current.props.globalFilter || ''
+    const result = searchLike(array, valor)
+
+    // const data = [
+    //   {
+    //     invoiceNumber: '001',
+    //     date: '2023-06-08',
+    //     client: 'John Doe',
+    //     total: 100.0,
+    //     items: [
+    //       { item: 'Product 1', quantity: 2, price: 25.0, subtotal: 50.0 },
+    //       { item: 'Product 2', quantity: 1, price: 50.0, subtotal: 50.0 }
+    //     ]
+    //   },
+    //   {
+    //     invoiceNumber: '001',
+    //     date: '2023-06-08',
+    //     client: 'John Doe',
+    //     total: 100.0,
+    //     items: [
+    //       { item: 'Product 1', quantity: 2, price: 25.0, subtotal: 50.0 },
+    //       { item: 'Product 2', quantity: 1, price: 50.0, subtotal: 50.0 }
+    //     ]
+    //   }
+    // ]
+
+    // Crea una copia del objeto y agrega los items al objeto de salida
+    const output = []
+    const joder = result.forEach((item) => {
+      // item.proveedorId = item.proveedorId.nombreProveedor
+      // item.dominioId = item.dominioId.nombreDominio
+      // item.divisionId = item.divisionId.nombreDivision
+      // item.dependenciaId = item.dependenciaId.nombreDependencia
+      // item.subDependenciaId = item.subDependenciaId.nombreSubDependencia
+      // item.actividadAsociadaId =
+      //   item.actividadAsociadaId.nombreActividadAsociada
+      // item.clasificacionServicioId =
+      //   item.clasificacionServicioId.nombreClasificacionServicio
+      item.items.forEach((subItem) => {
+        const newItem = { ...item }
+        delete newItem.items
+        delete newItem.userCreatorId
+        delete newItem.ingresoProforma
+        delete newItem.egresoProforma
+        delete newItem.createdAt
+        delete newItem.updatedAt
+
+        newItem.proveedorId = newItem.proveedorId.nombreProveedor
+        newItem.dominioId = newItem.dominioId.nombreDominio
+        newItem.divisionId = newItem.divisionId.nombreDivision
+        newItem.dependenciaId = newItem.dependenciaId.nombreDependencia
+        newItem.subDependenciaId = newItem.subDependenciaId.nombreSubDependencia
+        newItem.actividadAsociadaId =
+          newItem.actividadAsociadaId.nombreActividadAsociada
+        newItem.clasificacionServicioId =
+          newItem.clasificacionServicioId.nombreClasificacionServicio
+        newItem.itemId = subItem.itemId
+        newItem.itemClasificacionServicio = subItem.itemClasificacionServicio
+        newItem.itemDescripcion = subItem.itemDescripcion
+        newItem.itemUnidad = subItem.itemUnidad
+        newItem.itemCantidad = subItem.itemCantidad
+        newItem.itemPrecioUnitario = subItem.itemPrecioUnitario
+        output.push(newItem)
+      })
+    })
+    console.log(joder)
+    exportToExcel(output)
+  }
+
+  function searchLike(array, value) {
+    const escapedValue = value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
+    const regex = new RegExp(escapedValue, 'gi')
+    const result = array.filter((item) => {
+      // Recorre todas las propiedades del objeto
+      for (const key in item) {
+        // Si la propiedad es de tipo string, busca el valor con la expresión regular
+        if (typeof item[key] === 'string' && item[key].match(regex) !== null) {
+          return true
+        }
+        // Si la propiedad es de tipo array, recorre los elementos del array
+        if (Array.isArray(item[key])) {
+          for (let i = 0; i < item[key].length; i++) {
+            if (
+              typeof item[key][i] === 'string' &&
+              item[key][i].match(regex) !== null
+            ) {
+              return true
+            }
+          }
+        }
+        // Si la propiedad es de tipo objeto, recorre los elementos del objeto
+        if (typeof item[key] === 'object') {
+          for (const subkey in item[key]) {
+            if (
+              typeof item[key][subkey] === 'string' &&
+              item[key][subkey].match(regex) !== null
+            ) {
+              return true
+            }
+          }
+        }
+      }
+      // Si no se encontró el valor en el objeto, devuelve false
+      return false
+    })
+    return result
+  }
+  const reciboCajaChicaDialogFooter = (
+    <>
+      <Button
+        label="No"
+        icon="pi pi-times"
+        className="p-button-text"
+        onClick={() => setReciboCajaChicaDialog(false)}
+      />
+    </>
+  )
 
   const fechaControlProformaBody = (rowData) => {
     const fecha = moment(rowData.fechaControlProforma)
@@ -104,7 +291,10 @@ const CargaProformaList = () => {
     setProforma(proformas)
     setDeleteProformaDialog(true)
   }
-
+  const imprimirRecibo = (rowData) => {
+    setProforma(rowData)
+    setReciboCajaChicaDialog(true)
+  }
   const actionBodyTemplate = (rowData) => {
     return (
       <div className="actions">
@@ -112,6 +302,11 @@ const CargaProformaList = () => {
           icon="pi pi-pencil"
           className="p-button-rounded p-button-success mr-1"
           onClick={() => saveProforma(rowData.id)}
+        />
+        <Button
+          icon="pi pi-print"
+          className="p-button-rounded p-button-raised p-button-text p-button-plain"
+          onClick={() => imprimirRecibo(rowData)}
         />
         {auth.user.faidUser.roles[0] === 'SUPERADMIN' && (
           <Button
@@ -158,7 +353,7 @@ const CargaProformaList = () => {
     })
   }
   const formatCurrency = (value) => {
-    return value.toLocaleString('en-US', { style: 'currency', currency: 'USD' })
+    return value.toLocaleString('de-DE', { style: 'currency', currency: 'USD' })
   }
 
   const itemPrecioUnitarioBodyTemplate = (rowData) => {
@@ -166,6 +361,9 @@ const CargaProformaList = () => {
   }
   const itemPrecioTotalBodyTemplate = (rowData) => {
     return formatCurrency(rowData.itemCantidad * rowData.itemPrecioUnitario)
+  }
+  const proformaPrecioTotalBodyTemplate = (rowData) => {
+    return formatCurrency(rowData.totalProforma)
   }
   const rowExpansionTemplate = (data) => {
     return (
@@ -334,7 +532,12 @@ const CargaProformaList = () => {
           sortable
         />
 
-        <Column field="totalProforma" header="totalProforma" sortable />
+        <Column
+          field="totalProforma"
+          header="Total Proforma"
+          body={proformaPrecioTotalBodyTemplate}
+          sortable
+        />
         <Column field="descripcionProforma" header="Descripcion" sortable />
         <Column field="estatusProforma" header="Estatus Proforma" sortable />
         <Column field="estatus2Proforma" header="Estatus2 Proforma" sortable />
@@ -379,6 +582,19 @@ const CargaProformaList = () => {
             </span>
           )}
         </div>
+      </Dialog>
+      <Dialog
+        visible={reciboCajaChicaDialog}
+        style={{ width: '100%', height: '90vh' }}
+        header="Confirm"
+        modal
+        footer={reciboCajaChicaDialogFooter}
+        onHide={() => setReciboCajaChicaDialog(false)}
+      >
+        <PDFViewer style={{ width: '100%', height: '90vh' }}>
+          {/* <ReciboCajaChicaPDF cajaChica={cajaChica} /> */}
+          <CargaProformaRecibo proforma={proforma} auth={auth} />
+        </PDFViewer>
       </Dialog>
     </>
   )

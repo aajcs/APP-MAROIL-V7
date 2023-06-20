@@ -1,4 +1,4 @@
-import CargaProformaList from '../components/CargaProformaList'
+import CargaInformacionPanelNew from '../components/CargaInformacionPanelNew'
 
 import ActividadAsociadaContextProvider from '../contexts/ActividadAsociadaContext'
 import Clasificacion3erNivelContextProvider from '../contexts/Clasificacion3erNivelContext'
@@ -29,7 +29,7 @@ export const CargaProformaPage = () => {
                           <Clasificacion4toNivelContextProvider>
                             <ProformaContextProvider>
                               <ItemsProformaContextProvider>
-                                <CargaProformaList />
+                                <CargaInformacionPanelNew />
                               </ItemsProformaContextProvider>
                             </ProformaContextProvider>
                           </Clasificacion4toNivelContextProvider>

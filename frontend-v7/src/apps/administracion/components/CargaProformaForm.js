@@ -44,7 +44,7 @@ const CargaProformaForm = (props) => {
     totalProforma: 0,
     descripcionProforma: '',
     estatusProforma: null,
-    estatus2Proforma: null,
+    estatus2Proforma: 'NO PAGADA',
     userCreatorId: null,
     creadoProforma: moment(),
     modificadoProforma: moment()
@@ -105,20 +105,29 @@ const CargaProformaForm = (props) => {
     today: 'Hoy',
     clear: 'Limpiar'
   })
-  const { createProforma, editProforma, updateProforma } =
-    useContext(ProformaContext)
+  const {
+    proformas,
+    createProforma,
+    editProforma,
+    setEditProforma,
+    updateProforma
+  } = useContext(ProformaContext)
   const { dominios } = useContext(DominioContext)
   const { divisions } = useContext(DivisionContext)
   const { dependencias } = useContext(DependenciaContext)
   const { subDependencias } = useContext(SubDependenciaContext)
+
   const { proveedors } = useContext(ProveedorContext)
   const { actividadAsociadas } = useContext(ActividadAsociadaContext)
   const { clasificacionServicios } = useContext(ClasificacionServicioContext)
 
   const { isVisible, setIsVisible } = props
   const [selectedProforma, setSelectedProforma] = useState(null)
-  const [selectedEstatus2Proforma, setSelectedEstatus2Proforma] = useState(null)
+  const [selectedEstatus2Proforma, setSelectedEstatus2Proforma] = useState({
+    estatus2Proforma: 'NO PAGADA'
+  })
   const [proformaData, setProformaData] = useState(initialProformaForm)
+
   const [selectedDominio, setSelectedDominio] = useState(null)
   const [selectedDivision, setSelectedDivision] = useState(null)
   const [selectedDependencia, setSelectedDependencia] = useState(null)
@@ -150,7 +159,7 @@ const CargaProformaForm = (props) => {
   const usoFondoProforma = [
     { usoFondoProforma: 'CONTINUIDAD OPERATIVA' },
     { usoFondoProforma: 'INVERSIÓN' },
-    { usoFondoProforma: 'GASTO OPERATIVO' }
+    { usoFondoProforma: 'GASTO ADMINISTRATIVO' }
   ]
   const onEstatusProforma = (e) => {
     setSelectedProforma(e.value)
@@ -192,7 +201,6 @@ const CargaProformaForm = (props) => {
       const divisionSelecEdit =
         editProforma.divisionId &&
         divisions.find((p) => p.id === editProforma.divisionId.id)
-      console.log(divisionSelecEdit)
       setSelectedDivision(divisionSelecEdit)
 
       const dependenciaSelecEdit =
@@ -253,7 +261,7 @@ const CargaProformaForm = (props) => {
     return total
   }
   // const formatCurrency = (value) => {
-  //   return value.toLocaleString('en-US', { style: 'currency', currency: 'USD' })
+  //   return value.toLocaleString('de-DE', { style: 'currency', currency: 'USD' })
   // }
   const onDominio = (e) => {
     // e.value
@@ -333,9 +341,26 @@ const CargaProformaForm = (props) => {
     // }
   }
   const onProveedor = (e) => {
+    console.log(proformas)
+
+    const proveedorCodigoInterno = proformas.filter(
+      (p) => p.proveedorId?.id === e.value?.id
+    )
+
+    console.log(proveedorCodigoInterno.length + 1)
+    const codigoAutomaticoProforma = `PF-${e.value?.codigoProveedor}-${
+      proveedorCodigoInterno.length + 1
+    }`
     e.value
-      ? (setSelectedProveedor(e.value), updateField(e.value.id, 'proveedorId'))
-      : (setSelectedProveedor(null), updateField(null, 'proveedorId'))
+      ? (setSelectedProveedor(e.value),
+        updateField2(
+          e.value.id,
+          'proveedorId',
+          codigoAutomaticoProforma,
+          'codigoProforma'
+        ))
+      : (setSelectedProveedor(null),
+        updateField2(null, 'proveedorId', '', 'codigoProforma'))
     // if (e.value) {
     //   const subProyectoFilter = subProyectos.filter(
     //     (p) => p.proyectoId?.id === e.value.id
@@ -349,6 +374,40 @@ const CargaProformaForm = (props) => {
     //   setSelectedPresupuesto(null)
     // }
   }
+  // const onNumeroControl = (e) => {
+  //   const codigoAutomaticoProforma = `PF-${selectedProveedor?.codigoProveedor}-${e.target.value}`
+  //   updateField2(
+  //     e.target.value,
+  //     'numeroControlProforma',
+  //     codigoAutomaticoProforma,
+  //     'codigoProforma'
+  //   )
+  //   // console.log(e.value?.codigoProveedor)
+  //   // const codigoAutomaticoProforma = `PF-${e.value?.codigoProveedor}-${proformaData.numeroControlProforma}`
+  //   // console.log(codigoAutomaticoProforma)
+  //   // e.value
+  //   //   ? (setSelectedProveedor(e.value),
+  //   //     updateField2(
+  //   //       e.value.id,
+  //   //       'proveedorId',
+  //   //       codigoAutomaticoProforma,
+  //   //       'codigoProforma'
+  //   //     ))
+  //   //   : (setSelectedProveedor(null),
+  //   //     updateField2(null, 'proveedorId', '', 'codigoProforma'))
+  //   // if (e.value) {
+  //   //   const subProyectoFilter = subProyectos.filter(
+  //   //     (p) => p.proyectoId?.id === e.value.id
+  //   //   )
+  //   //   setSelectedProyecto(e.value)
+  //   //   setSubProyecto(subProyectoFilter)
+  //   // } else {
+  //   //   setSelectedProyecto(null)
+  //   //   setSubProyecto(null)
+  //   //   setSelectedSubProyecto(null)
+  //   //   setSelectedPresupuesto(null)
+  //   // }
+  // }
   const onActividadAsociada = (e) => {
     e.value
       ? (setSelectedActividadAsociada(e.value),
@@ -393,11 +452,20 @@ const CargaProformaForm = (props) => {
       [field]: data
     })
   }
+  const updateField2 = (data, field, data2, field2) => {
+    setProformaData({
+      ...proformaData,
+      [field]: data,
+      [field2]: data2
+    })
+  }
 
   const saveProforma = () => {
     setSubmitted(true)
+
     if (
       proformaData.proveedorId !== null &&
+      // proformaData.codigoProforma.trim() &&
       proformaData.numeroControlProforma.trim() &&
       proformaData.fechaControlProforma !== null &&
       proformaData.dominioId !== null &&
@@ -412,6 +480,15 @@ const CargaProformaForm = (props) => {
       proformaData.estatus2Proforma !== null &&
       items.length !== 0
     ) {
+      if (
+        editProforma &&
+        editProforma?.estatusProforma === 'ESTIMADA (PROVISIÓN)' &&
+        proformaData?.estatusProforma !== 'ESTIMADA (PROVISIÓN)'
+      ) {
+        createProforma({ ...proformaData, items: items, id: null })
+        clearSelected()
+        return
+      }
       if (!editProforma) {
         createProforma({ ...proformaData, items: items })
       } else {
@@ -425,9 +502,6 @@ const CargaProformaForm = (props) => {
       setIsVisible(false)
       setSelectedProforma('')
       clearSelected()
-    } else {
-      console.log(proformaData)
-      console.log(items)
     }
   }
 
@@ -447,7 +521,9 @@ const CargaProformaForm = (props) => {
     setProformaData(initialProformaForm)
 
     setSelectedProforma(null)
-    setSelectedEstatus2Proforma(null)
+    setSelectedEstatus2Proforma({
+      estatus2Proforma: 'NO PAGADA'
+    })
     setDateControl(null)
     setDateFinal(null)
     setSelectedDominio(null)
@@ -464,6 +540,7 @@ const CargaProformaForm = (props) => {
     setDivision(divisions)
     setDependencia(dependencias)
     setSubDependencia(subDependencias)
+    setEditProforma(null)
   }
 
   const selectedDominiosTemplate = (option, props) => {
@@ -597,7 +674,7 @@ const CargaProformaForm = (props) => {
                 <InputText
                   value={proformaData.numeroControlProforma}
                   onChange={(e) =>
-                    updateField(e.target.value, 'numeroControlProforma')
+                    updateField2(e.target.value, 'numeroControlProforma')
                   }
                   className={classNames({
                     'p-invalid':
@@ -876,9 +953,9 @@ const CargaProformaForm = (props) => {
               <span className="p-float-label ">
                 <InputText
                   value={proformaData.codigoProforma}
-                  onChange={(e) =>
-                    updateField(e.target.value, 'codigoProforma')
-                  }
+                  // onChange={(e) =>
+                  //   updateField(e.target.value, 'codigoProforma')
+                  // }
                   className={classNames({
                     'p-invalid': submitted && !proformaData.codigoProforma
                   })}
@@ -919,7 +996,7 @@ const CargaProformaForm = (props) => {
                   })}
                   mode="currency"
                   currency="USD"
-                  locale="en-US"
+                  locale="de-DE"
                 />
 
                 {submitted && !proformaData.totalProforma && (

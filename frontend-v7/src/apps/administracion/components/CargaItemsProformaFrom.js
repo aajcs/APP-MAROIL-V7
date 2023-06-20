@@ -503,7 +503,7 @@ const CargaItemsProformaFrom = ({
                 maxFractionDigits={5}
                 mode="currency"
                 currency="USD"
-                locale="en-US"
+                locale="de-DE"
                 className={classNames({
                   'p-invalid': submitted && !item.itemPrecioUnitario
                 })}
