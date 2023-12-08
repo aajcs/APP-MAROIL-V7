@@ -4,6 +4,7 @@ import AuthUse from '../../../auth/AuthUse'
 
 export const MenuControl = () => {
   const auth = AuthUse()
+  console.log(auth.user.faidUser.nombre)
   const usersBloqueo = ['vina', 'psuarez']
   const userBloqueo = usersBloqueo.filter((x) => x === auth.user.faidUser.user)
 
@@ -43,10 +44,21 @@ export const MenuControl = () => {
           permi1: 'LECTURA',
           permi2: 'OPERADOR'
         },
-        {
+        (auth.user.faidUser.roles[0] !== 'CLIENTE' ||
+          auth.user.faidUser.nombre === 'CREC 10') && {
           label: 'CLIENTE CREC 10',
           icon: 'pi pi-fw pi-info-circle',
           to: '/apps/control/reportecargaGOMInfoCrec10',
+          permi: 'ADMIN',
+          permi2: 'OPERADOR',
+          permi3: 'CLIENTE'
+        },
+
+        (auth.user.faidUser.roles[0] !== 'CLIENTE' ||
+          auth.user.faidUser.nombre === 'ENDECO') && {
+          label: 'CLIENTE ENDECO',
+          icon: 'pi pi-fw pi-info-circle',
+          to: '/apps/control/reportecargaGOMInfoEndeco',
           permi: 'ADMIN',
           permi2: 'OPERADOR',
           permi3: 'CLIENTE'

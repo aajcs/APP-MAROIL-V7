@@ -31,6 +31,7 @@ import { ReporteCargaGOMInfoPageCrec10 } from '../pages/ReporteCargaGOMInfoPageC
 import { VolumetriaPage } from '../pages/VolumetriaPage'
 import { HistoricoBuquesPage } from '../pages/HistoricoBuquesPage'
 import { VolumetriaEstadisticaPage } from '../pages/VolumetriaEstadisticaPage'
+import { ReporteCargaGOMInfoPageEndeco } from '../pages/ReporteCargaGOMInfoPageEndeco'
 
 export default function appControlRouter() {
   const { staticMenuInactive, onToggleMenuClick } = useContext(ConfigContext)
@@ -100,6 +101,11 @@ export default function appControlRouter() {
               exact
               path="/apps/control/reportecargaGOMInfoCrec10"
               component={ReporteCargaGOMInfoPageCrec10}
+            />
+            <PrivateRoute
+              exact
+              path="/apps/control/reportecargaGOMInfoEndeco"
+              component={ReporteCargaGOMInfoPageEndeco}
             />
             <PrivateRoute
               exact

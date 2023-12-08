@@ -6,10 +6,24 @@ export default function PrivateRoute({ hasRole: role, ...rest }) {
   const { isLogged, user } = AuthUse()
 
   if (!isLogged()) return <Redirect to="/login" />
-  if (user.faidUser.roles[0] === 'CLIENTE') {
+  if (
+    user.faidUser.roles[0] === 'CLIENTE' &&
+    user.faidUser.nombre === 'CREC 10'
+  ) {
     return (
       <>
         <Redirect to="/apps/control/reportecargaGOMInfoCrec10" />
+        <Route {...rest} />
+      </>
+    )
+  }
+  if (
+    user.faidUser.roles[0] === 'CLIENTE' &&
+    user.faidUser.nombre === 'ENDECO'
+  ) {
+    return (
+      <>
+        <Redirect to="/apps/control/reportecargaGOMInfoEndeco" />
         <Route {...rest} />
       </>
     )

@@ -106,6 +106,7 @@ const OperacionesGOMBarcoForm = (props) => {
   const buqueCliente = [{ buqueCliente: 'MAROIL' }, { buqueCliente: 'PDVSA' }]
   const buqueClienteVenta = [
     { buqueClienteVenta: 'CREC 10' },
+    { buqueClienteVenta: 'ENDECO' },
     { buqueClienteVenta: 'SHIMSUPA' },
     { buqueClienteVenta: 'ATLAS' },
     { buqueClienteVenta: 'JRD' },
