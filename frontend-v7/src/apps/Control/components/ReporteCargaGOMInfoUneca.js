@@ -1,28 +1,15 @@
 /* eslint-disable multiline-ternary */
 import { useContext } from 'react'
+import { BarcoContext } from '../contexts/BarcoContext'
 import { Skeleton } from 'primereact/skeleton'
+import ReporteCargaGOMInfoCardUneca from './ReporteCargaGOMInfoCardUneca'
+import ProgramacionVentanaUneca from './ProgramacionVentanaUneca'
 
-import HomeCajaChica from './HomeCajaChica'
-// import IngresoGastoEstadistica from './IngresoGastoEstadistica'
-import { IngresoGastoContext } from '../contexts/IngresoGastoContext'
-import HomeDashboard from './HomeDashboard'
-import { CentroDeCostoAuxContext } from '../contexts/CentroDeCostoAuxContext'
-function HomeAdministracion() {
-  const { ingresoGastos } = useContext(IngresoGastoContext)
-  const { centroDeCostoAuxs } = useContext(CentroDeCostoAuxContext)
-  console.log(centroDeCostoAuxs)
-  centroDeCostoAuxs.sort((o1, o2) => {
-    if (o1.centroDeCostoAuxCreado > o2.centroDeCostoAuxCreado) {
-      return -1
-    } else if (o1.centroDeCostoAuxCreado < o2.centroDeCostoAuxCreado) {
-      return 1
-    } else {
-      return 0
-    }
-  })
+function ReporteCargaGOMInfoUneca() {
+  const { barcos } = useContext(BarcoContext)
   return (
     <>
-      {ingresoGastos.length === 0 ? (
+      {barcos.length === 0 ? (
         <div className="field col-12 lg:col-6 xl:col-4 pr-0">
           <div className="card custom-skeleton p-4">
             <div className="flex justify-content-between mt-3 mb-3">
@@ -57,22 +44,18 @@ function HomeAdministracion() {
           </div>
         </div>
       ) : (
-        <>
-          <div className="animate__animated animate__backInUp animate__slower">
-            <HomeDashboard
-              ingresoGastos={ingresoGastos}
-              centroDeCostoAuxs={centroDeCostoAuxs}
-            />
-          </div>
-          <div className="animate__animated animate__backInUp animate__slower">
-            <HomeCajaChica />
-          </div>
-          {/*
-          <IngresoGastoEstadistica /> */}
-        </>
+        barcos.map(
+          (barcos) =>
+            barcos.estatusBarco === 'OPERATIVO' &&
+            barcos.buqueClienteVenta === 'UNECA' &&
+            barcos.reporteCargaGOM.length !== 0 && (
+              <ReporteCargaGOMInfoCardUneca key={barcos.id} barcos={barcos} />
+            )
+        )
       )}
+      <ProgramacionVentanaUneca></ProgramacionVentanaUneca>
     </>
   )
 }
 
-export default HomeAdministracion
+export default ReporteCargaGOMInfoUneca

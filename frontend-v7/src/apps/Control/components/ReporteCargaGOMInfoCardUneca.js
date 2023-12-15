@@ -12,7 +12,7 @@ import { CargaBodegaContext } from '../contexts/CargaBodegaContext'
 import AuthUse from '../../../auth/AuthUse'
 // import barcoJPEG from '../assetsControl/barco.jpeg'
 
-function ReporteCargaGOMInfoCardEndeco({ barcos }) {
+function ReporteCargaGOMInfoCardUneca({ barcos }) {
   const { cargaBodegas } = useContext(CargaBodegaContext)
   const [displayResponsive, setDisplayResponsive] = useState(false)
   const [displayDetalleCarga, setDisplayDetalleCarga] = useState(false)
@@ -307,4 +307,4 @@ function ReporteCargaGOMInfoCardEndeco({ barcos }) {
   )
 }
 
-export default ReporteCargaGOMInfoCardEndeco
+export default ReporteCargaGOMInfoCardUneca

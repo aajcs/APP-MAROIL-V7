@@ -28,6 +28,17 @@ export default function PrivateRoute({ hasRole: role, ...rest }) {
       </>
     )
   }
+  if (
+    user.faidUser.roles[0] === 'CLIENTE' &&
+    user.faidUser.nombre === 'UNECA'
+  ) {
+    return (
+      <>
+        <Redirect to="/apps/control/reportecargaGOMInfoUneca" />
+        <Route {...rest} />
+      </>
+    )
+  }
   return (
     <div>
       <Route {...rest} />

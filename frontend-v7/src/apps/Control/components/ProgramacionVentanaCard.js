@@ -4,6 +4,7 @@ import React from 'react'
 import moment from 'moment'
 
 function ProgramacionVentanaCard({ events }) {
+  console.log(events)
   const consignatarioBuque = {
     MAROIL: '#2600ff',
     'MAROIL PRIORIDAD': '#08afff',
@@ -64,7 +65,11 @@ function ProgramacionVentanaCard({ events }) {
             style={{ height: '2.5rem', 'font-size': '0.8rem' }}
           >
             {new Intl.NumberFormat().format(events.toneladasNominadas)}{' '}
-            {' TM / '} {events.buqueCliente}
+            {' TM / '}
+            {events.buqueClienteVenta === 'ENDECO' ||
+            events.buqueClienteVenta === 'UNECA'
+              ? events.buqueClienteVenta
+              : events.buqueCliente}
           </div>
         </div>
         {/* <span className="text-green-500 font-medium">

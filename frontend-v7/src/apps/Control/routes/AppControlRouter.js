@@ -32,6 +32,7 @@ import { VolumetriaPage } from '../pages/VolumetriaPage'
 import { HistoricoBuquesPage } from '../pages/HistoricoBuquesPage'
 import { VolumetriaEstadisticaPage } from '../pages/VolumetriaEstadisticaPage'
 import { ReporteCargaGOMInfoPageEndeco } from '../pages/ReporteCargaGOMInfoPageEndeco'
+import { ReporteCargaGOMInfoPageUneca } from '../pages/ReporteCargaGOMInfoPageUneca'
 
 export default function appControlRouter() {
   const { staticMenuInactive, onToggleMenuClick } = useContext(ConfigContext)
@@ -106,6 +107,11 @@ export default function appControlRouter() {
               exact
               path="/apps/control/reportecargaGOMInfoEndeco"
               component={ReporteCargaGOMInfoPageEndeco}
+            />
+            <PrivateRoute
+              exact
+              path="/apps/control/reportecargaGOMInfoUneca"
+              component={ReporteCargaGOMInfoPageUneca}
             />
             <PrivateRoute
               exact

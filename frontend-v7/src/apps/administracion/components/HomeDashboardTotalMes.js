@@ -36,6 +36,7 @@ const HomeDashboardTotalMes = ({
   const ingresoGastosPorCdco = ingresoGastos.filter(
     (p) => p.centroDeCostoAuxId.id === centroDeCosto.id && p
   )
+  console.log(ingresoGastos)
 
   const totalGastosCdco = ingresoGastos
     .map(
@@ -43,6 +44,15 @@ const HomeDashboardTotalMes = ({
         p.centroDeCostoAuxId.id === centroDeCosto.id && p.egresoIngresoGasto
     )
     .reduce((a, b) => a + b, 0)
+  const totalGastosCdcoAdminMaroil = ingresoGastos
+    .map(
+      (p) =>
+        p.procesoAuxId?.id === '65748c89afc5555f3f9b20de' &&
+        p.centroDeCostoAuxId.id === centroDeCosto.id &&
+        p.egresoIngresoGasto
+    )
+    .reduce((a, b) => a + b, 0)
+  console.log(totalGastosCdcoAdminMaroil)
   const ingresoGastoMesActual = ingresoGastos.filter((p) =>
     moment(dateDashboard).isSame(p.fechaIngresoGasto, 'month')
   )

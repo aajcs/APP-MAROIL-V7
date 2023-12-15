@@ -38,7 +38,7 @@ const HomeDashboard = ({ ingresoGastos, centroDeCostoAuxs }) => {
         {centroDeCostoAuxs.map(
           (p) =>
             p.estatusCentroDeCosto === 'OPERATIVO' && (
-              <div className="field card col-12 lg:col-12 xl:col-8 ">
+              <div className="field card col-12 lg:col-12 xl:col-12 ">
                 <Tag
                   style={{
                     background: ubicacionBuqueTag(p.descripcionCentroDeCosto)

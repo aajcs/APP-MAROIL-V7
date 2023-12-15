@@ -63,6 +63,15 @@ export const MenuControl = () => {
           permi2: 'OPERADOR',
           permi3: 'CLIENTE'
         },
+        (auth.user.faidUser.roles[0] !== 'CLIENTE' ||
+          auth.user.faidUser.nombre === 'UNECA') && {
+          label: 'CLIENTE UNECA',
+          icon: 'pi pi-fw pi-info-circle',
+          to: '/apps/control/reportecargaGOMInfoUneca',
+          permi: 'ADMIN',
+          permi2: 'OPERADOR',
+          permi3: 'CLIENTE'
+        },
         {
           label: 'BUQUE 3D',
           icon: 'pi pi-fw pi-box',
