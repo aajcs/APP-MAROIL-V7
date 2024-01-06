@@ -1,17 +1,17 @@
 import ReporteCargaGOMContextProvider from '../contexts/ReporteCargaGOMContext'
 import BarcoContextProvider from '../contexts/BarcoContext'
 import CargaBodegaContextProvider from '../contexts/CargaBodegaContext'
-import ReporteCargaGOMInfoUneca from '../components/ReporteCargaGOMInfoUneca'
+import ReporteCargaGOMInfoAtlasOil from '../components/ReporteCargaGOMInfoAtlasOil'
 import ProgramacionVentanaContextProvider from '../contexts/ProgramacionVentanaContext'
 
-export const ReporteCargaGOMInfoPageUneca = () => {
+export const ReporteCargaGOMInfoPageAtlasOil = () => {
   return (
     <div className="grid">
       <BarcoContextProvider>
         <CargaBodegaContextProvider>
           <ProgramacionVentanaContextProvider>
             <ReporteCargaGOMContextProvider>
-              <ReporteCargaGOMInfoUneca />
+              <ReporteCargaGOMInfoAtlasOil />
             </ReporteCargaGOMContextProvider>
           </ProgramacionVentanaContextProvider>
         </CargaBodegaContextProvider>

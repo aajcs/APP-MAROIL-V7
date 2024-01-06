@@ -67,7 +67,10 @@ function ProgramacionVentanaCard({ events }) {
             {new Intl.NumberFormat().format(events.toneladasNominadas)}{' '}
             {' TM / '}
             {events.buqueClienteVenta === 'ENDECO' ||
-            events.buqueClienteVenta === 'UNECA'
+            events.buqueClienteVenta === 'ATLAS OIL' ||
+            events.buqueClienteVenta === 'UNECA' ||
+            events.buqueClienteVenta === 'INTERNATIONAL MATERIALS' ||
+            events.buqueClienteVenta === 'IRAN GARMENT COMPANY'
               ? events.buqueClienteVenta
               : events.buqueCliente}
           </div>

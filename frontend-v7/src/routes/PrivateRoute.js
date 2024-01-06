@@ -30,11 +30,44 @@ export default function PrivateRoute({ hasRole: role, ...rest }) {
   }
   if (
     user.faidUser.roles[0] === 'CLIENTE' &&
+    user.faidUser.nombre === 'ATLAS OIL'
+  ) {
+    return (
+      <>
+        <Redirect to="/apps/control/reportecargaGOMInfoAtlasOil" />
+        <Route {...rest} />
+      </>
+    )
+  }
+  if (
+    user.faidUser.roles[0] === 'CLIENTE' &&
+    user.faidUser.nombre === 'IRAN GARMENT COMPANY'
+  ) {
+    return (
+      <>
+        <Redirect to="/apps/control/reportecargaGOMInfoIranGarmentCompany" />
+        <Route {...rest} />
+      </>
+    )
+  }
+  if (
+    user.faidUser.roles[0] === 'CLIENTE' &&
     user.faidUser.nombre === 'UNECA'
   ) {
     return (
       <>
         <Redirect to="/apps/control/reportecargaGOMInfoUneca" />
+        <Route {...rest} />
+      </>
+    )
+  }
+  if (
+    user.faidUser.roles[0] === 'CLIENTE' &&
+    user.faidUser.nombre === 'INTERNATIONAL MATERIALS'
+  ) {
+    return (
+      <>
+        <Redirect to="/apps/control/reportecargaGOMInfoInternationalMaterials" />
         <Route {...rest} />
       </>
     )

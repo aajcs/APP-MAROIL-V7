@@ -33,6 +33,9 @@ import { HistoricoBuquesPage } from '../pages/HistoricoBuquesPage'
 import { VolumetriaEstadisticaPage } from '../pages/VolumetriaEstadisticaPage'
 import { ReporteCargaGOMInfoPageEndeco } from '../pages/ReporteCargaGOMInfoPageEndeco'
 import { ReporteCargaGOMInfoPageUneca } from '../pages/ReporteCargaGOMInfoPageUneca'
+import { ReporteCargaGOMInfoPageInternationalMaterials } from '../pages/ReporteCargaGOMInfoPageInternationalMaterials'
+import { ReporteCargaGOMInfoPageIranGarmentCompany } from '../pages/ReporteCargaGOMInfoPageUnecaIranGarmentCompany'
+import { ReporteCargaGOMInfoPageAtlasOil } from '../pages/ReporteCargaGOMInfoPageEndecoAtlasOil'
 
 export default function appControlRouter() {
   const { staticMenuInactive, onToggleMenuClick } = useContext(ConfigContext)
@@ -110,8 +113,23 @@ export default function appControlRouter() {
             />
             <PrivateRoute
               exact
+              path="/apps/control/reportecargaGOMInfoAtlasOil"
+              component={ReporteCargaGOMInfoPageAtlasOil}
+            />
+            <PrivateRoute
+              exact
+              path="/apps/control/reportecargaGOMInfoIranGarmentCompany"
+              component={ReporteCargaGOMInfoPageIranGarmentCompany}
+            />
+            <PrivateRoute
+              exact
               path="/apps/control/reportecargaGOMInfoUneca"
               component={ReporteCargaGOMInfoPageUneca}
+            />
+            <PrivateRoute
+              exact
+              path="/apps/control/reportecargaGOMInfoInternationalMaterials"
+              component={ReporteCargaGOMInfoPageInternationalMaterials}
             />
             <PrivateRoute
               exact

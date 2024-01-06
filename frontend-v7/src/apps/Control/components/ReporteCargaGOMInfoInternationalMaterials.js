@@ -2,12 +2,11 @@
 import { useContext } from 'react'
 import { BarcoContext } from '../contexts/BarcoContext'
 import { Skeleton } from 'primereact/skeleton'
-import ReporteCargaGOMInfoCardUneca from './ReporteCargaGOMInfoCardUneca'
-import ProgramacionVentanaUneca from './ProgramacionVentanaUneca'
+import ReporteCargaGOMInfoCardInternationalMaterials from './ReporteCargaGOMInfoCardInternationalMaterials'
+import ProgramacionVentanaInternationalMaterials from './ProgramacionVentanaInternationalMaterials'
 
-function ReporteCargaGOMInfoUneca() {
+function ReporteCargaGOMInfoInternationalMaterials() {
   const { barcos } = useContext(BarcoContext)
-  console.log(barcos)
   return (
     <>
       {barcos.length === 0 ? (
@@ -48,15 +47,18 @@ function ReporteCargaGOMInfoUneca() {
         barcos.map(
           (barcos) =>
             barcos.estatusBarco === 'OPERATIVO' &&
-            barcos.buqueClienteVenta === 'UNECA' &&
+            barcos.buqueClienteVenta === 'INTERNATIONAL MATERIALS' &&
             barcos.reporteCargaGOM.length !== 0 && (
-              <ReporteCargaGOMInfoCardUneca key={barcos.id} barcos={barcos} />
+              <ReporteCargaGOMInfoCardInternationalMaterials
+                key={barcos.id}
+                barcos={barcos}
+              />
             )
         )
       )}
-      <ProgramacionVentanaUneca></ProgramacionVentanaUneca>
+      <ProgramacionVentanaInternationalMaterials></ProgramacionVentanaInternationalMaterials>
     </>
   )
 }
 
-export default ReporteCargaGOMInfoUneca
+export default ReporteCargaGOMInfoInternationalMaterials

@@ -64,10 +64,37 @@ export const MenuControl = () => {
           permi3: 'CLIENTE'
         },
         (auth.user.faidUser.roles[0] !== 'CLIENTE' ||
+          auth.user.faidUser.nombre === 'ATLAS OIL') && {
+          label: 'CLIENTE ATLAS OIL',
+          icon: 'pi pi-fw pi-info-circle',
+          to: '/apps/control/reportecargaGOMInfoAtlasOil',
+          permi: 'ADMIN',
+          permi2: 'OPERADOR',
+          permi3: 'CLIENTE'
+        },
+        (auth.user.faidUser.roles[0] !== 'CLIENTE' ||
+          auth.user.faidUser.nombre === 'IRAN GARMENT COMPANY') && {
+          label: 'CLIENTE IRAN GARMENT COMPANY',
+          icon: 'pi pi-fw pi-info-circle',
+          to: '/apps/control/reportecargaGOMInfoIranGarmentCompany',
+          permi: 'ADMIN',
+          permi2: 'OPERADOR',
+          permi3: 'CLIENTE'
+        },
+        (auth.user.faidUser.roles[0] !== 'CLIENTE' ||
           auth.user.faidUser.nombre === 'UNECA') && {
           label: 'CLIENTE UNECA',
           icon: 'pi pi-fw pi-info-circle',
           to: '/apps/control/reportecargaGOMInfoUneca',
+          permi: 'ADMIN',
+          permi2: 'OPERADOR',
+          permi3: 'CLIENTE'
+        },
+        (auth.user.faidUser.roles[0] !== 'CLIENTE' ||
+          auth.user.faidUser.nombre === 'INTERNATIONAL MATERIALS') && {
+          label: 'CLIENTE INTERNATIONAL MATERIALS',
+          icon: 'pi pi-fw pi-info-circle',
+          to: '/apps/control/reportecargaGOMInfoInternationalMaterials',
           permi: 'ADMIN',
           permi2: 'OPERADOR',
           permi3: 'CLIENTE'
