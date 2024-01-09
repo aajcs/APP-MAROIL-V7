@@ -209,6 +209,8 @@ const OperacionesGOMList = () => {
           <Column field="tasaDeCargaGOM" header="Tasa De Carga GOM" />
           <Column field="etc" header="etc" />
           <Column field="comentariosGOM" header="Comentarios GOM" />
+          <Column field="climaGOM" header="Clima GOM" />
+          <Column field="vientoGOM" header="Viento GOM" />
           <Column field="observacionesGOM" header="Observaciones GOM" />
 
           <Column

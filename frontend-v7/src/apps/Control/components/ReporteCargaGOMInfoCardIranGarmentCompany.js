@@ -223,6 +223,22 @@ function ReporteCargaGOMInfoCardIranGarmentCompany({ barcos }) {
                 reporteCargaGOM[ultimoRegistro].tasaDeCargaGOM}{' '}
               Tm/h
             </span>
+          </h6>{' '}
+          <h6 className="card-text mt-0 mb-2">
+            Clima:
+            <span className=" font-medium">
+              {' '}
+              {reporteCargaGOM[ultimoRegistro] &&
+                reporteCargaGOM[ultimoRegistro].climaGOM}
+            </span>
+          </h6>
+          <h6 className="card-text mt-0 mb-2">
+            Viento:
+            <span className=" font-medium">
+              {' '}
+              {reporteCargaGOM[ultimoRegistro] &&
+                reporteCargaGOM[ultimoRegistro].vientoGOM}
+            </span>
           </h6>
           <h6 className="card-text mt-0 mb-2">
             ETC:

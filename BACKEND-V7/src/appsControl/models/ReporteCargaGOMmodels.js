@@ -33,6 +33,15 @@ const reporteCargaGOMSchema = new Schema(
     observacionesGOM: {
       type: String
     },
+    climaGOM: {
+      type: String
+    },
+    vientoGOM: {
+      type: String
+    },
+    mareaGOM: {
+      type: String
+    },
     reporteCargaGOMCreado: {
       type: Date,
       default: moment()

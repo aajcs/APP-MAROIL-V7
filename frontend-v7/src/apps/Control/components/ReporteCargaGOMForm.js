@@ -29,6 +29,9 @@ const ReporteCargaGOMForm = (props) => {
     etc: '',
     comentariosGOM: '',
     observacionesGOM: '',
+    climaGOM: '',
+    vientoGOM: '',
+    mareaGOM: '',
     reporteCargaGOMCreado: moment(),
     reporteCargaGOMModificado: moment()
   }
@@ -98,10 +101,10 @@ const ReporteCargaGOMForm = (props) => {
     selectedubicacionBuqueReporteCargaGOM,
     setSelectedubicacionBuqueReporteCargaGOM
   ] = useState(null)
+  const [selectedClimaGOM, setSelectedClimaGOM] = useState(null)
   const [reporteCargaGOMData, setReporteCargaGOMData] = useState(
     initialReporteCargaGOMForm
   )
-  console.log(reporteCargaGOMData)
   const [isPuestoTerminalVisible, setPuestoTerminalIsVisible] = useState(false)
   const [selectedPuestoTerminal, setSelectedPuestoTerminal] = useState(null)
 
@@ -126,6 +129,16 @@ const ReporteCargaGOMForm = (props) => {
     { name: 'PETRO SAN FELIX' },
     { name: 'BUQUES FONDEADO' },
     { name: 'PROXIMOS BUQUES' }
+  ]
+  const climaGOMGOM = [
+    { name: 'Parcialmente soleado' },
+    { name: 'Mayormente nublado' },
+    { name: 'Nublado' },
+    { name: 'Vientos Fuertes' },
+    { name: 'Despejado' },
+    { name: 'Soleado' },
+    { name: 'Tormentas aisladas' },
+    { name: 'Parcialmente nublado' }
   ]
   const onuBarcoIDGOM = (e) => {
     setSelectedBarcoIDGOM(e.value)
@@ -241,6 +254,10 @@ const ReporteCargaGOMForm = (props) => {
       ? setPuestoTerminalIsVisible(true)
       : setPuestoTerminalIsVisible(false)
   }
+  const onClimaGOM = (e) => {
+    setSelectedClimaGOM(e.value)
+    updateField(e.value.name, 'climaGOM')
+  }
   const toast = useRef(null)
 
   useEffect(() => {
@@ -248,6 +265,9 @@ const ReporteCargaGOMForm = (props) => {
       setReporteCargaGOMData(editReporteCargaGOM)
       setSelectedubicacionBuqueReporteCargaGOM({
         name: editReporteCargaGOM.ubicacionBuque
+      })
+      setSelectedClimaGOM({
+        name: editReporteCargaGOM.climaGOM
       })
       if (editReporteCargaGOM.ubicacionBuque === 'MAROIL TERMINAL') {
         setPuestoTerminalIsVisible(true)
@@ -452,6 +472,26 @@ const ReporteCargaGOMForm = (props) => {
             />
             <label>Comentarios GOM:</label>
           </div>{' '}
+          <br />
+          <div className="formgrid grid">
+            <div className="field col-12 md:col-6">
+              <h5>Clima</h5>
+              <Dropdown
+                value={selectedClimaGOM}
+                options={climaGOMGOM}
+                onChange={onClimaGOM}
+                optionLabel="name"
+                placeholder="Seleccione el clima"
+              />
+            </div>
+            <div className="p-float-label field col-12 md:col-6">
+              <h5>Viento</h5>
+              <InputText
+                value={reporteCargaGOMData.vientoGOM}
+                onChange={(e) => updateField(e.target.value, 'vientoGOM')}
+              />
+            </div>
+          </div>
           <br />
           <div className="p-float-label">
             <InputText

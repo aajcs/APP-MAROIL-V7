@@ -16,6 +16,9 @@ reporteCargaGOMCtrl.createReporteCargaGOM = async (req, res) => {
     etc,
     comentariosGOM,
     observacionesGOM,
+    climaGOM,
+    vientoGOM,
+    mareaGOM,
     reporteCargaGOMCreado,
     reporteCargaGOMModificado
   } = req.body
@@ -38,6 +41,9 @@ reporteCargaGOMCtrl.createReporteCargaGOM = async (req, res) => {
     etc,
     comentariosGOM,
     observacionesGOM,
+    climaGOM,
+    vientoGOM,
+    mareaGOM,
     reporteCargaGOMCreado,
     reporteCargaGOMModificado
   })
@@ -121,6 +127,9 @@ reporteCargaGOMCtrl.updateReporteCargaGOM = async (req, res) => {
     etc,
     comentariosGOM,
     observacionesGOM,
+    climaGOM,
+    vientoGOM,
+    mareaGOM,
     reporteCargaGOMCreado,
     reporteCargaGOMModificado
   } = req.body
@@ -140,6 +149,9 @@ reporteCargaGOMCtrl.updateReporteCargaGOM = async (req, res) => {
         etc,
         comentariosGOM,
         observacionesGOM,
+        climaGOM,
+        vientoGOM,
+        mareaGOM,
         reporteCargaGOMCreado,
         reporteCargaGOMModificado
       },

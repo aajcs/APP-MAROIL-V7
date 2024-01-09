@@ -255,6 +255,8 @@ const ReporteCargaGOMList = () => {
           <Column field="tasaDeCargaGOM" header="tasaDeCargaGOM" />
           <Column field="etc" header="etc" />
           <Column field="comentariosGOM" header="comentarios GOM" />
+          <Column field="climaGOM" header="Clima GOM" />
+          <Column field="vientoGOM" header="Viento GOM" />
           <Column field="observacionesGOM" header="observaciones GOM" />
           <Column
             field="reporteCargaGOMCreado"
