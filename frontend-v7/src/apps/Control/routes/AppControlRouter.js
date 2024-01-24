@@ -36,6 +36,7 @@ import { ReporteCargaGOMInfoPageUneca } from '../pages/ReporteCargaGOMInfoPageUn
 import { ReporteCargaGOMInfoPageInternationalMaterials } from '../pages/ReporteCargaGOMInfoPageInternationalMaterials'
 import { ReporteCargaGOMInfoPageIranGarmentCompany } from '../pages/ReporteCargaGOMInfoPageUnecaIranGarmentCompany'
 import { ReporteCargaGOMInfoPageAtlasOil } from '../pages/ReporteCargaGOMInfoPageEndecoAtlasOil'
+import { ReporteCargaGOMInfoPageRezelCatalysts } from '../pages/ReporteCargaGOMInfoPageRezelCatalysts'
 
 export default function appControlRouter() {
   const { staticMenuInactive, onToggleMenuClick } = useContext(ConfigContext)
@@ -110,6 +111,11 @@ export default function appControlRouter() {
               exact
               path="/apps/control/reportecargaGOMInfoEndeco"
               component={ReporteCargaGOMInfoPageEndeco}
+            />
+            <PrivateRoute
+              exact
+              path="/apps/control/reportecargaGOMInfoRezelCatalysts"
+              component={ReporteCargaGOMInfoPageRezelCatalysts}
             />
             <PrivateRoute
               exact

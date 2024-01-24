@@ -30,6 +30,17 @@ export default function PrivateRoute({ hasRole: role, ...rest }) {
   }
   if (
     user.faidUser.roles[0] === 'CLIENTE' &&
+    user.faidUser.nombre === 'REZEL CATALYSTS'
+  ) {
+    return (
+      <>
+        <Redirect to="/apps/control/reportecargaGOMInfoRezelCatalysts" />
+        <Route {...rest} />
+      </>
+    )
+  }
+  if (
+    user.faidUser.roles[0] === 'CLIENTE' &&
     user.faidUser.nombre === 'ATLAS OIL'
   ) {
     return (

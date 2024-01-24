@@ -64,6 +64,15 @@ export const MenuControl = () => {
           permi3: 'CLIENTE'
         },
         (auth.user.faidUser.roles[0] !== 'CLIENTE' ||
+          auth.user.faidUser.nombre === 'REZEL CATALYSTS') && {
+          label: 'CLIENTE REZEL CATALYSTS',
+          icon: 'pi pi-fw pi-info-circle',
+          to: '/apps/control/reportecargaGOMInfoRezelCatalysts',
+          permi: 'ADMIN',
+          permi2: 'OPERADOR',
+          permi3: 'CLIENTE'
+        },
+        (auth.user.faidUser.roles[0] !== 'CLIENTE' ||
           auth.user.faidUser.nombre === 'ATLAS OIL') && {
           label: 'CLIENTE ATLAS OIL',
           icon: 'pi pi-fw pi-info-circle',

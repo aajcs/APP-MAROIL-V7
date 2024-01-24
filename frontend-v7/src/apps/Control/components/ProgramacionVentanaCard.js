@@ -67,6 +67,7 @@ function ProgramacionVentanaCard({ events }) {
             {new Intl.NumberFormat().format(events.toneladasNominadas)}{' '}
             {' TM / '}
             {events.buqueClienteVenta === 'ENDECO' ||
+            events.buqueClienteVenta === 'REZEL CATALYSTS' ||
             events.buqueClienteVenta === 'ATLAS OIL' ||
             events.buqueClienteVenta === 'UNECA' ||
             events.buqueClienteVenta === 'INTERNATIONAL MATERIALS' ||
