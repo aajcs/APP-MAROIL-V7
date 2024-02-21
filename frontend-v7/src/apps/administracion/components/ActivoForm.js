@@ -109,6 +109,7 @@ const ActivoForm = (props) => {
     { name: 'China', code: 'CN' },
     { name: 'India', code: 'IN' },
     { name: 'Brazil', code: 'BR' },
+    { name: 'Jordania', code: 'JO' },
     { name: 'Australia', code: 'AU' },
     { name: 'Egypt', code: 'EG' },
     { name: 'France', code: 'FR' },

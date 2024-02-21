@@ -7,16 +7,14 @@ const {
   createUsuario,
   getUsuario,
   deleteUsuario,
-  updateUsuario
+  updateUsuario,
+  validarTokenUsuario
 } = require('../controllers/UsuarioControlles')
 const auth = require('../middlewares/authMiddleware')
 const { isAdmin, isSuperAdmin } = require('../middlewares/RolesMiddleware')
 
-router
-  .route('/')
-  .get(auth, isAdmin, getUsuarios)
-  .post(auth, isAdmin, createUsuario)
-router.route('/login').post(login)
+router.route('/').get(auth, isAdmin, getUsuarios).post(createUsuario)
+router.route('/login').post(login).get(auth, validarTokenUsuario)
 router
   .route('/:id')
   .get(auth, isAdmin, getUsuario)

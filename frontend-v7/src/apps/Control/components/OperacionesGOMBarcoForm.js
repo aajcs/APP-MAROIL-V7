@@ -107,6 +107,7 @@ const OperacionesGOMBarcoForm = (props) => {
   const buqueClienteVenta = [
     { buqueClienteVenta: 'CREC 10' },
     { buqueClienteVenta: 'ENDECO' },
+    { buqueClienteVenta: 'SUPERIOR QUANTITY SDN BHD' },
     { buqueClienteVenta: 'REZEL CATALYSTS' },
     { buqueClienteVenta: 'ATLAS OIL' },
     { buqueClienteVenta: 'IRAN GARMENT COMPANY' },
@@ -132,6 +133,7 @@ const OperacionesGOMBarcoForm = (props) => {
     { name: 'China', code: 'CN' },
     { name: 'India', code: 'IN' },
     { name: 'Brazil', code: 'BR' },
+    { name: 'Jordania', code: 'JO' },
     { name: 'Senegal', code: 'SN' },
     { name: 'Cyprus', code: 'CY' },
     { name: 'Grecia', code: 'GR' },

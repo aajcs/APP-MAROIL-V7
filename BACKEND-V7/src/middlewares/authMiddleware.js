@@ -15,7 +15,8 @@ const authMiddleware = async (req, res, next) => {
           next()
         } else {
           return res.status(400).json({
-            status: false
+            status: false,
+            message: 'No existe el usuario.'
           })
         }
       } else {

@@ -13,7 +13,7 @@ import AuthUse from '../../../auth/AuthUse'
 import ClimaVientoGOMInfoCard from './ClimaVientoGOMInfoCard'
 // import barcoJPEG from '../assetsControl/barco.jpeg'
 
-function ReporteCargaGOMInfoCardEndeco({ barcos }) {
+function ReporteCargaGOMInfoCardSuperiorQuantitySDNBHD({ barcos }) {
   const { cargaBodegas } = useContext(CargaBodegaContext)
   const [displayResponsive, setDisplayResponsive] = useState(false)
   const [displayDetalleCarga, setDisplayDetalleCarga] = useState(false)
@@ -226,22 +226,6 @@ function ReporteCargaGOMInfoCardEndeco({ barcos }) {
             </span>
           </h6>{' '}
           <h6 className="card-text mt-0 mb-2">
-            Clima:
-            <span className=" font-medium">
-              {' '}
-              {reporteCargaGOM[ultimoRegistro] &&
-                reporteCargaGOM[ultimoRegistro].climaGOM}
-            </span>
-          </h6>
-          <h6 className="card-text mt-0 mb-2">
-            Viento:
-            <span className=" font-medium">
-              {' '}
-              {reporteCargaGOM[ultimoRegistro] &&
-                reporteCargaGOM[ultimoRegistro].vientoGOM}
-            </span>
-          </h6>
-          <h6 className="card-text mt-0 mb-2">
             ETC:
             <span className=" font-medium">
               {' '}
@@ -337,4 +321,4 @@ function ReporteCargaGOMInfoCardEndeco({ barcos }) {
   )
 }
 
-export default ReporteCargaGOMInfoCardEndeco
+export default ReporteCargaGOMInfoCardSuperiorQuantitySDNBHD

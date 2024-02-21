@@ -25,17 +25,18 @@ const VolumetriaEstadistica = () => {
     diciembre: 0
   }
   const { volumetrias } = useContext(VolumetriaContext)
-  const [anoVisual, setAnoVisual] = useState(2023)
-  const [totalVolumenTodo, setTotalVolumenTodo] = useState(2023)
+  const [anoVisual, setAnoVisual] = useState(2024)
+  const [totalVolumenTodo, setTotalVolumenTodo] = useState(2024)
 
   const [ingresoGastoData, setIngresoGastoData] = useState(initialIngresoGasto)
   const [selectedEstadoAno, setSelectedEstadoAno] = useState({
-    anoActual: '2023'
+    anoActual: '2024'
   })
   const estadoAno = [
     { anoActual: '2021' },
     { anoActual: '2022' },
-    { anoActual: '2023' }
+    { anoActual: '2023' },
+    { anoActual: '2024' }
   ]
   const onEstatusPresupuesto = (e) => {
     setSelectedEstadoAno(e.value)

@@ -10,6 +10,7 @@ import { Button } from 'primereact/button'
 import BarChartDemo from './BarChart'
 import { CargaBodegaContext } from '../contexts/CargaBodegaContext'
 import AuthUse from '../../../auth/AuthUse'
+import ClimaVientoGOMInfoCard from './ClimaVientoGOMInfoCard'
 // import barcoJPEG from '../assetsControl/barco.jpeg'
 
 function ReporteCargaGOMInfoCard({ barcos }) {
@@ -226,7 +227,7 @@ function ReporteCargaGOMInfoCard({ barcos }) {
               Tm/h
             </span>
           </h6>
-          <h6 className="card-text mt-0 mb-2">
+          {/* <h6 className="card-text mt-0 mb-2">
             Clima:
             <span className=" font-medium">
               {' '}
@@ -241,7 +242,7 @@ function ReporteCargaGOMInfoCard({ barcos }) {
               {reporteCargaGOM[ultimoRegistro] &&
                 reporteCargaGOM[ultimoRegistro].vientoGOM}
             </span>
-          </h6>
+          </h6> */}
           <h6 className="card-text mt-0 mb-2">
             ETC:
             <span className=" font-medium">
@@ -318,6 +319,19 @@ function ReporteCargaGOMInfoCard({ barcos }) {
                 Tiempo de Carga {secondsToString(diff)}
               </h6>
             </div>
+          </div>
+          <hr className="mt-2 mb-2 " />
+          <div className="grid ">
+            <ClimaVientoGOMInfoCard
+              clima={
+                reporteCargaGOM[ultimoRegistro] &&
+                reporteCargaGOM[ultimoRegistro].climaGOM
+              }
+              viento={
+                reporteCargaGOM[ultimoRegistro] &&
+                reporteCargaGOM[ultimoRegistro].vientoGOM
+              }
+            />
           </div>
         </div>
       </div>

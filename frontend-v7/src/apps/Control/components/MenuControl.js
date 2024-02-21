@@ -64,6 +64,15 @@ export const MenuControl = () => {
           permi3: 'CLIENTE'
         },
         (auth.user.faidUser.roles[0] !== 'CLIENTE' ||
+          auth.user.faidUser.nombre === 'SUPERIOR QUANTITY SDN BHD') && {
+          label: 'CLIENTE SUPERIOR QUANTITY SDN BHD',
+          icon: 'pi pi-fw pi-info-circle',
+          to: '/apps/control/reportecargaGOMInfoSuperiorQuantitySDNBHD',
+          permi: 'ADMIN',
+          permi2: 'OPERADOR',
+          permi3: 'CLIENTE'
+        },
+        (auth.user.faidUser.roles[0] !== 'CLIENTE' ||
           auth.user.faidUser.nombre === 'REZEL CATALYSTS') && {
           label: 'CLIENTE REZEL CATALYSTS',
           icon: 'pi pi-fw pi-info-circle',

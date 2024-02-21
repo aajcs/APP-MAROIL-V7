@@ -37,6 +37,7 @@ import { ReporteCargaGOMInfoPageInternationalMaterials } from '../pages/ReporteC
 import { ReporteCargaGOMInfoPageIranGarmentCompany } from '../pages/ReporteCargaGOMInfoPageUnecaIranGarmentCompany'
 import { ReporteCargaGOMInfoPageAtlasOil } from '../pages/ReporteCargaGOMInfoPageEndecoAtlasOil'
 import { ReporteCargaGOMInfoPageRezelCatalysts } from '../pages/ReporteCargaGOMInfoPageRezelCatalysts'
+import { ReporteCargaGOMInfoPageSuperiorQuantitySDNBHD } from '../pages/ReporteCargaGOMInfoPageSuperiorQuantitySDNBHD'
 
 export default function appControlRouter() {
   const { staticMenuInactive, onToggleMenuClick } = useContext(ConfigContext)
@@ -111,6 +112,11 @@ export default function appControlRouter() {
               exact
               path="/apps/control/reportecargaGOMInfoEndeco"
               component={ReporteCargaGOMInfoPageEndeco}
+            />
+            <PrivateRoute
+              exact
+              path="/apps/control/reportecargaGOMInfoSuperiorQuantitySDNBHD"
+              component={ReporteCargaGOMInfoPageSuperiorQuantitySDNBHD}
             />
             <PrivateRoute
               exact

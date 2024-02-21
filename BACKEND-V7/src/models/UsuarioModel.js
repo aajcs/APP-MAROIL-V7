@@ -5,7 +5,11 @@ const bcrypy = require('bcryptjs')
 
 const usaurioSchema = new Schema(
   {
-    nombre: String,
+    nombre: {
+      type: String,
+      required: true,
+      unique: true
+    },
     correo: {
       type: String,
       required: true,

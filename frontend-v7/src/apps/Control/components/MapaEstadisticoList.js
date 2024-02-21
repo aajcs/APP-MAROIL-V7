@@ -1202,8 +1202,21 @@ const markers = [
     markerOffset: 15,
     name: 'Brasil',
     coordinates: [-57.021382, -10.7305],
-    bandera: banderaMapa.banderaIndia
+    bandera: banderaMapa.banderaBrasil
+  },
+  {
+    markerOffset: 15,
+    name: 'Egipto',
+    coordinates: [29.021382, 22.7305],
+    bandera: banderaMapa.banderaEgipto
   }
+  // ,
+  // {
+  //   markerOffset: 15,
+  //   name: 'Senegal',
+  //   coordinates: [-21.021382, 10.7305],
+  //   bandera: banderaMapa.banderaSenegal
+  // }
 ]
 // a6a8ab
 const colosScale = scaleLinear()
@@ -1334,7 +1347,7 @@ const MapaEstadisticoList = ({ setTooltipContent }) => {
                         stroke-width="1"
                         fill="none"
                         stroke-dasharray="10, 5"
-                      ></path>{' '}
+                      ></path>
                       {/* iran */}
                       <path
                         d="M 192.028 -71.8285 C 218.59 -67.1649 208.681 -55.7869 218.59 -40.2146 C 225.13 -29.9361 235.75 -11.5101 237.901 -7.29736 C 248.578 -4.69719 260.875 -13.2131 263.701 -20.7204 C 267.657 -31.2327 271.398 -26.7877 272.95 -33.0248 C 274.701 -45.9184 263.701 -40.2146 247.12 -51.0582 C 245.348 -52.2174 253.934 -54.6508 253.934 -60.6165"
@@ -1717,7 +1730,180 @@ const MapaEstadisticoList = ({ setTooltipContent }) => {
                         {'TM'}
                       </text>
                     </Annotation>
-
+                    <Annotation
+                      subject={[-50.196115, -8.330118]}
+                      dx={20}
+                      dy={70}
+                      curve={1}
+                      connectorProps={{ stroke: '#000', strokeWidth: 1.5 }}
+                    >
+                      <rect
+                        width="100"
+                        height="25"
+                        style={{
+                          x: 0,
+                          y: -18,
+                          fill: 'rbg(0,0,0)',
+                          fillOpacity: 0.08,
+                          stroke: 'rbg(0,0,0)',
+                          strokeWidth: 1,
+                          strokeOpacity: 0.3
+                        }}
+                      ></rect>
+                      <text
+                        x="8"
+                        y="-10"
+                        textAnchor="start"
+                        alignmentBaseline="middle"
+                        style={{
+                          fontSize: 8,
+                          fill: '#C1C0CB',
+                          // fontFamily: 'barlow',
+                          fontWeight: 100,
+                          backgroudColor: '#000',
+                          width: 200,
+                          heught: 40
+                        }}
+                      >
+                        {'Port Brasil'}
+                      </text>
+                      <text
+                        x="8"
+                        textAnchor="start"
+                        alignmentBaseline="middle"
+                        style={{
+                          fontSize: 8,
+                          fill: '#0fb768',
+                          // fontFamily: 'barlow',
+                          fontWeight: 100,
+                          backgroudColor: '#000',
+                          width: 200,
+                          heught: 40
+                        }}
+                      >
+                        {total.BR}
+                        {' Buques,'}{' '}
+                        {totalToneladasPais.BR &&
+                          totalToneladasPais.BR.toLocaleString('de-DE')}{' '}
+                        {'TM'}
+                      </text>
+                    </Annotation>
+                    <Annotation
+                      subject={[30.196115, 22.330118]}
+                      dx={-20}
+                      dy={70}
+                      curve={1}
+                      connectorProps={{ stroke: '#000', strokeWidth: 1.5 }}
+                    >
+                      <rect
+                        width="100"
+                        height="25"
+                        style={{
+                          x: 0,
+                          y: -18,
+                          fill: 'rbg(0,0,0)',
+                          fillOpacity: 0.08,
+                          stroke: 'rbg(0,0,0)',
+                          strokeWidth: 1,
+                          strokeOpacity: 0.3
+                        }}
+                      ></rect>
+                      <text
+                        x="8"
+                        y="-10"
+                        textAnchor="start"
+                        alignmentBaseline="middle"
+                        style={{
+                          fontSize: 8,
+                          fill: '#C1C0CB',
+                          // fontFamily: 'barlow',
+                          fontWeight: 100,
+                          backgroudColor: '#000',
+                          width: 200,
+                          heught: 40
+                        }}
+                      >
+                        {'Port Egipto'}
+                      </text>
+                      <text
+                        x="8"
+                        textAnchor="start"
+                        alignmentBaseline="middle"
+                        style={{
+                          fontSize: 8,
+                          fill: '#0fb768',
+                          // fontFamily: 'barlow',
+                          fontWeight: 100,
+                          backgroudColor: '#000',
+                          width: 200,
+                          heught: 40
+                        }}
+                      >
+                        {total.EG}
+                        {' Buques,'}{' '}
+                        {totalToneladasPais.EG &&
+                          totalToneladasPais.EG.toLocaleString('de-DE')}{' '}
+                        {'TM'}
+                      </text>
+                    </Annotation>
+                    {/* <Annotation
+                      subject={[-21.196115, 12.330118]}
+                      dx={-20}
+                      dy={70}
+                      curve={1}
+                      connectorProps={{ stroke: '#000', strokeWidth: 1.5 }}
+                    >
+                      <rect
+                        width="100"
+                        height="25"
+                        style={{
+                          x: 0,
+                          y: -18,
+                          fill: 'rbg(0,0,0)',
+                          fillOpacity: 0.08,
+                          stroke: 'rbg(0,0,0)',
+                          strokeWidth: 1,
+                          strokeOpacity: 0.3
+                        }}
+                      ></rect>
+                      <text
+                        x="8"
+                        y="-10"
+                        textAnchor="start"
+                        alignmentBaseline="middle"
+                        style={{
+                          fontSize: 8,
+                          fill: '#C1C0CB',
+                          // fontFamily: 'barlow',
+                          fontWeight: 100,
+                          backgroudColor: '#000',
+                          width: 200,
+                          heught: 40
+                        }}
+                      >
+                        {'Port Genegal'}
+                      </text>
+                      <text
+                        x="8"
+                        textAnchor="start"
+                        alignmentBaseline="middle"
+                        style={{
+                          fontSize: 8,
+                          fill: '#0fb768',
+                          // fontFamily: 'barlow',
+                          fontWeight: 100,
+                          backgroudColor: '#000',
+                          width: 200,
+                          heught: 40
+                        }}
+                      >
+                        {total.SN}
+                        {' Buques,'}{' '}
+                        {totalToneladasPais.SN &&
+                          totalToneladasPais.SN.toLocaleString('de-DE')}{' '}
+                        {'TM'}
+                      </text>
+                    </Annotation> */}
                     {/* venezuela lineas de navegacion */}
 
                     {/* <path

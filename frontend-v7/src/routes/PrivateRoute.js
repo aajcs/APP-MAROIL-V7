@@ -30,6 +30,17 @@ export default function PrivateRoute({ hasRole: role, ...rest }) {
   }
   if (
     user.faidUser.roles[0] === 'CLIENTE' &&
+    user.faidUser.nombre === 'SUPERIOR QUANTITY SDN BHD'
+  ) {
+    return (
+      <>
+        <Redirect to="/apps/control/reportecargaGOMInfoSuperiorQuantitySDNBHD" />
+        <Route {...rest} />
+      </>
+    )
+  }
+  if (
+    user.faidUser.roles[0] === 'CLIENTE' &&
     user.faidUser.nombre === 'REZEL CATALYSTS'
   ) {
     return (

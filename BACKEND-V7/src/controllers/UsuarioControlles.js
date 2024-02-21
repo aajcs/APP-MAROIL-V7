@@ -40,12 +40,23 @@ usuarioCtrl.createUsuario = async (req, res) => {
     newUsuario.password = await newUsuario.encryptPassword(newUsuario.password)
 
     const saveUsuario = await newUsuario.save()
-
+    const userForToken = {
+      id: saveUsuario._id.toString(),
+      username: saveUsuario.username
+    }
+    const token = jwt.sign(userForToken, process.env.PRIVATE_KEY)
     res.status(200).json({
       saveUsuario,
+      token,
       message: 'Nuevo Usuario Agregado.'
     })
   } catch (err) {
+    if (err.code === 11000) {
+      // Duplicate username
+      return res.status(400).json({
+        message: 'Usuario ya existe.'
+      })
+    }
     res.status(400).json({
       error: err
     })
@@ -203,6 +214,41 @@ usuarioCtrl.login = async (req, res) => {
       message: 'usuario incorrecto'
     })
   }
+}
+
+usuarioCtrl.validarTokenUsuario = (req, res = response) => {
+  console.log('validarTokenUsuario', req.user._id)
+  // Generar el JWT
+  // const token = jwt.sign(req.user._id, process.env.PRIVATE_KEY)
+
+  const userForToken = {
+    id: req.user._id.toString(),
+    username: req.user.username
+  }
+  try {
+    // crea el token del usario manera simple la de medudev es mas extensa con el beard
+    // ,{  expiresIn: '7d'
+    // }
+    const token = jwt.sign(userForToken, process.env.PRIVATE_KEY)
+
+    console.log(token)
+
+    return res.status(200).json({
+      faidUser: req.user,
+      token,
+      message: 'Login correct.'
+    })
+  } catch (err) {
+    res.status(400).json({
+      error: err
+    })
+  }
+
+  // console.log('token', token)
+  // res.json({
+  //   usuario: req.user
+  //   // token: token
+  // })
 }
 
 module.exports = usuarioCtrl

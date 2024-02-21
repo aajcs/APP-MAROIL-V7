@@ -486,9 +486,15 @@ const ReporteCargaGOMForm = (props) => {
             </div>
             <div className="p-float-label field col-12 md:col-6">
               <h5>Viento</h5>
-              <InputText
+              {/* <InputText
                 value={reporteCargaGOMData.vientoGOM}
                 onChange={(e) => updateField(e.target.value, 'vientoGOM')}
+              /> */}
+              <InputNumber
+                value={reporteCargaGOMData.vientoGOM}
+                onValueChange={(e) => updateField(e.target.value, 'vientoGOM')}
+                min={0}
+                max={63}
               />
             </div>
           </div>

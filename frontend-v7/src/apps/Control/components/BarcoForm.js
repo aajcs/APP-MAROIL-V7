@@ -109,6 +109,7 @@ const BarcoForm = (props) => {
     { name: 'Cuba', code: 'CU' },
     { name: 'China', code: 'CN' },
     { name: 'India', code: 'IN' },
+    { name: 'Jordania', code: 'JO' },
     { name: 'Brazil', code: 'BR' },
     { name: 'Australia', code: 'AU' },
     { name: 'Egypt', code: 'EG' },

@@ -53,7 +53,7 @@ const HomeInfo = () => {
       }
     ]
   })
-  const [anoVisual, setAnoVisual] = useState(2023)
+  const [anoVisual, setAnoVisual] = useState(2024)
 
   useEffect(() => {
     setDataGraficaCostoTmMuelle({
