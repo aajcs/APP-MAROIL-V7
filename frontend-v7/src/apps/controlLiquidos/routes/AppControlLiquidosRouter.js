@@ -30,6 +30,8 @@ import { InicioInfoPage } from '../pages/InicioInfoPage'
 import { GastosOperacionalePage } from '../pages/GastosOperacionalePage'
 import { GastosOperacionaleInfoPage } from '../pages/GastosOperacionaleInfoPage'
 import { CargaInformacionPage } from '../pages/CargaInformacionPage'
+import { BuquePage } from '../pages/BuquePage'
+import { ReporteCargaBuquePage } from '../pages/ReporteCargaBuquePage'
 
 export default function AppControlLiquidosRouter() {
   const { staticMenuInactive, onToggleMenuClick } = useContext(ConfigContext)
@@ -130,6 +132,16 @@ export default function AppControlLiquidosRouter() {
               exact
               path="/apps/controlLiquidos/CargaInformacion"
               component={CargaInformacionPage}
+            />
+            <PrivateRoute
+              exact
+              path="/apps/controlLiquidos/Buque"
+              component={BuquePage}
+            />
+            <PrivateRoute
+              exact
+              path="/apps/controlLiquidos/ReporteCargaBuque"
+              component={ReporteCargaBuquePage}
             />
             <Route path="*">
               <Redirect to="/404" />

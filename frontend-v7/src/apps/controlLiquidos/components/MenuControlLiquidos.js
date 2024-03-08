@@ -84,6 +84,18 @@ export const MenuControlLiquidos = () => {
         permi: 'SUPERADMIN',
         items: [
           {
+            label: 'BUQUE',
+            icon: 'pi pi-fw pi-database',
+            to: '/apps/controlLiquidos/buque',
+            permi: 'SUPERADMIN'
+          },
+          {
+            label: 'REPORTE DE CARGA BUQUE',
+            icon: 'pi pi-fw pi-database',
+            to: '/apps/controlLiquidos/reporteCargaBuque',
+            permi: 'SUPERADMIN'
+          },
+          {
             label: 'EMBARCACION',
             icon: 'pi pi-fw pi-database',
             to: '/apps/controlLiquidos/embarcacion',

@@ -157,6 +157,11 @@ app.use(
   '/api/GastosOperacionale',
   require('./appsControlLiquidos/routes/GastosOperacionaleRoutes')
 )
+app.use('/api/buque', require('./appsControlLiquidos/routes/BuqueRoutes'))
+app.use(
+  '/api/ReporteCargaBuque',
+  require('./appsControlLiquidos/routes/ReporteCargaBuqueRoutes')
+)
 app.use('/api/Ganador', require('./appsProcura/routes/GanadorRoutes'))
 app.use('/api/Concursante', require('./appsProcura/routes/ConcursanteRoutes'))
 app.use('/api/ViajeAux', require('./appsControlLiquidos/routes/ViajeAuxRoutes'))
