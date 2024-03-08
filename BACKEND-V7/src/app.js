@@ -168,6 +168,8 @@ app.use(
   '/api/PresupuestoPM',
   require('./appsPlanificacionMaritima/routes/PresupuestoPMRoutes')
 )
+app.use('/api/Post', require('./appsMaroilConnect/routes/PostRoutes'))
+app.use('/api/Like', require('./appsMaroilConnect/routes/LikeRoutes'))
 // Static Files
 // app.use(express.static(path.join(__dirname, '../public')));;
 app.use((req, res) => {

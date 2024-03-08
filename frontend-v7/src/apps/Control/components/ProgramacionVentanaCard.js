@@ -68,6 +68,9 @@ function ProgramacionVentanaCard({ events }) {
             {' TM / '}
             {events.buqueClienteVenta === 'ENDECO' ||
             events.buqueClienteVenta === 'SUPERIOR QUANTITY SDN BHD' ||
+            events.buqueClienteVenta === 'ADENIX GROUP LIMITED' ||
+            events.buqueClienteVenta === 'GRANELES' ||
+            events.buqueClienteVenta === 'GLOBULK DMCC' ||
             events.buqueClienteVenta === 'REZEL CATALYSTS' ||
             events.buqueClienteVenta === 'ATLAS OIL' ||
             events.buqueClienteVenta === 'UNECA' ||

@@ -30,6 +30,39 @@ export default function PrivateRoute({ hasRole: role, ...rest }) {
   }
   if (
     user.faidUser.roles[0] === 'CLIENTE' &&
+    user.faidUser.nombre === 'GRANELES'
+  ) {
+    return (
+      <>
+        <Redirect to="/apps/control/reportecargaGOMInfoGraneles" />
+        <Route {...rest} />
+      </>
+    )
+  }
+  if (
+    user.faidUser.roles[0] === 'CLIENTE' &&
+    user.faidUser.nombre === 'ADENIX GROUP LIMITED'
+  ) {
+    return (
+      <>
+        <Redirect to="/apps/control/reportecargaGOMInfoAdenixGroupLimited" />
+        <Route {...rest} />
+      </>
+    )
+  }
+  if (
+    user.faidUser.roles[0] === 'CLIENTE' &&
+    user.faidUser.nombre === 'GLOBULK DMCC'
+  ) {
+    return (
+      <>
+        <Redirect to="/apps/control/reportecargaGOMInfoGlobulkDmcc" />
+        <Route {...rest} />
+      </>
+    )
+  }
+  if (
+    user.faidUser.roles[0] === 'CLIENTE' &&
     user.faidUser.nombre === 'SUPERIOR QUANTITY SDN BHD'
   ) {
     return (

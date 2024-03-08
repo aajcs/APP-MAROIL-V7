@@ -113,6 +113,9 @@ const ProgramacionVentanaForm = (props) => {
   const buqueClienteVenta = [
     { buqueClienteVenta: 'CREC 10' },
     { buqueClienteVenta: 'ENDECO' },
+    { buqueClienteVenta: 'GLOBULK DMCC' },
+    { buqueClienteVenta: 'ADENIX GROUP LIMITED' },
+    { buqueClienteVenta: 'GRANELES' },
     { buqueClienteVenta: 'SUPERIOR QUANTITY SDN BHD' },
     { buqueClienteVenta: 'REZEL CATALYSTS' },
     { buqueClienteVenta: 'ATLAS OIL' },

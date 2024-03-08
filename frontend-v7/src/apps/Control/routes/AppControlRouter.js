@@ -38,6 +38,9 @@ import { ReporteCargaGOMInfoPageIranGarmentCompany } from '../pages/ReporteCarga
 import { ReporteCargaGOMInfoPageAtlasOil } from '../pages/ReporteCargaGOMInfoPageEndecoAtlasOil'
 import { ReporteCargaGOMInfoPageRezelCatalysts } from '../pages/ReporteCargaGOMInfoPageRezelCatalysts'
 import { ReporteCargaGOMInfoPageSuperiorQuantitySDNBHD } from '../pages/ReporteCargaGOMInfoPageSuperiorQuantitySDNBHD'
+import { ReporteCargaGOMInfoPageGlobulkDmcc } from '../pages/ReporteCargaGOMInfoPageGlobulkDmcc'
+import { ReporteCargaGOMInfoPageGraneles } from '../pages/ReporteCargaGOMInfoPageGraneles'
+import { ReporteCargaGOMInfoPageAdenixGroupLimited } from '../pages/ReporteCargaGOMInfoPageAdenixGroupLimited'
 
 export default function appControlRouter() {
   const { staticMenuInactive, onToggleMenuClick } = useContext(ConfigContext)
@@ -112,6 +115,21 @@ export default function appControlRouter() {
               exact
               path="/apps/control/reportecargaGOMInfoEndeco"
               component={ReporteCargaGOMInfoPageEndeco}
+            />
+            <PrivateRoute
+              exact
+              path="/apps/control/reportecargaGOMInfoGRANELES"
+              component={ReporteCargaGOMInfoPageGraneles}
+            />
+            <PrivateRoute
+              exact
+              path="/apps/control/reportecargaGOMInfoGlobulkDmcc"
+              component={ReporteCargaGOMInfoPageGlobulkDmcc}
+            />
+            <PrivateRoute
+              exact
+              path="/apps/control/reportecargaGOMInfoAdenixGroupLimited"
+              component={ReporteCargaGOMInfoPageAdenixGroupLimited}
             />
             <PrivateRoute
               exact

@@ -7,7 +7,7 @@ cloudinary.config({
 })
 CloudinaryArray.uploadImage = async (filePath) => {
   return await cloudinary.uploader.upload(filePath, {
-    folder: 'appMaroil'
+    folder: 'appMaroilConnect'
   })
   // .then((result) => console.log(result))
 }
