@@ -136,16 +136,21 @@ const BuqueForm = (props) => {
 
   useEffect(() => {
     if (editBuque) {
-      setBuqueData(editBuque)
+      const { reporteCargaGOMBuque, ...rest } = editBuque
+      setBuqueData(rest)
       setSelectedBuque({ estatusBuque: editBuque.estatusBuque })
       setSelectedBuqueCliente({ clienteBuque: editBuque.clienteBuque })
       setDate(moment(editBuque.buqueCreado)._d)
-      setDateAtraco(editBuque.fechaAtraco && moment(editBuque.fechaAtraco)._d)
+      setDateAtraco(
+        editBuque.fechaAtracoBuque && moment(editBuque.fechaAtracoBuque)._d
+      )
       setDateInicio(
-        editBuque.fechaInicioCarga && moment(editBuque.fechaInicioCarga)._d
+        editBuque.fechaInicioCargaBuque &&
+          moment(editBuque.fechaInicioCargaBuque)._d
       )
       setDateFinal(
-        editBuque.fechaFinalCarga && moment(editBuque.fechaFinalCarga)._d
+        editBuque.fechaFinalCargaBuque &&
+          moment(editBuque.fechaFinalCargaBuque)._d
       )
     }
   }, [editBuque])

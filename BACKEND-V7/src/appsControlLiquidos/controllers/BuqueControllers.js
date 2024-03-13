@@ -68,8 +68,8 @@ buqueCtrl.createBuque = async (req, res) => {
 buqueCtrl.getBuques = async (req, res) => {
   try {
     const barcos = await Buque.find({})
-    // .populate('reporteCarga')
-    // .populate('reporteCargaGOM')
+      // .populate('reporteCarga')
+      .populate('reporteCargaGOMBuque')
     // .populate('cargaBodega')
     // .populate('volumetriaId')
     res.status(200).json(barcos)

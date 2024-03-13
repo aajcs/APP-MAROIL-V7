@@ -22,8 +22,9 @@ const ReporteCargaBuqueForm = (props) => {
     id: null,
     buqueID: '',
     ubicacionBuque: '',
-    puestoTerminal: '',
-    toneladasCargadasBuque: 0,
+    nombreFeederBuque: '',
+    capacidadFeederBuque: 0,
+    materialCargadoBuque: 0,
     tasaDeCargaBuque: 0,
     etc: '',
     comentariosBuque: '',
@@ -31,8 +32,8 @@ const ReporteCargaBuqueForm = (props) => {
     climaBuque: '',
     vientoBuque: '',
     mareaBuque: '',
-    reporteCargaBuqueCreado: moment(),
-    reporteCargaBuqueModificado: moment()
+    fechaInicioFeederBuque: moment(),
+    fechaFinFeederBuque: moment()
   }
   addLocale('es', {
     firstDayOfWeek: 1,
@@ -103,9 +104,9 @@ const ReporteCargaBuqueForm = (props) => {
   const [reporteCargaBuqueData, setReporteCargaBuqueData] = useState(
     initialReporteCargaBuqueForm
   )
-  const [isPuestoTerminalVisible, setPuestoTerminalIsVisible] = useState(false)
-  const [selectedPuestoTerminal, setSelectedPuestoTerminal] = useState(null)
 
+  const [dateInicio, setDateInicio] = useState(null)
+  const [dateFinal, setDateFinal] = useState(null)
   function secondsToString(diff) {
     const numdays = Math.floor(diff / 86400)
     const numhours = Math.floor((diff % 86400) / 3600)
@@ -115,18 +116,12 @@ const ReporteCargaBuqueForm = (props) => {
     return numdays + ' dias ' + numhours + ' horas ' + numminutes + ' minutos '
   }
 
-  const onPuestoTerminal = (e) => {
-    setSelectedPuestoTerminal(e.value)
-    updateField(e.value.name, 'puestoTerminal')
-  }
   const buqueIDBuque = buques.filter((p) => p.estatusBuque === 'OPERATIVO' && p)
 
   const ubicacionBuqueReporteCargaBuque = [
-    { name: 'MAROIL TERMINAL' },
-    { name: 'PETRO CEDENO' },
-    { name: 'PETRO SAN FELIX' },
-    { name: 'BUQUES FONDEADO' },
-    { name: 'PROXIMOS BUQUES' }
+    { name: 'AMUAY' },
+    { name: 'GUARAGUAO' },
+    { name: 'CARDON' }
   ]
   const climaBuqueBuque = [
     { name: 'Parcialmente soleado' },
@@ -154,26 +149,12 @@ const ReporteCargaBuqueForm = (props) => {
       ...reporteCargaBuqueData,
       buqueID: p.buqueID.id,
       ubicacionBuque: p.ubicacionBuque,
-      toneladasCargadasBuque: p.toneladasCargadasBuque,
+      materialCargadoBuque: p.materialCargadoBuque,
       tasaDeCargaBuque: p.tasaDeCargaBuque,
       etc: p.etc,
       comentariosBuque: p.comentariosBuque,
-      observacionesBuque: p.observacionesBuque,
-      puestoTerminal: p.puestoTerminal
+      observacionesBuque: p.observacionesBuque
     })
-    if (p.ubicacionBuque === 'MAROIL TERMINAL') {
-      setPuestoTerminalIsVisible(true)
-      // p.puestoTerminal === 'PUESTO-2'
-      //   ? setSelectedPuestoTerminal(categories[1])
-      //   : setSelectedPuestoTerminal(categories[0])
-      p.puestoTerminal === 'PUESTO-2'
-        ? setSelectedPuestoTerminal(categories[1])
-        : p.puestoTerminal === 'PUESTO-3'
-        ? setSelectedPuestoTerminal(categories[2])
-        : setSelectedPuestoTerminal(categories[0])
-    } else {
-      setPuestoTerminalIsVisible(false)
-    }
 
     // setReporteCargaBuqueData(p)
   }
@@ -181,9 +162,6 @@ const ReporteCargaBuqueForm = (props) => {
   const onubicacionBuqueReporteCargaBuque = (e) => {
     setSelectedubicacionBuqueReporteCargaBuque(e.value)
     updateField(e.value.name, 'ubicacionBuque')
-    e.value.name === 'MAROIL TERMINAL'
-      ? setPuestoTerminalIsVisible(true)
-      : setPuestoTerminalIsVisible(false)
   }
   const onClimaBuque = (e) => {
     setSelectedClimaBuque(e.value)
@@ -197,19 +175,14 @@ const ReporteCargaBuqueForm = (props) => {
       setSelectedubicacionBuqueReporteCargaBuque({
         name: editReporteCargaBuque.ubicacionBuque
       })
-      setSelectedClimaBuque({
-        name: editReporteCargaBuque.climaBuque
-      })
-      if (editReporteCargaBuque.ubicacionBuque === 'MAROIL TERMINAL') {
-        setPuestoTerminalIsVisible(true)
-        editReporteCargaBuque.puestoTerminal === 'PUESTO-2'
-          ? setSelectedPuestoTerminal(categories[1])
-          : editReporteCargaBuque.puestoTerminal === 'PUESTO-3'
-          ? setSelectedPuestoTerminal(categories[2])
-          : setSelectedPuestoTerminal(categories[0])
-      } else {
-        setPuestoTerminalIsVisible(false)
-      }
+      setDateInicio(
+        editReporteCargaBuque.fechaInicioFeederBuque &&
+          moment(editReporteCargaBuque.fechaInicioFeederBuque)._d
+      )
+      setDateFinal(
+        editReporteCargaBuque.fechaFinFeederBuque &&
+          moment(editReporteCargaBuque.fechaFinFeederBuque)._d
+      )
     }
   }, [editReporteCargaBuque])
 
@@ -231,11 +204,7 @@ const ReporteCargaBuqueForm = (props) => {
         reporteCargaBuqueModificado: moment()
       })
     }
-    setReporteCargaBuqueData(initialReporteCargaBuqueForm)
-    setSelectedBuqueIDBuque(null)
-    setSelectedubicacionBuqueReporteCargaBuque(null)
-    setIsVisible(false)
-    setPuestoTerminalIsVisible(false)
+    clearSelected()
   }
 
   const dialogFooter = (
@@ -258,7 +227,8 @@ const ReporteCargaBuqueForm = (props) => {
     setReporteCargaBuqueData(initialReporteCargaBuqueForm)
     setSelectedBuqueIDBuque(null)
     setSelectedubicacionBuqueReporteCargaBuque(null)
-    setPuestoTerminalIsVisible(false)
+    setDateFinal(null)
+    setDateInicio(null)
   }
   const selectedUbicacionBuqueTemplate = (option, props) => {
     if (option) {
@@ -316,43 +286,60 @@ const ReporteCargaBuqueForm = (props) => {
                 itemTemplate={ubicacionBuqueOptionTemplate}
               />
             </div>
-            {isPuestoTerminalVisible && (
-              <div className="field col-12 md:col-6">
-                <h5>Puesto</h5>
-                {/* me gusta esto para map de objero pilas */}
-                <div className="field col-12 md:col-12 flex">
-                  {categories.map((Puesto) => {
-                    return (
-                      <div key={Puesto.key} className="field-radiobutton ml-2">
-                        <RadioButton
-                          inputId={Puesto.key}
-                          name="Puesto"
-                          value={Puesto}
-                          onChange={onPuestoTerminal}
-                          checked={
-                            selectedPuestoTerminal &&
-                            selectedPuestoTerminal.key === Puesto.key
-                          }
-                          disabled={Puesto.key === 'R'}
-                        />
-                        <label htmlFor={Puesto.key}>{Puesto.name}</label>
-                      </div>
-                    )
-                  })}
-                </div>
-              </div>
-            )}
+          </div>
+          <div className="formgrid grid">
+            <div className="p-float-label mt-3 col-12 p-col-2 p-md-1 md:col-6">
+              <InputText
+                value={reporteCargaBuqueData.nombreFeederBuque}
+                onChange={(e) =>
+                  updateField(e.target.value, 'nombreFeederBuque')
+                }
+              />
+              <label>Nombre del Feeder:</label>
+            </div>
+            <div className="field col-12 md:col-6">
+              <label>Fecha Inicio Feeder</label>
+              <Calendar
+                className="p-datepicker-today"
+                id="time24"
+                value={dateInicio !== null && dateInicio}
+                onChange={(e) => {
+                  setDateInicio(e.value)
+                  updateField(e.target.value, 'fechaInicioFeederBuque')
+                }}
+                showTime
+                locale="es"
+                // hourFormat="12"
+                showButtonBar
+              />
+            </div>
+            <div className="field col-12 md:col-6">
+              <label>Fecha Final Feeder</label>
+              <Calendar
+                className="p-datepicker-today"
+                id="time24"
+                value={dateFinal !== null && dateFinal}
+                onChange={(e) => {
+                  setDateFinal(e.value)
+                  updateField(e.target.value, 'fechaFinFeederBuque')
+                }}
+                showTime
+                locale="es"
+                // hourFormat="12"
+                showButtonBar
+              />
+            </div>
           </div>
           <div className="formgrid grid">
             <div className="field col-12 p-col-2 p-md-1 md:col-6">
-              <label htmlFor="toneladasCargadasBuque">
-                Toneladas Cargadas Buque
+              <label htmlFor="capacidadFeederBuque">
+                Total de Barriles del Feeder
               </label>
               <InputNumber
-                inputId="toneladasCargadasBuque"
-                value={reporteCargaBuqueData.toneladasCargadasBuque}
+                inputId="capacidadFeederBuque"
+                value={reporteCargaBuqueData.capacidadFeederBuque}
                 onValueChange={(e) =>
-                  updateField(e.target.value, 'toneladasCargadasBuque')
+                  updateField(e.target.value, 'capacidadFeederBuque')
                 }
                 showButtons
                 buttonLayout="horizontal"
@@ -364,7 +351,30 @@ const ReporteCargaBuqueForm = (props) => {
                 // mode="decimal"
                 // minFractionDigits={3}
                 // maxFractionDigits={5}
-                suffix=" TM"
+                suffix=" Bbls"
+              />
+            </div>
+            <div className="field col-12 p-col-2 p-md-1 md:col-6">
+              <label htmlFor="materialCargadoBuque">
+                Barriles Descargados del Feeder
+              </label>
+              <InputNumber
+                inputId="materialCargadoBuque"
+                value={reporteCargaBuqueData.materialCargadoBuque}
+                onValueChange={(e) =>
+                  updateField(e.target.value, 'materialCargadoBuque')
+                }
+                showButtons
+                buttonLayout="horizontal"
+                step={1}
+                decrementButtonClassName="p-button-danger"
+                incrementButtonClassName="p-button-success"
+                incrementButtonIcon="pi pi-plus"
+                decrementButtonIcon="pi pi-minus"
+                // mode="decimal"
+                // minFractionDigits={3}
+                // maxFractionDigits={5}
+                suffix=" Bbls"
               />
             </div>{' '}
             <div className="field col-12 p-col-2 p-md-1 md:col-6">
@@ -382,14 +392,14 @@ const ReporteCargaBuqueForm = (props) => {
                 incrementButtonClassName="p-button-success"
                 incrementButtonIcon="pi pi-plus"
                 decrementButtonIcon="pi pi-minus"
-                suffix=" TM/hr"
+                suffix=" Bbls/hr"
               />
             </div>
           </div>
           <div className="p-float-label">
             <InputText
-              value={reporteCargaBuqueData.etc}
-              onChange={(e) => updateField(e.target.value, 'etc')}
+              value={reporteCargaBuqueData.etcBuque}
+              onChange={(e) => updateField(e.target.value, 'etcBuque')}
             />
             <label>etc:</label>
           </div>
@@ -402,33 +412,6 @@ const ReporteCargaBuqueForm = (props) => {
             <label>Comentarios Buque:</label>
           </div>{' '}
           <br />
-          <div className="formgrid grid">
-            <div className="field col-12 md:col-6">
-              <h5>Clima</h5>
-              <Dropdown
-                value={selectedClimaBuque}
-                options={climaBuqueBuque}
-                onChange={onClimaBuque}
-                optionLabel="name"
-                placeholder="Seleccione el clima"
-              />
-            </div>
-            <div className="p-float-label field col-12 md:col-6">
-              <h5>Viento</h5>
-              {/* <InputText
-                value={reporteCargaBuqueData.vientoBuque}
-                onChange={(e) => updateField(e.target.value, 'vientoBuque')}
-              /> */}
-              <InputNumber
-                value={reporteCargaBuqueData.vientoBuque}
-                onValueChange={(e) =>
-                  updateField(e.target.value, 'vientoBuque')
-                }
-                min={0}
-                max={63}
-              />
-            </div>
-          </div>
           <br />
           <div className="p-float-label">
             <InputText

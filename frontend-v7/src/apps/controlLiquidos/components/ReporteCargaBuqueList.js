@@ -27,7 +27,6 @@ const ReporteCargaBuqueList = () => {
     deleteReporteCargaBuque,
     loading
   } = useContext(ReporteCargaBuqueContext)
-  console.log(reporteCargaBuques)
   const { buques } = useContext(BuqueContext)
   const [buquestodos, setBuquestodos] = useState(buques)
 
@@ -176,16 +175,16 @@ const ReporteCargaBuqueList = () => {
     setDeleteReporteCargaBuqueDialog(false)
   }
 
-  const reporteCargaBuqueCreadoTemplate = (rowData) => {
-    const validarFecha = moment(rowData.reporteCargaBuqueCreado).isValid()
+  const fechaInicioFeederBuqueTemplate = (rowData) => {
+    const validarFecha = moment(rowData.fechaInicioFeederBuque).isValid()
     if (!validarFecha) return
-    const fecha = moment(rowData.reporteCargaBuqueCreado)
+    const fecha = moment(rowData.fechaInicioFeederBuque)
     return fecha.format('dddDD/MM/YY HH:mm')
   }
-  const reporteCargaBuqueModificadoTemplate = (rowData) => {
-    const validarFecha = moment(rowData.reporteCargaBuqueModificado).isValid()
+  const fechaFinFeederBuqueTemplate = (rowData) => {
+    const validarFecha = moment(rowData.fechaFinFeederBuque).isValid()
     if (!validarFecha) return
-    const fecha = moment(rowData.reporteCargaBuqueModificado)
+    const fecha = moment(rowData.fechaFinFeederBuque)
     return fecha.format('dddDD/MM/YY HH:mm')
   }
   const onRowExpand = (event) => {
@@ -236,42 +235,39 @@ const ReporteCargaBuqueList = () => {
   )
 
   const rowExpansionTemplate = (data) => {
+    console.log(data)
     return (
       <div className="orders-subtable">
         <h5>Reporte Buque del buque {data.nombreBuque}</h5>
         <DataTable
-          value={data.reporteCargaBuque}
+          value={data.reporteCargaGOMBuque}
           responsiveLayout="scroll"
-          sortField="data.reporteCargaBuqueCreado"
+          sortField="data.fechaInicioFeederBuque"
           sortOrder={1}
         >
           <Column body={actionBodyTemplate}></Column>
           <Column field="ubicacionBuque" header="ubicacionBuque" />
-          <Column field="puestoTerminal" header="puestoTerminal" />
-
+          <Column field="nombreFeederBuque" header="nombreFeederBuque" />
           <Column
-            field="toneladasCargadasBuque"
-            header="toneladas Cargadas Buque"
-          />
-          <Column field="tasaDeCargaBuque" header="tasaDeCargaBuque" />
-          <Column field="etc" header="etc" />
-          <Column field="comentariosBuque" header="comentarios Buque" />
-          <Column field="climaBuque" header="Clima Buque" />
-          <Column field="vientoBuque" header="Viento Buque" />
-          <Column field="observacionesBuque" header="observaciones Buque" />
-          <Column
-            field="reporteCargaBuqueCreado"
+            field="fechaInicioFeederBuque"
             header="reporte CargaBuque Creado"
-            body={reporteCargaBuqueCreadoTemplate}
+            body={fechaInicioFeederBuqueTemplate}
             dataType="date"
             sortable
           />
           <Column
-            field="reporteCargaBuqueModificado"
-            body={reporteCargaBuqueModificadoTemplate}
+            field="fechaFinFeederBuque"
+            body={fechaFinFeederBuqueTemplate}
             header="reporte CargaBuque Modificado"
             dataType="date"
           />
+          <Column field="capacidadFeederBuque" header="capacidadFeederBuque" />
+
+          <Column field="materialCargadoBuque" header="materialCargadoBuque" />
+          <Column field="tasaDeCargaBuque" header="tasaDeCargaBuque" />
+          <Column field="etcBuque" header="etcBuque" />
+          <Column field="comentariosBuque" header="comentariosBuque" />
+          <Column field="observacionesBuque" header="observacionesBuque" />
         </DataTable>
       </div>
     )
@@ -310,21 +306,17 @@ const ReporteCargaBuqueList = () => {
         >
           <Column expander style={{ width: '3em' }} />
           <Column field="nombreBuque" header="nombre Buque" sortable />
-          <Column field="buqueCliente" header="buqueCliente" sortable />
+          <Column field="clienteBuque" header="clienteBuque" sortable />
           <Column
             body={estatusTemplate}
             field="estatusBuque"
             header="estatusBuque"
             sortable
           />
+          <Column field="capacidadBuque" header="capacidadBuque" sortable />
           <Column
-            field="toneladasCapacidad"
-            header="toneladas Nominadas"
-            sortable
-          />
-          <Column
-            field="toneladasNominadas"
-            header="toneladas Solicitadas"
+            field="capacidadNominadaBuque"
+            header="capacidadNominadaBuque"
             sortable
           />
         </DataTable>
@@ -370,14 +362,14 @@ const ReporteCargaBuqueList = () => {
         <Column field="comentariosBuque" header="comentarios Buque" />
         <Column field="observacionesBuque" header="observaciones Buque" />
         <Column
-          field="reporteCargaBuqueCreado"
+          field="fechaInicioFeederBuque"
           header="reporte CargaBuque Creado"
-          body={reporteCargaBuqueCreadoTemplate}
+          body={fechaInicioFeederBuqueTemplate}
           dataType="date"
         />
         <Column
-          field="reporteCargaBuqueModificado"
-          body={reporteCargaBuqueModificadoTemplate}
+          field="fechaFinFeederBuque"
+          body={fechaFinFeederBuqueTemplate}
           header="reporte CargaBuque Modificado"
           dataType="date"
         />

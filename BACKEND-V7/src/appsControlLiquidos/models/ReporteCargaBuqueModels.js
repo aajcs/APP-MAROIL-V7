@@ -13,6 +13,20 @@ const reporteCargaBuqueSchema = new Schema(
     puestoTerminalBuque: {
       type: String
     },
+    nombreFeederBuque: {
+      type: String
+    },
+    capacidadFeederBuque: {
+      type: Number,
+      default: 0,
+      required: true
+    },
+    fechaInicioFeederBuque: {
+      type: Date
+    },
+    fechaFinFeederBuque: {
+      type: Date
+    },
     materialCargadoBuque: {
       type: Number,
       default: 0,

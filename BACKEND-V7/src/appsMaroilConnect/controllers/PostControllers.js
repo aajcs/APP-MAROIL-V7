@@ -21,6 +21,7 @@ postCtrl.createPost = async (req, res) => {
     const mediaPost = []
     console.log(req.body)
     if (req.files?.mediaPost) {
+      console.log(req.files.mediaPost)
       for (const file of req.files.mediaPost) {
         const result = await uploadImage(file.tempFilePath)
         await fs.remove(file.tempFilePath)

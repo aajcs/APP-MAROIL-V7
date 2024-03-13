@@ -8,6 +8,10 @@ reporteCargaBuqueCtrl.createReporteCargaBuque = async (req, res) => {
     buqueID,
     ubicacionBuque,
     puestoTerminalBuque,
+    nombreFeederBuque,
+    capacidadFeederBuque,
+    fechaInicioFeederBuque,
+    fechaFinFeederBuque,
     materialCargadoBuque,
     tasaDeCargaBuque,
     etcBuque,
@@ -28,7 +32,11 @@ reporteCargaBuqueCtrl.createReporteCargaBuque = async (req, res) => {
     buqueID: buqueFindID._id,
     ubicacionBuque,
     puestoTerminalBuque,
+    nombreFeederBuque,
+    capacidadFeederBuque,
     materialCargadoBuque,
+    fechaInicioFeederBuque,
+    fechaFinFeederBuque,
     tasaDeCargaBuque,
     etcBuque,
     comentariosBuque,
@@ -40,7 +48,7 @@ reporteCargaBuqueCtrl.createReporteCargaBuque = async (req, res) => {
   try {
     const savenewReporteCargaBuque1 = await newReporteCargaBuque.save()
 
-    buqueFindID.reporteCargaGOM = buqueFindID.reporteCargaGOM.concat(
+    buqueFindID.reporteCargaGOMBuque = buqueFindID.reporteCargaGOMBuque.concat(
       savenewReporteCargaBuque1._id
     )
     await buqueFindID.save()
@@ -112,7 +120,11 @@ reporteCargaBuqueCtrl.updateReporteCargaBuque = async (req, res) => {
     buqueID,
     ubicacionBuque,
     puestoTerminalBuque,
+    nombreFeederBuque,
+    capacidadFeederBuque,
     materialCargadoBuque,
+    fechaInicioFeederBuque,
+    fechaFinFeederBuque,
     tasaDeCargaBuque,
     etcBuque,
     comentariosBuque,
@@ -130,7 +142,11 @@ reporteCargaBuqueCtrl.updateReporteCargaBuque = async (req, res) => {
         ubicacionBuque,
 
         puestoTerminalBuque,
+        nombreFeederBuque,
+        capacidadFeederBuque,
         materialCargadoBuque,
+        fechaInicioFeederBuque,
+        fechaFinFeederBuque,
         tasaDeCargaBuque,
         etcBuque,
         comentariosBuque,

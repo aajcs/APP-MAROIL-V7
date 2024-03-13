@@ -216,7 +216,7 @@ const BuqueList = () => {
         <Column field="paisDestinoBuque" header="paisDestinoBuque" />
         <Column field="capacidadBuque" header="capacidadBuque" />
         <Column
-          field="capacidadNominadaBuque,"
+          field="capacidadNominadaBuque"
           header="capacidadNominadaBuque"
         />
         <Column field="capacidadActualBuque" header="capacidadActualBuque" />
