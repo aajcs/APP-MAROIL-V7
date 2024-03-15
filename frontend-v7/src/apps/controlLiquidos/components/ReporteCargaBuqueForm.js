@@ -79,13 +79,7 @@ const ReporteCargaBuqueForm = (props) => {
     today: 'Hoy',
     clear: 'Limpiar'
   })
-  const categories = [
-    { name: 'PUESTO-1', key: 'A' },
-    { name: 'PUESTO-2', key: 'M' },
-    { name: 'PUESTO-3', key: 'B' }
-    // { name: 'Production', key: 'P' },
-    // { name: 'Research', key: 'R' }
-  ]
+
   const {
     reporteCargaBuques,
     createReporteCargaBuque,

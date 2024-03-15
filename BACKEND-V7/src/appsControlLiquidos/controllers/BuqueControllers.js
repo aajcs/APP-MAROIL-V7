@@ -25,7 +25,8 @@ buqueCtrl.createBuque = async (req, res) => {
     reporteCargaBuque,
     reporteCargaGOMBuque,
     cargaBodegaBuque,
-    volumetriaIdBuque
+    volumetriaIdBuque,
+    etcBuque
   } = req.body
   try {
     const newBuque = new Buque({
@@ -50,7 +51,8 @@ buqueCtrl.createBuque = async (req, res) => {
       reporteCargaBuque,
       reporteCargaGOMBuque,
       cargaBodegaBuque,
-      volumetriaIdBuque
+      volumetriaIdBuque,
+      etcBuque
     })
     const saveBuque = await newBuque.save()
 
@@ -130,7 +132,8 @@ buqueCtrl.updateBuque = async (req, res) => {
     reporteCargaBuque,
     reporteCargaGOMBuque,
     cargaBodegaBuque,
-    volumetriaIdBuque
+    volumetriaIdBuque,
+    etcBuque
   } = req.body
   // no se esta usuando
   // const newBuque = new Buque({
@@ -173,7 +176,8 @@ buqueCtrl.updateBuque = async (req, res) => {
         reporteCargaBuque,
         reporteCargaGOMBuque,
         cargaBodegaBuque,
-        volumetriaIdBuque
+        volumetriaIdBuque,
+        etcBuque
       },
       { new: true }
     )

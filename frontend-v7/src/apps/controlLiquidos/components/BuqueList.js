@@ -220,6 +220,7 @@ const BuqueList = () => {
           header="capacidadNominadaBuque"
         />
         <Column field="capacidadActualBuque" header="capacidadActualBuque" />
+        <Column field="etcBuque" header="etcBuque" />
         <Column field="blFinalBuque" header="blFinalBuque" />
         <Column field="totalGabarras" header="totalGabarras" />
         <Column field="cantidadBodegas" header="cantidadBodegas" />

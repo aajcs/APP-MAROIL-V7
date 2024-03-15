@@ -36,6 +36,9 @@ const buqueSchema = new Schema(
       type: Number,
       default: 0
     },
+    etcBuque: {
+      type: String
+    },
     totalGabarras: {
       type: Number,
       default: 0

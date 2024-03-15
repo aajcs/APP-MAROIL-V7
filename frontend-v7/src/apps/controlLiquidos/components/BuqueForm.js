@@ -36,6 +36,7 @@ const BuqueForm = (props) => {
     fechaInicioCargaBuque: '',
     fechaFinalCargaBuque: '',
     estatusBuque: '',
+    etcBuque: '',
     reporteCargaBuque: [],
     reporteCargaGOMBuque: [],
     cargaBodegaBuque: [],
@@ -502,6 +503,13 @@ const BuqueForm = (props) => {
                 decrementButtonIcon="pi pi-minus"
               />
               {/* <InputNumber id="quantity" value={product.quantity} onValueChange={(e) => onInputNumberChange(e, 'quantity')} integeronly /> */}
+            </div>
+            <div className="field col-12  md:col-6 p-col-2 p-md-1">
+              <label>etc:</label>
+              <InputText
+                value={buqueData.etcBuque}
+                onChange={(e) => updateField(e.target.value, 'etcBuque')}
+              />
             </div>
           </div>
           <div className="formgrid grid">

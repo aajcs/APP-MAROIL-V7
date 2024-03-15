@@ -21,7 +21,7 @@ postCtrl.createPost = async (req, res) => {
     const mediaPost = []
     console.log(req.body)
     if (req.files?.mediaPost) {
-      console.log(req.files.mediaPost)
+      console.log('lo que manda en las miganes', req.files.mediaPost)
       for (const file of req.files.mediaPost) {
         const result = await uploadImage(file.tempFilePath)
         await fs.remove(file.tempFilePath)
@@ -51,6 +51,7 @@ postCtrl.createPost = async (req, res) => {
       message: 'Nuevo Post Agregado.'
     })
   } catch (err) {
+    console.log(err)
     res.status(400).json({
       error: err.message
     })

@@ -113,9 +113,9 @@ function ReporteCargaBuqueCard({ buques }) {
     )
   }
   const ubicacionBuqueTags = {
-    'MAROIL TERMINAL': '#094db1',
-    'PETRO CEDENO': '#d9a406',
-    'PETRO SAN FELIX': '#157347',
+    AMUAY: '#094db1',
+    GUARAGUAO: '#d9a406',
+    CARDON: '#157347',
     'BUQUES FONDEADO': 'danger',
     'PROXIMOS BUQUES': 'danger'
   }
@@ -124,7 +124,7 @@ function ReporteCargaBuqueCard({ buques }) {
     ubicacionBuqueTags[reporteCargaGOMBuque[ultimoRegistro].ubicacionBuque]
 
   return (
-    <div className="col-12 lg:col-6 xl:col-4">
+    <div className="col-12 lg:col-6 xl:col-6">
       <div className="card mt-2 mb-0 pb-0 ">
         <div className="card-body p-0">
           <div className="grid ">
@@ -171,68 +171,80 @@ function ReporteCargaBuqueCard({ buques }) {
               )}
             </div>
           </div>
-          <h6 className="card-text  mt-0 mb-2">
-            Fecha de Atraque:
-            <span className="text-yellow-500 font-medium ">
-              {' '}
-              {moment(buques.fechaAtracoBuque).isValid() &&
-                moment(buques.fechaAtracoBuque).format('dddDD/MM/YY HH:mm')}
-            </span>
-          </h6>
-          <h6 className="card-text mt-0 mb-2">
-            Fecha Inicio Carga:
-            <span className="text-green-500 font-medium">
-              {' '}
-              {moment(buques.fechaInicioCargaBuque).isValid() &&
-                moment(buques.fechaInicioCargaBuque).format(
-                  'dddDD/MM/YY HH:mm'
-                )}
-            </span>
-          </h6>
-          <h6 className="card-text mt-0 mb-2">
-            Fecha Fin Carga:
-            <span className="text-orange-500 font-medium">
-              {' '}
-              {moment(buques.fechaFinalCargaBuque).isValid() &&
-                moment(buques.fechaFinalCargaBuque).format('dddDD/MM/YY HH:mm')}
-            </span>
-          </h6>
+          <hr className="mt-2 mb-2 " />
+          <div className="grid ">
+            <div className="col-6">
+              <h6 className="card-text  mt-0 mb-2">
+                Fecha de Atraque:
+                <span className="text-yellow-500 font-medium ">
+                  {' '}
+                  {moment(buques.fechaAtracoBuque).isValid() &&
+                    moment(buques.fechaAtracoBuque).format('dddDD/MM/YY HH:mm')}
+                </span>
+              </h6>
+              <h6 className="card-text mt-0 mb-2">
+                Fecha Inicio Carga:
+                <span className="text-green-500 font-medium">
+                  {' '}
+                  {moment(buques.fechaInicioCargaBuque).isValid() &&
+                    moment(buques.fechaInicioCargaBuque).format(
+                      'dddDD/MM/YY HH:mm'
+                    )}
+                </span>
+              </h6>
+              <h6 className="card-text mt-0 mb-2">
+                Fecha Fin Carga:
+                <span className="text-orange-500 font-medium">
+                  {' '}
+                  {moment(buques.fechaFinalCargaBuque).isValid() &&
+                    moment(buques.fechaFinalCargaBuque).format(
+                      'dddDD/MM/YY HH:mm'
+                    )}
+                </span>
+              </h6>
 
-          <h6 className="card-text mt-0 mb-2">
-            Requerida por el Buque:
-            <span className=" font-medium">
-              {' '}
-              {new Intl.NumberFormat().format(
-                buques.capacidadNominadaBuque
-              )}{' '}
-              Bbls
-            </span>
-          </h6>
-          <h6 className="card-text mt-0 mb-2">
-            Cantidad Cargada:
-            <span className=" font-medium"> {totalDescargadoBuque} Bbls</span>
-          </h6>
-          <h6 className="card-text mt-0 mb-2">
-            Cantidad por Cargar:
-            <span className=" font-medium">
-              {' '}
-              {reporteCargaGOMBuque[ultimoRegistro] &&
-                new Intl.NumberFormat().format(
-                  buques.capacidadNominadaBuque - totalDescargadoBuque
-                )}{' '}
-              Bbls
-            </span>
-          </h6>
-          <h6 className="card-text mt-0 mb-2">
-            Tasa de Carga:
-            <span className=" font-medium">
-              {' '}
-              {reporteCargaGOMBuque[ultimoRegistro] &&
-                reporteCargaGOMBuque[ultimoRegistro].tasaDeCargaBuque}{' '}
-              Bbls/h
-            </span>
-          </h6>
-          {/* <h6 className="card-text mt-0 mb-2">
+              <h6 className="card-text mt-0 mb-2">
+                Requerida por el Buque:
+                <span className=" font-medium">
+                  {' '}
+                  {new Intl.NumberFormat().format(
+                    buques.capacidadNominadaBuque
+                  )}{' '}
+                  Bbls
+                </span>
+              </h6>
+              <h6 className="card-text mt-0 mb-2">
+                Cantidad Cargada:
+                <span className=" font-medium">
+                  {' '}
+                  {totalDescargadoBuque} Bbls
+                </span>
+              </h6>
+              <h6 className="card-text mt-0 mb-2">
+                Cantidad por Cargar:
+                <span className=" font-medium">
+                  {' '}
+                  {reporteCargaGOMBuque[ultimoRegistro] &&
+                    new Intl.NumberFormat().format(
+                      buques.capacidadNominadaBuque - totalDescargadoBuque
+                    )}{' '}
+                  Bbls
+                </span>
+              </h6>
+              <h6 className="card-text mt-0 mb-2">
+                Tasa de Carga:
+                <span className=" font-medium">
+                  {' '}
+                  {reporteCargaGOMBuque[ultimoRegistro] &&
+                    reporteCargaGOMBuque[ultimoRegistro].tasaDeCargaBuque}{' '}
+                  Bbls/h
+                </span>
+              </h6>
+              <h6 className="card-text mt-0 mb-2">
+                ETC:
+                <span className=" font-medium"> {buques.etcBuque}</span>
+              </h6>
+              {/* <h6 className="card-text mt-0 mb-2">
             Clima:
             <span className=" font-medium">
               {' '}
@@ -248,52 +260,60 @@ function ReporteCargaBuqueCard({ buques }) {
                 reporteCargaGOMBuque[ultimoRegistro].vientoGOM}
             </span>
           </h6> */}
-          <h6 className="card-text mt-0 mb-2">
-            ETC:
-            <span className=" font-medium">
-              {' '}
-              {reporteCargaGOMBuque[ultimoRegistro] &&
-                reporteCargaGOMBuque[ultimoRegistro].etcBuque}
-            </span>
-          </h6>
-          <h6 className="card-text mt-0 mb-0">
-            <Button
-              className="mr-3"
-              icon="pi pi-search-plus"
-              onClick={() => onClick('displayResponsive')}
-            />
-            <Dialog
-              header="Observaciones"
-              visible={displayResponsive}
-              onHide={() => onHide('displayResponsive')}
-              breakpoints={{ '960px': '75vw' }}
-              style={{ width: '50vw' }}
-              footer={renderFooter('displayResponsive')}
-            >
-              <p>
-                {reporteCargaGOMBuque[ultimoRegistro] &&
-                  reporteCargaGOMBuque[ultimoRegistro].observacionesBuque}
-              </p>
-            </Dialog>{' '}
-            Comentarios:
-            <span className=" font-medium">
-              {reporteCargaGOMBuque[ultimoRegistro] &&
-                reporteCargaGOMBuque[ultimoRegistro].comentariosBuque}
-            </span>
-          </h6>
+
+              <h6 className="card-text mt-0 mb-0">
+                <Button
+                  className="mr-3"
+                  icon="pi pi-search-plus"
+                  onClick={() => onClick('displayResponsive')}
+                />
+                <Dialog
+                  header="Observaciones"
+                  visible={displayResponsive}
+                  onHide={() => onHide('displayResponsive')}
+                  breakpoints={{ '960px': '75vw' }}
+                  style={{ width: '50vw' }}
+                  footer={renderFooter('displayResponsive')}
+                >
+                  <p>
+                    {reporteCargaGOMBuque[ultimoRegistro] &&
+                      reporteCargaGOMBuque[ultimoRegistro].observacionesBuque}
+                  </p>
+                </Dialog>{' '}
+                Comentarios:
+                <span className=" font-medium">
+                  {reporteCargaGOMBuque[ultimoRegistro] &&
+                    reporteCargaGOMBuque[ultimoRegistro].comentariosBuque}
+                </span>
+              </h6>
+            </div>
+            <div className="col-6 d-flex align-items-center">
+              <div>
+                <h6 className="text-center">Porcentaje de Carga</h6>
+                <ProgressBar
+                  color={porcentajeDescarga > 99 ? '#00bc51' : '#0000FF'}
+                  value={porcentajeDescarga}
+                ></ProgressBar>
+                <h6 className="text-center  m-1">
+                  Tiempo de Carga {secondsToString(diff)}
+                </h6>
+              </div>
+            </div>
+          </div>
+
           <hr className="mt-2 mb-2 " />
           <div className="grid ">
-            <div
-              className="col-6 text-center "
-              onClick={() => onClick('displayDetalleCarga')}
-            >
-              <h6 className="text-center">
+            <div className="col-12">
+              <h6 className="text-3xl text-center">
                 Feeder{' '}
                 <span className="text-blue-400 font-medium ">
                   {reporteCargaGOMBuque[ultimoRegistro] &&
                     reporteCargaGOMBuque[ultimoRegistro].nombreFeederBuque}
                 </span>
               </h6>
+            </div>
+
+            <div className="col-6  ">
               <h6 className="card-text mt-0 mb-2">
                 Capacidad Feeder:
                 <span className=" font-medium">
@@ -339,23 +359,25 @@ function ReporteCargaBuqueCard({ buques }) {
                     ).format('dddDD/MM/YY HH:mm')}
                 </span>
               </h6>
-              <ProgressBar
-                color={porcentajeDescargaFeeder > 99 ? '#00bc51' : '#0000FF'}
-                value={porcentajeDescargaFeeder}
-              ></ProgressBar>
-              <h6 className="text-center  m-1">
-                Tiempo de Carga {secondsToString1(diff1)}
+              <h6 className="card-text mt-0 mb-2">
+                ETC:
+                <span className=" font-medium">
+                  {' '}
+                  {reporteCargaGOMBuque[ultimoRegistro] &&
+                    reporteCargaGOMBuque[ultimoRegistro].etcBuque}
+                </span>
               </h6>
             </div>
-            <div className="col-6 text-right ">
-              <h6 className="text-center">Porcentaje de Carga</h6>
-              <ProgressBar
-                color={porcentajeDescarga > 99 ? '#00bc51' : '#0000FF'}
-                value={porcentajeDescarga}
-              ></ProgressBar>
-              <h6 className="text-center  m-1">
-                Tiempo de Carga {secondsToString(diff)}
-              </h6>
+            <div className="col-6 d-flex align-items-center">
+              <div>
+                <ProgressBar
+                  color={porcentajeDescargaFeeder > 99 ? '#00bc51' : '#0000FF'}
+                  value={porcentajeDescargaFeeder}
+                ></ProgressBar>
+                <h6 className="text-center  m-1">
+                  Tiempo de Carga {secondsToString1(diff1)}
+                </h6>
+              </div>
             </div>
           </div>
         </div>
