@@ -321,7 +321,7 @@ const ReporteCargaBuqueList = () => {
           />
         </DataTable>
       </div>
-      <DataTable
+      {/* <DataTable
         ref={dt}
         value={reporteCargaBuques}
         rowGroupMode="subheader"
@@ -374,7 +374,7 @@ const ReporteCargaBuqueList = () => {
           dataType="date"
         />
         <Column body={actionBodyTemplate}></Column>
-      </DataTable>
+      </DataTable> */}
 
       <ReporteCargaBuqueForm
         isVisible={isVisible}

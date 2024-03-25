@@ -4,7 +4,8 @@ const Likes = require('../models/LikesModel')
 const Posts = require('../models/PostsModels')
 
 likeCtrl.createLike = async (req, res) => {
-  const { authorLike, postLike, estatusLike } = req.body
+  console.log('iduser', req.user._id)
+  const { authorLike = req.user._id, postLike, estatusLike } = req.body
   try {
     // Buscar si ya existe un "like" de este usuario para este post
     const existingLike = await Likes.findOne({
@@ -13,9 +14,16 @@ likeCtrl.createLike = async (req, res) => {
     })
 
     if (existingLike) {
+      // Delete the existing like
+      await Likes.deleteOne({ _id: existingLike._id })
+
+      // Remove the like from the post
+      const post = await Posts.findById(postLike)
+      post.likesPost.pull(existingLike._id)
+      await post.save()
       return res
-        .status(400)
-        .json({ message: 'You have already liked this post.' })
+        .status(200)
+        .json({ saveLike: post, message: 'Nuevo Like Quitado.' })
     }
     const newLike = new Likes({
       authorLike,
@@ -30,12 +38,14 @@ likeCtrl.createLike = async (req, res) => {
     // Actualizar el post para incluir el nuevo like
     const post = await Posts.findById(postLike)
     post.likesPost.push(saveLike._id)
-    await post.save()
-
-    res.status(200).json({
-      saveLike,
-      message: 'Nuevo Like Agregado.'
-    })
+    const postactualizado = await post.save()
+    // console.log('aqui se actrualiza', postactualizado)
+    if (postactualizado) {
+      res.status(200).json({
+        saveLike: postactualizado,
+        message: 'Nuevo Like Agregado.'
+      })
+    }
   } catch (err) {
     res.status(400).json({
       error: err.message

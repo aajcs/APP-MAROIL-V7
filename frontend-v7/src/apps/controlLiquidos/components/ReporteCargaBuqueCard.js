@@ -217,7 +217,7 @@ function ReporteCargaBuqueCard({ buques }) {
                 Cantidad Cargada:
                 <span className=" font-medium">
                   {' '}
-                  {totalDescargadoBuque} Bbls
+                  {new Intl.NumberFormat().format(totalDescargadoBuque)} Bbls
                 </span>
               </h6>
               <h6 className="card-text mt-0 mb-2">
@@ -235,8 +235,10 @@ function ReporteCargaBuqueCard({ buques }) {
                 Tasa de Carga:
                 <span className=" font-medium">
                   {' '}
-                  {reporteCargaGOMBuque[ultimoRegistro] &&
-                    reporteCargaGOMBuque[ultimoRegistro].tasaDeCargaBuque}{' '}
+                  {new Intl.NumberFormat().format(
+                    reporteCargaGOMBuque[ultimoRegistro] &&
+                      reporteCargaGOMBuque[ultimoRegistro].tasaDeCargaBuque
+                  )}{' '}
                   Bbls/h
                 </span>
               </h6>

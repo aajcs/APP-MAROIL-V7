@@ -16,7 +16,7 @@ const {
   isLectura
 } = require('../../middlewares/RolesMiddleware')
 
-router.route('/').get(getLikes).post(createLike)
+router.route('/').get(getLikes).post([auth], createLike)
 
 router.route('/:id').get(getLike).delete(deleteLike).put(updateLike)
 

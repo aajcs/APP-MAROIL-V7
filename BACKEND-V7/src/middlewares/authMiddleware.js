@@ -4,6 +4,7 @@ const jwt = require('jsonwebtoken')
 const authMiddleware = async (req, res, next) => {
   try {
     const token = req.headers.authorization
+    console.log(req.headers.authorization)
 
     if (token) {
       const verify = jwt.verify(token, process.env.PRIVATE_KEY)

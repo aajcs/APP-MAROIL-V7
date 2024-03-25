@@ -64,6 +64,26 @@ export const MenuControl = () => {
           permi3: 'CLIENTE'
         },
         (auth.user.faidUser.roles[0] !== 'CLIENTE' ||
+          auth.user.faidUser.nombre === 'FARLE') && {
+          label: 'CLIENTE FARLE',
+          icon: 'pi pi-fw pi-info-circle',
+          to: '/apps/control/reportecargaGOMInfoFarle',
+          permi: 'ADMIN',
+          permi2: 'OPERADOR',
+          permi3: 'CLIENTE'
+        },
+
+        (auth.user.faidUser.roles[0] !== 'CLIENTE' ||
+          auth.user.faidUser.nombre ===
+            'EMPRESA DE ASISTENCIAS Y SERVICIOS') && {
+          label: 'CLIENTE EMPRESA DE ASISTENCIAS Y SERVICIOS',
+          icon: 'pi pi-fw pi-info-circle',
+          to: '/apps/control/reportecargaGOMInfoEmpresaDeAsistenciasYServicios',
+          permi: 'ADMIN',
+          permi2: 'OPERADOR',
+          permi3: 'CLIENTE'
+        },
+        (auth.user.faidUser.roles[0] !== 'CLIENTE' ||
           auth.user.faidUser.nombre === 'GLOBULK DMCC') && {
           label: 'CLIENTE GLOBULK DMCC',
           icon: 'pi pi-fw pi-info-circle',

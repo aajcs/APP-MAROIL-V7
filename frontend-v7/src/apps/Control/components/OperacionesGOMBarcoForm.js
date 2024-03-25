@@ -107,6 +107,8 @@ const OperacionesGOMBarcoForm = (props) => {
   const buqueClienteVenta = [
     { buqueClienteVenta: 'CREC 10' },
     { buqueClienteVenta: 'ENDECO' },
+    { buqueClienteVenta: 'FARLE' },
+    { buqueClienteVenta: 'EMPRESA DE ASISTENCIAS Y SERVICIOS' },
     { buqueClienteVenta: 'GLOBULK DMCC' },
     { buqueClienteVenta: 'ADENIX GROUP LIMITED' },
     { buqueClienteVenta: 'GRANELES' },

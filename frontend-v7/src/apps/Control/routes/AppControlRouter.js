@@ -41,6 +41,8 @@ import { ReporteCargaGOMInfoPageSuperiorQuantitySDNBHD } from '../pages/ReporteC
 import { ReporteCargaGOMInfoPageGlobulkDmcc } from '../pages/ReporteCargaGOMInfoPageGlobulkDmcc'
 import { ReporteCargaGOMInfoPageGraneles } from '../pages/ReporteCargaGOMInfoPageGraneles'
 import { ReporteCargaGOMInfoPageAdenixGroupLimited } from '../pages/ReporteCargaGOMInfoPageAdenixGroupLimited'
+import { ReporteCargaGOMInfoPageEmpresaDeAsistenciasYServicios } from '../pages/ReporteCargaGOMInfoPageEmpresaDeAsistenciasYServicios'
+import { ReporteCargaGOMInfoPageFarle } from '../pages/ReporteCargaGOMInfoPageFarle'
 
 export default function appControlRouter() {
   const { staticMenuInactive, onToggleMenuClick } = useContext(ConfigContext)
@@ -115,6 +117,16 @@ export default function appControlRouter() {
               exact
               path="/apps/control/reportecargaGOMInfoEndeco"
               component={ReporteCargaGOMInfoPageEndeco}
+            />
+            <PrivateRoute
+              exact
+              path="/apps/control/reportecargaGOMInfoFarle"
+              component={ReporteCargaGOMInfoPageFarle}
+            />
+            <PrivateRoute
+              exact
+              path="/apps/control/reportecargaGOMInfoEmpresaDeAsistenciasYServicios"
+              component={ReporteCargaGOMInfoPageEmpresaDeAsistenciasYServicios}
             />
             <PrivateRoute
               exact

@@ -30,6 +30,28 @@ export default function PrivateRoute({ hasRole: role, ...rest }) {
   }
   if (
     user.faidUser.roles[0] === 'CLIENTE' &&
+    user.faidUser.nombre === 'FARLE'
+  ) {
+    return (
+      <>
+        <Redirect to="/apps/control/reportecargaGOMInfoFarle" />
+        <Route {...rest} />
+      </>
+    )
+  }
+  if (
+    user.faidUser.roles[0] === 'CLIENTE' &&
+    user.faidUser.nombre === 'EMPRESA DE ASISTENCIAS Y SERVICIOS'
+  ) {
+    return (
+      <>
+        <Redirect to="/apps/control/reportecargaGOMInfoEmpresaDeAsistenciasYServicios" />
+        <Route {...rest} />
+      </>
+    )
+  }
+  if (
+    user.faidUser.roles[0] === 'CLIENTE' &&
     user.faidUser.nombre === 'GRANELES'
   ) {
     return (

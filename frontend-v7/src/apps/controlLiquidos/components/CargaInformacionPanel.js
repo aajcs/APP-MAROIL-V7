@@ -10,6 +10,8 @@ import AuthUse from '../../../auth/AuthUse'
 import CargaInformacionList from './CargaInformacionList'
 import { CargaInformacionTanqueList } from './CargaInformacionTanqueList'
 import GastosOperacionaleList from './GastosOperacionaleList'
+import BuqueList from './BuqueList'
+import ReporteCargaBuqueList from './ReporteCargaBuqueList'
 
 const CargaInformacionPanel = () => {
   const auth = AuthUse()
@@ -21,6 +23,12 @@ const CargaInformacionPanel = () => {
     <>
       <h5>Operaciones de Carga de Viajes</h5>
       <TabView className="tabview-custom">
+        <TabPanel header="Carga de Buque" leftIcon="pi pi-user">
+          <BuqueList />
+        </TabPanel>
+        <TabPanel header="Carga de Feeder" leftIcon="pi pi-user">
+          <ReporteCargaBuqueList />
+        </TabPanel>
         <TabPanel header="Carga de Viajes" leftIcon="pi pi-user">
           <CargaInformacionList />
         </TabPanel>
