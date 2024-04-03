@@ -30,6 +30,17 @@ export default function PrivateRoute({ hasRole: role, ...rest }) {
   }
   if (
     user.faidUser.roles[0] === 'CLIENTE' &&
+    user.faidUser.nombre === 'COMET'
+  ) {
+    return (
+      <>
+        <Redirect to="/apps/control/reportecargaGOMInfoComet" />
+        <Route {...rest} />
+      </>
+    )
+  }
+  if (
+    user.faidUser.roles[0] === 'CLIENTE' &&
     user.faidUser.nombre === 'FARLE'
   ) {
     return (

@@ -67,6 +67,7 @@ function ProgramacionVentanaCard({ events }) {
             {new Intl.NumberFormat().format(events.toneladasNominadas)}{' '}
             {' TM / '}
             {events.buqueClienteVenta === 'ENDECO' ||
+            events.buqueClienteVenta === 'COMET' ||
             events.buqueClienteVenta === 'FARLE' ||
             events.buqueClienteVenta === 'EMPRESA DE ASISTENCIAS Y SERVICIOS' ||
             events.buqueClienteVenta === 'SUPERIOR QUANTITY SDN BHD' ||
