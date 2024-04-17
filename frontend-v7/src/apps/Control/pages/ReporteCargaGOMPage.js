@@ -1,6 +1,7 @@
 import ReporteCargaGOMContextProvider from '../contexts/ReporteCargaGOMContext'
 import ReporteCargaGOMList from '../components/ReporteCargaGOMList'
 import BarcoContextProvider from '../contexts/BarcoContext'
+import WhatsappContextProvider from '../contexts/WhatsappContext'
 
 export const ReporteCargaGOMPage = () => {
   return (
@@ -8,11 +9,13 @@ export const ReporteCargaGOMPage = () => {
       <div className="col-12 ">
         <div className="card">
           <h5>ReporteCargaGOM CRUD</h5>
-          <BarcoContextProvider>
-            <ReporteCargaGOMContextProvider>
-              <ReporteCargaGOMList />
-            </ReporteCargaGOMContextProvider>
-          </BarcoContextProvider>
+          <WhatsappContextProvider>
+            <BarcoContextProvider>
+              <ReporteCargaGOMContextProvider>
+                <ReporteCargaGOMList />
+              </ReporteCargaGOMContextProvider>
+            </BarcoContextProvider>
+          </WhatsappContextProvider>
         </div>
       </div>
     </div>

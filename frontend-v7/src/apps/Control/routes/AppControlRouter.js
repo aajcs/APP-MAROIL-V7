@@ -44,6 +44,7 @@ import { ReporteCargaGOMInfoPageAdenixGroupLimited } from '../pages/ReporteCarga
 import { ReporteCargaGOMInfoPageEmpresaDeAsistenciasYServicios } from '../pages/ReporteCargaGOMInfoPageEmpresaDeAsistenciasYServicios'
 import { ReporteCargaGOMInfoPageFarle } from '../pages/ReporteCargaGOMInfoPageFarle'
 import { ReporteCargaGOMInfoPageComet } from '../pages/ReporteCargaGOMInfoPageComet'
+import { ReporteCargaGOMInfoPageGlobalCargoTrading } from '../pages/ReporteCargaGOMInfoPageGlobalCargoTrading'
 
 export default function appControlRouter() {
   const { staticMenuInactive, onToggleMenuClick } = useContext(ConfigContext)
@@ -118,6 +119,11 @@ export default function appControlRouter() {
               exact
               path="/apps/control/reportecargaGOMInfoEndeco"
               component={ReporteCargaGOMInfoPageEndeco}
+            />
+            <PrivateRoute
+              exact
+              path="/apps/control/reportecargaGOMInfoGlobalCargoTrading"
+              component={ReporteCargaGOMInfoPageGlobalCargoTrading}
             />
             <PrivateRoute
               exact

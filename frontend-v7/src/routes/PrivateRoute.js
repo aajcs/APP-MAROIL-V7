@@ -30,6 +30,17 @@ export default function PrivateRoute({ hasRole: role, ...rest }) {
   }
   if (
     user.faidUser.roles[0] === 'CLIENTE' &&
+    user.faidUser.nombre === 'GLOBAL CARGO TRADING'
+  ) {
+    return (
+      <>
+        <Redirect to="/apps/control/reportecargaGOMInfoGlobalCargoTrading" />
+        <Route {...rest} />
+      </>
+    )
+  }
+  if (
+    user.faidUser.roles[0] === 'CLIENTE' &&
     user.faidUser.nombre === 'COMET'
   ) {
     return (

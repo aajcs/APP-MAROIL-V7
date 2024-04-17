@@ -68,6 +68,7 @@ function ProgramacionVentanaCard({ events }) {
             {' TM / '}
             {events.buqueClienteVenta === 'ENDECO' ||
             events.buqueClienteVenta === 'COMET' ||
+            events.buqueClienteVenta === 'GLOBAL CARGO TRADING' ||
             events.buqueClienteVenta === 'FARLE' ||
             events.buqueClienteVenta === 'EMPRESA DE ASISTENCIAS Y SERVICIOS' ||
             events.buqueClienteVenta === 'SUPERIOR QUANTITY SDN BHD' ||

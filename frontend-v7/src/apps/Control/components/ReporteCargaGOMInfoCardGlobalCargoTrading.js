@@ -13,7 +13,7 @@ import AuthUse from '../../../auth/AuthUse'
 import ClimaVientoGOMInfoCard from './ClimaVientoGOMInfoCard'
 // import barcoJPEG from '../assetsControl/barco.jpeg'
 
-function ReporteCargaGOMInfoCardComet({ barcos }) {
+function ReporteCargaGOMInfoCardGlobalCargoTrading({ barcos }) {
   const { cargaBodegas } = useContext(CargaBodegaContext)
   const [displayResponsive, setDisplayResponsive] = useState(false)
   const [displayDetalleCarga, setDisplayDetalleCarga] = useState(false)
@@ -337,4 +337,4 @@ function ReporteCargaGOMInfoCardComet({ barcos }) {
   )
 }
 
-export default ReporteCargaGOMInfoCardComet
+export default ReporteCargaGOMInfoCardGlobalCargoTrading

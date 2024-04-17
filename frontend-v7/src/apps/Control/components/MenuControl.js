@@ -64,6 +64,15 @@ export const MenuControl = () => {
           permi3: 'CLIENTE'
         },
         (auth.user.faidUser.roles[0] !== 'CLIENTE' ||
+          auth.user.faidUser.nombre === 'GLOBAL CARGO TRADING') && {
+          label: 'CLIENTE GLOBAL CARGO TRADING',
+          icon: 'pi pi-fw pi-info-circle',
+          to: '/apps/control/reportecargaGOMInfoGlobalCargoTrading',
+          permi: 'ADMIN',
+          permi2: 'OPERADOR',
+          permi3: 'CLIENTE'
+        },
+        (auth.user.faidUser.roles[0] !== 'CLIENTE' ||
           auth.user.faidUser.nombre === 'COMET') && {
           label: 'CLIENTE COMET',
           icon: 'pi pi-fw pi-info-circle',
