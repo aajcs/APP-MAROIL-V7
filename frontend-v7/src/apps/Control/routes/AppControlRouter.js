@@ -45,6 +45,9 @@ import { ReporteCargaGOMInfoPageEmpresaDeAsistenciasYServicios } from '../pages/
 import { ReporteCargaGOMInfoPageFarle } from '../pages/ReporteCargaGOMInfoPageFarle'
 import { ReporteCargaGOMInfoPageComet } from '../pages/ReporteCargaGOMInfoPageComet'
 import { ReporteCargaGOMInfoPageGlobalCargoTrading } from '../pages/ReporteCargaGOMInfoPageGlobalCargoTrading'
+import { ReporteCargaGOMInfoPageTardidLimited } from '../pages/ReporteCargaGOMInfoPageTardidLimited'
+import { ReporteCargaGOMInfoPageMinasGusa } from '../pages/ReporteCargaGOMInfoPageMinasGusa'
+import { ReporteCargaGOMInfoPageNormanGlobalCorporation } from '../pages/ReporteCargaGOMInfoPageENormanGlobalCorporation'
 
 export default function appControlRouter() {
   const { staticMenuInactive, onToggleMenuClick } = useContext(ConfigContext)
@@ -119,6 +122,21 @@ export default function appControlRouter() {
               exact
               path="/apps/control/reportecargaGOMInfoEndeco"
               component={ReporteCargaGOMInfoPageEndeco}
+            />
+            <PrivateRoute
+              exact
+              path="/apps/control/reportecargaGOMInfoNormanGlobalCorporation"
+              component={ReporteCargaGOMInfoPageNormanGlobalCorporation}
+            />
+            <PrivateRoute
+              exact
+              path="/apps/control/reportecargaGOMInfoMinasGusa"
+              component={ReporteCargaGOMInfoPageMinasGusa}
+            />
+            <PrivateRoute
+              exact
+              path="/apps/control/reportecargaGOMInfoTardidLimited"
+              component={ReporteCargaGOMInfoPageTardidLimited}
             />
             <PrivateRoute
               exact

@@ -18,7 +18,7 @@ const postsSchema = new Schema(
     commentsPost: [
       {
         type: Schema.Types.ObjectId,
-        ref: 'CommentsPost'
+        ref: 'Comments'
       }
     ],
     likesPost: [
@@ -30,7 +30,7 @@ const postsSchema = new Schema(
     viewsPost: [
       {
         type: Schema.Types.ObjectId,
-        ref: 'ViewsPost'
+        ref: 'Views'
       }
     ],
     mediaPost: [{ public_id: String, url: String }],

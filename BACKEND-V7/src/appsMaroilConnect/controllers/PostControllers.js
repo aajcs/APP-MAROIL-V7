@@ -74,6 +74,22 @@ postCtrl.getPosts = async (req, res) => {
           select: 'nombre' // selecciona solo el campo 'nombre' del usuario
         }
       })
+      .populate({
+        path: 'viewsPost',
+        select: 'authorView ',
+        populate: {
+          path: 'authorView',
+          select: 'nombre' // selecciona solo el campo 'nombre' del usuario
+        }
+      })
+      .populate({
+        path: 'commentsPost',
+        select: 'authorComment contentComment',
+        populate: {
+          path: 'authorComment',
+          select: 'nombre' // selecciona solo el campo 'nombre' del usuario
+        }
+      })
       .sort({ createdAt: -1 })
       .skip(desde)
       .limit(limite)

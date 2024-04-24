@@ -67,6 +67,9 @@ function ProgramacionVentanaCard({ events }) {
             {new Intl.NumberFormat().format(events.toneladasNominadas)}{' '}
             {' TM / '}
             {events.buqueClienteVenta === 'ENDECO' ||
+            events.buqueClienteVenta === 'NORMAN GLOBAL CORPORATION' ||
+            events.buqueClienteVenta === 'MINAS GUSA' ||
+            events.buqueClienteVenta === 'TARDID LIMITED' ||
             events.buqueClienteVenta === 'COMET' ||
             events.buqueClienteVenta === 'GLOBAL CARGO TRADING' ||
             events.buqueClienteVenta === 'FARLE' ||

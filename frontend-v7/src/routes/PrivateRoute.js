@@ -30,6 +30,39 @@ export default function PrivateRoute({ hasRole: role, ...rest }) {
   }
   if (
     user.faidUser.roles[0] === 'CLIENTE' &&
+    user.faidUser.nombre === 'NORMAN GLOBAL CORPORATION'
+  ) {
+    return (
+      <>
+        <Redirect to="/apps/control/reportecargaGOMInfoNormanGlobalCorporation" />
+        <Route {...rest} />
+      </>
+    )
+  }
+  if (
+    user.faidUser.roles[0] === 'CLIENTE' &&
+    user.faidUser.nombre === 'MINAS GUSA'
+  ) {
+    return (
+      <>
+        <Redirect to="/apps/control/reportecargaGOMInfoMinasGusa" />
+        <Route {...rest} />
+      </>
+    )
+  }
+  if (
+    user.faidUser.roles[0] === 'CLIENTE' &&
+    user.faidUser.nombre === 'TARDID LIMITED'
+  ) {
+    return (
+      <>
+        <Redirect to="/apps/control/reportecargaGOMInfoTardidLimited" />
+        <Route {...rest} />
+      </>
+    )
+  }
+  if (
+    user.faidUser.roles[0] === 'CLIENTE' &&
     user.faidUser.nombre === 'GLOBAL CARGO TRADING'
   ) {
     return (
