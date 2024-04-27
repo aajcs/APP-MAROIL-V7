@@ -64,6 +64,15 @@ export const MenuControl = () => {
           permi3: 'CLIENTE'
         },
         (auth.user.faidUser.roles[0] !== 'CLIENTE' ||
+          auth.user.faidUser.nombre === 'TTCO VERSEAS') && {
+          label: 'CLIENTE TTCO VERSEAS',
+          icon: 'pi pi-fw pi-info-circle',
+          to: '/apps/control/reportecargaGOMInfoTTCOverseas',
+          permi: 'ADMIN',
+          permi2: 'OPERADOR',
+          permi3: 'CLIENTE'
+        },
+        (auth.user.faidUser.roles[0] !== 'CLIENTE' ||
           auth.user.faidUser.nombre === 'NORMAN GLOBAL CORPORATION') && {
           label: 'CLIENTE NORMAN GLOBAL CORPORATION',
           icon: 'pi pi-fw pi-info-circle',

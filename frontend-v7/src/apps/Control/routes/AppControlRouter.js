@@ -48,6 +48,7 @@ import { ReporteCargaGOMInfoPageGlobalCargoTrading } from '../pages/ReporteCarga
 import { ReporteCargaGOMInfoPageTardidLimited } from '../pages/ReporteCargaGOMInfoPageTardidLimited'
 import { ReporteCargaGOMInfoPageMinasGusa } from '../pages/ReporteCargaGOMInfoPageMinasGusa'
 import { ReporteCargaGOMInfoPageNormanGlobalCorporation } from '../pages/ReporteCargaGOMInfoPageENormanGlobalCorporation'
+import { ReporteCargaGOMInfoPageTTCOverseas } from '../pages/ReporteCargaGOMInfoPageTTCOverseas'
 
 export default function appControlRouter() {
   const { staticMenuInactive, onToggleMenuClick } = useContext(ConfigContext)
@@ -122,6 +123,11 @@ export default function appControlRouter() {
               exact
               path="/apps/control/reportecargaGOMInfoEndeco"
               component={ReporteCargaGOMInfoPageEndeco}
+            />
+            <PrivateRoute
+              exact
+              path="/apps/control/reportecargaGOMInfoTTCOverseas"
+              component={ReporteCargaGOMInfoPageTTCOverseas}
             />
             <PrivateRoute
               exact
