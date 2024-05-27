@@ -64,6 +64,25 @@ export const MenuControl = () => {
           permi3: 'CLIENTE'
         },
         (auth.user.faidUser.roles[0] !== 'CLIENTE' ||
+          auth.user.faidUser.nombre === 'RAC OVERSEAS') && {
+          label: 'CLIENTE RAC OVERSEAS',
+          icon: 'pi pi-fw pi-info-circle',
+          to: '/apps/control/reportecargaGOMInfoRacOverseas',
+          permi: 'ADMIN',
+          permi2: 'OPERADOR',
+          permi3: 'CLIENTE'
+        },
+        (auth.user.faidUser.roles[0] !== 'CLIENTE' ||
+          auth.user.faidUser.nombre ===
+            'FONTE GLOBAL TRADING AND LOGISTICS') && {
+          label: 'CLIENTE FONTE GLOBAL TRADING AND LOGISTICS',
+          icon: 'pi pi-fw pi-info-circle',
+          to: '/apps/control/reportecargaGOMInfoFonteGlobalTradingAndLogistics',
+          permi: 'ADMIN',
+          permi2: 'OPERADOR',
+          permi3: 'CLIENTE'
+        },
+        (auth.user.faidUser.roles[0] !== 'CLIENTE' ||
           auth.user.faidUser.nombre === 'TTCO VERSEAS') && {
           label: 'CLIENTE TTCO VERSEAS',
           icon: 'pi pi-fw pi-info-circle',

@@ -1,12 +1,16 @@
 const postCtrl = {}
 
 const fs = require('fs-extra')
-const { uploadImage } = require('../../libs/cloudinary')
+// const { uploadImage } = require('../../libs/cloudinary')
 const Posts = require('../models/PostsModels')
-
+const admin = require('firebase-admin')
+const serviceAccount = JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT)
+admin.initializeApp({
+  credential: admin.credential.cert(serviceAccount),
+  storageBucket: 'gs://maroilconnect.appspot.com/'
+})
+const bucket = admin.storage().bucket()
 postCtrl.createPost = async (req, res) => {
-  console.log('validarTokenUsuario', req.user._id)
-
   const {
     authorPost = req.user._id,
     titlePost,
@@ -23,13 +27,57 @@ postCtrl.createPost = async (req, res) => {
     if (req.files?.mediaPost) {
       console.log('lo que manda en las miganes', req.files.mediaPost)
       for (const file of req.files.mediaPost) {
-        const result = await uploadImage(file.tempFilePath)
+        console.log('file', file)
+        const uniqueFileName = `${Date.now()}_${file.name}`
+
+        await bucket.upload(file.tempFilePath, {
+          // Opciones de subida, como el nombre del archivo, metadatos, etc.
+          destination: `mediaPost/${uniqueFileName}`,
+          metadata: {
+            contentType: file.mimetype
+          }
+        })
+        const [url] = await bucket
+          .file(`mediaPost/${uniqueFileName}`)
+          .getSignedUrl({
+            action: 'read',
+            expires: '03-09-2491'
+          })
+        console.log('url', url)
+        // const result = await uploadImage(file.tempFilePath)
         await fs.remove(file.tempFilePath)
         mediaPost.push({
-          url: result.secure_url,
-          public_id: result.public_id
+          url: url,
+          public_id: url
         })
       }
+    } else if (typeof req.files?.mediaPost === 'object') {
+      console.log('lo que manda en las miganes', req.files.mediaPost)
+      const file = req.files.mediaPost
+      const uniqueFileName = `${Date.now()}_${file.name}`
+      await bucket.upload(file.tempFilePath, {
+        // Opciones de subida, como el nombre del archivo, metadatos, etc.
+        destination: `mediaPost/${uniqueFileName}`,
+        metadata: {
+          contentType: file.mimetype
+        }
+      })
+      // const result = await uploadImage(file.tempFilePath)
+
+      const [url] = await bucket
+        .file(`mediaPost/${uniqueFileName}`)
+        .getSignedUrl({
+          action: 'read',
+          expires: '03-09-2491'
+        })
+      console.log('url', url)
+      await fs.remove(file.tempFilePath)
+      mediaPost.push({
+        url: url,
+        public_id: url
+      })
+    } else {
+      console.log('mediaPost is not iterable')
     }
     const newPost = new Posts({
       authorPost,

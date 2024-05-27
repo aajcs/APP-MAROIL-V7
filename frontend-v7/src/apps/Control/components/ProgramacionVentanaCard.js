@@ -67,6 +67,8 @@ function ProgramacionVentanaCard({ events }) {
             {new Intl.NumberFormat().format(events.toneladasNominadas)}{' '}
             {' TM / '}
             {events.buqueClienteVenta === 'ENDECO' ||
+            events.buqueClienteVenta === 'RAC OVERSEAS' ||
+            events.buqueClienteVenta === 'FONTE GLOBAL TRADING AND LOGISTICS' ||
             events.buqueClienteVenta === 'TTCO VERSEAS' ||
             events.buqueClienteVenta === 'NORMAN GLOBAL CORPORATION' ||
             events.buqueClienteVenta === 'MINAS GUSA' ||

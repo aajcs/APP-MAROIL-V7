@@ -30,6 +30,28 @@ export default function PrivateRoute({ hasRole: role, ...rest }) {
   }
   if (
     user.faidUser.roles[0] === 'CLIENTE' &&
+    user.faidUser.nombre === 'RAC OVERSEAS'
+  ) {
+    return (
+      <>
+        <Redirect to="/apps/control/reportecargaGOMInfoRacOverseas" />
+        <Route {...rest} />
+      </>
+    )
+  }
+  if (
+    user.faidUser.roles[0] === 'CLIENTE' &&
+    user.faidUser.nombre === 'FONTE GLOBAL TRADING AND LOGISTICS'
+  ) {
+    return (
+      <>
+        <Redirect to="/apps/control/reportecargaGOMInfoFonteGlobalTradingAndLogistics" />
+        <Route {...rest} />
+      </>
+    )
+  }
+  if (
+    user.faidUser.roles[0] === 'CLIENTE' &&
     user.faidUser.nombre === 'TTCO VERSEAS'
   ) {
     return (
