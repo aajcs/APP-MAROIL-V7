@@ -24,8 +24,8 @@ postCtrl.createPost = async (req, res) => {
   try {
     const mediaPost = []
     console.log(req.body)
-    if (req.files?.mediaPost) {
-      console.log('lo que manda en las miganes', req.files.mediaPost)
+    if (Array.isArray(req.files?.mediaPost)) {
+      // console.log('lo que manda en las miganes', req.files.mediaPost)
       for (const file of req.files.mediaPost) {
         console.log('file', file)
         const uniqueFileName = `${Date.now()}_${file.name}`
