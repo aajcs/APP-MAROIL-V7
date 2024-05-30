@@ -4,7 +4,11 @@ const fileUpload = require('express-fileupload')
 const cors = require('cors')
 const morgan = require('morgan')
 const createAdmin = require('./libs/initialSetup')
+const http = require('http')
+const { initSocketServer } = require('./utils/index.js')
 const app = express()
+const server = http.createServer(app)
+initSocketServer(server)
 createAdmin()
 // const { mongoose } = require('./database');
 // require('./database');
