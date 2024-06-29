@@ -59,7 +59,8 @@ likeCtrl.getLikes = async (req, res) => {
     const posts = await Likes.find({})
       .populate('authorLike', {
         nombre: 1,
-        correo: 1
+        correo: 1,
+        createdAt: 1
       })
       .skip(skip)
       .limit(10)

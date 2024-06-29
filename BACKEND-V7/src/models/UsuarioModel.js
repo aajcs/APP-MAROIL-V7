@@ -7,8 +7,8 @@ const usaurioSchema = new Schema(
   {
     nombre: {
       type: String,
-      required: true,
-      unique: true
+      required: true
+      // unique: true
     },
     correo: {
       type: String,
@@ -17,13 +17,26 @@ const usaurioSchema = new Schema(
     },
     user: {
       type: String,
-      required: true,
+      // required: true,
       unique: true
     },
     password: {
       type: String,
       required: true
     },
+    rolesMaroilConnect: [
+      {
+        type: String,
+        required: true,
+        default: 'NotRol'
+      }
+    ],
+    chatMaroilConnect: {
+      type: Boolean
+      // required: true,
+      // default: true
+    },
+
     roles: [
       {
         type: String,

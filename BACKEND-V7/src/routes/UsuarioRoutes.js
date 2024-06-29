@@ -13,7 +13,7 @@ const {
 const auth = require('../middlewares/authMiddleware')
 const { isAdmin, isSuperAdmin } = require('../middlewares/RolesMiddleware')
 
-router.route('/').get(auth, isAdmin, getUsuarios).post(createUsuario)
+router.route('/').get(auth, getUsuarios).post(createUsuario)
 router.route('/login').post(login).get(auth, validarTokenUsuario)
 router
   .route('/:id')

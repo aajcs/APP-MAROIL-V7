@@ -22,6 +22,8 @@ usuarioCtrl.createUsuario = async (req, res) => {
     password,
     roles,
     apps,
+    rolesMaroilConnect,
+    chatMaroilConnect,
     usuariocreado,
     usuariomodificado
   } = req.body
@@ -33,6 +35,8 @@ usuarioCtrl.createUsuario = async (req, res) => {
     password,
     roles,
     apps,
+    rolesMaroilConnect,
+    chatMaroilConnect,
     usuariocreado,
     usuariomodificado
   })
@@ -53,8 +57,8 @@ usuarioCtrl.createUsuario = async (req, res) => {
   } catch (err) {
     if (err.code === 11000) {
       // Duplicate username
-      return res.status(400).json({
-        message: 'Usuario ya existe.'
+      return res.status(401).json({
+        message: 'Correo ya existe.'
       })
     }
     res.status(400).json({
@@ -112,6 +116,8 @@ usuarioCtrl.updateUsuario = async (req, res) => {
     password,
     roles,
     apps,
+    rolesMaroilConnect,
+    chatMaroilConnect,
     usuariocreado,
     usuariomodificado
   } = req.body
@@ -137,6 +143,8 @@ usuarioCtrl.updateUsuario = async (req, res) => {
         password: newUsuario.password,
         roles,
         apps,
+        rolesMaroilConnect,
+        chatMaroilConnect,
         usuariocreado,
         usuariomodificado
       },

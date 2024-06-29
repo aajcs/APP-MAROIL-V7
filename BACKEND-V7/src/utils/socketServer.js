@@ -11,7 +11,14 @@ function initSocketServer(server) {
   })
   return io
 }
+function getIo() {
+  if (!io) {
+    throw new Error('Must call initSocketServer first')
+  }
+  return io
+}
 
 module.exports = {
+  getIo,
   initSocketServer
 }

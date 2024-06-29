@@ -116,7 +116,7 @@ postCtrl.getPosts = async (req, res) => {
       })
       .populate({
         path: 'likesPost',
-        select: 'authorLike ',
+        select: 'authorLike createdAt',
         populate: {
           path: 'authorLike',
           select: 'nombre' // selecciona solo el campo 'nombre' del usuario
@@ -124,7 +124,7 @@ postCtrl.getPosts = async (req, res) => {
       })
       .populate({
         path: 'viewsPost',
-        select: 'authorView ',
+        select: 'authorView createdAt',
         populate: {
           path: 'authorView',
           select: 'nombre' // selecciona solo el campo 'nombre' del usuario
@@ -132,7 +132,8 @@ postCtrl.getPosts = async (req, res) => {
       })
       .populate({
         path: 'commentsPost',
-        select: 'authorComment contentComment',
+        select: 'authorComment contentComment createdAt',
+        options: { sort: { createdAt: -1 } },
         populate: {
           path: 'authorComment',
           select: 'nombre' // selecciona solo el campo 'nombre' del usuario

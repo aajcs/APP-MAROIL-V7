@@ -181,6 +181,11 @@ app.use('/api/Post', require('./appsMaroilConnect/routes/PostRoutes'))
 app.use('/api/Like', require('./appsMaroilConnect/routes/LikeRoutes'))
 app.use('/api/View', require('./appsMaroilConnect/routes/ViewRoutes'))
 app.use('/api/Comment', require('./appsMaroilConnect/routes/CommentRoutes'))
+app.use('/api/Chat', require('./appsMaroilConnect/routes/ChatRoutes'))
+app.use(
+  '/api/ChatMessage',
+  require('./appsMaroilConnect/routes/ChatMessageRoutes')
+)
 // Static Files
 // app.use(express.static(path.join(__dirname, '../public')));;
 app.use((req, res) => {
