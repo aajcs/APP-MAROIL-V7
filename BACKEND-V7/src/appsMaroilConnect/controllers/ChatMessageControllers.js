@@ -72,7 +72,7 @@ chatMessageCtrl.sendChatMessage = async (req, res) => {
     getIo()
       .sockets.in(`chat-${chatIdChatMessage}`)
       .emit('newMessageNotify', chatMessageSave)
-    if (postAuthor.tokenFcm.length !== 0) {
+    if (participant.tokenFcm !== 0) {
       await admin.messaging().sendEachForMulticast({
         tokens: [...participant.tokenFcm],
         // data: {
