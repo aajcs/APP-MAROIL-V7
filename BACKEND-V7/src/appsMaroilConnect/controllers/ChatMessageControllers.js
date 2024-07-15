@@ -1,7 +1,9 @@
 const chatMessageCtrl = {}
+const admin = require('firebase-admin')
 
 const { getIo } = require('../../utils')
 const ChatMessage = require('../models/ChatMessageModel')
+const Chat = require('../models/ChatModel')
 
 // chatMessageCtrl.createChatMessage = async (req, res) => {
 //   console.log('iduser', req.user._id)
@@ -41,11 +43,9 @@ const ChatMessage = require('../models/ChatMessageModel')
 //   }
 // }
 chatMessageCtrl.sendChatMessage = async (req, res) => {
-  const { _id } = req.user
-  console.log('iduser', _id)
+  const { _id, nombre } = req.user
+
   const { chatIdChatMessage, messageChatMessage } = req.body
-  console.log('chatIdChatMessage', chatIdChatMessage)
-  console.log('messageChatMessage', messageChatMessage)
 
   try {
     if (chatIdChatMessage === undefined || messageChatMessage === undefined) {
@@ -60,12 +60,45 @@ chatMessageCtrl.sendChatMessage = async (req, res) => {
       typeChatMessage: 'text'
     })
     const chatMessageSave = await newChatMessage.save()
-
+    const chat = await Chat.findById(chatIdChatMessage).populate(
+      'participanteOne participanteTwo',
+      { nombre: 1, tokenFcm: 1 }
+    )
+    const participant =
+      chat.participanteOne.id.toString() === _id.toString()
+        ? chat.participanteTwo
+        : chat.participanteOne
     getIo().sockets.in(chatIdChatMessage).emit('newMessage', chatMessageSave)
     getIo()
       .sockets.in(`chat-${chatIdChatMessage}`)
       .emit('newMessageNotify', chatMessageSave)
-
+    if (postAuthor.tokenFcm.length !== 0) {
+      await admin.messaging().sendEachForMulticast({
+        tokens: [...participant.tokenFcm],
+        // data: {
+        //   owner: JSON.stringify(owner),
+        //   user: JSON.stringify(user),
+        //   picture: JSON.stringify(picture)
+        // },
+        notification: {
+          title: `Nuevo Mensaje de ${nombre}`,
+          body: `${messageChatMessage}`
+        },
+        apns: {
+          payload: {
+            aps: {
+              // Required for background/quit data-only messages on iOS
+              // Note: iOS frequently will receive the message but decline to deliver it to your app.
+              //           This is an Apple design choice to favor user battery life over data-only delivery
+              //           reliability. It is not under app control, though you may see the behavior in device logs.
+              'content-available': true,
+              // Required for background/quit data-only messages on Android
+              priority: 'high'
+            }
+          }
+        }
+      })
+    }
     res.status(200).json({
       chatMessageSave,
       message: 'Nuevo ChatMessage Agregado.'
@@ -92,6 +125,7 @@ chatMessageCtrl.getChatMessages = async (req, res) => {
     const totalChatsMessages = await ChatMessage.find({
       chatIdChatMessage
     }).count()
+
     res.status(200).json({ chatsMessages, totalChatsMessages })
   } catch (err) {
     console.log(err)

@@ -14,6 +14,10 @@ const postsSchema = new Schema(
       type: String,
       trim: true
     },
+    categoriaPost: {
+      type: String,
+      trim: true
+    },
 
     commentsPost: [
       {

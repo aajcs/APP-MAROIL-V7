@@ -2,10 +2,60 @@ const likeCtrl = {}
 
 const Likes = require('../models/LikesModel')
 const Posts = require('../models/PostsModels')
+const Usuario = require('../../models/UsuarioModel')
+const admin = require('firebase-admin')
 
+// likeCtrl.createLike = async (req, res) => {
+//   const { authorLike = req.user._id, postLike, estatusLike } = req.body
+//   try {
+//     // Buscar si ya existe un "like" de este usuario para este post
+//     const existingLike = await Likes.findOne({
+//       authorLike,
+//       postLike
+//     })
+
+//     if (existingLike) {
+//       // Delete the existing like
+//       await Likes.deleteOne({ _id: existingLike._id })
+
+//       // Remove the like from the post
+//       const post = await Posts.findById(postLike)
+//       post.likesPost.pull(existingLike._id)
+//       await post.save()
+//       return res
+//         .status(200)
+//         .json({ saveLike: post, message: 'Nuevo Like Quitado.' })
+//     }
+//     const newLike = new Likes({
+//       authorLike,
+//       postLike,
+//       estatusLike
+//     })
+//     const saveLike = await newLike.save()
+//     await saveLike.populate('authorLike', {
+//       nombre: 1,
+//       correo: 1
+//     })
+//     // Actualizar el post para incluir el nuevo like
+//     const post = await Posts.findById(postLike)
+//     post.likesPost.push(saveLike._id)
+//     const postactualizado = await post.save()
+//     // console.log('aqui se actrualiza', postactualizado)
+//     if (postactualizado) {
+//       res.status(200).json({
+//         saveLike: postactualizado,
+//         message: 'Nuevo Like Agregado.'
+//       })
+//     }
+//   } catch (err) {
+//     res.status(400).json({
+//       error: err.message
+//     })
+//   }
+// }
 likeCtrl.createLike = async (req, res) => {
-  console.log('iduser', req.user._id)
-  const { authorLike = req.user._id, postLike, estatusLike } = req.body
+  const { _id, nombre } = req.user
+  const { authorLike = _id, postLike, estatusLike } = req.body
   try {
     // Buscar si ya existe un "like" de este usuario para este post
     const existingLike = await Likes.findOne({
@@ -16,7 +66,7 @@ likeCtrl.createLike = async (req, res) => {
     if (existingLike) {
       // Delete the existing like
       await Likes.deleteOne({ _id: existingLike._id })
-
+      console.log('quitar like')
       // Remove the like from the post
       const post = await Posts.findById(postLike)
       post.likesPost.pull(existingLike._id)
@@ -35,11 +85,46 @@ likeCtrl.createLike = async (req, res) => {
       nombre: 1,
       correo: 1
     })
+    console.log('actualizar like')
+
     // Actualizar el post para incluir el nuevo like
     const post = await Posts.findById(postLike)
     post.likesPost.push(saveLike._id)
     const postactualizado = await post.save()
-    // console.log('aqui se actrualiza', postactualizado)
+
+    // Get the post author's information
+    const postAuthor = await Usuario.findById(post.authorPost)
+    console.log('postauthor', postAuthor.tokenFcm)
+    // Send a notification to the post author
+
+    if (postAuthor.tokenFcm.length !== 0) {
+      await admin.messaging().sendEachForMulticast({
+        tokens: [...postAuthor.tokenFcm],
+        // data: {
+        //   owner: JSON.stringify(owner),
+        //   user: JSON.stringify(user),
+        //   picture: JSON.stringify(picture)
+        // },
+        notification: {
+          title: `Like de ${nombre}`,
+          body: `Tu post ${post.titlePost} ha recibido un nuevo like`
+        },
+        apns: {
+          payload: {
+            aps: {
+              // Required for background/quit data-only messages on iOS
+              // Note: iOS frequently will receive the message but decline to deliver it to your app.
+              //           This is an Apple design choice to favor user battery life over data-only delivery
+              //           reliability. It is not under app control, though you may see the behavior in device logs.
+              'content-available': true,
+              // Required for background/quit data-only messages on Android
+              priority: 'high'
+            }
+          }
+        }
+      })
+    }
+
     if (postactualizado) {
       res.status(200).json({
         saveLike: postactualizado,
@@ -47,12 +132,12 @@ likeCtrl.createLike = async (req, res) => {
       })
     }
   } catch (err) {
+    console.log('error', err)
     res.status(400).json({
       error: err.message
     })
   }
 }
-
 likeCtrl.getLikes = async (req, res) => {
   try {
     const skip = Number(req.query.skip) || 0

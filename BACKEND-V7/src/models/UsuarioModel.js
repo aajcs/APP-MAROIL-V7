@@ -20,10 +20,18 @@ const usaurioSchema = new Schema(
       // required: true,
       unique: true
     },
+    departamento: {
+      type: String
+    },
     password: {
       type: String,
       required: true
     },
+    tokenFcm: [
+      {
+        type: String
+      }
+    ],
     rolesMaroilConnect: [
       {
         type: String,

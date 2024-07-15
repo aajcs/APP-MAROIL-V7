@@ -2,10 +2,13 @@ const viewCtrl = {}
 
 const Views = require('../models/ViewsModels')
 const Posts = require('../models/PostsModels')
+const Usuario = require('../../models/UsuarioModel')
+
+const admin = require('firebase-admin')
 
 viewCtrl.createView = async (req, res) => {
-  console.log('iduser', req.user._id)
-  const { authorView = req.user._id, postView, estatusView } = req.body
+  const { _id, nombre } = req.user
+  const { authorView = _id, postView, estatusView } = req.body
   try {
     // Buscar si ya existe un "view" de este usuario para este post
     const existingView = await Views.findOne({
@@ -31,6 +34,35 @@ viewCtrl.createView = async (req, res) => {
     post.viewsPost.push(saveView._id)
     const postactualizado = await post.save()
     // console.log('aqui se actrualiza', postactualizado)
+    // Get the post author's information
+    const postAuthor = await Usuario.findById(post.authorPost)
+    console.log('postauthor', postAuthor.tokenFcm)
+    // Send a notification to the post author
+    await admin.messaging().sendEachForMulticast({
+      tokens: [...postAuthor.tokenFcm],
+      // data: {
+      //   owner: JSON.stringify(owner),
+      //   user: JSON.stringify(user),
+      //   picture: JSON.stringify(picture)
+      // },
+      notification: {
+        title: `View de ${nombre}`,
+        body: `Tu post ${post.titlePost} ha recibido un nuevo view`
+      },
+      apns: {
+        payload: {
+          aps: {
+            // Required for background/quit data-only messages on iOS
+            // Note: iOS frequently will receive the message but decline to deliver it to your app.
+            //           This is an Apple design choice to favor user battery life over data-only delivery
+            //           reliability. It is not under app control, though you may see the behavior in device logs.
+            'content-available': true,
+            // Required for background/quit data-only messages on Android
+            priority: 'high'
+          }
+        }
+      }
+    })
     if (postactualizado) {
       res.status(200).json({
         saveView: postactualizado,

@@ -2,11 +2,13 @@ const commentCtrl = {}
 
 const Comments = require('../models/CommentsModels')
 const Posts = require('../models/PostsModels')
+const Usuario = require('../../models/UsuarioModel')
+const admin = require('firebase-admin')
 
 commentCtrl.createComment = async (req, res) => {
-  console.log('iduser', req.user._id)
+  const { _id, nombre } = req.user
   const {
-    authorComment = req.user._id,
+    authorComment = _id,
     postComment,
     estatusComment,
     contentComment
@@ -28,6 +30,35 @@ commentCtrl.createComment = async (req, res) => {
     post.commentsPost.push(saveComment._id)
     const postactualizado = await post.save()
     // console.log('aqui se actrualiza', postactualizado)
+    const postAuthor = await Usuario.findById(post.authorPost)
+    // Send a notification to the post author
+    if (postAuthor.tokenFcm.length !== 0) {
+      await admin.messaging().sendEachForMulticast({
+        tokens: [...postAuthor.tokenFcm],
+        // data: {
+        //   owner: JSON.stringify(owner),
+        //   user: JSON.stringify(user),
+        //   picture: JSON.stringify(picture)
+        // },
+        notification: {
+          title: `Comentario de ${nombre}`,
+          body: `Tu post ${post.titlePost} ha recibido un nuevo Comentario ${contentComment}`
+        },
+        apns: {
+          payload: {
+            aps: {
+              // Required for background/quit data-only messages on iOS
+              // Note: iOS frequently will receive the message but decline to deliver it to your app.
+              //           This is an Apple design choice to favor user battery life over data-only delivery
+              //           reliability. It is not under app control, though you may see the behavior in device logs.
+              'content-available': true,
+              // Required for background/quit data-only messages on Android
+              priority: 'high'
+            }
+          }
+        }
+      })
+    }
     if (postactualizado) {
       res.status(200).json({
         saveComment: postactualizado,

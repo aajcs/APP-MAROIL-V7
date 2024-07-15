@@ -23,7 +23,9 @@ usuarioCtrl.createUsuario = async (req, res) => {
     roles,
     apps,
     rolesMaroilConnect,
+    tokenFcm,
     chatMaroilConnect,
+    departamento,
     usuariocreado,
     usuariomodificado
   } = req.body
@@ -36,7 +38,10 @@ usuarioCtrl.createUsuario = async (req, res) => {
     roles,
     apps,
     rolesMaroilConnect,
+    tokenFcm,
     chatMaroilConnect,
+    departamento,
+
     usuariocreado,
     usuariomodificado
   })
@@ -118,6 +123,8 @@ usuarioCtrl.updateUsuario = async (req, res) => {
     apps,
     rolesMaroilConnect,
     chatMaroilConnect,
+    tokenFcm,
+    departamento,
     usuariocreado,
     usuariomodificado
   } = req.body
@@ -128,6 +135,9 @@ usuarioCtrl.updateUsuario = async (req, res) => {
     password,
     roles,
     apps,
+    rolesMaroilConnect,
+    chatMaroilConnect,
+    tokenFcm,
     usuariocreado,
     usuariomodificado
   })
@@ -144,7 +154,9 @@ usuarioCtrl.updateUsuario = async (req, res) => {
         roles,
         apps,
         rolesMaroilConnect,
+        tokenFcm,
         chatMaroilConnect,
+        departamento,
         usuariocreado,
         usuariomodificado
       },
@@ -257,6 +269,53 @@ usuarioCtrl.validarTokenUsuario = (req, res = response) => {
   //   usuario: req.user
   //   // token: token
   // })
+}
+
+usuarioCtrl.updateTokenFcmUser = async (req, res) => {
+  const { id } = req.params
+  const { tokenFcm } = req.body
+  console.log('tokenfcm22', tokenFcm)
+  try {
+    // Actualizar el usuario con el nuevo tokenFcm
+    const updatedUsuario = await Usuario.findByIdAndUpdate(
+      id,
+      { $addToSet: { tokenFcm: tokenFcm } },
+      { new: true }
+    )
+
+    return res.status(200).json({
+      updatedUser: updatedUsuario,
+      // token,
+      message: 'Token FCM updated successfully.'
+    })
+  } catch (err) {
+    res.status(400).json({
+      error: err.message
+    })
+  }
+}
+usuarioCtrl.removeTokenFcmUser = async (req, res) => {
+  const { id } = req.params
+  const { tokenFcm } = req.body
+  console.log('tokenfcm22', tokenFcm)
+  try {
+    // Eliminar el tokenFcm del usuario
+    const updatedUsuario = await Usuario.findByIdAndUpdate(
+      id,
+      { $pull: { tokenFcm: tokenFcm } },
+      { new: true }
+    )
+
+    return res.status(200).json({
+      updatedUser: updatedUsuario,
+      // token,
+      message: 'Token FCM removed successfully.'
+    })
+  } catch (err) {
+    res.status(400).json({
+      error: err.message
+    })
+  }
 }
 
 module.exports = usuarioCtrl

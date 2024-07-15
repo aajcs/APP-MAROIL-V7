@@ -4,7 +4,6 @@ const ChatMessage = require('../models/ChatMessageModel')
 const Chat = require('../models/ChatModel')
 
 likeCtrl.createChat = async (req, res) => {
-  console.log('iduser', req.user._id)
   const { participanteOne, participanteTwo } = req.body
   try {
     const foundChat = await Chat.findOne({
@@ -42,9 +41,7 @@ likeCtrl.createChat = async (req, res) => {
 }
 
 likeCtrl.getChats = async (req, res) => {
-  console.log('iduser', req.user._id)
   const { _id } = req.user
-  console.log('iduser', _id)
   try {
     const chats = await Chat.find({
       $or: [{ participanteOne: _id }, { participanteTwo: _id }]
