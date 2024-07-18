@@ -51,6 +51,7 @@ import { ReporteCargaGOMInfoPageNormanGlobalCorporation } from '../pages/Reporte
 import { ReporteCargaGOMInfoPageTTCOverseas } from '../pages/ReporteCargaGOMInfoPageTTCOverseas'
 import { ReporteCargaGOMInfoPageFonteGlobalTradingAndLogistics } from '../pages/ReporteCargaGOMInfoPageEndecoFonteGlobalTradingAndLogistics'
 import { ReporteCargaGOMInfoPageRacOverseas } from '../pages/ReporteCargaGOMInfoPageRacOverseas'
+import { ReporteCargaGOMInfoPageProtocolCapitalWLL } from '../pages/ReporteCargaGOMInfoPageProtocolCapitalWLL'
 
 export default function appControlRouter() {
   const { staticMenuInactive, onToggleMenuClick } = useContext(ConfigContext)
@@ -125,6 +126,11 @@ export default function appControlRouter() {
               exact
               path="/apps/control/reportecargaGOMInfoEndeco"
               component={ReporteCargaGOMInfoPageEndeco}
+            />
+            <PrivateRoute
+              exact
+              path="/apps/control/reportecargaGOMInfoProtocolCapitalWLL"
+              component={ReporteCargaGOMInfoPageProtocolCapitalWLL}
             />
             <PrivateRoute
               exact

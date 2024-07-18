@@ -3,7 +3,14 @@
 const usuarioCtrl = {}
 const Usuario = require('../models/UsuarioModel')
 const jwt = require('jsonwebtoken')
-
+const fs = require('fs-extra')
+const admin = require('firebase-admin')
+// const serviceAccount = JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT)
+// admin.initializeApp({
+//   credential: admin.credential.cert(serviceAccount),
+//   storageBucket: 'gs://maroilconnect.appspot.com/'
+// })
+const bucket = admin.storage().bucket()
 usuarioCtrl.createUsuario = async (req, res) => {
   // ejemplo para recorre todo el cuerpo de boby
   // asigar a una variable todo el texto del boby
@@ -111,7 +118,13 @@ async function getUser(param) {
     return false
   }
 }
-
+async function updatePassword(password, newUsuario) {
+  if (password) {
+    newUsuario.password = await newUsuario.encryptPassword(password)
+    return newUsuario.password
+  }
+  return null
+}
 usuarioCtrl.updateUsuario = async (req, res) => {
   const { id } = req.params
   const {
@@ -123,45 +136,108 @@ usuarioCtrl.updateUsuario = async (req, res) => {
     apps,
     rolesMaroilConnect,
     chatMaroilConnect,
+    // avatarUser,
     tokenFcm,
     departamento,
     usuariocreado,
     usuariomodificado
   } = req.body
-  const newUsuario = new Usuario({
-    nombre,
-    correo,
-    user,
-    password,
-    roles,
-    apps,
-    rolesMaroilConnect,
-    chatMaroilConnect,
-    tokenFcm,
-    usuariocreado,
-    usuariomodificado
-  })
   try {
-    newUsuario.password = await newUsuario.encryptPassword(newUsuario.password)
+    const avatarUser = []
+    console.log(req.body)
+    if (Array.isArray(req.files?.avatarUser)) {
+      // console.log('lo que manda en las miganes', req.files.avatarUser)
+      for (const file of req.files.avatarUser) {
+        console.log('file', file)
+        const uniqueFileName = `${Date.now()}_${file.name}`
+
+        await bucket.upload(file.tempFilePath, {
+          // Opciones de subida, como el nombre del archivo, metadatos, etc.
+          destination: `avatarUser/${uniqueFileName}`,
+          metadata: {
+            contentType: file.mimetype
+          }
+        })
+        const [url] = await bucket
+          .file(`avatarUser/${uniqueFileName}`)
+          .getSignedUrl({
+            action: 'read',
+            expires: '03-09-2491'
+          })
+        console.log('url', url)
+        // const result = await uploadImage(file.tempFilePath)
+        await fs.remove(file.tempFilePath)
+        avatarUser.push({
+          url: url,
+          public_id: url
+        })
+      }
+    } else if (typeof req.files?.avatarUser === 'object') {
+      console.log('lo que manda en las miganes', req.files.avatarUser)
+      const file = req.files.avatarUser
+      const uniqueFileName = `${Date.now()}_${file.name}`
+      await bucket.upload(file.tempFilePath, {
+        // Opciones de subida, como el nombre del archivo, metadatos, etc.
+        destination: `avatarUser/${uniqueFileName}`,
+        metadata: {
+          contentType: file.mimetype
+        }
+      })
+      // const result = await uploadImage(file.tempFilePath)
+
+      const [url] = await bucket
+        .file(`avatarUser/${uniqueFileName}`)
+        .getSignedUrl({
+          action: 'read',
+          expires: '03-09-2491'
+        })
+      console.log('url', url)
+      await fs.remove(file.tempFilePath)
+      avatarUser.push({
+        url: url,
+        public_id: url
+      })
+    } else {
+      console.log('avatarUser is not iterable')
+    }
+    const newUsuario = new Usuario({
+      nombre,
+      correo,
+      user,
+      password,
+      roles,
+      apps,
+      rolesMaroilConnect,
+      chatMaroilConnect,
+      avatarUser,
+      tokenFcm,
+      usuariocreado,
+      usuariomodificado
+    })
+    const updatedPassword = await updatePassword(password, newUsuario)
     // con el new : true me manda el registro actualizado
-    const updateUsuario = await Usuario.findByIdAndUpdate(
-      id,
-      {
-        nombre,
-        correo,
-        user,
-        password: newUsuario.password,
-        roles,
-        apps,
-        rolesMaroilConnect,
-        tokenFcm,
-        chatMaroilConnect,
-        departamento,
-        usuariocreado,
-        usuariomodificado
-      },
-      { new: true }
-    )
+    const updateData = {
+      nombre,
+      correo,
+      user,
+      roles,
+      apps,
+      rolesMaroilConnect,
+      tokenFcm,
+      chatMaroilConnect,
+      departamento,
+      usuariocreado,
+      usuariomodificado,
+      avatarUser
+    }
+
+    if (updatedPassword) {
+      updateData.password = updatedPassword
+    }
+
+    const updateUsuario = await Usuario.findByIdAndUpdate(id, updateData, {
+      new: true
+    })
     // const usuario = await Usuario.findById(req.params.id)
 
     res.status(200).json({
@@ -169,6 +245,7 @@ usuarioCtrl.updateUsuario = async (req, res) => {
       message: 'Usuario Actualizado de Manera Exitosa.'
     })
   } catch (err) {
+    console.log('error', err)
     res.status(400).json({
       error: err
     })

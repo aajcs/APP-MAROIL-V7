@@ -4,11 +4,11 @@ const fs = require('fs-extra')
 // const { uploadImage } = require('../../libs/cloudinary')
 const Posts = require('../models/PostsModels')
 const admin = require('firebase-admin')
-const serviceAccount = JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT)
-admin.initializeApp({
-  credential: admin.credential.cert(serviceAccount),
-  storageBucket: 'gs://maroilconnect.appspot.com/'
-})
+// const serviceAccount = JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT)
+// admin.initializeApp({
+//   credential: admin.credential.cert(serviceAccount),
+//   storageBucket: 'gs://maroilconnect.appspot.com/'
+// })
 const bucket = admin.storage().bucket()
 postCtrl.createPost = async (req, res) => {
   const { _id, nombre } = req.user
@@ -129,7 +129,7 @@ postCtrl.createPost = async (req, res) => {
 }
 
 postCtrl.getPosts = async (req, res) => {
-  const { limite = 15, desde = 0 } = req.query
+  const { limite = 5, desde = 0 } = req.query
   try {
     const posts = await Posts.find({})
       .populate('authorPost', {
@@ -162,8 +162,103 @@ postCtrl.getPosts = async (req, res) => {
         }
       })
       .sort({ createdAt: -1 })
+      .skip(Number(desde))
+      .limit(Number(limite))
+    res.status(200).json(posts)
+  } catch (err) {
+    console.log(err)
+    res.status(400).json({
+      error: err.message
+    })
+  }
+}
+postCtrl.getPostsAprobados = async (req, res) => {
+  const { limite = 10, desde = 0 } = req.query
+  if (isNaN(limite) || isNaN(desde)) {
+    return res.status(400).json({
+      error: 'Invalid query parameters'
+    })
+  }
+  console.log('limite', limite)
+  console.log('desde', desde)
+  try {
+    const posts = await Posts.find({ estatusPost: 'Aprobado' })
+      .populate('authorPost', {
+        nombre: 1,
+        correo: 1
+      })
+      .populate({
+        path: 'likesPost',
+        select: 'authorLike createdAt',
+        populate: {
+          path: 'authorLike',
+          select: 'nombre' // selecciona solo el campo 'nombre' del usuario
+        }
+      })
+      .populate({
+        path: 'viewsPost',
+        select: 'authorView createdAt',
+        populate: {
+          path: 'authorView',
+          select: 'nombre' // selecciona solo el campo 'nombre' del usuario
+        }
+      })
+      .populate({
+        path: 'commentsPost',
+        select: 'authorComment contentComment createdAt',
+        options: { sort: { createdAt: -1 } },
+        populate: {
+          path: 'authorComment',
+          select: 'nombre' // selecciona solo el campo 'nombre' del usuario
+        }
+      })
+      .sort({ updatedAt: -1 })
       .skip(desde)
       .limit(limite)
+    res.status(200).json(posts)
+  } catch (err) {
+    console.log(err)
+    res.status(400).json({
+      error: err.message
+    })
+  }
+}
+postCtrl.getPostsBorrador = async (req, res) => {
+  const { limite = 10, desde = 0 } = req.query
+  try {
+    const posts = await Posts.find({ estatusPost: 'Borrador' })
+      .populate('authorPost', {
+        nombre: 1,
+        correo: 1
+      })
+      .populate({
+        path: 'likesPost',
+        select: 'authorLike createdAt',
+        populate: {
+          path: 'authorLike',
+          select: 'nombre' // selecciona solo el campo 'nombre' del usuario
+        }
+      })
+      .populate({
+        path: 'viewsPost',
+        select: 'authorView createdAt',
+        populate: {
+          path: 'authorView',
+          select: 'nombre' // selecciona solo el campo 'nombre' del usuario
+        }
+      })
+      .populate({
+        path: 'commentsPost',
+        select: 'authorComment contentComment createdAt',
+        options: { sort: { createdAt: -1 } },
+        populate: {
+          path: 'authorComment',
+          select: 'nombre' // selecciona solo el campo 'nombre' del usuario
+        }
+      })
+      .sort({ createdAt: -1 })
+      .skip(Number(desde))
+      .limit(Number(limite))
     res.status(200).json(posts)
   } catch (err) {
     console.log(err)
@@ -282,7 +377,6 @@ postCtrl.updatePost = async (req, res) => {
       correo: 1
     })
     // VERIFICAR QUE UPDATE NO SEA NULL
-    console.log(updatePost)
     res.status(200).json({
       updatePost,
       message: 'Post Actualizado de Manera Exitosa.'

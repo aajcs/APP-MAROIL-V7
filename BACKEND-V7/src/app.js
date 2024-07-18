@@ -1,11 +1,20 @@
 const express = require('express')
 const fileUpload = require('express-fileupload')
-
+const admin = require('firebase-admin')
 const cors = require('cors')
 const morgan = require('morgan')
 const createAdmin = require('./libs/initialSetup')
 const http = require('http')
 const { initSocketServer } = require('./utils/index.js')
+const serviceAccount = JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT)
+
+if (!admin.apps.length) {
+  admin.initializeApp({
+    credential: admin.credential.cert(serviceAccount),
+    storageBucket: 'gs://maroilconnect.appspot.com/'
+  })
+}
+
 const app = express()
 const server = http.createServer(app)
 initSocketServer(server)

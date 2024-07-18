@@ -4,6 +4,8 @@ const router = express.Router()
 const {
   createPost,
   getPosts,
+  getPostsAprobados,
+  getPostsBorrador,
   getPostsUser,
   getPost,
   updatePost,
@@ -17,7 +19,9 @@ const {
   isLectura
 } = require('../../middlewares/RolesMiddleware')
 
-router.route('/').get(getPosts).post([auth], createPost)
+router.route('/').get([auth], getPosts).post([auth], createPost)
+router.route('/aprobados/').get([auth], getPostsAprobados)
+router.route('/borrador/').get([auth], getPostsBorrador)
 router.route('/user/:id').get([auth], getPostsUser)
 
 router.route('/:id').get(getPost).delete(deletePost).put(updatePost)

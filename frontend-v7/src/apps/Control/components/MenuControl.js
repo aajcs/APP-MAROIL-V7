@@ -64,6 +64,15 @@ export const MenuControl = () => {
           permi3: 'CLIENTE'
         },
         (auth.user.faidUser.roles[0] !== 'CLIENTE' ||
+          auth.user.faidUser.nombre === 'PROTOCOL CAPITAL W. L. L.') && {
+          label: 'CLIENTE PROTOCOL CAPITAL W. L. L.',
+          icon: 'pi pi-fw pi-info-circle',
+          to: '/apps/control/reportecargaGOMInfoProtocolCapitalWLL',
+          permi: 'ADMIN',
+          permi2: 'OPERADOR',
+          permi3: 'CLIENTE'
+        },
+        (auth.user.faidUser.roles[0] !== 'CLIENTE' ||
           auth.user.faidUser.nombre === 'RAC OVERSEAS') && {
           label: 'CLIENTE RAC OVERSEAS',
           icon: 'pi pi-fw pi-info-circle',
