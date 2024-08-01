@@ -23,6 +23,6 @@ router
   .route('/:id')
   .get(getUsuario)
   .delete(auth, isSuperAdmin, deleteUsuario)
-  .put(auth, isAdmin, updateUsuario)
+  .put(auth, updateUsuario)
 
 module.exports = router

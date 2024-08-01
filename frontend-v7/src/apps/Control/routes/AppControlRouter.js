@@ -52,6 +52,8 @@ import { ReporteCargaGOMInfoPageTTCOverseas } from '../pages/ReporteCargaGOMInfo
 import { ReporteCargaGOMInfoPageFonteGlobalTradingAndLogistics } from '../pages/ReporteCargaGOMInfoPageEndecoFonteGlobalTradingAndLogistics'
 import { ReporteCargaGOMInfoPageRacOverseas } from '../pages/ReporteCargaGOMInfoPageRacOverseas'
 import { ReporteCargaGOMInfoPageProtocolCapitalWLL } from '../pages/ReporteCargaGOMInfoPageProtocolCapitalWLL'
+import { ReporteCargaGOMInfoPagePraxlan } from '../pages/ReporteCargaGOMInfoPagePraxlan'
+import { ReporteCargaGOMInfoPageKaramanPetrokimyaAnonimSirketi } from '../pages/ReporteCargaGOMInfoPageKaramanPetrokimyaAnonimSirketi'
 
 export default function appControlRouter() {
   const { staticMenuInactive, onToggleMenuClick } = useContext(ConfigContext)
@@ -126,6 +128,16 @@ export default function appControlRouter() {
               exact
               path="/apps/control/reportecargaGOMInfoEndeco"
               component={ReporteCargaGOMInfoPageEndeco}
+            />
+            <PrivateRoute
+              exact
+              path="/apps/control/reportecargaGOMInfoKaramanPetrokimyaAnonimSirketi"
+              component={ReporteCargaGOMInfoPageKaramanPetrokimyaAnonimSirketi}
+            />
+            <PrivateRoute
+              exact
+              path="/apps/control/reportecargaGOMInfoPraxlan"
+              component={ReporteCargaGOMInfoPagePraxlan}
             />
             <PrivateRoute
               exact

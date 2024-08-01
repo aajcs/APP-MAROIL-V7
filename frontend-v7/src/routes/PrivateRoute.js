@@ -30,6 +30,28 @@ export default function PrivateRoute({ hasRole: role, ...rest }) {
   }
   if (
     user.faidUser.roles[0] === 'CLIENTE' &&
+    user.faidUser.nombre === 'KARAMAN PETROKIMYA ANONIM SIRKETI'
+  ) {
+    return (
+      <>
+        <Redirect to="/apps/control/reportecargaGOMInfoKaramanPetrokimyaAnonimSirketi" />
+        <Route {...rest} />
+      </>
+    )
+  }
+  if (
+    user.faidUser.roles[0] === 'CLIENTE' &&
+    user.faidUser.nombre === 'PRAXLAN'
+  ) {
+    return (
+      <>
+        <Redirect to="/apps/control/reportecargaGOMInfoPraxlan" />
+        <Route {...rest} />
+      </>
+    )
+  }
+  if (
+    user.faidUser.roles[0] === 'CLIENTE' &&
     user.faidUser.nombre === 'PROTOCOL CAPITAL W. L. L.'
   ) {
     return (

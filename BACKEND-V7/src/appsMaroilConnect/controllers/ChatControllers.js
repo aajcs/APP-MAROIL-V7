@@ -48,11 +48,13 @@ likeCtrl.getChats = async (req, res) => {
     })
       .populate('participanteOne', {
         nombre: 1,
-        correo: 1
+        correo: 1,
+        avatarUnicoUser: 1
       })
       .populate('participanteTwo', {
         nombre: 1,
-        correo: 1
+        correo: 1,
+        avatarUnicoUser: 1
       })
 
     const arrayChats = []

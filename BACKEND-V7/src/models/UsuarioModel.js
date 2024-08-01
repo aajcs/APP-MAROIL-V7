@@ -28,6 +28,9 @@ const usaurioSchema = new Schema(
       required: true
     },
     avatarUser: [{ public_id: String, url: String }],
+    avatarUnicoUser: {
+      type: String
+    },
     tokenFcm: [
       {
         type: String

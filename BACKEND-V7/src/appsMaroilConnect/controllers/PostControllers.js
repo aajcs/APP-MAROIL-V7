@@ -141,7 +141,7 @@ postCtrl.getPosts = async (req, res) => {
         select: 'authorLike createdAt',
         populate: {
           path: 'authorLike',
-          select: 'nombre' // selecciona solo el campo 'nombre' del usuario
+          select: 'nombre avatarUnicoUser' // selecciona solo el campo 'nombre' del usuario
         }
       })
       .populate({
@@ -149,7 +149,7 @@ postCtrl.getPosts = async (req, res) => {
         select: 'authorView createdAt',
         populate: {
           path: 'authorView',
-          select: 'nombre' // selecciona solo el campo 'nombre' del usuario
+          select: 'nombre avatarUnicoUser' // selecciona solo el campo 'nombre' del usuario
         }
       })
       .populate({
@@ -158,7 +158,7 @@ postCtrl.getPosts = async (req, res) => {
         options: { sort: { createdAt: -1 } },
         populate: {
           path: 'authorComment',
-          select: 'nombre' // selecciona solo el campo 'nombre' del usuario
+          select: 'nombre avatarUnicoUser' // selecciona solo el campo 'nombre' del usuario
         }
       })
       .sort({ createdAt: -1 })
@@ -185,14 +185,15 @@ postCtrl.getPostsAprobados = async (req, res) => {
     const posts = await Posts.find({ estatusPost: 'Aprobado' })
       .populate('authorPost', {
         nombre: 1,
-        correo: 1
+        correo: 1,
+        avatarUnicoUser: 1
       })
       .populate({
         path: 'likesPost',
         select: 'authorLike createdAt',
         populate: {
           path: 'authorLike',
-          select: 'nombre' // selecciona solo el campo 'nombre' del usuario
+          select: 'nombre avatarUnicoUser' // selecciona solo el campo 'nombre' del usuario
         }
       })
       .populate({
@@ -200,7 +201,7 @@ postCtrl.getPostsAprobados = async (req, res) => {
         select: 'authorView createdAt',
         populate: {
           path: 'authorView',
-          select: 'nombre' // selecciona solo el campo 'nombre' del usuario
+          select: 'nombre avatarUnicoUser' // selecciona solo el campo 'nombre' del usuario
         }
       })
       .populate({
@@ -209,7 +210,7 @@ postCtrl.getPostsAprobados = async (req, res) => {
         options: { sort: { createdAt: -1 } },
         populate: {
           path: 'authorComment',
-          select: 'nombre' // selecciona solo el campo 'nombre' del usuario
+          select: 'nombre avatarUnicoUser' // selecciona solo el campo 'nombre' del usuario
         }
       })
       .sort({ updatedAt: -1 })
@@ -229,14 +230,15 @@ postCtrl.getPostsBorrador = async (req, res) => {
     const posts = await Posts.find({ estatusPost: 'Borrador' })
       .populate('authorPost', {
         nombre: 1,
-        correo: 1
+        correo: 1,
+        avatarUnicoUser: 1
       })
       .populate({
         path: 'likesPost',
         select: 'authorLike createdAt',
         populate: {
           path: 'authorLike',
-          select: 'nombre' // selecciona solo el campo 'nombre' del usuario
+          select: 'nombre avatarUnicoUser' // selecciona solo el campo 'nombre' del usuario
         }
       })
       .populate({
@@ -244,7 +246,7 @@ postCtrl.getPostsBorrador = async (req, res) => {
         select: 'authorView createdAt',
         populate: {
           path: 'authorView',
-          select: 'nombre' // selecciona solo el campo 'nombre' del usuario
+          select: 'nombre avatarUnicoUser' // selecciona solo el campo 'nombre' del usuario
         }
       })
       .populate({
@@ -253,7 +255,7 @@ postCtrl.getPostsBorrador = async (req, res) => {
         options: { sort: { createdAt: -1 } },
         populate: {
           path: 'authorComment',
-          select: 'nombre' // selecciona solo el campo 'nombre' del usuario
+          select: 'nombre avatarUnicoUser' // selecciona solo el campo 'nombre' del usuario
         }
       })
       .sort({ createdAt: -1 })
@@ -276,14 +278,15 @@ postCtrl.getPostsUser = async (req, res) => {
     const posts = await Posts.find({ authorPost: userId })
       .populate('authorPost', {
         nombre: 1,
-        correo: 1
+        correo: 1,
+        avatarUnicoUser: 1
       })
       .populate({
         path: 'likesPost',
         select: 'authorLike createdAt',
         populate: {
           path: 'authorLike',
-          select: 'nombre' // selecciona solo el campo 'nombre' del usuario
+          select: 'nombre avatarUnicoUser' // selecciona solo el campo 'nombre' del usuario
         }
       })
       .populate({
@@ -291,7 +294,7 @@ postCtrl.getPostsUser = async (req, res) => {
         select: 'authorView createdAt',
         populate: {
           path: 'authorView',
-          select: 'nombre' // selecciona solo el campo 'nombre' del usuario
+          select: 'nombre avatarUnicoUser' // selecciona solo el campo 'nombre' del usuario
         }
       })
       .populate({
@@ -300,7 +303,7 @@ postCtrl.getPostsUser = async (req, res) => {
         options: { sort: { createdAt: -1 } },
         populate: {
           path: 'authorComment',
-          select: 'nombre' // selecciona solo el campo 'nombre' del usuario
+          select: 'nombre avatarUnicoUser' // selecciona solo el campo 'nombre' del usuario
         }
       })
       .sort({ createdAt: -1 })

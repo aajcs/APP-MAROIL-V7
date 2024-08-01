@@ -67,6 +67,8 @@ function ProgramacionVentanaCard({ events }) {
             {new Intl.NumberFormat().format(events.toneladasNominadas)}{' '}
             {' TM / '}
             {events.buqueClienteVenta === 'ENDECO' ||
+            events.buqueClienteVenta === 'KARAMAN PETROKIMYA ANONIM SIRKETI' ||
+            events.buqueClienteVenta === 'PRAXLAN' ||
             events.buqueClienteVenta === 'PROTOCOL CAPITAL W. L. L.' ||
             events.buqueClienteVenta === 'RAC OVERSEAS' ||
             events.buqueClienteVenta === 'FONTE GLOBAL TRADING AND LOGISTICS' ||

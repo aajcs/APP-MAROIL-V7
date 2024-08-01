@@ -126,6 +126,7 @@ async function updatePassword(password, newUsuario) {
   return null
 }
 usuarioCtrl.updateUsuario = async (req, res) => {
+  console.log('req.files', req.files)
   const { id } = req.params
   const {
     nombre,
@@ -144,7 +145,25 @@ usuarioCtrl.updateUsuario = async (req, res) => {
   } = req.body
   try {
     const avatarUser = []
-    console.log(req.body)
+    let avatarUnicoUser = []
+    if (req.files?.avatarUnicoUser) {
+      const uniqueFileName = `${Date.now()}_${req.files.avatarUnicoUser.name}`
+      await bucket.upload(req.files.avatarUnicoUser.tempFilePath, {
+        destination: `avatarUnicoUser/${uniqueFileName}`,
+        metadata: {
+          contentType: req.files.avatarUnicoUser.mimetype
+        }
+      })
+      const [url] = await bucket
+        .file(`avatarUnicoUser/${uniqueFileName}`)
+        .getSignedUrl({
+          action: 'read',
+          expires: '03-09-2491'
+        })
+      await fs.remove(req.files.avatarUnicoUser.tempFilePath)
+      console.log('url', url)
+      avatarUnicoUser = url
+    }
     if (Array.isArray(req.files?.avatarUser)) {
       // console.log('lo que manda en las miganes', req.files.avatarUser)
       for (const file of req.files.avatarUser) {
@@ -210,6 +229,7 @@ usuarioCtrl.updateUsuario = async (req, res) => {
       rolesMaroilConnect,
       chatMaroilConnect,
       avatarUser,
+      avatarUnicoUser,
       tokenFcm,
       usuariocreado,
       usuariomodificado
@@ -228,7 +248,8 @@ usuarioCtrl.updateUsuario = async (req, res) => {
       departamento,
       usuariocreado,
       usuariomodificado,
-      avatarUser
+      avatarUser,
+      avatarUnicoUser
     }
 
     if (updatedPassword) {
