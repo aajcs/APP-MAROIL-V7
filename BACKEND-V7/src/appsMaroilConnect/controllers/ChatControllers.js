@@ -7,15 +7,38 @@ likeCtrl.createChat = async (req, res) => {
   const { participanteOne, participanteTwo } = req.body
   try {
     const foundChat = await Chat.findOne({
-      participanteOne,
-      participanteTwo
+      participanteOne: participanteOne,
+      participanteTwo: participanteTwo
     })
+      .populate('participanteOne', {
+        nombre: 1,
+        correo: 1,
+        avatarUnicoUser: 1
+      })
+      .populate('participanteTwo', {
+        nombre: 1,
+        correo: 1,
+        avatarUnicoUser: 1
+      })
     const foundChatInv = await Chat.findOne({
-      participanteTwo,
-      participanteOne
+      participanteOne: participanteTwo,
+      participanteTwo: participanteOne
     })
+      .populate('participanteOne', {
+        nombre: 1,
+        correo: 1,
+        avatarUnicoUser: 1
+      })
+      .populate('participanteTwo', {
+        nombre: 1,
+        correo: 1,
+        avatarUnicoUser: 1
+      })
+    console.log('foundChat', foundChat)
+    console.log('foundChatInv', foundChatInv)
     if (foundChat || foundChatInv) {
       return res.status(200).json({
+        chat: foundChat || foundChatInv,
         message: 'Ya existe un chat entre estos dos usuarios.'
       })
     }
@@ -23,7 +46,19 @@ likeCtrl.createChat = async (req, res) => {
       participanteOne,
       participanteTwo
     })
+    newChat.populate('participanteOne', {
+      nombre: 1,
+      correo: 1,
+      avatarUnicoUser: 1
+    })
+    newChat.populate('participanteTwo', {
+      nombre: 1,
+      correo: 1,
+      avatarUnicoUser: 1
+    })
+
     const chatSave = await newChat.save()
+
     res.status(201).json({
       chatSave,
       message: 'Nuevo Chat Agregado.'

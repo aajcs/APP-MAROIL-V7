@@ -97,25 +97,7 @@ postCtrl.createPost = async (req, res) => {
       nombre: 1,
       correo: 1
     })
-    var message = {
-      notification: {
-        title: `Nuevo Post Agregado de ${nombre}`,
-        body: `${titlePost}`
-      },
-      topic: 'allUsers' // El nombre del tema al que deseas enviar el mensaje
-    }
 
-    // Enviar un mensaje al tema.
-    admin
-      .messaging()
-      .send(message)
-      .then((response) => {
-        // La respuesta es un ID de mensaje.
-        console.log('Successfully sent message:', response)
-      })
-      .catch((error) => {
-        console.log('Error sending message:', error)
-      })
     res.status(200).json({
       savePost,
       message: 'Nuevo Post Agregado.'
@@ -379,6 +361,27 @@ postCtrl.updatePost = async (req, res) => {
       nombre: 1,
       correo: 1
     })
+    var message = {
+      notification: {
+        title: `Nuevo Post Agregado de ${nombre}`,
+        body: `${titlePost}`
+      },
+      topic: 'allUsers' // El nombre del tema al que deseas enviar el mensaje
+    }
+
+    // Enviar un mensaje al tema.
+    if (estatusPost === 'Aprobado') {
+      admin
+        .messaging()
+        .send(message)
+        .then((response) => {
+          // La respuesta es un ID de mensaje.
+          console.log('Successfully sent message:', response)
+        })
+        .catch((error) => {
+          console.log('Error sending message:', error)
+        })
+    }
     // VERIFICAR QUE UPDATE NO SEA NULL
     res.status(200).json({
       updatePost,
