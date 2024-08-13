@@ -64,6 +64,15 @@ export const MenuControl = () => {
           permi3: 'CLIENTE'
         },
         (auth.user.faidUser.roles[0] !== 'CLIENTE' ||
+          auth.user.faidUser.nombre === 'MERCALIX') && {
+          label: 'CLIENTE MERCALIX',
+          icon: 'pi pi-fw pi-info-circle',
+          to: '/apps/control/reportecargaGOMInfoMercalix',
+          permi: 'ADMIN',
+          permi2: 'OPERADOR',
+          permi3: 'CLIENTE'
+        },
+        (auth.user.faidUser.roles[0] !== 'CLIENTE' ||
           auth.user.faidUser.nombre ===
             'KARAMAN PETROKIMYA ANONIM SIRKETI') && {
           label: 'CLIENTE KARAMAN PETROKIMYA ANONIM SIRKETI',

@@ -30,6 +30,17 @@ export default function PrivateRoute({ hasRole: role, ...rest }) {
   }
   if (
     user.faidUser.roles[0] === 'CLIENTE' &&
+    user.faidUser.nombre === 'MERCALIX'
+  ) {
+    return (
+      <>
+        <Redirect to="/apps/control/reportecargaGOMInfoMercalix" />
+        <Route {...rest} />
+      </>
+    )
+  }
+  if (
+    user.faidUser.roles[0] === 'CLIENTE' &&
     user.faidUser.nombre === 'KARAMAN PETROKIMYA ANONIM SIRKETI'
   ) {
     return (

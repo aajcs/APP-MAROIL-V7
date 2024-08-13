@@ -21,6 +21,7 @@ postCtrl.createPost = async (req, res) => {
     viewsPost,
     categoriaPost,
     // mediaPost,
+    fechaAprobadoPost,
     estatusPost
   } = req.body
   try {
@@ -90,6 +91,7 @@ postCtrl.createPost = async (req, res) => {
       viewsPost,
       mediaPost,
       categoriaPost,
+      fechaAprobadoPost,
       estatusPost
     })
     const savePost = await newPost.save()
@@ -195,7 +197,7 @@ postCtrl.getPostsAprobados = async (req, res) => {
           select: 'nombre avatarUnicoUser' // selecciona solo el campo 'nombre' del usuario
         }
       })
-      .sort({ updatedAt: -1 })
+      .sort({ fechaAprobadoPost: -1 })
       .skip(desde)
       .limit(limite)
     res.status(200).json(posts)
@@ -339,6 +341,7 @@ postCtrl.updatePost = async (req, res) => {
     viewsPost,
     mediaPost,
     categoriaPost,
+    fechaAprobadoPost,
     estatusPost
   } = req.body
 
@@ -354,6 +357,7 @@ postCtrl.updatePost = async (req, res) => {
         viewsPost,
         mediaPost,
         categoriaPost,
+        fechaAprobadoPost,
         estatusPost
       },
       { new: true }
@@ -361,10 +365,16 @@ postCtrl.updatePost = async (req, res) => {
       nombre: 1,
       correo: 1
     })
-    var message = {
+    if (!updatePost) {
+      return res.status(404).json({
+        message: 'Post no Encontrado.'
+      })
+    }
+
+    const message = {
       notification: {
-        title: `Nuevo Post Agregado de ${nombre}`,
-        body: `${titlePost}`
+        title: `Nuevo Post Agregado de ${updatePost?.authorPost.nombre}`,
+        body: `${updatePost?.titlePost}`
       },
       topic: 'allUsers' // El nombre del tema al que deseas enviar el mensaje
     }
@@ -388,6 +398,7 @@ postCtrl.updatePost = async (req, res) => {
       message: 'Post Actualizado de Manera Exitosa.'
     })
   } catch (err) {
+    console.log(err.message)
     res.status(400).json({
       error: err.message
     })

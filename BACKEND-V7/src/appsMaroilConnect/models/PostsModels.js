@@ -18,7 +18,9 @@ const postsSchema = new Schema(
       type: String,
       trim: true
     },
-
+    fechaAprobadoPost: {
+      type: Date
+    },
     commentsPost: [
       {
         type: Schema.Types.ObjectId,
