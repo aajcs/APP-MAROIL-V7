@@ -44,236 +44,242 @@ export const MenuControl = () => {
           permi1: 'LECTURA',
           permi2: 'OPERADOR'
         },
-        (auth.user.faidUser.roles[0] !== 'CLIENTE' ||
-          auth.user.faidUser.nombre === 'CREC 10') && {
-          label: 'CLIENTE CREC 10',
-          icon: 'pi pi-fw pi-info-circle',
-          to: '/apps/control/reportecargaGOMInfoCrec10',
-          permi: 'ADMIN',
-          permi2: 'OPERADOR',
-          permi3: 'CLIENTE'
+        {
+          label: 'CLIENTES',
+          icon: 'pi pi-fw pi-plus',
+          items: [
+            (auth.user.faidUser.roles[0] !== 'CLIENTE' ||
+              auth.user.faidUser.nombre === 'CREC 10') && {
+              label: 'CLIENTE CREC 10',
+              icon: 'pi pi-fw pi-info-circle',
+              to: '/apps/control/reportecargaGOMInfoCrec10',
+              permi: 'ADMIN',
+              permi2: 'OPERADOR',
+              permi3: 'CLIENTE'
+            },
+            (auth.user.faidUser.roles[0] !== 'CLIENTE' ||
+              auth.user.faidUser.nombre === 'ENDECO') && {
+              label: 'CLIENTE ENDECO',
+              icon: 'pi pi-fw pi-info-circle',
+              to: '/apps/control/reportecargaGOMInfoEndeco',
+              permi: 'ADMIN',
+              permi2: 'OPERADOR',
+              permi3: 'CLIENTE'
+            },
+            (auth.user.faidUser.roles[0] !== 'CLIENTE' ||
+              auth.user.faidUser.nombre === 'MERCALIX') && {
+              label: 'CLIENTE MERCALIX',
+              icon: 'pi pi-fw pi-info-circle',
+              to: '/apps/control/reportecargaGOMInfoMercalix',
+              permi: 'ADMIN',
+              permi2: 'OPERADOR',
+              permi3: 'CLIENTE'
+            },
+            (auth.user.faidUser.roles[0] !== 'CLIENTE' ||
+              auth.user.faidUser.nombre ===
+                'KARAMAN PETROKIMYA ANONIM SIRKETI') && {
+              label: 'CLIENTE KARAMAN PETROKIMYA ANONIM SIRKETI',
+              icon: 'pi pi-fw pi-info-circle',
+              to: '/apps/control/reportecargaGOMInfoKaramanPetrokimyaAnonimSirketi',
+              permi: 'ADMIN',
+              permi2: 'OPERADOR',
+              permi3: 'CLIENTE'
+            },
+            (auth.user.faidUser.roles[0] !== 'CLIENTE' ||
+              auth.user.faidUser.nombre === 'PRAXLAN') && {
+              label: 'CLIENTE PRAXLAN',
+              icon: 'pi pi-fw pi-info-circle',
+              to: '/apps/control/reportecargaGOMInfoPraxlan',
+              permi: 'ADMIN',
+              permi2: 'OPERADOR',
+              permi3: 'CLIENTE'
+            },
+            (auth.user.faidUser.roles[0] !== 'CLIENTE' ||
+              auth.user.faidUser.nombre === 'PROTOCOL CAPITAL W. L. L.') && {
+              label: 'CLIENTE PROTOCOL CAPITAL W. L. L.',
+              icon: 'pi pi-fw pi-info-circle',
+              to: '/apps/control/reportecargaGOMInfoProtocolCapitalWLL',
+              permi: 'ADMIN',
+              permi2: 'OPERADOR',
+              permi3: 'CLIENTE'
+            },
+            (auth.user.faidUser.roles[0] !== 'CLIENTE' ||
+              auth.user.faidUser.nombre === 'RAC OVERSEAS') && {
+              label: 'CLIENTE RAC OVERSEAS',
+              icon: 'pi pi-fw pi-info-circle',
+              to: '/apps/control/reportecargaGOMInfoRacOverseas',
+              permi: 'ADMIN',
+              permi2: 'OPERADOR',
+              permi3: 'CLIENTE'
+            },
+            (auth.user.faidUser.roles[0] !== 'CLIENTE' ||
+              auth.user.faidUser.nombre ===
+                'FONTE GLOBAL TRADING AND LOGISTICS') && {
+              label: 'CLIENTE FONTE GLOBAL TRADING AND LOGISTICS',
+              icon: 'pi pi-fw pi-info-circle',
+              to: '/apps/control/reportecargaGOMInfoFonteGlobalTradingAndLogistics',
+              permi: 'ADMIN',
+              permi2: 'OPERADOR',
+              permi3: 'CLIENTE'
+            },
+            (auth.user.faidUser.roles[0] !== 'CLIENTE' ||
+              auth.user.faidUser.nombre === 'TTCO VERSEAS') && {
+              label: 'CLIENTE TTCO VERSEAS',
+              icon: 'pi pi-fw pi-info-circle',
+              to: '/apps/control/reportecargaGOMInfoTTCOverseas',
+              permi: 'ADMIN',
+              permi2: 'OPERADOR',
+              permi3: 'CLIENTE'
+            },
+            (auth.user.faidUser.roles[0] !== 'CLIENTE' ||
+              auth.user.faidUser.nombre === 'NORMAN GLOBAL CORPORATION') && {
+              label: 'CLIENTE NORMAN GLOBAL CORPORATION',
+              icon: 'pi pi-fw pi-info-circle',
+              to: '/apps/control/reportecargaGOMInfoNormanGlobalCorporation',
+              permi: 'ADMIN',
+              permi2: 'OPERADOR',
+              permi3: 'CLIENTE'
+            },
+            (auth.user.faidUser.roles[0] !== 'CLIENTE' ||
+              auth.user.faidUser.nombre === 'MINAS GUSA') && {
+              label: 'CLIENTE MINAS GUSA',
+              icon: 'pi pi-fw pi-info-circle',
+              to: '/apps/control/reportecargaGOMInfoMinasGusa',
+              permi: 'ADMIN',
+              permi2: 'OPERADOR',
+              permi3: 'CLIENTE'
+            },
+            (auth.user.faidUser.roles[0] !== 'CLIENTE' ||
+              auth.user.faidUser.nombre === 'TARDID LIMITED') && {
+              label: 'CLIENTE TARDID LIMITED',
+              icon: 'pi pi-fw pi-info-circle',
+              to: '/apps/control/reportecargaGOMInfoTardidLimited',
+              permi: 'ADMIN',
+              permi2: 'OPERADOR',
+              permi3: 'CLIENTE'
+            },
+            (auth.user.faidUser.roles[0] !== 'CLIENTE' ||
+              auth.user.faidUser.nombre === 'GLOBAL CARGO TRADING') && {
+              label: 'CLIENTE GLOBAL CARGO TRADING',
+              icon: 'pi pi-fw pi-info-circle',
+              to: '/apps/control/reportecargaGOMInfoGlobalCargoTrading',
+              permi: 'ADMIN',
+              permi2: 'OPERADOR',
+              permi3: 'CLIENTE'
+            },
+            (auth.user.faidUser.roles[0] !== 'CLIENTE' ||
+              auth.user.faidUser.nombre === 'COMET') && {
+              label: 'CLIENTE COMET',
+              icon: 'pi pi-fw pi-info-circle',
+              to: '/apps/control/reportecargaGOMInfoComet',
+              permi: 'ADMIN',
+              permi2: 'OPERADOR',
+              permi3: 'CLIENTE'
+            },
+            (auth.user.faidUser.roles[0] !== 'CLIENTE' ||
+              auth.user.faidUser.nombre === 'FARLE') && {
+              label: 'CLIENTE FARLE',
+              icon: 'pi pi-fw pi-info-circle',
+              to: '/apps/control/reportecargaGOMInfoFarle',
+              permi: 'ADMIN',
+              permi2: 'OPERADOR',
+              permi3: 'CLIENTE'
+            },
+
+            (auth.user.faidUser.roles[0] !== 'CLIENTE' ||
+              auth.user.faidUser.nombre ===
+                'EMPRESA DE ASISTENCIAS Y SERVICIOS') && {
+              label: 'CLIENTE EMPRESA DE ASISTENCIAS Y SERVICIOS',
+              icon: 'pi pi-fw pi-info-circle',
+              to: '/apps/control/reportecargaGOMInfoEmpresaDeAsistenciasYServicios',
+              permi: 'ADMIN',
+              permi2: 'OPERADOR',
+              permi3: 'CLIENTE'
+            },
+            (auth.user.faidUser.roles[0] !== 'CLIENTE' ||
+              auth.user.faidUser.nombre === 'GLOBULK DMCC') && {
+              label: 'CLIENTE GLOBULK DMCC',
+              icon: 'pi pi-fw pi-info-circle',
+              to: '/apps/control/reportecargaGOMInfoGlobulkDmcc',
+              permi: 'ADMIN',
+              permi2: 'OPERADOR',
+              permi3: 'CLIENTE'
+            },
+            (auth.user.faidUser.roles[0] !== 'CLIENTE' ||
+              auth.user.faidUser.nombre === 'GRANELES') && {
+              label: 'CLIENTE GRANELES',
+              icon: 'pi pi-fw pi-info-circle',
+              to: '/apps/control/reportecargaGOMInfoGraneles',
+              permi: 'ADMIN',
+              permi2: 'OPERADOR',
+              permi3: 'CLIENTE'
+            },
+            (auth.user.faidUser.roles[0] !== 'CLIENTE' ||
+              auth.user.faidUser.nombre === 'ADENIX GROUP LIMITED') && {
+              label: 'CLIENTE ADENIX GROUP LIMITED',
+              icon: 'pi pi-fw pi-info-circle',
+              to: '/apps/control/reportecargaGOMInfoAdenixGroupLimited',
+              permi: 'ADMIN',
+              permi2: 'OPERADOR',
+              permi3: 'CLIENTE'
+            },
+            (auth.user.faidUser.roles[0] !== 'CLIENTE' ||
+              auth.user.faidUser.nombre === 'SUPERIOR QUANTITY SDN BHD') && {
+              label: 'CLIENTE SUPERIOR QUANTITY SDN BHD',
+              icon: 'pi pi-fw pi-info-circle',
+              to: '/apps/control/reportecargaGOMInfoSuperiorQuantitySDNBHD',
+              permi: 'ADMIN',
+              permi2: 'OPERADOR',
+              permi3: 'CLIENTE'
+            },
+            (auth.user.faidUser.roles[0] !== 'CLIENTE' ||
+              auth.user.faidUser.nombre === 'REZEL CATALYSTS') && {
+              label: 'CLIENTE REZEL CATALYSTS',
+              icon: 'pi pi-fw pi-info-circle',
+              to: '/apps/control/reportecargaGOMInfoRezelCatalysts',
+              permi: 'ADMIN',
+              permi2: 'OPERADOR',
+              permi3: 'CLIENTE'
+            },
+            (auth.user.faidUser.roles[0] !== 'CLIENTE' ||
+              auth.user.faidUser.nombre === 'ATLAS OIL') && {
+              label: 'CLIENTE ATLAS OIL',
+              icon: 'pi pi-fw pi-info-circle',
+              to: '/apps/control/reportecargaGOMInfoAtlasOil',
+              permi: 'ADMIN',
+              permi2: 'OPERADOR',
+              permi3: 'CLIENTE'
+            },
+            (auth.user.faidUser.roles[0] !== 'CLIENTE' ||
+              auth.user.faidUser.nombre === 'IRAN GARMENT COMPANY') && {
+              label: 'CLIENTE IRAN GARMENT COMPANY',
+              icon: 'pi pi-fw pi-info-circle',
+              to: '/apps/control/reportecargaGOMInfoIranGarmentCompany',
+              permi: 'ADMIN',
+              permi2: 'OPERADOR',
+              permi3: 'CLIENTE'
+            },
+            (auth.user.faidUser.roles[0] !== 'CLIENTE' ||
+              auth.user.faidUser.nombre === 'UNECA') && {
+              label: 'CLIENTE UNECA',
+              icon: 'pi pi-fw pi-info-circle',
+              to: '/apps/control/reportecargaGOMInfoUneca',
+              permi: 'ADMIN',
+              permi2: 'OPERADOR',
+              permi3: 'CLIENTE'
+            },
+            (auth.user.faidUser.roles[0] !== 'CLIENTE' ||
+              auth.user.faidUser.nombre === 'INTERNATIONAL MATERIALS') && {
+              label: 'CLIENTE INTERNATIONAL MATERIALS',
+              icon: 'pi pi-fw pi-info-circle',
+              to: '/apps/control/reportecargaGOMInfoInternationalMaterials',
+              permi: 'ADMIN',
+              permi2: 'OPERADOR',
+              permi3: 'CLIENTE'
+            }
+          ]
         },
 
-        (auth.user.faidUser.roles[0] !== 'CLIENTE' ||
-          auth.user.faidUser.nombre === 'ENDECO') && {
-          label: 'CLIENTE ENDECO',
-          icon: 'pi pi-fw pi-info-circle',
-          to: '/apps/control/reportecargaGOMInfoEndeco',
-          permi: 'ADMIN',
-          permi2: 'OPERADOR',
-          permi3: 'CLIENTE'
-        },
-        (auth.user.faidUser.roles[0] !== 'CLIENTE' ||
-          auth.user.faidUser.nombre === 'MERCALIX') && {
-          label: 'CLIENTE MERCALIX',
-          icon: 'pi pi-fw pi-info-circle',
-          to: '/apps/control/reportecargaGOMInfoMercalix',
-          permi: 'ADMIN',
-          permi2: 'OPERADOR',
-          permi3: 'CLIENTE'
-        },
-        (auth.user.faidUser.roles[0] !== 'CLIENTE' ||
-          auth.user.faidUser.nombre ===
-            'KARAMAN PETROKIMYA ANONIM SIRKETI') && {
-          label: 'CLIENTE KARAMAN PETROKIMYA ANONIM SIRKETI',
-          icon: 'pi pi-fw pi-info-circle',
-          to: '/apps/control/reportecargaGOMInfoKaramanPetrokimyaAnonimSirketi',
-          permi: 'ADMIN',
-          permi2: 'OPERADOR',
-          permi3: 'CLIENTE'
-        },
-        (auth.user.faidUser.roles[0] !== 'CLIENTE' ||
-          auth.user.faidUser.nombre === 'PRAXLAN') && {
-          label: 'CLIENTE PRAXLAN',
-          icon: 'pi pi-fw pi-info-circle',
-          to: '/apps/control/reportecargaGOMInfoPraxlan',
-          permi: 'ADMIN',
-          permi2: 'OPERADOR',
-          permi3: 'CLIENTE'
-        },
-        (auth.user.faidUser.roles[0] !== 'CLIENTE' ||
-          auth.user.faidUser.nombre === 'PROTOCOL CAPITAL W. L. L.') && {
-          label: 'CLIENTE PROTOCOL CAPITAL W. L. L.',
-          icon: 'pi pi-fw pi-info-circle',
-          to: '/apps/control/reportecargaGOMInfoProtocolCapitalWLL',
-          permi: 'ADMIN',
-          permi2: 'OPERADOR',
-          permi3: 'CLIENTE'
-        },
-        (auth.user.faidUser.roles[0] !== 'CLIENTE' ||
-          auth.user.faidUser.nombre === 'RAC OVERSEAS') && {
-          label: 'CLIENTE RAC OVERSEAS',
-          icon: 'pi pi-fw pi-info-circle',
-          to: '/apps/control/reportecargaGOMInfoRacOverseas',
-          permi: 'ADMIN',
-          permi2: 'OPERADOR',
-          permi3: 'CLIENTE'
-        },
-        (auth.user.faidUser.roles[0] !== 'CLIENTE' ||
-          auth.user.faidUser.nombre ===
-            'FONTE GLOBAL TRADING AND LOGISTICS') && {
-          label: 'CLIENTE FONTE GLOBAL TRADING AND LOGISTICS',
-          icon: 'pi pi-fw pi-info-circle',
-          to: '/apps/control/reportecargaGOMInfoFonteGlobalTradingAndLogistics',
-          permi: 'ADMIN',
-          permi2: 'OPERADOR',
-          permi3: 'CLIENTE'
-        },
-        (auth.user.faidUser.roles[0] !== 'CLIENTE' ||
-          auth.user.faidUser.nombre === 'TTCO VERSEAS') && {
-          label: 'CLIENTE TTCO VERSEAS',
-          icon: 'pi pi-fw pi-info-circle',
-          to: '/apps/control/reportecargaGOMInfoTTCOverseas',
-          permi: 'ADMIN',
-          permi2: 'OPERADOR',
-          permi3: 'CLIENTE'
-        },
-        (auth.user.faidUser.roles[0] !== 'CLIENTE' ||
-          auth.user.faidUser.nombre === 'NORMAN GLOBAL CORPORATION') && {
-          label: 'CLIENTE NORMAN GLOBAL CORPORATION',
-          icon: 'pi pi-fw pi-info-circle',
-          to: '/apps/control/reportecargaGOMInfoNormanGlobalCorporation',
-          permi: 'ADMIN',
-          permi2: 'OPERADOR',
-          permi3: 'CLIENTE'
-        },
-        (auth.user.faidUser.roles[0] !== 'CLIENTE' ||
-          auth.user.faidUser.nombre === 'MINAS GUSA') && {
-          label: 'CLIENTE MINAS GUSA',
-          icon: 'pi pi-fw pi-info-circle',
-          to: '/apps/control/reportecargaGOMInfoMinasGusa',
-          permi: 'ADMIN',
-          permi2: 'OPERADOR',
-          permi3: 'CLIENTE'
-        },
-        (auth.user.faidUser.roles[0] !== 'CLIENTE' ||
-          auth.user.faidUser.nombre === 'TARDID LIMITED') && {
-          label: 'CLIENTE TARDID LIMITED',
-          icon: 'pi pi-fw pi-info-circle',
-          to: '/apps/control/reportecargaGOMInfoTardidLimited',
-          permi: 'ADMIN',
-          permi2: 'OPERADOR',
-          permi3: 'CLIENTE'
-        },
-        (auth.user.faidUser.roles[0] !== 'CLIENTE' ||
-          auth.user.faidUser.nombre === 'GLOBAL CARGO TRADING') && {
-          label: 'CLIENTE GLOBAL CARGO TRADING',
-          icon: 'pi pi-fw pi-info-circle',
-          to: '/apps/control/reportecargaGOMInfoGlobalCargoTrading',
-          permi: 'ADMIN',
-          permi2: 'OPERADOR',
-          permi3: 'CLIENTE'
-        },
-        (auth.user.faidUser.roles[0] !== 'CLIENTE' ||
-          auth.user.faidUser.nombre === 'COMET') && {
-          label: 'CLIENTE COMET',
-          icon: 'pi pi-fw pi-info-circle',
-          to: '/apps/control/reportecargaGOMInfoComet',
-          permi: 'ADMIN',
-          permi2: 'OPERADOR',
-          permi3: 'CLIENTE'
-        },
-        (auth.user.faidUser.roles[0] !== 'CLIENTE' ||
-          auth.user.faidUser.nombre === 'FARLE') && {
-          label: 'CLIENTE FARLE',
-          icon: 'pi pi-fw pi-info-circle',
-          to: '/apps/control/reportecargaGOMInfoFarle',
-          permi: 'ADMIN',
-          permi2: 'OPERADOR',
-          permi3: 'CLIENTE'
-        },
-
-        (auth.user.faidUser.roles[0] !== 'CLIENTE' ||
-          auth.user.faidUser.nombre ===
-            'EMPRESA DE ASISTENCIAS Y SERVICIOS') && {
-          label: 'CLIENTE EMPRESA DE ASISTENCIAS Y SERVICIOS',
-          icon: 'pi pi-fw pi-info-circle',
-          to: '/apps/control/reportecargaGOMInfoEmpresaDeAsistenciasYServicios',
-          permi: 'ADMIN',
-          permi2: 'OPERADOR',
-          permi3: 'CLIENTE'
-        },
-        (auth.user.faidUser.roles[0] !== 'CLIENTE' ||
-          auth.user.faidUser.nombre === 'GLOBULK DMCC') && {
-          label: 'CLIENTE GLOBULK DMCC',
-          icon: 'pi pi-fw pi-info-circle',
-          to: '/apps/control/reportecargaGOMInfoGlobulkDmcc',
-          permi: 'ADMIN',
-          permi2: 'OPERADOR',
-          permi3: 'CLIENTE'
-        },
-        (auth.user.faidUser.roles[0] !== 'CLIENTE' ||
-          auth.user.faidUser.nombre === 'GRANELES') && {
-          label: 'CLIENTE GRANELES',
-          icon: 'pi pi-fw pi-info-circle',
-          to: '/apps/control/reportecargaGOMInfoGraneles',
-          permi: 'ADMIN',
-          permi2: 'OPERADOR',
-          permi3: 'CLIENTE'
-        },
-        (auth.user.faidUser.roles[0] !== 'CLIENTE' ||
-          auth.user.faidUser.nombre === 'ADENIX GROUP LIMITED') && {
-          label: 'CLIENTE ADENIX GROUP LIMITED',
-          icon: 'pi pi-fw pi-info-circle',
-          to: '/apps/control/reportecargaGOMInfoAdenixGroupLimited',
-          permi: 'ADMIN',
-          permi2: 'OPERADOR',
-          permi3: 'CLIENTE'
-        },
-        (auth.user.faidUser.roles[0] !== 'CLIENTE' ||
-          auth.user.faidUser.nombre === 'SUPERIOR QUANTITY SDN BHD') && {
-          label: 'CLIENTE SUPERIOR QUANTITY SDN BHD',
-          icon: 'pi pi-fw pi-info-circle',
-          to: '/apps/control/reportecargaGOMInfoSuperiorQuantitySDNBHD',
-          permi: 'ADMIN',
-          permi2: 'OPERADOR',
-          permi3: 'CLIENTE'
-        },
-        (auth.user.faidUser.roles[0] !== 'CLIENTE' ||
-          auth.user.faidUser.nombre === 'REZEL CATALYSTS') && {
-          label: 'CLIENTE REZEL CATALYSTS',
-          icon: 'pi pi-fw pi-info-circle',
-          to: '/apps/control/reportecargaGOMInfoRezelCatalysts',
-          permi: 'ADMIN',
-          permi2: 'OPERADOR',
-          permi3: 'CLIENTE'
-        },
-        (auth.user.faidUser.roles[0] !== 'CLIENTE' ||
-          auth.user.faidUser.nombre === 'ATLAS OIL') && {
-          label: 'CLIENTE ATLAS OIL',
-          icon: 'pi pi-fw pi-info-circle',
-          to: '/apps/control/reportecargaGOMInfoAtlasOil',
-          permi: 'ADMIN',
-          permi2: 'OPERADOR',
-          permi3: 'CLIENTE'
-        },
-        (auth.user.faidUser.roles[0] !== 'CLIENTE' ||
-          auth.user.faidUser.nombre === 'IRAN GARMENT COMPANY') && {
-          label: 'CLIENTE IRAN GARMENT COMPANY',
-          icon: 'pi pi-fw pi-info-circle',
-          to: '/apps/control/reportecargaGOMInfoIranGarmentCompany',
-          permi: 'ADMIN',
-          permi2: 'OPERADOR',
-          permi3: 'CLIENTE'
-        },
-        (auth.user.faidUser.roles[0] !== 'CLIENTE' ||
-          auth.user.faidUser.nombre === 'UNECA') && {
-          label: 'CLIENTE UNECA',
-          icon: 'pi pi-fw pi-info-circle',
-          to: '/apps/control/reportecargaGOMInfoUneca',
-          permi: 'ADMIN',
-          permi2: 'OPERADOR',
-          permi3: 'CLIENTE'
-        },
-        (auth.user.faidUser.roles[0] !== 'CLIENTE' ||
-          auth.user.faidUser.nombre === 'INTERNATIONAL MATERIALS') && {
-          label: 'CLIENTE INTERNATIONAL MATERIALS',
-          icon: 'pi pi-fw pi-info-circle',
-          to: '/apps/control/reportecargaGOMInfoInternationalMaterials',
-          permi: 'ADMIN',
-          permi2: 'OPERADOR',
-          permi3: 'CLIENTE'
-        },
         {
           label: 'BUQUE 3D',
           icon: 'pi pi-fw pi-box',
