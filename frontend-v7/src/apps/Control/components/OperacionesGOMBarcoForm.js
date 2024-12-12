@@ -107,6 +107,13 @@ const OperacionesGOMBarcoForm = (props) => {
   const buqueClienteVenta = [
     { buqueClienteVenta: 'CREC 10' },
     { buqueClienteVenta: 'ENDECO' },
+    { buqueClienteVenta: 'YIWU WUTING TRADING' },
+    { buqueClienteVenta: 'SHANGHAI INTERNATIONAL LOGISTICS' },
+    { buqueClienteVenta: 'ARXHK' },
+    { buqueClienteVenta: 'LATAM RESOURCE SSUPPLY' },
+    { buqueClienteVenta: 'MBENGUE SARL' },
+    { buqueClienteVenta: 'GLOBEX WORLDWIDE' },
+    { buqueClienteVenta: 'SANEKS' },
     { buqueClienteVenta: 'MERCALIX' },
     { buqueClienteVenta: 'KARAMAN PETROKIMYA ANONIM SIRKETI' },
     { buqueClienteVenta: 'PRAXLAN' },

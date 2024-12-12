@@ -55,6 +55,13 @@ import { ReporteCargaGOMInfoPageProtocolCapitalWLL } from '../pages/ReporteCarga
 import { ReporteCargaGOMInfoPagePraxlan } from '../pages/ReporteCargaGOMInfoPagePraxlan'
 import { ReporteCargaGOMInfoPageKaramanPetrokimyaAnonimSirketi } from '../pages/ReporteCargaGOMInfoPageKaramanPetrokimyaAnonimSirketi'
 import { ReporteCargaGOMInfoPageMercalix } from '../pages/ReporteCargaGOMInfoPageMercalix'
+import { ReporteCargaGOMInfoPageYiwuWutingTrading } from '../pages/ReporteCargaGOMInfoPageYiwuWutingTrading'
+import { ReporteCargaGOMInfoPageShanghaiInternationalLogistics } from '../pages/ReporteCargaGOMInfoPageShanghaiInternationalLogistics'
+import { ReporteCargaGOMInfoPageArxhk } from '../pages/ReporteCargaGOMInfoPageArxhk'
+import { ReporteCargaGOMInfoPageLatamResourceSsupply } from '../pages/ReporteCargaGOMInfoPageLatamResourceSsupply'
+import { ReporteCargaGOMInfoPageMbengueSarl } from '../pages/ReporteCargaGOMInfoPageMbengueSarl'
+import { ReporteCargaGOMInfoPageGlobexWorldwide } from '../pages/ReporteCargaGOMInfoPageGlobexWorldwide'
+import { ReporteCargaGOMInfoPageSaneks } from '../pages/ReporteCargaGOMInfoPageSaneks'
 
 export default function appControlRouter() {
   const { staticMenuInactive, onToggleMenuClick } = useContext(ConfigContext)
@@ -129,6 +136,41 @@ export default function appControlRouter() {
               exact
               path="/apps/control/reportecargaGOMInfoEndeco"
               component={ReporteCargaGOMInfoPageEndeco}
+            />
+            <PrivateRoute
+              exact
+              path="/apps/control/reportecargaGOMInfoYiwuWutingTrading"
+              component={ReporteCargaGOMInfoPageYiwuWutingTrading}
+            />
+            <PrivateRoute
+              exact
+              path="/apps/control/reportecargaGOMInfoShanghaiInternationalLogistics"
+              component={ReporteCargaGOMInfoPageShanghaiInternationalLogistics}
+            />
+            <PrivateRoute
+              exact
+              path="/apps/control/reportecargaGOMInfoArxhk"
+              component={ReporteCargaGOMInfoPageArxhk}
+            />
+            <PrivateRoute
+              exact
+              path="/apps/control/reportecargaGOMInfoLatamResourceSsupply"
+              component={ReporteCargaGOMInfoPageLatamResourceSsupply}
+            />
+            <PrivateRoute
+              exact
+              path="/apps/control/reportecargaGOMInfoMbengueSarl"
+              component={ReporteCargaGOMInfoPageMbengueSarl}
+            />
+            <PrivateRoute
+              exact
+              path="/apps/control/reportecargaGOMInfoGlobexWorldwide"
+              component={ReporteCargaGOMInfoPageGlobexWorldwide}
+            />
+            <PrivateRoute
+              exact
+              path="/apps/control/reportecargaGOMInfoSaneks"
+              component={ReporteCargaGOMInfoPageSaneks}
             />
             <PrivateRoute
               exact

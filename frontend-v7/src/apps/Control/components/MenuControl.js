@@ -67,6 +67,70 @@ export const MenuControl = () => {
               permi3: 'CLIENTE'
             },
             (auth.user.faidUser.roles[0] !== 'CLIENTE' ||
+              auth.user.faidUser.nombre === 'YIWU WUTING TRADING') && {
+              label: 'CLIENTE YIWU WUTING TRADING',
+              icon: 'pi pi-fw pi-info-circle',
+              to: '/apps/control/reportecargaGOMInfoYiwuWutingTrading',
+              permi: 'ADMIN',
+              permi2: 'OPERADOR',
+              permi3: 'CLIENTE'
+            },
+            (auth.user.faidUser.roles[0] !== 'CLIENTE' ||
+              auth.user.faidUser.nombre ===
+                'SHANGHAI INTERNATIONAL LOGISTICS') && {
+              label: 'CLIENTE SHANGHAI INTERNATIONAL LOGISTICS',
+              icon: 'pi pi-fw pi-info-circle',
+              to: '/apps/control/reportecargaGOMInfoShanghaiInternationalLogistics',
+              permi: 'ADMIN',
+              permi2: 'OPERADOR',
+              permi3: 'CLIENTE'
+            },
+            (auth.user.faidUser.roles[0] !== 'CLIENTE' ||
+              auth.user.faidUser.nombre === 'ARXHK') && {
+              label: 'CLIENTE ARXHK',
+              icon: 'pi pi-fw pi-info-circle',
+              to: '/apps/control/reportecargaGOMInfoArxhk',
+              permi: 'ADMIN',
+              permi2: 'OPERADOR',
+              permi3: 'CLIENTE'
+            },
+            (auth.user.faidUser.roles[0] !== 'CLIENTE' ||
+              auth.user.faidUser.nombre === 'LATAM RESOURCE SSUPPLY') && {
+              label: 'CLIENTE LATAM RESOURCE SSUPPLY',
+              icon: 'pi pi-fw pi-info-circle',
+              to: '/apps/control/reportecargaGOMInfoLatamResourceSsupply',
+              permi: 'ADMIN',
+              permi2: 'OPERADOR',
+              permi3: 'CLIENTE'
+            },
+            (auth.user.faidUser.roles[0] !== 'CLIENTE' ||
+              auth.user.faidUser.nombre === 'MBENGUE SARL') && {
+              label: 'CLIENTE MBENGUE SARL',
+              icon: 'pi pi-fw pi-info-circle',
+              to: '/apps/control/reportecargaGOMInfoMbengueSarl',
+              permi: 'ADMIN',
+              permi2: 'OPERADOR',
+              permi3: 'CLIENTE'
+            },
+            (auth.user.faidUser.roles[0] !== 'CLIENTE' ||
+              auth.user.faidUser.nombre === 'GLOBEX WORLDWIDE') && {
+              label: 'CLIENTE GLOBEX WORLDWIDE',
+              icon: 'pi pi-fw pi-info-circle',
+              to: '/apps/control/reportecargaGOMInfoGlobexWorldwide',
+              permi: 'ADMIN',
+              permi2: 'OPERADOR',
+              permi3: 'CLIENTE'
+            },
+            (auth.user.faidUser.roles[0] !== 'CLIENTE' ||
+              auth.user.faidUser.nombre === 'SANEKS') && {
+              label: 'CLIENTE SANEKS',
+              icon: 'pi pi-fw pi-info-circle',
+              to: '/apps/control/reportecargaGOMInfoSaneks',
+              permi: 'ADMIN',
+              permi2: 'OPERADOR',
+              permi3: 'CLIENTE'
+            },
+            (auth.user.faidUser.roles[0] !== 'CLIENTE' ||
               auth.user.faidUser.nombre === 'MERCALIX') && {
               label: 'CLIENTE MERCALIX',
               icon: 'pi pi-fw pi-info-circle',

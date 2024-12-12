@@ -145,7 +145,7 @@ usuarioCtrl.updateUsuario = async (req, res) => {
   } = req.body
   try {
     const avatarUser = []
-    let avatarUnicoUser = []
+    let avatarUnicoUser = ''
     if (req.files?.avatarUnicoUser) {
       const uniqueFileName = `${Date.now()}_${req.files.avatarUnicoUser.name}`
       await bucket.upload(req.files.avatarUnicoUser.tempFilePath, {

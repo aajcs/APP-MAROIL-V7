@@ -398,7 +398,7 @@ postCtrl.updatePost = async (req, res) => {
       message: 'Post Actualizado de Manera Exitosa.'
     })
   } catch (err) {
-    console.log(err.message)
+    console.log('aqui esta el error?', err.message)
     res.status(400).json({
       error: err.message
     })

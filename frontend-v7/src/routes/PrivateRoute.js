@@ -30,6 +30,83 @@ export default function PrivateRoute({ hasRole: role, ...rest }) {
   }
   if (
     user.faidUser.roles[0] === 'CLIENTE' &&
+    user.faidUser.nombre === 'YIWU WUTING TRADING'
+  ) {
+    return (
+      <>
+        <Redirect to="/apps/control/reportecargaGOMInfoYiwuWutingTrading" />
+        <Route {...rest} />
+      </>
+    )
+  }
+  if (
+    user.faidUser.roles[0] === 'CLIENTE' &&
+    user.faidUser.nombre === 'SHANGHAI INTERNATIONAL LOGISTICS'
+  ) {
+    return (
+      <>
+        <Redirect to="/apps/control/reportecargaGOMInfoShanghaiInternationalLogistics" />
+        <Route {...rest} />
+      </>
+    )
+  }
+  if (
+    user.faidUser.roles[0] === 'CLIENTE' &&
+    user.faidUser.nombre === 'ARXHK'
+  ) {
+    return (
+      <>
+        <Redirect to="/apps/control/reportecargaGOMInfoArxhk" />
+        <Route {...rest} />
+      </>
+    )
+  }
+  if (
+    user.faidUser.roles[0] === 'CLIENTE' &&
+    user.faidUser.nombre === 'LATAM RESOURCE SSUPPLY'
+  ) {
+    return (
+      <>
+        <Redirect to="/apps/control/reportecargaGOMInfoLatamResourceSsupply" />
+        <Route {...rest} />
+      </>
+    )
+  }
+  if (
+    user.faidUser.roles[0] === 'CLIENTE' &&
+    user.faidUser.nombre === 'MBENGUE SARL'
+  ) {
+    return (
+      <>
+        <Redirect to="/apps/control/reportecargaGOMInfoMbengueSarl" />
+        <Route {...rest} />
+      </>
+    )
+  }
+  if (
+    user.faidUser.roles[0] === 'CLIENTE' &&
+    user.faidUser.nombre === 'GLOBEX WORLDWIDE'
+  ) {
+    return (
+      <>
+        <Redirect to="/apps/control/reportecargaGOMInfoGlobexWorldwide" />
+        <Route {...rest} />
+      </>
+    )
+  }
+  if (
+    user.faidUser.roles[0] === 'CLIENTE' &&
+    user.faidUser.nombre === 'SANEKS'
+  ) {
+    return (
+      <>
+        <Redirect to="/apps/control/reportecargaGOMInfoSaneks" />
+        <Route {...rest} />
+      </>
+    )
+  }
+  if (
+    user.faidUser.roles[0] === 'CLIENTE' &&
     user.faidUser.nombre === 'MERCALIX'
   ) {
     return (
