@@ -30,6 +30,17 @@ export default function PrivateRoute({ hasRole: role, ...rest }) {
   }
   if (
     user.faidUser.roles[0] === 'CLIENTE' &&
+    user.faidUser.nombre === 'HK JIN GANG NA MEI'
+  ) {
+    return (
+      <>
+        <Redirect to="/apps/control/reportecargaGOMInfoHKJinGangNaMei" />
+        <Route {...rest} />
+      </>
+    )
+  }
+  if (
+    user.faidUser.roles[0] === 'CLIENTE' &&
     user.faidUser.nombre === 'YIWU WUTING TRADING'
   ) {
     return (

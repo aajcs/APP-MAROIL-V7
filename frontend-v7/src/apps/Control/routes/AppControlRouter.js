@@ -62,6 +62,7 @@ import { ReporteCargaGOMInfoPageLatamResourceSsupply } from '../pages/ReporteCar
 import { ReporteCargaGOMInfoPageMbengueSarl } from '../pages/ReporteCargaGOMInfoPageMbengueSarl'
 import { ReporteCargaGOMInfoPageGlobexWorldwide } from '../pages/ReporteCargaGOMInfoPageGlobexWorldwide'
 import { ReporteCargaGOMInfoPageSaneks } from '../pages/ReporteCargaGOMInfoPageSaneks'
+import { ReporteCargaGOMInfoPageHKJinGangNaMei } from '../pages/ReporteCargaGOMInfoPageHKJinGangNaMei'
 
 export default function appControlRouter() {
   const { staticMenuInactive, onToggleMenuClick } = useContext(ConfigContext)
@@ -136,6 +137,11 @@ export default function appControlRouter() {
               exact
               path="/apps/control/reportecargaGOMInfoEndeco"
               component={ReporteCargaGOMInfoPageEndeco}
+            />
+            <PrivateRoute
+              exact
+              path="/apps/control/reportecargaGOMInfoHKJinGangNaMei"
+              component={ReporteCargaGOMInfoPageHKJinGangNaMei}
             />
             <PrivateRoute
               exact

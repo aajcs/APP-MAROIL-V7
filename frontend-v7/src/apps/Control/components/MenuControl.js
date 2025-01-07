@@ -67,6 +67,15 @@ export const MenuControl = () => {
               permi3: 'CLIENTE'
             },
             (auth.user.faidUser.roles[0] !== 'CLIENTE' ||
+              auth.user.faidUser.nombre === 'HK JIN GANG NA MEI') && {
+              label: 'CLIENTE HK JIN GANG NA MEI',
+              icon: 'pi pi-fw pi-info-circle',
+              to: '/apps/control/reportecargaGOMInfoHKJinGangNaMei',
+              permi: 'ADMIN',
+              permi2: 'OPERADOR',
+              permi3: 'CLIENTE'
+            },
+            (auth.user.faidUser.roles[0] !== 'CLIENTE' ||
               auth.user.faidUser.nombre === 'YIWU WUTING TRADING') && {
               label: 'CLIENTE YIWU WUTING TRADING',
               icon: 'pi pi-fw pi-info-circle',

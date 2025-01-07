@@ -67,6 +67,7 @@ function ProgramacionVentanaCard({ events }) {
             {new Intl.NumberFormat().format(events.toneladasNominadas)}{' '}
             {' TM / '}
             {events.buqueClienteVenta === 'ENDECO' ||
+            events.buqueClienteVenta === 'HK JIN GANG NA MEI' ||
             events.buqueClienteVenta === 'MERCALIX' ||
             events.buqueClienteVenta === 'KARAMAN PETROKIMYA ANONIM SIRKETI' ||
             events.buqueClienteVenta === 'PRAXLAN' ||
